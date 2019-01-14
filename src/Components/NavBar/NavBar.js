@@ -8,10 +8,10 @@ const NavBar = () => {
 	return (
 		<div className='nav-bar'>
 			<div className='nav-list'>
-				<Link to={'/'}><Icon icon={icons.search} title='Search'/></Link> 
-				<Link to={'/Favorites'}><Icon icon={icons.heart} title='Favorites'/></Link>
-				<Link to={'/WordOfTheDay'}><Icon icon={icons.calendar} title='Word of The Day'/></Link>
-				<Link to={'/Learn'}><Icon icon={icons.rocket} title='Learn'/></Link>
+				<Link to={'/'} className='icon-button'><Icon icon={icons.search} className='icon-button' title='Search'/></Link> 
+				<Link to={'/Favorites'} className='icon-button'><Icon icon={icons.heart} className='icon-button' title='Favorites'/></Link>
+				<Link to={'/WordOfTheDay'} className='icon-button'><Icon icon={icons.calendar} className='icon-button' title='Word of The Day'/></Link>
+				<Link to={'/Learn'} className='icon-button'><Icon icon={icons.rocket} title='Learn'/></Link>
 			</div>
 		</div>
 	);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import TitleBar from './Components/TitleBar/TitleBar';
 import NavBar from './Components/NavBar/NavBar';
 import MainView from './Containers/MainView';
 
@@ -15,6 +16,7 @@ constructor (props, context) {
   render() {
     return (
       <div>
+        <TitleBar className='title-bar'/>
       	<NavBar className='nav-bar'/>
   	    <MainView className='main-view'/>
       </div>

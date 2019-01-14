@@ -3,7 +3,6 @@
 	border: none;
 	color: var(--cantoWhite);
 	outline: none;
-	padding-bottom: 20px;
 	text-align: center;
 }
 
@@ -16,6 +15,7 @@ svg:hover {
 .icon p {
 	font-size: 12px;
 	text-decoration: none;
+	margin-top: 5px;
 }
 
 svg {

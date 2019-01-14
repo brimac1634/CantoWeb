@@ -1,0 +1,18 @@
+.logo {
+	margin: 10px;
+	height: 30px;
+	width: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.logo img {
+	width: 30px;
+	height: auto;
+	margin-right: 10px;
+}
+
+.logo h2 {
+	color: var(--cantoWhite);
+}

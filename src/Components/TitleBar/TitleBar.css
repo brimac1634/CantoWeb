@@ -1,0 +1,19 @@
+.title-bar {
+	background: var(--cantoDarkBlue);
+}
+
+.button-container {
+	position: absolute;
+	height: auto;
+	width: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	top: 0;
+	right: 0;
+	margin: 5px;
+}
+
+.icon {
+	margin: 5px;
+}

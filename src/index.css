@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Heebo|Playfair+Display');
+
 :root {
 	--cantoDarkBlue: #062743;
 	--cantoBlue: #113a5d;
@@ -5,12 +7,16 @@
 	--cantoWhite: #f9f9f9;
 }
 
+h1,
+h2,
+h3 {
+  font-family: 'Playfair Display', serif;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: 'Heebo', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

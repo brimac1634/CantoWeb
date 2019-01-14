@@ -1,6 +1,19 @@
+.nav-bar {
+	background: var(--cantoDarkBlue);
+	text-align: center;
+}
+
+.nav-bar:before {
+	display: block;
+	content: "";
+	background: var(--cantoWhite);
+	height: 1px;
+	width: 100%;
+}
+
 .nav-list {
 	position: absolute;
-	top: 100px;
+	top: 10px;
 	left: 0;
 	width: 100%;
 	height: calc(100% - 80px);
@@ -8,4 +21,19 @@
 	flex-direction: column;
 	justify-content: top;
 	align-items: center;
+}
+
+.icon-button {
+	width: 100%;
+	height: 80px;
+
+}
+
+.icon-button:after {
+	display: block;
+	content: "";
+	background: var(--cantoPink);
+	height: 1px;
+	width: 60%;
+	margin-top: 10px;
 }
