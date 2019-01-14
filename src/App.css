@@ -1,3 +1,18 @@
+.nav-bar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 80px;
+	height: 100%;
+	background: var(--cantoDarkBlue);
+}
 
+.main-view {
+	position: absolute;
+	left: 80px;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
 
 

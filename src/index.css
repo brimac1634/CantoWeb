@@ -1,3 +1,10 @@
+:root {
+	--cantoDarkBlue: #062743;
+	--cantoBlue: #113a5d;
+	--cantoPink: #ff7a8a;
+	--cantoWhite: #f9f9f9;
+}
+
 body {
   margin: 0;
   padding: 0;

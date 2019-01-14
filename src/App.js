@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import NavBar from './Components/NavBar';
+import NavBar from './Components/NavBar/NavBar';
 import MainView from './Containers/MainView';
 
 class App extends Component {
@@ -15,8 +15,8 @@ constructor (props, context) {
   render() {
     return (
       <div>
-      	<NavBar />
-	    <MainView />
+      	<NavBar className='nav-bar'/>
+  	    <MainView className='main-view'/>
       </div>
     );
   }
