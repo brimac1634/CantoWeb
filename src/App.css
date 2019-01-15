@@ -10,13 +10,13 @@
 	position: fixed;
 	top: 50px;
 	left: 0;
-	width: 160px;
+	width: 140px;
 	height: calc(100% - 50px);
 }
 
 .main-view {
 	position: absolute;
-	left: 160px;
+	left: 140px;
 	top: 50px;
 	right: 0;
 	bottom: 0;

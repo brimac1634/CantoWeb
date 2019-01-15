@@ -32,22 +32,21 @@
 	position: absolute;
 	left: 255px;
 	margin-top: 12px;
-	color: var(--cantoDarkBlue);
+	color: var(--cantoWhite);
 
 }
 
 .button-container {
 	position: absolute;
-	height: auto;
+	height: 50px;
 	width: auto;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	top: 0;
 	right: 0;
-	margin: 5px;
 }
 
 .icon {
-	margin: 5px;
+	margin: 8px;
 }

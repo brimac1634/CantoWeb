@@ -12,7 +12,6 @@
 	flex-direction: column;
 	justify-content: top;
 	align-items: center;
-	margin-top: 20px;
 }
 
 .icon-button {
@@ -20,12 +19,3 @@
 	height: 80px;
 
 }
-
-/*.icon-button:after {
-	display: block;
-	content: "";
-	background: var(--cantoWhite);
-	height: 1px;
-	width: 60%;
-	margin-top: 10px;
-}*/

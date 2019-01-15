@@ -2,7 +2,6 @@ import React from 'react';
 import './TitleBar.css';
 import Logo from '../Logo/Logo';
 import Icon from '../Icon/Icon';
-import {icons} from '../../constants';
 
 const TitleBar = props => {
 	return (

@@ -22,12 +22,12 @@ const Icon = (props) => {
 	}
 
 	return (
-		<div className='icon'>
+		<a href='#' className='icon'>
 			<svg width={`${width}px`} height={`${width}px`} viewBox="0 0 1024 1024">
 			    <path d={getPath(props.icon)}></path>
 			</svg>
 			<p>{props.title}</p>
-		</div>
+		</a>
 	);
 }
 
