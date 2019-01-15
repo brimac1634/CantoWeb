@@ -3,24 +3,16 @@
 	text-align: center;
 }
 
-.nav-bar:before {
-	display: block;
-	content: "";
-	background: var(--cantoWhite);
-	height: 1px;
-	width: 100%;
-}
 
 .nav-list {
-	position: absolute;
-	top: 10px;
-	left: 0;
+	position: relative;
 	width: 100%;
-	height: calc(100% - 80px);
+	height: auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: top;
 	align-items: center;
+	margin-top: 20px;
 }
 
 .icon-button {
@@ -29,11 +21,11 @@
 
 }
 
-.icon-button:after {
+/*.icon-button:after {
 	display: block;
 	content: "";
-	background: var(--cantoPink);
+	background: var(--cantoWhite);
 	height: 1px;
 	width: 60%;
 	margin-top: 10px;
-}
+}*/

@@ -1,13 +1,15 @@
 .icon {
 	background: transparent;
+	width: 100%;
+	height: 100%;
 	border: none;
 	color: var(--cantoWhite);
 	outline: none;
 	text-align: center;
 }
 
-.icon:hover,
-svg:hover {
+.icon:hover svg,
+.icon:hover p {
 	color: var(--cantoPink);
 	fill: var(--cantoPink);
 }

@@ -9,14 +9,14 @@ class App extends Component {
 constructor (props, context) {
 	super(props, context);
 	this.state = {
-		
+		current: 'Search'
 	}
 }
 
   render() {
     return (
       <div>
-        <TitleBar className='title-bar'/>
+        <TitleBar className='title-bar'current={this.state.current}/>
       	<NavBar className='nav-bar'/>
   	    <MainView className='main-view'/>
       </div>

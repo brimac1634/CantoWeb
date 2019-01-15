@@ -1,5 +1,39 @@
 .title-bar {
 	background: var(--cantoDarkBlue);
+	overflow: hidden;
+}
+
+.slanted-div {
+	position: absolute;
+	width: 350px;
+	transform: rotateZ(55deg);
+}
+.logo-div {
+	height: 300px;
+	top: -90px;
+	left: -140px;
+	background: var(--cantoWhite);
+}
+
+.current-div {
+	height: 150px;
+	top: -50px;
+	left: 110px;
+	background: var(--cantoPink);
+}
+
+.logo {
+	position: absolute;
+	margin: 10px 20px;
+	
+}
+
+.current {
+	position: absolute;
+	left: 255px;
+	margin-top: 12px;
+	color: var(--cantoWhite);
+
 }
 
 .button-container {

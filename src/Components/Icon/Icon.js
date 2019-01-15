@@ -3,7 +3,7 @@ import './Icon.css';
 
 const Icon = (props) => {
 
-	let width = 30;
+	let width = 20;
 
 	if (props.width != null) {
 		width = props.width
