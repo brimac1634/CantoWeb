@@ -7,10 +7,10 @@ const NavBar = () => {
 	return (
 		<div className='nav-bar'>
 			<div className='nav-list'>
-				<NavBarButton to={'/'} icon={icons.search} title='Search'/> 
-				<NavBarButton to={'/Favorites'} icon={icons.heart} title='Favorites'/> 
-				<NavBarButton to={'/WordOfTheDay'} icon={icons.calendar} title='Word of The Day'/> 
-				<NavBarButton to={'/Learn'} icon={icons.rocket} title='Learn'/> 
+				<NavBarButton to={'/'} icon='search' title='Search'/> 
+				<NavBarButton to={'/Favorites'} icon='like-2' title='Favorites'/> 
+				<NavBarButton to={'/WordOfTheDay'} icon='calendar-7' title='Word of The Day'/> 
+				<NavBarButton to={'/Learn'} icon='windows' title='Learn'/> 
 			</div>
 		</div>
 	);

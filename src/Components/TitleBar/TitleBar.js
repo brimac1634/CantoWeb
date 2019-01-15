@@ -12,8 +12,8 @@ const TitleBar = props => {
 			<div className='slanted-div current-div'></div>
 			<h3 className='current'>{props.current}</h3>
 			<div className='button-container'>
-				<Icon icon={icons.profile} className='icon' width={22}/>
-				<Icon icon={icons.settings} className='icon' width={22}/>
+				<Icon icon='user-3' className='icon' width={22}/>
+				<Icon icon='settings-6' className='icon' width={22}/>
 			</div>
 		</div>
 	);
