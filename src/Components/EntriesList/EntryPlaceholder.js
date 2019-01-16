@@ -15,4 +15,60 @@ export const entriesHolder = [
 		englishWord: 'car',
 		mandarinWord: '好'
 	},
+	{
+		entryID: 67,
+		cantoWord: '好',
+		jyutping: 'ce1',
+		classifier: '',
+		englishWord: 'car',
+		mandarinWord: '好'
+	},
+	{
+		entryID: 67,
+		cantoWord: '好',
+		jyutping: 'ce1',
+		classifier: '',
+		englishWord: 'car',
+		mandarinWord: '好'
+	},
+	{
+		entryID: 67,
+		cantoWord: '好',
+		jyutping: 'ce1',
+		classifier: '',
+		englishWord: 'car',
+		mandarinWord: '好'
+	},
+	{
+		entryID: 67,
+		cantoWord: '好',
+		jyutping: 'ce1',
+		classifier: '',
+		englishWord: 'car',
+		mandarinWord: '好'
+	},
+	{
+		entryID: 67,
+		cantoWord: '好',
+		jyutping: 'ce1',
+		classifier: '',
+		englishWord: 'car',
+		mandarinWord: '好'
+	},
+	{
+		entryID: 67,
+		cantoWord: '好',
+		jyutping: 'ce1',
+		classifier: '',
+		englishWord: 'car',
+		mandarinWord: '好'
+	},
+	{
+		entryID: 67,
+		cantoWord: '好',
+		jyutping: 'ce1',
+		classifier: '',
+		englishWord: 'car',
+		mandarinWord: '好'
+	},
 ];

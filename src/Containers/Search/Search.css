@@ -1,3 +1,9 @@
+.search-bar {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
 .split-container {
 	position: absolute;
 	height: calc(100% - 40px);
@@ -10,7 +16,6 @@
 }
 
 .entry-list {
-	background: red;
 	width: 50%;
 	height: 100%;
 }
@@ -18,5 +23,4 @@
 .entry-view {
 	width: 50%;
 	height: 100%;
-	background: green;
 }

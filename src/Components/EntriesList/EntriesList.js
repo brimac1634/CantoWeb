@@ -7,7 +7,7 @@ const EntryList = ({entries}) => {
 	const placeholder = entriesHolder
 
 	return (
-		<div className='entry-list'>
+		<div className='entry-list' style={{overflowY: 'auto'}}>
 			{placeholder.map(entry => {
 				return (
 					<EntryRow 

@@ -5,9 +5,14 @@ import iconPaths from './selection.json';
 const Icon = (props) => {
 
 	let width = 20;
+	let iconStyle = 'light';
 
 	if (props.width != null) {
 		width = props.width
+	}
+
+	if (props.iconStyle === 'dark') {
+		iconStyle = 'dark';
 	}
 
 	function getPath(iconName) {
@@ -23,7 +28,7 @@ const Icon = (props) => {
 
 	return (
 		<a href='#' className='icon'>
-			<svg width={`${width}px`} height={`${width}px`} viewBox="0 0 1024 1024">
+			<svg className={iconStyle} width={`${width}px`} height={`${width}px`} viewBox="0 0 1024 1024">
 			    <path d={getPath(props.icon)}></path>
 			</svg>
 			<p>{props.title}</p>

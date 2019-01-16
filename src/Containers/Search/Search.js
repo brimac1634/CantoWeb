@@ -23,8 +23,8 @@ class Search extends Component {
 
 	render() {
 		return (
-			<div className='search'>
-				<SearchBar searchChange={this.handleSearch}/>
+			<div>
+				<SearchBar className='search-bar' searchChange={this.handleSearch}/>
 				<div className='split-container'>
 					<EntriesList className='entry-list'/>
 					<EntryView className='entry-view'/>

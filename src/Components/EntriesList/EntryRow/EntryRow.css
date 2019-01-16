@@ -1,7 +1,37 @@
 .entry-row {
 	width: 100%;
-	height: 100px;
+	height: 80px;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
+	align-items: center;
+	padding: 10px;
+}
+
+.entry-row: after {
+	display: block;
+	content: "";
+	width: 100%;
+	height: 2px;
+	background-color: var(--cantoDarkBlue);
+	margin-top: 30px;
+}
+
+.entry-row > * {
+	width: 50%;
+	height: 50%;
+	text-align: left;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.entry-row p {
+	font-size: 16px;
+}
+
+.top-left h3 {
+	font-size: 22px;
+	margin-right: 8px;
 }

@@ -2,15 +2,22 @@ import React from 'react';
 import './EntryRow.css';
 
 const EntryRow = (props) => {
+
+	let clLabel = 'cl: '
+
+	if (props.classifier === '') {
+		clLabel = '';
+	}
+
 	return (
 		<div className='entry-row'>
 			<div className='top-left'>
 				<h3>{props.cantoWord}</h3>
-				<p>`cl: {props.classifier}`</p>
+				<p>{clLabel}{props.classifier}</p>
 			</div>
-			<p>`En: {props.englishWord}`</p>
-			<p>{props.jyutping}</p>
-			<p>`普: {props.mandarinWord}`</p>
+			<div><p>En: {props.englishWord}</p></div>
+			<div><p>{props.jyutping}</p></div>
+			<div><p>普: {props.mandarinWord}</p></div>
 		</div>
 	);
 }

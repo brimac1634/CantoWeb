@@ -19,9 +19,9 @@
 	fill: #b0b0b0;
 }
 
-.icon:active svg,
+.icon:active .light,
 .icon:active p,
-.icon:focus svg,
+.icon:focus .light,
 .icon:focus p  {
 	color: var(--cantoPink);
 	fill: var(--cantoPink);
@@ -37,5 +37,12 @@ svg {
 	display: inline-block;
 	vertical-align: middle;
 	background: transparent;
+}
+
+.light {
 	fill: var(--cantoWhite);
+}
+
+.dark {
+	fill: var(--cantoDarkBlue);
 }
