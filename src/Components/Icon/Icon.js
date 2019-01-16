@@ -27,7 +27,7 @@ const Icon = (props) => {
 	}
 
 	return (
-		<a href='#' className='icon'>
+		<a name='icon' className='icon'>
 			<svg className={iconStyle} width={`${width}px`} height={`${width}px`} viewBox="0 0 1024 1024">
 			    <path d={getPath(props.icon)}></path>
 			</svg>

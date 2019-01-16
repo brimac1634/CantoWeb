@@ -12,7 +12,7 @@ export const entriesHolder = [
 		cantoWord: '好',
 		jyutping: 'ce1',
 		classifier: '',
-		englishWord: 'car',
+		englishWord: 'bug',
 		mandarinWord: '好'
 	},
 	{

@@ -1,11 +1,15 @@
 .entry-row {
-	width: 100%;
+	width: 90%;
 	height: 80px;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
 	align-items: center;
-	padding: 10px;
+	border-radius: 4px;
+	padding: 10px ;
+	margin: 10px;
+	box-shadow: 0 2px 2px 1px #ccc;
+	transition: all 0.3s ease-in-out;
 }
 
 .entry-row: after {
@@ -15,6 +19,11 @@
 	height: 2px;
 	background-color: var(--cantoDarkBlue);
 	margin-top: 30px;
+}
+
+.entry-row:hover {
+	background: #e8e8e8;
+	transform: scale(1.02);
 }
 
 .entry-row > * {

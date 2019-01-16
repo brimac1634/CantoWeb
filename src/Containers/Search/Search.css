@@ -6,7 +6,7 @@
 
 .split-container {
 	position: absolute;
-	height: calc(100% - 40px);
+	height: calc(100% - 42px);
 	width: 100%;
 	bottom: 0;
 	left: 0;
