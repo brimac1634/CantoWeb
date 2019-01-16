@@ -1,0 +1,22 @@
+.split-container {
+	position: absolute;
+	height: calc(100% - 40px);
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	flex-direction: row;
+
+}
+
+.entry-list {
+	background: red;
+	width: 50%;
+	height: 100%;
+}
+
+.entry-view {
+	width: 50%;
+	height: 100%;
+	background: green;
+}

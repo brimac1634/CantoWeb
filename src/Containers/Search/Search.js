@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Search.css';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
@@ -25,8 +26,8 @@ class Search extends Component {
 			<div className='search'>
 				<SearchBar searchChange={this.handleSearch}/>
 				<div className='split-container'>
-					<EntriesList />
-					<EntryView />
+					<EntriesList className='entry-list'/>
+					<EntryView className='entry-view'/>
 				</div>
 			</div>
 		);
