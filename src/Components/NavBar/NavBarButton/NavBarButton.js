@@ -6,8 +6,8 @@ import Icon from '../../Icon/Icon';
 
 const NavBarButton = (props) => {
 	return (
-		<div className='nav-button-container'>
-			<Link to={props.to} className='nav-bar-button' onClick={props.navChange(props.title)}>
+		<div className='nav-button-container' onClick={()=>props.navChange(props.title)}>
+			<Link to={props.to} className='nav-bar-button'>
 				<Icon icon={props.icon} className='icon-button' title={props.title}/>
 			</Link>
 		</div>

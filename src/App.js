@@ -14,7 +14,9 @@ constructor (props, context) {
 	}
 }
   handleNavChange = (title) => {
-    console.log(title)
+    this.setState({
+      current: title,
+    })
   }
 
   render() {
