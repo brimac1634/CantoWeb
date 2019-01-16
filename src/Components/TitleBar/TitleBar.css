@@ -12,14 +12,14 @@
 	height: 300px;
 	top: -90px;
 	left: -140px;
-	background: var(--cantoWhite);
+	background: var(--cantoPink);
 }
 
 .current-div {
 	height: 150px;
 	top: -50px;
 	left: 110px;
-	background: var(--cantoPink);
+	background: var(--cantoWhite);
 }
 
 .logo {
@@ -28,12 +28,18 @@
 	
 }
 
-.current {
+.current-container {
 	position: absolute;
-	left: 255px;
-	margin-top: 12px;
-	color: var(--cantoWhite);
+	height: 50px;
+	width: 200px;
+	left: 185px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
+.current {
+	color: var(--cantoDarkBlue);
 }
 
 .button-container {

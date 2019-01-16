@@ -9,7 +9,9 @@ const TitleBar = props => {
 			<div className='slanted-div logo-div'></div>
 			<Logo className='logo'/>
 			<div className='slanted-div current-div'></div>
-			<h3 className='current'>{props.current}</h3>
+			<div className='current-container'>
+				<h3 className='current'>{props.current}</h3>
+				</div>
 			<div className='button-container'>
 				<Icon icon='user-3' className='icon' width={22}/>
 				<Icon icon='settings-6' className='icon' width={22}/>

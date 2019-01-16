@@ -1,6 +1,6 @@
 import React from 'react';
 import './Logo.css';
-import CantoIcon from './CantoTalkIconLatest.png';
+import CantoIcon from './CantoTalkIconBlue.png';
 
 const Logo = () => {
 	return (
