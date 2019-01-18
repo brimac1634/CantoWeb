@@ -1,0 +1,15 @@
+.sign-in {
+	background: var(--cantoWhite);
+	width: 500px;
+	height: auto;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	box-shadow: 0 2px 2px 1px #ccc;
+}
+
+.form-group {
+	margin-top: 15px;
+}

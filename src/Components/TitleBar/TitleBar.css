@@ -51,9 +51,13 @@
 	align-items: center;
 	top: 0;
 	right: 0;
-	margin-top: 8px;
 }
 
-.icon {
-	margin: 8px;
+.button {
+	background: transparent;
+	outline: none;
+	border: none;
+	width: 40px;
+	height: 100%;
+	margin-top: 20px;
 }

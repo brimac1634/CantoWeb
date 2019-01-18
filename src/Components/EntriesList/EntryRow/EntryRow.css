@@ -12,13 +12,8 @@
 	transition: all 0.3s ease-in-out;
 }
 
-.entry-row: after {
-	display: block;
-	content: "";
-	width: 100%;
-	height: 2px;
-	background-color: var(--cantoDarkBlue);
-	margin-top: 30px;
+.entry-row:active {
+	transform: scale(9.98);
 }
 
 .entry-row:hover {
