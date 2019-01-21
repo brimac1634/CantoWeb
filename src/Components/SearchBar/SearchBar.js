@@ -14,7 +14,13 @@ const SearchBar = ( {searchField, searchChange} ) => {
 					/>
 				</div>
 				<div className='icon-container'>
-					<Icon className='search-icon' iconStyle='dark' icon='search' width='25'/>
+					<Icon 
+						className='search-icon' 
+						iconType='icon'
+						iconStyle='dark' 
+						icon='search' 
+						width='18'
+					/>
 				</div>
 			<div className='bottom-divider'></div>
 		</div>

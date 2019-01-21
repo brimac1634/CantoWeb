@@ -4,9 +4,11 @@ import Logo from '../Logo/Logo';
 import Icon from '../Icon/Icon';
 
 const SignIn = ({ signInToggle, title, signInButton, alternateButton }) => {
+
+
 	return (
-		<div className='shade-background'>
-			<div className='sign-in-box'>
+		<div className='shade-background animate-fade-in'>
+			<div className='sign-in-box animate-pop-in'>
 				<button className='close' onClick={() => signInToggle('home')}>
 					<Icon 
 						icon='multiply' 

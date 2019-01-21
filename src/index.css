@@ -31,3 +31,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/*---------animations----------*/
+
+.animate-pop-in {
+  opacity: 0;
+  animation: pop-in .7s .3s cubic-bezier(0, .9, .3, 1.2) forwards;
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fade-in .5s  ease-out forwards;
+}
+
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-6em) scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

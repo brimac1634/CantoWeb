@@ -1,4 +1,5 @@
-.icon {
+.icon,
+.icon-btn {
 	width: 100%;
 	height: 100%;
 	border: none;
@@ -12,21 +13,26 @@
 	text-decoration: none;
 }
 
-.icon:hover svg,
-.icon:hover p {
+.icon-btn {
+	cursor: pointer;
+}
+
+.icon-btn:hover svg,
+.icon-btn:hover p {
 	color: #b0b0b0;
 	fill: #b0b0b0;
 }
 
-.icon:active .light,
-.icon:active p,
-.icon:focus .light,
-.icon:focus p  {
+.icon-btn:active .light,
+.icon-btn:active p,
+.icon-btn:focus .light,
+.icon-btn:focus p  {
 	color: var(--cantoPink);
 	fill: var(--cantoPink);
 }
 
-.icon p {
+.icon p,
+.icon-btn p {
 	font-size: 14px;
 	text-decoration: none;
 	margin-top: 5px;
