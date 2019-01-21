@@ -12,31 +12,44 @@
 }
 
 .sign-in-box {
+	position: relative;
 	background: var(--cantoWhite);
 	width: 340px;
 	height: 400px;
 	padding: 20px 30px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	box-shadow: 0 2px 2px 1px #ccc;
 	border-radius: 4px;
 	z-index: 99;
 	color: var(--cantoDarkBlue);
 }
 
+.close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.sign-in-container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 .logo-container {
-	height: 60px;
+	height: 55px;
+	width: 55px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 20px
+	margin-bottom: 10px
 }
 
 .sign-in-input {
 	width: 100%;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 }
 
 .form-group {

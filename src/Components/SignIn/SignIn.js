@@ -1,11 +1,16 @@
 import React from 'react';
 import './SignIn.css';
 import Logo from '../Logo/Logo';
+import Icon from '../Icon/Icon';
 
 const SignIn = () => {
 	return (
 		<div className='shade-background'>
 			<div className='sign-in-box'>
+				<div className='close'>
+					<Icon icon='multiply' iconStyle='dark' width='15'/>
+				</div>
+				<div className='sign-in-container'>
 					<div className='logo-container'>
 						<Logo />
 					</div>
@@ -16,6 +21,7 @@ const SignIn = () => {
 					<input className='sign-in-input input-field' type='password'/>
 					<input className='btn' type='submit' value='Sign In'/>
 					<p className='register'>Register</p>
+				</div>
 			</div>
 		</div>
 	);

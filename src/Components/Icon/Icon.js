@@ -2,17 +2,17 @@ import React from 'react';
 import './Icon.css';
 import iconPaths from './selection.json';
 
-const Icon = (props) => {
+const Icon = ({ icon, iconStyle, width, title }) => {
 
-	let width = 20;
-	let iconStyle = 'light';
+	let iconWidth = 20;
+	let style = 'light';
 
-	if (props.width != null) {
-		width = props.width
+	if (width != null) {
+		iconWidth = width
 	}
 
-	if (props.iconStyle === 'dark') {
-		iconStyle = 'dark';
+	if (iconStyle === 'dark') {
+		style = 'dark';
 	}
 
 	function getPath(iconName) {
@@ -28,10 +28,10 @@ const Icon = (props) => {
 
 	return (
 		<div className='icon'>
-			<svg className={iconStyle} width={`${width}px`} height={`${width}px`} viewBox="0 0 1024 1024">
-			    <path d={getPath(props.icon)}></path>
+			<svg className={style} width={`${iconWidth}px`} height={`${iconWidth}px`} viewBox="0 0 1024 1024">
+			    <path d={getPath(icon)}></path>
 			</svg>
-			<p>{props.title}</p>
+			<p>{title}</p>
 		</div>
 	);
 }
