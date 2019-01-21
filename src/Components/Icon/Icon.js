@@ -31,7 +31,11 @@ const Icon = ({ icon, iconStyle, width, title }) => {
 			<svg className={style} width={`${iconWidth}px`} height={`${iconWidth}px`} viewBox="0 0 1024 1024">
 			    <path d={getPath(icon)}></path>
 			</svg>
-			<p>{title}</p>
+			{
+				title != null &&
+				<p>{title}</p>
+			}
+			
 		</div>
 	);
 }

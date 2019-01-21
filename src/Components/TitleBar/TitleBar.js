@@ -3,7 +3,7 @@ import './TitleBar.css';
 import LogoFull from '../LogoFull/LogoFull';
 import Icon from '../Icon/Icon';
 
-const TitleBar = ({ current, showSignIn }) => {
+const TitleBar = ({ current, signInToggle }) => {
 	return (
 		<div className='title-bar'>
 			<div className='slanted-div logo-div'></div>
@@ -15,7 +15,7 @@ const TitleBar = ({ current, showSignIn }) => {
 				<h3 className='current'>{current}</h3>
 			</div>
 			<div className='button-container'>
-				<button className='button' onClick={showSignIn}>
+				<button className='button' onClick={() => signInToggle('login')}>
 					<Icon icon='user-3' className='icon' width={22}/>
 				</button>
 				<button className='button'>
