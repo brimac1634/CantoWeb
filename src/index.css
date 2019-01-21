@@ -64,3 +64,20 @@ code {
     opacity: 1;
   }
 }
+
+/*--------Scroll Bar------------*/
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--cantoDarkBlue); 
+}
