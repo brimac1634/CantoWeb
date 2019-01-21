@@ -32,7 +32,7 @@ constructor (props, context) {
     return (
       <div>
         {signInShowing === true &&
-          <SignIn />
+          <SignIn className='sign-in'/>
         }
         <TitleBar className='title-bar' current={current} signInShowing={signInShowing} showSignIn={this.handleShowSignIn}/>
       	<NavBar className='nav-bar' current={this.state.current} navChange={this.handleNavChange}/>

@@ -1,16 +1,21 @@
 import React from 'react';
 import './SignIn.css';
+import Logo from '../Logo/Logo';
 
 const SignIn = () => {
 	return (
-		<div className='sign-in'>
-			<div className='form-group'>
-				<label>Email</label>
-				<input className='input-field' type='email'/>
-			</div>
-			<div className='form-group'>
-				<label>Password</label>
-				<input className='input-field' type='password'/>
+		<div className='shade-background'>
+			<div className='sign-in-box'>
+					<div className='logo-container'>
+						<Logo />
+					</div>
+					<h2>Login</h2>
+					<label>Email</label>
+					<input className='sign-in-input input-field' type='email'/>
+					<label>Password</label>
+					<input className='sign-in-input input-field' type='password'/>
+					<input className='btn' type='submit' value='Sign In'/>
+					<p className='register'>Register</p>
 			</div>
 		</div>
 	);

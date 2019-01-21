@@ -22,8 +22,19 @@
 	background: var(--cantoWhite);
 }
 
-.logo {
+.title-logo-container {
 	position: absolute;
+	width: 200px;
+	height: 100%;
+	top: 0;
+	left: 0;
+
+}
+
+.title-logo {
+	position: absolute;
+	top: 0;
+	left: 0;
 	margin: 10px 20px;
 	
 }

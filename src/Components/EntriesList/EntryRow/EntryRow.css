@@ -1,4 +1,5 @@
 .entry-row {
+	background: var(--cantoWhite);
 	width: 90%;
 	height: 80px;
 	display: flex;
