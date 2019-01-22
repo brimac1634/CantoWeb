@@ -6,21 +6,29 @@
 
 .split-container {
 	position: absolute;
-	height: calc(100% - 42px);
-	width: 100%;
-	bottom: 0;
-	left: 0;
+	top: 42px;
+	right: 5px;
+	bottom: 5px;
+	left: 5px;
 	display: flex;
 	flex-direction: row;
-
 }
 
-.entry-list {
+.entry-list-container {
+	position: relative;
 	width: 50%;
 	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
 }
 
-.entry-view {
+.entry-view-container {
+	position: relative;
 	width: 50%;
 	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

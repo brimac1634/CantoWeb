@@ -1,16 +1,17 @@
 .entry-row {
 	background: var(--cantoWhite);
-	width: 90%;
+	width: 92%;
 	height: 80px;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
 	align-items: center;
 	border-radius: 4px;
-	padding: 10px ;
+	padding: 10px;
 	margin: 10px;
 	box-shadow: 0 2px 2px 1px #ccc;
 	transition: all 0.3s ease-in-out;
+	cursor: pointer;
 }
 
 .entry-row:active {

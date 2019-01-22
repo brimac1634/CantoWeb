@@ -11,6 +11,7 @@ class Search extends Component {
 		this.state = {
 			entries: [],
 			searchField: '',
+			entry: 0,
 		}
 		this.handleSearch = this.handleSearch.bind(this);
 	}
@@ -29,7 +30,7 @@ class Search extends Component {
 	}
 
 	render() {
-		const { entries, searchField } = this.state;
+		const { entries, searchField, entry } = this.state;
 		const filteredEntries = entries.filter(entry => {
 			return entry.englishWord.toLowerCase().includes(
 				searchField.toLowerCase()
@@ -38,13 +39,21 @@ class Search extends Component {
 
 		return (
 			<div>
-				<SearchBar className='search-bar' searchChange={this.handleSearch}/>
+				<SearchBar 
+					className='search-bar' 
+					searchChange={this.handleSearch}
+				/>
 				<div className='split-container'>
-					<EntriesList 
-						className='entry-list' 
-						entries={filteredEntries}
-					/>
-					<EntryView className='entry-view'/>
+					<div className='entry-list-container'>
+						<EntriesList  
+							entries={filteredEntries}
+						/>
+					</div>
+					<div className='entry-view-container'>
+						<EntryView 
+							entry={entry}
+						/>
+					</div>
 				</div>
 			</div>
 		);

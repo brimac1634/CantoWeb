@@ -1,10 +1,11 @@
 import React from 'react';
+import './EntryList.css';
 import EntryRow from './EntryRow/EntryRow';
 
 const EntryList = ({entries}) => {
 
 	return (
-		<div className='entry-list' style={{overflowY: 'auto'}}>
+		<div className='entry-list'>
 			{entries.map(entry => {
 				return (
 					<EntryRow 
