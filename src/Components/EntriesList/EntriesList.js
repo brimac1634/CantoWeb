@@ -2,19 +2,15 @@ import React from 'react';
 import './EntryList.css';
 import EntryRow from './EntryRow/EntryRow';
 
-const EntryList = ({entries}) => {
+const EntryList = ({ entries, selectEntry }) => {
 
 	return (
 		<div className='entry-list'>
 			{entries.map(entry => {
 				return (
 					<EntryRow 
-						entryID={entry.entryID}
-						cantoWord={entry.cantoWord}
-						jyutping={entry.jyutping}
-						classifier={entry.classifier}
-						englishWord={entry.englishWord}
-						mandarinWord={entry.mandarinWord}
+						selectEntry={selectEntry}
+						entry={entry}
 					/>
 				);
 			})}

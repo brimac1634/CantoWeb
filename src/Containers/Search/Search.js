@@ -11,9 +11,8 @@ class Search extends Component {
 		this.state = {
 			entries: [],
 			searchField: '',
-			entry: 0,
+			selectedEntry: '',
 		}
-		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	componentDidMount() {
@@ -23,14 +22,19 @@ class Search extends Component {
 	}
 
 	handleSearch = (event) => {
-		console.log(event.target.value)
 		this.setState({
 			searchField: event.target.value
 		})
 	}
 
+	handleEntrySelect = (entry) => {
+		this.setState({
+			selectedEntry: entry
+		})
+	}
+
 	render() {
-		const { entries, searchField, entry } = this.state;
+		const { entries, searchField, selectedEntry } = this.state;
 		const filteredEntries = entries.filter(entry => {
 			return entry.englishWord.toLowerCase().includes(
 				searchField.toLowerCase()
@@ -47,11 +51,12 @@ class Search extends Component {
 					<div className='entry-list-container'>
 						<EntriesList  
 							entries={filteredEntries}
+							selectEntry={this.handleEntrySelect}
 						/>
 					</div>
 					<div className='entry-view-container'>
 						<EntryView 
-							entry={entry}
+							entry={selectedEntry}
 						/>
 					</div>
 				</div>
