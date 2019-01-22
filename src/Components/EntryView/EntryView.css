@@ -1,6 +1,46 @@
 .entry-view {
+	display: relative;
 	height: 90%;
 	width: 90%;
 	box-shadow: 0 2px 2px 1px #ccc;
 	border-radius: 4px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.inner-entry-view {
+	display: absolute;
+	height: 85%;
+	width: 85%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow-y: auto;
+}
+
+.inner-entry-view p {
+	font-size: 18px;
+}
+
+.canto-class {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+
+.canto-class h3,
+.canto-class p {
+	margin: 0;
+}
+
+.canto-class p {
+	font-size: 16px;
+}
+
+.canto-class h3 {
+	font-size: 38px;
+	margin-right: 8px;
 }

@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
+import SearchView from '../SearchView/SearchView';
+import {entriesHolder} from '../../Components/EntriesList/EntryPlaceholder';
 
-const Favorites = () => {
-	return (
-		<div className='favorites'>
+class Favorites extends Component {
+	constructor() {
+		super()
+		this.state = {
+			entries: [],
+		}
+	}
 
-		</div>
-	);
+	componentDidMount() {
+		this.setState({
+			entries: entriesHolder,
+		})
+	}
+
+	render() {
+		const { entries } = this.state;
+
+		return (
+			<SearchView entries={entries} />
+		);
+	}
+	
 }
 
 export default Favorites;
