@@ -1,7 +1,7 @@
 .entry-row {
 	background: var(--cantoWhite);
 	width: 92%;
-	height: 80px;
+	height: 60px;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;

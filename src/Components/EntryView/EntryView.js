@@ -1,5 +1,6 @@
 import React from 'react';
 import './EntryView.css';
+import Icon from '../Icon/Icon';
 
 const EntryView = (props) => {
 	const {
@@ -22,7 +23,11 @@ const EntryView = (props) => {
 	return (
 		<div className='entry-view'>
 			{entry !== ''
-				? <div className='inner-entry-view'>
+				?   <div className='inner-entry-view'>
+						<div className='entry-btn-container'>
+							<Icon icon='like-2' width='35' iconStyle='dark'/>
+							<Icon icon='speaker-5' width='35' iconStyle='dark'/>
+						</div>
 						<div>
 							<div className='canto-class'>
 								<h3>{cantoWord}</h3>
@@ -40,7 +45,7 @@ const EntryView = (props) => {
 							<div><p>This is a filler sentence</p></div>
 						</div>
 					</div>
-				: <div></div>}
+				:   <div></div>}
 		</div>
 		
 	);
