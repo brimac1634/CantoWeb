@@ -7,26 +7,17 @@ import SignIn from './Components/SignIn/SignIn';
 
 class App extends Component {
 
-constructor (props, context) {
-	super();
-  this.handleNavChange = this.handleNavChange.bind(this);
-	this.state = {
-		current: 'Search',
-    loginRoute: '',
-	}
-}
-  handleNavChange = (title) => {
-    this.setState({
-      current: title,
-    })
+  constructor (props, context) {
+  	super();
+  	this.state = {
+  		current: 'Search',
+      loginRoute: '',
+  	}
   }
 
-  handleSignInView = (type) => {
-    console.log(type);
-    this.setState({
-      loginRoute: type,
-    })
-  }
+  handleNavChange = (title) => this.setState({ current: title });
+  handleSignInView = (type) => this.setState({ loginRoute: type })
+  
 
   renderLoginOptions = (loginRoute) => {
     if (loginRoute === 'login') {
@@ -37,6 +28,7 @@ constructor (props, context) {
             title='Login'
             signInButton='Sign In'
             alternateButton='register'
+            show='animate-fade-in'
           />
       );
     } else if (loginRoute === 'register') {
@@ -47,6 +39,7 @@ constructor (props, context) {
             title='Register'
             signInButton='Register'
             alternateButton='login'
+            show='animate-fade-in'
           />
       );
     }
