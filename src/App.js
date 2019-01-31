@@ -12,11 +12,13 @@ class App extends Component {
   	this.state = {
   		current: 'Search',
       loginRoute: '',
+      userID: '',
   	}
   }
 
   handleNavChange = (title) => this.setState({ current: title });
   handleSignInView = (type) => this.setState({ loginRoute: type })
+  updateUserID = (id) => this.setState({ userID: id })
   
 
   renderLoginOptions = (loginRoute) => {
@@ -29,6 +31,7 @@ class App extends Component {
             signInButton='Sign In'
             alternateButton='register'
             show='animate-fade-in'
+            updateUserID={this.updateUserID}
           />
       );
     } else if (loginRoute === 'register') {
@@ -40,6 +43,7 @@ class App extends Component {
             signInButton='Register'
             alternateButton='login'
             show='animate-fade-in'
+            updateUserID={this.updateUserID}
           />
       );
     }

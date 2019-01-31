@@ -7,29 +7,29 @@ const EntryRow = (props) => {
 		selectEntry,
 		entry,
 		entry: {
-			cantoWord,
+			cantoword,
 			classifier,
 			jyutping,
-			englishWord,
-			mandarinWord
+			englishword,
+			mandarinword
 		}
 	} = props;
 
 	let clLabel = 'cl: '
 
-	if (classifier === '') {
+	if (!classifier) {
 		clLabel = '';
 	}
 
 	return (
 		<div className='entry-row' onClick={() => selectEntry(entry)}>
 			<div className='top-left'>
-				<h3>{cantoWord}</h3>
+				<h3>{cantoword}</h3>
 				<p>{clLabel}{classifier}</p>
 			</div>
-			<div><p>En: {englishWord}</p></div>
+			<div><p>En: {englishword}</p></div>
 			<div><p>{jyutping}</p></div>
-			<div><p>普: {mandarinWord}</p></div>
+			<div><p>普: {mandarinword}</p></div>
 		</div>
 	);
 }

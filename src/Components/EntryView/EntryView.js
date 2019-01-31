@@ -6,17 +6,20 @@ const EntryView = (props) => {
 	const {
 		entry,
 		entry: {
-			cantoWord,
+			cantoword,
 			classifier,
 			jyutping,
-			englishWord,
-			mandarinWord
+			englishword,
+			mandarinword,
+			cantosentence,
+			jyutpingsentence,
+			englishsentence
 		}
 	} = props;
 
 	let clLabel = 'cl: '
 
-	if (classifier === '') {
+	if (!classifier) {
 		clLabel = '';
 	}
 
@@ -30,19 +33,19 @@ const EntryView = (props) => {
 						</div>
 						<div>
 							<div className='canto-class'>
-								<h3>{cantoWord}</h3>
+								<h3>{cantoword}</h3>
 								<p>{clLabel}{classifier}</p>
 							</div>
 							<div><p>{jyutping}</p></div>
 						</div>
 						<div>
-							<div><p>En: {englishWord}</p></div>
-							<div><p>普: {mandarinWord}</p></div>
+							<div><p>En: {englishword}</p></div>
+							<div><p>普: {mandarinword}</p></div>
 						</div>
 						<div>
-							<div><p>This is a filler sentence</p></div>
-							<div><p>This is a filler sentence</p></div>
-							<div><p>This is a filler sentence</p></div>
+							<div><p>{cantosentence}</p></div>
+							<div><p>{jyutpingsentence}</p></div>
+							<div><p>{englishsentence}</p></div>
 						</div>
 					</div>
 				:   <div></div>}
