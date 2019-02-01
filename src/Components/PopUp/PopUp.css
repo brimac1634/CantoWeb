@@ -34,3 +34,68 @@
 	border: none;
 }
 
+/*---------animations----------*/
+
+.animate-pop-in {
+  opacity: 0;
+  animation: pop-in .6s .3s cubic-bezier(0, .9, .3, 1.2) forwards;
+}
+
+.animate-pop-out {
+  opacity: 1;
+  animation: pop-out .6s cubic-bezier(0.7, -0.19, 1, 0.09) forwards;
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fade-in .5s  ease-out forwards;
+}
+
+.animate-fade-out {
+  opacity: 1;
+  animation: fade-out .5s .4s  ease-out forwards;
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-6em) scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop-out {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  50% {
+    opacity: 1
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6em) scale(0.8);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+

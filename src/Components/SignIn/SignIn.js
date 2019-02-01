@@ -15,7 +15,7 @@ class SignIn extends Component {
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 
 	onUserSubmit = () => {
-		const { title, updateUserID } = this.props;
+		const { title, updateUserID, handlePopUpView } = this.props;
 		const { email, password } = this.state;
 		if (title === 'Login') {
 			//login
@@ -32,8 +32,8 @@ class SignIn extends Component {
 			})
 				.then(res => res.json())
 				.then(user => {
-					console.log(user);
 					updateUserID(user)
+					handlePopUpView()
 				})
 				.catch(console.log)
 			

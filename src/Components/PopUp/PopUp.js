@@ -1,51 +1,33 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './PopUp.css';
 import Icon from '../Icon/Icon';
 
 
-class PopUp extends Component {
-	constructor(props) {
-		super()
-		this.state = {
-			show: true
-		}
-	}
+const PopUp = ({ showPopUp, popUpToggle, handlePopUpView, children }) => {
 
-	transitionOut = () => {
-		const { popUpToggle } = this.props;
-		this.setState({
-			show: false,
-		})
+	let fadeType = 'animate-fade-in'
+	let popType = 'animate-pop-in'
+
+	if (showPopUp === false) {
+		fadeType = 'animate-fade-out'
+		popType = 'animate-pop-out'
 		setTimeout(() => popUpToggle('home'), 1100);
 	}
 
-	render() {
-		const { show } = this.state;
-
-		let fadeType = 'animate-fade-in'
-		let popType = 'animate-pop-in'
-
-		if (!show) {
-			fadeType = 'animate-fade-out'
-			popType = 'animate-pop-out'
-		}
-
-		return (
-			<div className={`shade-background ${fadeType}`}>
-				<div className={`sign-in-box ${popType}`}>
-					<button className='close' onClick={this.transitionOut}>
-						<Icon 
-							icon='multiply' 
-							iconStyle='dark' 
-							width='15'
-						/>
-					</button>
-					{this.props.children}
-				</div>
+	return (
+		<div className={`shade-background ${fadeType}`}>
+			<div className={`sign-in-box ${popType}`}>
+				<button className='close' onClick={handlePopUpView}>
+					<Icon 
+						icon='multiply' 
+						iconStyle='dark' 
+						width='15'
+					/>
+				</button>
+				{children}
 			</div>
-		);
-	}
-	
+		</div>
+	);
 }
 
 export default PopUp;
