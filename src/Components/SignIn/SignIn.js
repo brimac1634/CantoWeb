@@ -6,8 +6,28 @@ class SignIn extends Component {
 	constructor(props) {
 		super()
 		this.state = {
+			title: 'Login',
+			signInButton: 'Sign In',
+			alternateButton: 'register',
 			email: '',
 			password: '',
+		}
+		
+	}
+
+	signInToggle = (type) => {
+		if (type === 'sign in') {
+			this.setState({
+				title: 'Login',
+				signInButton: 'Sign In',
+				alternateButton: 'register',
+			})
+		} else if (type === 'register') {
+			this.setState({
+				title: 'Register',
+				signInButton: 'Register',
+				alternateButton: 'sign in',
+			})
 		}
 	}
 
@@ -15,10 +35,24 @@ class SignIn extends Component {
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 
 	onUserSubmit = () => {
-		const { title, updateUserID, handlePopUpView } = this.props;
-		const { email, password } = this.state;
+		const { updateUserID, removePopUpBegin } = this.props;
+		const { title, email, password } = this.state;
 		if (title === 'Login') {
 			//login
+			fetch('http://localhost:3000/signin', {
+				method: 'post',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({
+					email: email,
+					password: password
+				})
+			})
+				.then(res => res.json())
+				.then(user => {
+					console.log(user)
+					updateUserID(user)
+					removePopUpBegin()
+				})
 
 		} else {
 			//register
@@ -33,16 +67,14 @@ class SignIn extends Component {
 				.then(res => res.json())
 				.then(user => {
 					updateUserID(user)
-					handlePopUpView()
+					removePopUpBegin()
 				})
 				.catch(console.log)
-			
 		}
     }
 
 	render() {
-		const {signInToggle, title, signInButton, alternateButton} = this.props;
-
+		const { title, signInButton, alternateButton} = this.state;
 		return (
 			<div className='sign-in-container'>
 				<div className='logo-container'>
@@ -69,14 +101,12 @@ class SignIn extends Component {
 				/>
 				<p 
 					className='register' 
-					onClick={() => signInToggle(alternateButton)}
+					onClick={() => this.signInToggle(alternateButton)}
 				>
 					{alternateButton}
 				</p>
 			</div>
 		);
 	}
-	
 }
-
 export default SignIn;

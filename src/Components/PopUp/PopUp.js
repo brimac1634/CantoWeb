@@ -3,21 +3,21 @@ import './PopUp.css';
 import Icon from '../Icon/Icon';
 
 
-const PopUp = ({ showPopUp, popUpToggle, handlePopUpView, children }) => {
+const PopUp = ({ animateOut, removePopUpEnd, removePopUpBegin, children }) => {
 
 	let fadeType = 'animate-fade-in'
 	let popType = 'animate-pop-in'
 
-	if (showPopUp === false) {
+	if (animateOut === true) {
 		fadeType = 'animate-fade-out'
 		popType = 'animate-pop-out'
-		setTimeout(() => popUpToggle('home'), 1100);
+		setTimeout(() => removePopUpEnd(), 1100);
 	}
 
 	return (
 		<div className={`shade-background ${fadeType}`}>
 			<div className={`sign-in-box ${popType}`}>
-				<button className='close' onClick={handlePopUpView}>
+				<button className='close' onClick={removePopUpBegin}>
 					<Icon 
 						icon='multiply' 
 						iconStyle='dark' 

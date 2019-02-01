@@ -12,23 +12,22 @@ class App extends Component {
   	super();
   	this.state = {
   		current: 'Search',
-      loginRoute: '',
-      showPopUP: true,
+      showPopUP: false,
+      animateOut: false,
       userID: '',
       userEmail: '',
   	}
   }
 
   handleNavChange = (title) => this.setState({ current: title });
-
-  handleSignInView = (type) => {
+  presentPopUp = () => this.setState({ showPopUp: true })
+  removePopUpBegin = () => this.setState({ animateOut: true})
+  removePopUpEnd = () => {
     this.setState({ 
-      loginRoute: type,
-      showPopUp: true, 
+      showPopUp: false,
+      animateOut: false, 
     })
-
   }
-  handlePopUpView = () => this.setState({ showPopUp: false})
 
   updateUserID = (user) => {
     const { id, email } = user;
@@ -40,44 +39,20 @@ class App extends Component {
   }
   
 
-  renderLoginOptions = (loginRoute) => {
-    const { showPopUp } = this.state;
-    if (loginRoute === 'login') {
+  renderLoginOptions = () => {
+    const { showPopUp, animateOut } = this.state;
+    if (showPopUp) {
       return (
         <PopUp 
-          popUpToggle={this.handleSignInView} 
-          handlePopUpView={this.handlePopUpView} 
-          showPopUp={showPopUp}
+          removePopUpEnd={this.removePopUpEnd} 
+          removePopUpBegin={this.removePopUpBegin} 
+          animateOut={animateOut}
         >
           <SignIn 
-              className='sign-in' 
-              signInToggle={this.handleSignInView}
-              title='Login'
-              signInButton='Sign In'
-              alternateButton='register'
-              show='animate-fade-in'
+              className='sign-in'
               updateUserID={this.updateUserID}
-              handlePopUpView={this.handlePopUpView}
+              removePopUpBegin={this.removePopUpBegin}
             />
-        </PopUp>
-      );
-    } else if (loginRoute === 'register') {
-      return (
-        <PopUp 
-          popUpToggle={this.handleSignInView}
-          handlePopUpView={this.handlePopUpView}  
-          showPopUp={showPopUp}
-        >
-          <SignIn 
-            className='Register' 
-            signInToggle={this.handleSignInView}
-            title='Register'
-            signInButton='Register'
-            alternateButton='login'
-            show='animate-fade-in'
-            updateUserID={this.updateUserID}
-            handlePopUpView={this.handlePopUpView}
-          />
         </PopUp>
       );
     }
@@ -91,7 +66,7 @@ class App extends Component {
         <TitleBar 
           className='title-bar' 
           current={current}  
-          signInToggle={this.handleSignInView}
+          signInToggle={this.presentPopUp}
         />
       	<NavBar 
           className='nav-bar' 

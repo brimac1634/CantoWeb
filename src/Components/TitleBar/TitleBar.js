@@ -15,7 +15,7 @@ const TitleBar = ({ current, signInToggle }) => {
 				<h3 className='current'>{current}</h3>
 			</div>
 			<div className='button-container'>
-				<button className='button' onClick={() => signInToggle('login')}>
+				<button className='button' onClick={signInToggle}>
 					<Icon icon='user-3' className='icon' width={22}/>
 				</button>
 				<button className='button'>
