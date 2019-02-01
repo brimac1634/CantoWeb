@@ -51,3 +51,7 @@ svg {
 .dark {
 	fill: var(--cantoDarkBlue);
 }
+
+.selected {
+	fill: var(--cantoPink);
+}

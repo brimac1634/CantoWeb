@@ -12,8 +12,8 @@ const Icon = ({ iconType, icon, iconStyle, width, title }) => {
 		iconWidth = width
 	}
 
-	if (iconStyle === 'dark') {
-		style = 'dark';
+	if (iconStyle != null) {
+		style = iconStyle;
 	}
 
 	if (iconType === 'icon') {

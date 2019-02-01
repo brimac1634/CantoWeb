@@ -4,11 +4,17 @@ import {Link} from 'react-router-dom';
 import Icon from '../../Icon/Icon';
 
 
-const NavBarButton = (props) => {
+const NavBarButton = ({ to, navChange, title, icon, buttonStatus }) => {
+
 	return (
-		<div className='nav-button-container' onClick={()=>props.navChange(props.title)}>
-			<Link to={props.to} className='nav-bar-button'>
-				<Icon icon={props.icon} className='icon-button' title={props.title}/>
+		<div className='nav-button-container' onClick={()=>navChange(title)}>
+			<Link to={to} className='nav-bar-button'>
+				<Icon 
+					icon={icon} 
+					className='icon-button' 
+					title={title}
+					iconStyle={buttonStatus}
+				/>
 			</Link>
 		</div>
 	);
