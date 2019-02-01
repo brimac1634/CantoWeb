@@ -7,6 +7,7 @@ const EntryView = (props) => {
 		userID,
 		entry,
 		entry: {
+			entryID,
 			cantoword,
 			classifier,
 			jyutping,
@@ -24,9 +25,28 @@ const EntryView = (props) => {
 		clLabel = '';
 	}
 
-	const renderLikeButton = () => {
-		fetch('http://localhost:3000')
-			//user a get to check for favorite
+	// const renderLikeButton = () => {
+	// 	fetch('http://localhost:3000')
+	// 		//user a get to check for favorite
+	// }
+
+	const toggleFavorite = () => {
+		console.log(entryID, userID, cantoword);
+		fetch('http://localhost:3000/Favorites/toggle', {
+				method: 'post',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({
+					entryid: entryID,
+					userid: userID,
+					cantoword: cantoword
+				})
+		})
+			.then(data => data.json())
+			.then(fav => {
+				//do something
+				console.log(fav);
+			})
+			.catch(err => console.log('unable to toggle favorite'))
 	}
 
 	return (
@@ -34,8 +54,16 @@ const EntryView = (props) => {
 			{entry !== ''
 				?   <div className='inner-entry-view'>
 						<div className='entry-btn-container'>
-							<Icon icon='like-2' width='35' iconStyle='dark'/>
-							<Icon icon='speaker-5' width='35' iconStyle='dark'/>
+							<button className='entry-btn' onClick={toggleFavorite}>
+								<Icon 
+									icon='like-2' 
+									width='35' 
+									iconStyle='dark'
+								/>
+							</button>
+							<button className='entry-btn'>
+								<Icon icon='speaker-5' width='35' iconStyle='dark'/>
+							</button>
 						</div>
 						<div>
 							<div className='canto-class'>

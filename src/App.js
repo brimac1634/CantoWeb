@@ -31,6 +31,7 @@ class App extends Component {
 
   updateUserID = (user) => {
     const { id, email } = user;
+    console.log(id);
     this.setState({
       userID: id,
       userEmail: email

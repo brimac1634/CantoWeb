@@ -54,3 +54,8 @@
 	font-size: 38px;
 	margin-right: 8px;
 }
+
+.entry-btn {
+	border-style: none;
+	background: transparent;
+}
