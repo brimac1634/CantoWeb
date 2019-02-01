@@ -3,6 +3,7 @@ import './App.css';
 import TitleBar from './Components/TitleBar/TitleBar';
 import NavBar from './Components/NavBar/NavBar';
 import MainView from './Containers/MainView';
+import PopUp from './Components/PopUp/PopUp';
 import SignIn from './Components/SignIn/SignIn';
 
 class App extends Component {
@@ -13,30 +14,41 @@ class App extends Component {
   		current: 'Search',
       loginRoute: '',
       userID: '',
+      userEmail: '',
   	}
   }
 
   handleNavChange = (title) => this.setState({ current: title });
   handleSignInView = (type) => this.setState({ loginRoute: type })
-  updateUserID = (id) => this.setState({ userID: id })
+  updateUserID = (user) => {
+    const { id, email } = user;
+    this.setState({
+      userID: id,
+      userEmail: email
+    })
+    console.log(email);
+  }
   
 
   renderLoginOptions = (loginRoute) => {
     if (loginRoute === 'login') {
       return (
-        <SignIn 
-            className='sign-in' 
-            signInToggle={this.handleSignInView}
-            title='Login'
-            signInButton='Sign In'
-            alternateButton='register'
-            show='animate-fade-in'
-            updateUserID={this.updateUserID}
-          />
+        <PopUp popUpToggle={this.handleSignInView}>
+          <SignIn 
+              className='sign-in' 
+              signInToggle={this.handleSignInView}
+              title='Login'
+              signInButton='Sign In'
+              alternateButton='register'
+              show='animate-fade-in'
+              updateUserID={this.updateUserID}
+            />
+        </PopUp>
       );
     } else if (loginRoute === 'register') {
       return (
-        <SignIn 
+        <PopUp popUpToggle={this.handleSignInView}>
+          <SignIn 
             className='Register' 
             signInToggle={this.handleSignInView}
             title='Register'
@@ -45,6 +57,7 @@ class App extends Component {
             show='animate-fade-in'
             updateUserID={this.updateUserID}
           />
+        </PopUp>
       );
     }
   }
