@@ -8,7 +8,7 @@ import SignIn from './Components/SignIn/SignIn';
 
 class App extends Component {
 
-  constructor (props, context) {
+  constructor (props) {
   	super();
   	this.state = {
   		current: 'Search',
@@ -59,12 +59,13 @@ class App extends Component {
   }
 
   render() {
-    const { current, loginRoute } = this.state;
+    const { current, loginRoute, userID, userEmail } = this.state;
     return (
       <div>
         {this.renderLoginOptions(loginRoute)}
         <TitleBar 
           className='title-bar' 
+          userEmail={userEmail}
           current={current}  
           signInToggle={this.presentPopUp}
         />
@@ -73,7 +74,7 @@ class App extends Component {
           current={this.state.current} 
           navChange={this.handleNavChange}
         />
-  	    <MainView className='main-view'/>
+  	    <MainView className='main-view' userID={userID}/>
       </div>
     );
   }

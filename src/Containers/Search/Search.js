@@ -5,7 +5,7 @@ import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 
 class Search extends Component {
-	constructor() {
+	constructor(props) {
 		super()
 		this.state = {
 			selectedEntry: '',
@@ -45,7 +45,7 @@ class Search extends Component {
 
 	render() {
 		const { selectedEntry, entries } = this.state;
-		
+		const { userID } = this.props;
 		return (
 			<div>
 				<SearchBar 
@@ -62,6 +62,7 @@ class Search extends Component {
 					<div className='entry-view-container'>
 						<EntryView 
 							entry={selectedEntry}
+							userID={userID}
 						/>
 					</div>
 				</div>

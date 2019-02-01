@@ -5,14 +5,22 @@ import Favorites from './Favorites/Favorites';
 import WordOfTheDay from './WordOfTheDay/WordOfTheDay';
 import Learn from './Learn/Learn';
 
-const MainView = () => {
+const MainView = ({ userID }) => {
 	return (
 		<div className='main-view'>
 			<Switch>
-				<Route exact path='/' component={Search}/>
-				<Route path='/Favorites' component={Favorites}/>
-				<Route path='/WordOfTheDay' component={WordOfTheDay}/>
-				<Route path='/Learn' component={Learn}/>
+				<Route exact path='/' component={Search} userID={userID}/>
+				<Route 
+					path='/Favorites' 
+					component={Favorites} 
+					userID={userID}
+				/>
+				<Route 
+					path='/WordOfTheDay' 
+					component={WordOfTheDay} 
+					userID={userID}
+				/>
+				<Route path='/Learn' component={Learn} userID={userID}/>
 			</Switch>
 		</div>
 	);

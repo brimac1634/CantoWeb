@@ -4,6 +4,7 @@ import Icon from '../Icon/Icon';
 
 const EntryView = (props) => {
 	const {
+		userID,
 		entry,
 		entry: {
 			cantoword,
@@ -21,6 +22,11 @@ const EntryView = (props) => {
 
 	if (!classifier) {
 		clLabel = '';
+	}
+
+	const renderLikeButton = () => {
+		fetch('http://localhost:3000')
+			//user a get to check for favorite
 	}
 
 	return (
