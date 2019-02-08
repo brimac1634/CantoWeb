@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import './TitleBar.css';
 import LogoFull from '../LogoFull/LogoFull';
 import Icon from '../Icon/Icon';
+import Controller from '../../Containers/PopOver/Controller';
+import Trigger from '../../Containers/PopOver/Trigger';
+import PopOver from '../../Containers/PopOver/PopOver';
+import Settings from '../Settings/Settings';
 
 class TitleBar extends Component {
 	constructor(props) {
@@ -36,9 +40,16 @@ class TitleBar extends Component {
 					<button className='button' ref='profile' onClick={signInToggle}>
 						<Icon icon='user-3' className='icon' width={22}/>
 					</button>
-					<button className='button' ref='settings' onClick={() => this.setupPopOver('settings')}>
-						<Icon icon='settings-6' className='icon' width={22}/>
-					</button>
+					<Controller>
+						<Trigger>
+							<button className='button' ref='settings'>
+								<Icon icon='settings-6' className='icon' width={22}/>
+							</button>
+						</Trigger>
+						<PopOver>
+							<Settings />
+						</PopOver>
+					</Controller>
 				</div>
 			</div>
 		);

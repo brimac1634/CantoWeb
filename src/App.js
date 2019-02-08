@@ -4,7 +4,6 @@ import TitleBar from './Components/TitleBar/TitleBar';
 import NavBar from './Components/NavBar/NavBar';
 import MainView from './Containers/MainView';
 import PopUp from './Components/PopUp/PopUp';
-import PopOver from './Components/PopOver/PopOver';
 import SignIn from './Components/SignIn/SignIn';
 
 class App extends Component {
@@ -15,13 +14,6 @@ class App extends Component {
   		current: 'Search',
       showPopUP: false,
       animateOut: false,
-      showPopOver: false,
-      popOverType: '',
-      popOverPoint: {
-        x: '',
-        y: '',
-      },
-      triggerWidth: '',
       userID: '',
       userEmail: '',
   	}
@@ -35,17 +27,6 @@ class App extends Component {
       showPopUp: false,
       animateOut: false, 
     })
-  }
-  togglePopOver = (popOverType, point, triggerWidth) => {
-    this.setState({
-     showPopOver: !this.state.showPopOver,
-     popOverType: popOverType,
-     popOverPoint: {
-      x: point.x,
-      y: point.y
-     },
-     triggerWidth: triggerWidth
-   })
   }
 
   updateUserID = (user) => {
@@ -78,60 +59,22 @@ class App extends Component {
     }
   }
 
-  renderPopUp = (showPopOver, type, point, triggerWidth) => {
-    if (showPopOver){
-      if (type === 'profile') {
-        return (
-          <PopOver 
-            arrowLocation='top'
-            width='250px'
-            height='300px'
-            x={point.x}
-            y={point.y}
-            triggerWidth={triggerWidth}
-          >
-          <p>profiel</p>
-          </PopOver>
-        );
-      } else if (type === 'settings') {
-        return (
-          <PopOver 
-            arrowLocation='top'
-            width='250'
-            height='300'
-            x={point.x}
-            y={point.y}
-            triggerWidth={triggerWidth}
-          >
-          <p>settings</p>
-          </PopOver>
-        );
-      }
-    }
-    
-  }
 
   render() {
     const { 
       current,
       loginRoute,
       userID,
-      userEmail,
-      showPopOver,
-      popOverType,
-      popOverPoint,
-      triggerWidth} = this.state;
+      userEmail} = this.state;
 
     return (
       <div>
         {this.renderLoginOptions(loginRoute)}
-        {this.renderPopUp(showPopOver, popOverType, popOverPoint, triggerWidth)}
         <TitleBar 
           className='title-bar' 
           userEmail={userEmail}
           current={current}  
           signInToggle={this.presentPopUp}
-          togglePopOver={this.togglePopOver}
         />
       	<NavBar 
           className='nav-bar' 
