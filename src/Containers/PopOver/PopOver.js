@@ -5,7 +5,7 @@ class PopOver extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			width: '',
+			width: '200',
 			height: '',
 		}
 	}
@@ -21,9 +21,11 @@ class PopOver extends Component {
 		const { 
 		togglePopOver,
 		animateOut,
-		x,
-		y,
-		triggerWidth,
+		triggerRect,
+		triggerRect: {
+			x,
+			y,
+		},
 		children } = this.props;
 
 		let popType = 'animate-pop-in'
@@ -36,10 +38,11 @@ class PopOver extends Component {
 	      	 return React.cloneElement(child, { togglePopOver: togglePopOver })      
 	    });
 
+
 		return (
 			<div 
 				className={`pop-over ${popType}`} 
-				style={{width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x}px`}}
+				style={{width: `${width}px`, height: `${height}px`, top: `${y + triggerRect.height}px`, left: `${x + triggerRect.width - width}px`}}
 			>
 				<div className='pop-over-arrow'/>
 				{childrenWithProps}
