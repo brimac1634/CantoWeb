@@ -1,8 +1,11 @@
 import React from 'react';
+import './Settings.css';
 
-const Settings = () => {
+const Settings = ({ setSize }) => {
+
+
 	return (
-		<div style={{background: 'red', width: '200px', heigh: '250px'}}>
+		<div className='settings'>
 			<p>Settings here</p>
 		</div>
 	);
