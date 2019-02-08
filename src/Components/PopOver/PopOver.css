@@ -1,0 +1,67 @@
+.pop-over {
+	position: absolute;
+    left: 20px;
+    top: 20px;
+    background: red;
+    display: inline-block;
+    z-index: 98;
+}
+
+.top {
+  margin-top: -5px;
+}
+
+.pop-over .top {
+  top: auto;
+  bottom: -5px;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px 5px 0;
+  border-top-color: #000;
+}
+
+.pop-over .pop-over-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-right-color: transparent;
+  border-style: solid;
+}
+
+/*---------animations----------*/
+
+.animate-pop-in {
+  opacity: 0;
+  animation: pop-in .6s .3s cubic-bezier(0, .9, .3, 1.2) forwards;
+}
+
+.animate-pop-out {
+  opacity: 1;
+  animation: pop-out .6s cubic-bezier(0.7, -0.19, 1, 0.09) forwards;
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-6em) scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop-out {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  50% {
+    opacity: 1
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6em) scale(0.8);
+  }
+}
