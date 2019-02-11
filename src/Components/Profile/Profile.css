@@ -1,0 +1,7 @@
+.profile {
+	width: 300px;
+	height: 350px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}

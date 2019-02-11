@@ -33,10 +33,10 @@ class PopOver extends Component {
 		},
 		children } = this.props;
 
-		let popType = 'animate-pop-in'
+		let popType = 'animate-in'
 
 		if (animateOut === true) {
-			popType = 'animate-pop-out';
+			popType = 'animate-out';
 		}
 
 		const childrenWithProps = React.Children.map(children, child => {

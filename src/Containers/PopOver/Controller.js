@@ -6,7 +6,6 @@ class Controller extends Component {
 		super(props);
 		this.state = {
 			showPopOver: false,
-			style: '',
 			animateOut: false,
 			triggerRect: {
 				x: '',
@@ -29,14 +28,27 @@ class Controller extends Component {
 	}
 
 	togglePopOver = () => {
+		const { showPopOver } = this.state;
+		if (showPopOver) {
+			this.setState({
+				animateOut: true,
+			})
+			setTimeout(() => this.setPopOverState(), 1100)
+		} else {
+			this.setPopOverState()
+		}
+	}
+
+	setPopOverState = () => {
 		this.setState({
 			showPopOver: !this.state.showPopOver,
+			animateOut: false,
 		})
 	}
 
 	render() {
 		const { children } = this.props;
-		const { showPopOver, triggerRect } = this.state;
+		const { showPopOver, triggerRect, animateOut } = this.state;
 
 		const childrenWithProps = React.Children.map(children, child => {
 		      if (child.type.name === 'Trigger') {
@@ -45,7 +57,7 @@ class Controller extends Component {
 		      	if (showPopOver) {
 		      		return ReactDOM.createPortal(
 			            <span>
-				            {React.cloneElement(child, { togglePopOver: this.togglePopOver, showPopOver: showPopOver, triggerRect: triggerRect })}
+				            {React.cloneElement(child, { togglePopOver: this.togglePopOver, showPopOver: showPopOver, triggerRect: triggerRect, animateOut: animateOut })}
 				        </span>
 				        , document.body
 			        )

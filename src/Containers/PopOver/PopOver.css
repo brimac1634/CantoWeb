@@ -28,33 +28,33 @@
     border-color: rgba(255, 255, 255, 0);
     border-bottom-color: #ffffff;
     border-width: 10px;
-    left: 90%;
+    left: 95%;
     margin-left: -10px;
 }
 .pop-over:before {
     border-color: rgba(113, 158, 206, 0);
     border-bottom-color: #719ECE;
     border-width: 11px;
-    left: 90%;
+    left: 95%;
     margin-left: -11px;
 }
 
 /*---------animations----------*/
 
-.animate-pop-in {
+.animate-in {
   opacity: 0;
-  animation: pop-in .6s .3s cubic-bezier(0, .9, .3, 1.2) forwards;
+  animation: pop-over-in .6s .2s cubic-bezier(0, .9, .3, 1.2) forwards;
 }
 
-.animate-pop-out {
+.animate-out {
   opacity: 1;
-  animation: pop-out .6s cubic-bezier(0.7, -0.19, 1, 0.09) forwards;
+  animation: pop-over-out .6s cubic-bezier(0.7, -0.19, 1, 0.09) forwards;
 }
 
-@keyframes pop-in {
+@keyframes pop-over-in {
   0% {
     opacity: 0;
-    transform: translateY(-6em) scale(0.7);
+    transform: translateY(-6em) scaleY(0);
   }
   100% {
     opacity: 1;
@@ -62,16 +62,13 @@
   }
 }
 
-@keyframes pop-out {
+@keyframes pop-over-out {
   0% {
     opacity: 1;
     transform: none;
   }
-  50% {
-    opacity: 1
-  }
   100% {
     opacity: 0;
-    transform: translateY(-6em) scale(0.8);
+    transform: translateY(-6em) scaleY(0);
   }
 }
