@@ -8,20 +8,17 @@ class PopOver extends Component {
 			width: '',
 			height: '',
 		}
-		this.popOverContent = React.createRef()
+		this.content = React.createRef();
 	}
 
 	componentDidMount() {
-		const rect = this.popOverContent.current.getBoundingClientRect()
-		const { width, height } = rect;
-		this.setState({
-			width: width,
-			height: height,
-		})
-	}
-
-	setContentSize = (size) => {
-		console.log('size', size)
+		if (this.content.current.firstChild) {
+			const rect = this.content.current.getBoundingClientRect();
+			this.setState({
+				width: rect.width,
+				height: rect.height,
+			})
+		}
 	}
 	
 	render() {
@@ -43,9 +40,8 @@ class PopOver extends Component {
 		}
 
 		const childrenWithProps = React.Children.map(children, child => {
-	      	 return React.cloneElement(child, { togglePopOver: togglePopOver, ref: this.popOverContent, setSize: this.setContentSize })      
+	      	 return React.cloneElement(child, { togglePopOver: togglePopOver})      
 	    });
-
 
 		return (
 			<div 
@@ -53,7 +49,9 @@ class PopOver extends Component {
 				style={{width: `${width}px`, height: `${height}px`, top: `${y + triggerRect.height + 20}px`, left: `${x + triggerRect.width - width}px`}}
 			>
 				<div className='pop-over-arrow'/>
-				{childrenWithProps}
+				<div ref={this.content}>
+					{childrenWithProps}
+				</div>
 			</div>
 		);
 	}

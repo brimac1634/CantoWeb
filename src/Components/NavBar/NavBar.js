@@ -33,6 +33,7 @@ const NavBar = ( {navChange} ) => {
 				{sections.map(section => {
 					return (
 						<NavBarButton 
+							key={section.title}
 							to={section.to} 
 							icon={section.icon} 
 							title={section.title} 

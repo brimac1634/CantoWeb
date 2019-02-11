@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './Settings.css';
 
-const Settings = ({ setSize }) => {
+class Settings extends Component {
+	constructor() {
+		super();
+	}
 
-
-	return (
-		<div className='settings'>
-			<p>Settings here</p>
-		</div>
-	);
+	render() {
+		return (
+			<div className='settings'>
+				<p>Settings here</p>
+			</div>
+		);
+	}
 }
 
 export default Settings;

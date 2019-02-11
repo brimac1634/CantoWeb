@@ -1,7 +1,7 @@
 .entry-view {
 	height: 90%;
 	width: 90%;
-	box-shadow: 0 2px 2px 1px #ccc;
+	box-shadow: var(--cantoShadow);
 	border-radius: 4px;
 	display: flex;
 	justify-content: center;

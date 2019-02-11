@@ -9,7 +9,7 @@
 	border-radius: 4px;
 	padding: 10px;
 	margin: 10px;
-	box-shadow: 0 2px 2px 1px #ccc;
+	box-shadow: var(--cantoShadow);
 	transition: all 0.3s ease-in-out;
 	cursor: pointer;
 }
