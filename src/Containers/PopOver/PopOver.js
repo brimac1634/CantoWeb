@@ -46,9 +46,8 @@ class PopOver extends Component {
 		return (
 			<div 
 				className={`pop-over ${popType}`} 
-				style={{width: `${width}px`, height: `${height}px`, top: `${y + triggerRect.height + 20}px`, left: `${x + triggerRect.width - width}px`}}
+				style={{width: `${width}px`, height: `${height}px`, top: `${y + triggerRect.height + 15}px`, left: `${x + (triggerRect.width / 2) - width}px`}}
 			>
-				<div className='pop-over-arrow'/>
 				<div ref={this.content}>
 					{childrenWithProps}
 				</div>
