@@ -35,7 +35,7 @@ class SignIn extends Component {
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 
 	onUserSubmit = () => {
-		const { updateUserID, removePopUpBegin } = this.props;
+		const { updateUser, removePopUpBegin } = this.props;
 		const { title, email, password } = this.state;
 		if (title === 'Login') {
 			//login
@@ -50,7 +50,7 @@ class SignIn extends Component {
 				.then(res => res.json())
 				.then(user => {
 					console.log(user)
-					updateUserID(user)
+					updateUser(user)
 					removePopUpBegin()
 				})
 
@@ -66,7 +66,7 @@ class SignIn extends Component {
 			})
 				.then(res => res.json())
 				.then(user => {
-					updateUserID(user)
+					updateUser(user)
 					removePopUpBegin()
 				})
 				.catch(console.log)

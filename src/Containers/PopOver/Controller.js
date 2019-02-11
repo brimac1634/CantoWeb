@@ -33,7 +33,7 @@ class Controller extends Component {
 			this.setState({
 				animateOut: true,
 			})
-			setTimeout(() => this.setPopOverState(), 1100)
+			setTimeout(() => this.setPopOverState(), 800)
 		} else {
 			this.setPopOverState()
 		}
@@ -67,7 +67,7 @@ class Controller extends Component {
 	    });
 
 	    return (
-	    	<div>
+	    	<div style={{width: '100%', height: '100%'}}>
 		    	{childrenWithProps}
 	    	</div>
 	    );

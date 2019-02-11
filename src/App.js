@@ -7,7 +7,6 @@ import PopUp from './Components/PopUp/PopUp';
 import SignIn from './Components/SignIn/SignIn';
 
 class App extends Component {
-
   constructor (props) {
   	super();
   	this.state = {
@@ -20,7 +19,9 @@ class App extends Component {
   }
 
   handleNavChange = (title) => this.setState({ current: title });
-  presentPopUp = () => this.setState({ showPopUp: true })
+  presentPopUp = () => {
+    this.setState({ showPopUp: true })
+  }
   removePopUpBegin = () => this.setState({ animateOut: true})
   removePopUpEnd = () => {
     this.setState({ 
@@ -29,14 +30,13 @@ class App extends Component {
     })
   }
 
-  updateUserID = (user) => {
+  updateUser = (user) => {
     const { id, email } = user;
     console.log(id);
     this.setState({
       userID: id,
       userEmail: email
     })
-
   }
   
 
@@ -51,7 +51,7 @@ class App extends Component {
         >
           <SignIn 
               className='sign-in'
-              updateUserID={this.updateUserID}
+              updateUser={this.updateUser}
               removePopUpBegin={this.removePopUpBegin}
             />
         </PopUp>
@@ -65,7 +65,8 @@ class App extends Component {
       current,
       loginRoute,
       userID,
-      userEmail} = this.state;
+      userEmail
+    } = this.state;
 
     return (
       <div>
@@ -75,6 +76,7 @@ class App extends Component {
           userEmail={userEmail}
           current={current}  
           signInToggle={this.presentPopUp}
+          updateUserID={this.updateUserID}
         />
       	<NavBar 
           className='nav-bar' 

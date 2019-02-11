@@ -4,7 +4,7 @@ import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 
-class Search extends Component {
+class Favorites extends Component {
 	constructor() {
 		super()
 		this.state = {
@@ -13,27 +13,24 @@ class Search extends Component {
 		}
 	}
 
-	handleSearch = (event) => {
-		if (event.target.value.length) {
-			fetch('http://localhost:3000', {
+	componentDidMount() {
+		const { userID } = this.props;
+		fetch('http://localhost:3000/Favorites', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({
-					searchKey: event.target.value
+					id: userID
 				})
 			})
-				.then(res => res.json())
-				.then(entries => {
-					this.setState({
-						entries: entries
-					})
-				})
-				.catch(err => console.log('unable to retrieve entries'))
-		} else {
-			this.setState({
-				entries: []
+			.then(res => res.json())
+			.then(favorites => {
+				this.setState({entries: favorites})
 			})
-		}
+			.catch(err => console.log('unable to retrieve favorites'))
+	}
+
+	handleSearch = (event) => {
+		
 
 	}
 
@@ -71,4 +68,4 @@ class Search extends Component {
 	
 }
 
-export default Search;
+export default Favorites;

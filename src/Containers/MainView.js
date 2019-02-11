@@ -9,18 +9,22 @@ const MainView = ({ userID }) => {
 	return (
 		<div className='main-view'>
 			<Switch>
-				<Route exact path='/' component={Search} userID={userID}/>
+				<Route 
+					exact path='/' 
+					render={(props) => <Search {...props} userID={userID}/>}
+				/>
 				<Route 
 					path='/Favorites' 
-					component={Favorites} 
-					userID={userID}
+					render={(props) => <Favorites {...props} userID={userID}/>}
 				/>
 				<Route 
 					path='/WordOfTheDay' 
-					component={WordOfTheDay} 
-					userID={userID}
+					render={(props) => <WordOfTheDay {...props} userID={userID}/>}
 				/>
-				<Route path='/Learn' component={Learn} userID={userID}/>
+				<Route 
+					path='/Learn' 
+					render={(props) => <Learn {...props} userID={userID}/>}
+				/>
 			</Switch>
 		</div>
 	);

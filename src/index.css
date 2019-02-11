@@ -50,37 +50,31 @@ code {
   background: #d1d1d1;
 }
 
-.btn {
+.btn,
+.ghost-btn {
   border-radius: 4px;
   outline: none;
   background: transparent;
   color: var(--cantoDarkBlue);
-  width: 100px;
-  height: 40px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.ghost-btn {
-  border-radius: 4px;
-  border: 2px solid #555;
-  outline: none;
-  background: transparent;
-  color: #555;
   width: 100px;
   height: 40px;
   font-size: 16px;
   cursor: pointer;
   transition: all .2s;
+  margin-bottom: 10px;
+}
+
+.ghost-btn {
+  border: 2px solid var(--cantoDarkBlue);
 }
 
 .btn:hover {
-  background: #555;
+  background: #d1d1d1;
 }
 
 .ghost-btn:hover {
-  border: 2px solid var(--cantoDarkBlue);
-  color: var(--cantoDarkBlue);
+  background: var(--cantoDarkBlue);
+  color: var(--cantoWhite);
 }
 
 /*--------Scroll Bar------------*/
