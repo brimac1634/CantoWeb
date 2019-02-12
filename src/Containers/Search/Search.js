@@ -24,7 +24,6 @@ class Search extends Component {
 			})
 				.then(res => res.json())
 				.then(entries => {
-					console.log(entries)
 					if (entries.length) {
 						this.setState({
 							entries: entries

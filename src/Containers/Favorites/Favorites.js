@@ -15,7 +15,8 @@ class Favorites extends Component {
 
 	componentDidMount() {
 		const { userID } = this.props;
-		fetch('http://localhost:3000/Favorites', {
+		if (userID) {
+			fetch('http://localhost:3000/Favorites', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({
@@ -27,6 +28,10 @@ class Favorites extends Component {
 				this.setState({entries: favorites})
 			})
 			.catch(err => console.log('unable to retrieve favorites'))
+		} else {
+			//ask user to sign in
+		}
+		
 	}
 
 	handleSearch = (event) => {

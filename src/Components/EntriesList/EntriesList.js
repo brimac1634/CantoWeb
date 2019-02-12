@@ -10,7 +10,8 @@ const EntryList = ({ entries, selectEntry }) => {
 				entries.length
 				?   entries.map(entry => {
 						return (
-							<EntryRow 
+							<EntryRow
+								key={entry.entryID}
 								selectEntry={selectEntry}
 								entry={entry}
 							/>

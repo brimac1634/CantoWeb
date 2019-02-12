@@ -19,8 +19,6 @@ const EntryView = (props) => {
 		}
 	} = props;
 
-	console.log(userID)
-
 	let clLabel = 'cl: '
 
 	if (!classifier) {
