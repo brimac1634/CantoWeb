@@ -1,9 +1,9 @@
 import React from 'react';
-import './EntryList.css';
+import './EntriesList.css';
 import EntryRow from './EntryRow/EntryRow';
 
 const EntryList = ({ entries, selectEntry }) => {
-
+	let ghostRows = [0,1,2,3,4,5,6]
 	return (
 		<div className='entry-list'>
 			{
@@ -18,7 +18,15 @@ const EntryList = ({ entries, selectEntry }) => {
 						);
 					})
 					
-				:   <div className='center-div'><h3>Try a new search...</h3></div>
+				:   ghostRows.map(i => {
+						return (
+							<EntryRow
+								key={i}
+								entry=''
+							/>
+						);
+					})
+							
 				
 			}
 		</div>

@@ -48,3 +48,13 @@
 	text-overflow: ellipsis;
 }
 
+.ghost * {
+	height: 40%;
+	margin: 0;
+}
+
+.top-left .ghost-div {
+	height: 100%;
+	margin: 0;
+}
+
