@@ -24,9 +24,16 @@ class Search extends Component {
 			})
 				.then(res => res.json())
 				.then(entries => {
-					this.setState({
-						entries: entries
-					})
+					console.log(entries)
+					if (entries.length) {
+						this.setState({
+							entries: entries
+						})
+					} else {
+						this.setState({
+							entries: []
+						})
+					}
 				})
 				.catch(err => console.log('unable to retrieve entries'))
 		} else {
@@ -34,7 +41,6 @@ class Search extends Component {
 				entries: []
 			})
 		}
-
 	}
 
 	handleEntrySelect = (entry) => {

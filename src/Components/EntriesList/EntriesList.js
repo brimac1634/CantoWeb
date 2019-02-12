@@ -6,14 +6,20 @@ const EntryList = ({ entries, selectEntry }) => {
 
 	return (
 		<div className='entry-list'>
-			{entries.map(entry => {
-				return (
-					<EntryRow 
-						selectEntry={selectEntry}
-						entry={entry}
-					/>
-				);
-			})}
+			{
+				entries.length
+				?   entries.map(entry => {
+						return (
+							<EntryRow 
+								selectEntry={selectEntry}
+								entry={entry}
+							/>
+						);
+					})
+					
+				:   <div className='center-div'><h3>Try a new search...</h3></div>
+				
+			}
 		</div>
 	);
 }

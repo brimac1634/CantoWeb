@@ -67,7 +67,7 @@ const EntryView = (props) => {
 								<Icon icon='speaker-5' width='35' iconStyle='dark'/>
 							</button>
 						</div>
-						<div>
+						<div className='top-group'>
 							<div className='canto-class'>
 								<h3>{cantoword}</h3>
 								<p>{clLabel}{classifier}</p>
@@ -84,7 +84,28 @@ const EntryView = (props) => {
 							<div><p>{englishsentence}</p></div>
 						</div>
 					</div>
-				:   <div></div>}
+				:   <div className='inner-entry-view'>
+						<div className='entry-btn-container'>
+							<div className='ghost-div'/>
+							<div className='ghost-div'/>
+						</div>
+						<div className='top-group'>
+							<div className='canto-class'>
+								<div className='ghost-div'>&nbsp;</div>
+								<div className='ghost-div'>&nbsp;</div>
+							</div>
+							<div className='ghost-div'>&nbsp;</div>
+						</div>
+						<div>
+							<div className='ghost-div'>&nbsp;</div>
+							<div className='ghost-div'>&nbsp;</div>
+						</div>
+						<div>
+							<div className='ghost-div'>&nbsp;</div>
+							<div className='ghost-div'>&nbsp;</div>
+							<div className='ghost-div'>&nbsp;</div>
+						</div>
+					</div>}
 		</div>
 		
 	);

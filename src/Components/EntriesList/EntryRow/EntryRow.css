@@ -12,6 +12,7 @@
 	box-shadow: var(--cantoShadow);
 	transition: all 0.3s ease-in-out;
 	cursor: pointer;
+	white-space: nowrap;
 }
 
 .entry-row:active {
@@ -31,14 +32,19 @@
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
+
 }
 
 .entry-row p {
 	font-size: 16px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .top-left h3 {
 	font-size: 22px;
 	margin-right: 8px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
