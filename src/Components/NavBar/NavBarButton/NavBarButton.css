@@ -2,6 +2,7 @@
 	width: 100%;
 	height: 80px;
 	padding-top: 10px;
+	transition: all 0.3s;
 }
 
 .nav-bar-button{
@@ -11,4 +12,10 @@
 	align-items: center;
 	justify-content: center;
 	text-decoration: none;
+}
+
+.selected-nav-button {
+	margin-right: 8px;
+	border-right: solid 8px var(--cantoPink);
+	transition: all 0.3s;
 }
