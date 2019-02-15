@@ -16,22 +16,26 @@ class Favorites extends Component {
 	componentDidMount() {
 		const { userID } = this.props;
 		if (userID) {
-			fetch('http://localhost:3000/Favorites', {
-				method: 'post',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({
-					id: userID
-				})
-			})
-			.then(res => res.json())
-			.then(favorites => {
-				this.setState({entries: favorites})
-			})
-			.catch(err => console.log('unable to retrieve favorites'))
+			this.updateFavoritesList(userID);
 		} else {
 			//ask user to sign in
 		}
 		
+	}
+
+	updateFavoritesList = (userID) => {
+		fetch('http://localhost:3000/Favorites', {
+			method: 'post',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				id: userID
+			})
+		})
+		.then(res => res.json())
+		.then(favorites => {
+			this.setState({entries: favorites})
+		})
+		.catch(err => console.log('unable to retrieve favorites'))
 	}
 
 	handleSearch = (event) => {
@@ -47,7 +51,7 @@ class Favorites extends Component {
 
 	render() {
 		const { selectedEntry, entries } = this.state;
-		
+		const { userID } = this.props;
 		return (
 			<div>
 				<SearchBar 
@@ -64,6 +68,9 @@ class Favorites extends Component {
 					<div className='entry-view-container'>
 						<EntryView 
 							entry={selectedEntry}
+							userID={userID}
+							updateEntries={this.updateFavoritesList}
+							updateSelected={this.handleEntrySelect}
 						/>
 					</div>
 				</div>

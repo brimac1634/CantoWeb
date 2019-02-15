@@ -16,7 +16,9 @@ const EntryView = (props) => {
 			cantosentence,
 			jyutpingsentence,
 			englishsentence
-		}
+		},
+		updateEntries,
+		updateSelected
 	} = props;
 
 	let clLabel = 'cl: '
@@ -31,7 +33,6 @@ const EntryView = (props) => {
 	// }
 
 	const toggleFavorite = () => {
-		console.log(entryID, userID, cantoword);
 		fetch('http://localhost:3000/Favorites/toggle', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
@@ -42,11 +43,13 @@ const EntryView = (props) => {
 				})
 		})
 			.then(data => data.json())
-			.then(fav => {
-				//do something
-				console.log(fav);
+			.then(result => {
+				if (result === 'deleted') {
+					updateEntries(userID)
+					updateSelected('')
+				}
 			})
-			.catch(err => console.log('unable to toggle favorite'))
+			.catch(err => console.log('error:', err))
 	}
 
 	return (
