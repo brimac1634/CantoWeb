@@ -21,26 +21,41 @@ const EntryView = (props) => {
 		updateSelected
 	} = props;
 
-	let clLabel = 'cl: '
+	let clLabel = 'cl: ';
+	let color = ''
 
 	if (!classifier) {
 		clLabel = '';
 	}
 
-	// const renderLikeButton = () => {
-	// 	fetch('http://localhost:3000')
-	// 		//user a get to check for favorite
-	// }
-
-	const toggleFavorite = () => {
-		fetch('http://localhost:3000/Favorites/toggle', {
+	const renderLikeButton = (entryID, userID) => {
+		console.log(entryID, userID);
+		if (entryID !== undefined && userID !== '') {
+			fetch('http://localhost:3000/Favorites/isFavorited', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({
-					entryid: entryID,
-					userid: userID,
-					cantoword: cantoword
+					entryID: entryID,
+					userID: userID
 				})
+			})
+				.then(data => data.json())
+				.then(isFavorited => {
+					color = isFavorited ? 'cantoPink' : 'cantoDarkBlue'
+				})
+				.catch(err => console.log('Unable to check favorite'))
+		}
+	}
+
+	const toggleFavorite = (entryID, userID, cantoWord) => {
+		fetch('http://localhost:3000/Favorites/toggle', {
+			method: 'post',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				entryid: entryID,
+				userid: userID,
+				cantoword: cantoWord
+			})
 		})
 			.then(data => data.json())
 			.then(result => {
@@ -49,19 +64,22 @@ const EntryView = (props) => {
 					updateSelected('')
 				}
 			})
-			.catch(err => console.log('error:', err))
+			.catch(err => console.log('Unable to toggle favorite'))
 	}
+
+	renderLikeButton(entryID, userID);
 
 	return (
 		<div className='entry-view'>
 			{entry !== ''
 				?   <div className='inner-entry-view'>
 						<div className='entry-btn-container'>
-							<button className='entry-btn' onClick={toggleFavorite}>
+							<button className='entry-btn' onClick={() => toggleFavorite(entryID, userID, cantoword)}>
 								<Icon 
 									icon='like-2' 
 									width='35' 
 									iconStyle='dark'
+									color={color}
 								/>
 							</button>
 							<button className='entry-btn'>

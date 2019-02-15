@@ -27,6 +27,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser }) => {
 								icon='user-3' 
 								className='icon' 
 								width={22}
+								color='cantoWhite'
 							/>
 						</button>
 					</Trigger>
@@ -41,7 +42,12 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser }) => {
 				<Controller>
 					<Trigger>
 						<button className='button'>
-							<Icon icon='settings-6' className='icon' width={22}/>
+							<Icon 
+								icon='settings-6' 
+								className='icon' 
+								width={22}
+								color='cantoWhite'
+							/>
 						</button>
 					</Trigger>
 					<PopOver>

@@ -7,10 +7,10 @@ import Icon from '../../Icon/Icon';
 const NavBarButton = ({ to, navChange, title, icon, buttonStatus, selectButton, isSelected }) => {
 
 	let buttonStyle = ''
-	let color = ''
+	let color = 'cantoWhite'
 	if (isSelected) {
 		buttonStyle = 'selected-nav-button'
-		color = '#ff7a8a'
+		color = 'cantoPink'
 	}
 
 	return (

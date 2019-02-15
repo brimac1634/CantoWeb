@@ -20,6 +20,16 @@ const Icon = ({ iconType, icon, iconStyle, width, title, color }) => {
 		type = 'icon'
 	}
 
+	const fillColor = (color) => {
+		switch (color) {
+			case 'cantoPink': return '#ff7a8a';
+			case 'cantoDarkBlue': return '#062743';
+			case 'cantoWhite': return '#f9f9f9';
+			default: return '#062743';
+		}
+	}
+
+
 	function getPath(iconName) {
 	  const icon = iconPaths.icons.find(icon => icon.properties.name === iconName);
 
@@ -38,13 +48,13 @@ const Icon = ({ iconType, icon, iconStyle, width, title, color }) => {
 				width={`${iconWidth}px`} 
 				height={`${iconWidth}px`} 
 				viewBox="0 0 1024 1024"
-				style={{fill: `${color}`}}
+				style={{fill: `${fillColor(color)}`}}
 			>
 			    <path d={getPath(icon)}></path>
 			</svg>
 			{
 				title != null &&
-				<p style={{color: `${color}`}}>{title}</p>
+				<p style={{color: `${fillColor(color)}`}}>{title}</p>
 			}
 			
 		</div>
