@@ -37,7 +37,7 @@ class EntryView extends Component {
 			clLabel = '';
 		}
 
-		if (entryID !== undefined && userID !== '') {
+		const checkIfFavorite = (entryID, userID) => {
 			fetch('http://localhost:3000/Favorites/isFavorited', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
@@ -48,11 +48,16 @@ class EntryView extends Component {
 			})
 				.then(data => data.json())
 				.then(favorited => {
+					console.log(favorited)
 					if (favorited !== isFavorited) {
 						this.setState({isFavorited: favorited})
 					}
 				})
 				.catch(err => console.log('Unable to check favorite'))
+		}
+
+		if (entryID !== undefined && userID !== '') {
+			checkIfFavorite(entryID, userID)
 		}
 
 		const toggleFavorite = (entryID, userID, cantoWord) => {
@@ -72,6 +77,7 @@ class EntryView extends Component {
 							updateEntries(userID)
 							updateSelected('')
 						}
+						checkIfFavorite(entryID, userID)
 					})
 					.catch(err => console.log('Unable to toggle favorite'))
 			} else {

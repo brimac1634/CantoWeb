@@ -18,6 +18,14 @@ class App extends Component {
   	}
   }
 
+  componentDidMount() {
+    const cachedUser = localStorage.getItem('user');
+    if (cachedUser) {
+      const user = JSON.parse(cachedUser)
+      this.setState({userID: user.id, userEmail: user.email})
+    }
+  }
+
   handleNavChange = (title) => this.setState({ current: title });
   presentPopUp = () => {
     this.setState({ showPopUp: true })
@@ -32,7 +40,7 @@ class App extends Component {
 
   updateUser = (user) => {
     const { id, email } = user;
-    console.log(id);
+    localStorage.setItem('user', JSON.stringify(user));
     this.setState({
       userID: id,
       userEmail: email

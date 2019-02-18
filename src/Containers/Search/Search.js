@@ -9,12 +9,28 @@ class Search extends Component {
 		super()
 		this.state = {
 			selectedEntry: '',
+			searchKey: '',
 			entries: [],
 		}
 	}
 
+	componentDidMount() {
+		const lastSearch = sessionStorage.getItem('lastSearch')
+		const lastSearchEntries = sessionStorage.getItem('lastSearchEntries')
+		const lastSelectedEntry = sessionStorage.getItem('lastSelectedEntry')
+		if (lastSelectedEntry || (lastSearch && lastSearchEntries)) {
+			this.setState({
+				searchKey: JSON.parse(lastSearch),
+				entries: JSON.parse(lastSearchEntries),
+				selectedEntry: JSON.parse(lastSelectedEntry),
+			})
+		}
+	}
+
 	handleSearch = (event) => {
-		if (event.target.value.length) {
+		const value = event.target.value;
+		if (value.length) {
+			sessionStorage.setItem('lastSearch', JSON.stringify(value));
 			fetch('http://localhost:3000', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
@@ -25,6 +41,7 @@ class Search extends Component {
 				.then(res => res.json())
 				.then(entries => {
 					if (entries.length) {
+						sessionStorage.setItem('lastSearchEntries', JSON.stringify(entries));
 						this.setState({
 							entries: entries
 						})
@@ -43,6 +60,7 @@ class Search extends Component {
 	}
 
 	handleEntrySelect = (entry) => {
+		sessionStorage.setItem('lastSelectedEntry', JSON.stringify(entry));
 		this.setState({
 			selectedEntry: entry
 		})
