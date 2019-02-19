@@ -1,22 +1,26 @@
 import React from 'react';
 import './Profile.css';
+import Logo from '../Logo/Logo';
 
 const Profile = ({ userEmail, signInToggle, updateUser }) => {
-	
-	if (userEmail === '' || userEmail == null) {
-		return (
-			<div className='profile'>
-				<h3>Welcome<br/> to CantoTalk</h3>
-				<button className='ghost-btn' onClick={signInToggle}>Login</button>
-			</div>
-		);
-	} else {
-		return (
-			<div className='profile'>
-				<h3>Welcome<br/>  {`${userEmail}`}</h3>
-				<button className='ghost-btn' onClick={() => updateUser('')}>Logout</button>
-			</div>
-		);
+	let userIsLoggedIn = false;
+	if (userEmail !== '' || userEmail != null) {
+		console.log('im here')
+		userIsLoggedIn = true
 	}
+
+	return (
+		<div className='profile'>
+			<div className='top-bar'>
+				<Logo />
+				<p>{userEmail}</p>
+			</div>
+			<div className='setting-list'>
+				<button onClick={() => updateUser('')}>Logout</button>
+				<button onClick={() => updateUser('')}>Logout</button>
+			</div>
+		</div>
+	);
+		
 }
 export default Profile;

@@ -35,7 +35,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser }) => {
 						<Profile 
 							userEmail={userEmail} 
 							signInToggle={signInToggle}
-							updateUserID={updateUser} 
+							updateUser={updateUser} 
 						/>
 					</PopOver>
 				</Controller>

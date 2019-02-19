@@ -84,7 +84,7 @@ class App extends Component {
           userEmail={userEmail}
           current={current}  
           signInToggle={this.presentPopUp}
-          updateUserID={this.updateUserID}
+          updateUser={this.updateUser}
         />
       	<NavBar 
           className='nav-bar' 
