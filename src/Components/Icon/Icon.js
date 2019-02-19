@@ -25,6 +25,8 @@ const Icon = ({ iconType, icon, iconStyle, width, title, color }) => {
 			case 'cantoPink': return '#ff7a8a';
 			case 'cantoDarkBlue': return '#062743';
 			case 'cantoWhite': return '#f9f9f9';
+			case 'cantoGray': return '#e0e0e0';
+			case 'cantoDarkGray': return '#d1d1d1';
 			default: return '#062743';
 		}
 	}

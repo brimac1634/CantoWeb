@@ -7,7 +7,6 @@
   display: inline-block;
   z-index: 98;
   box-shadow: var(--cantoFloatShadow);
-  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;

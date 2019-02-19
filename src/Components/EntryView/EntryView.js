@@ -56,7 +56,7 @@ class EntryView extends Component {
 				.catch(err => console.log('Unable to check favorite'))
 		}
 
-		if (entryID !== undefined && userID !== '') {
+		if (entryID != null && userID != null) {
 			checkIfFavorite(entryID, userID)
 		}
 
