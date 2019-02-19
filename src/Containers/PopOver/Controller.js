@@ -16,6 +16,16 @@ class Controller extends Component {
 		}
 	}
 
+	componentDidUpdate(){
+	  setTimeout(() => {
+	    if(this.state.showPopOver){
+	      window.addEventListener('click', this.animateOut)
+	    } else {
+	      window.removeEventListener('click', this.animateOut)
+	    }
+	  }, 0)
+	}
+
 	setPositition = (rect) => {
 		this.setState({
 			triggerRect: {
@@ -27,13 +37,22 @@ class Controller extends Component {
 		})
 	}
 
+	animateOut = () => {
+		this.setState({
+				animateOut: true,
+			})
+		setTimeout(() => {
+			this.setState({
+			showPopOver: false,
+			animateOut: false,
+		})
+		}, 800)
+	}
+
 	togglePopOver = () => {
 		const { showPopOver } = this.state;
 		if (showPopOver) {
-			this.setState({
-				animateOut: true,
-			})
-			setTimeout(() => this.setPopOverState(), 800)
+			this.animateOut()
 		} else {
 			this.setPopOverState()
 		}
