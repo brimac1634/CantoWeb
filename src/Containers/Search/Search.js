@@ -18,24 +18,32 @@ class Search extends Component {
 		const lastSearch = sessionStorage.getItem('lastSearch')
 		const lastSearchEntries = sessionStorage.getItem('lastSearchEntries')
 		const lastSelectedEntry = sessionStorage.getItem('lastSelectedEntry')
-		if (lastSelectedEntry || (lastSearch && lastSearchEntries)) {
+		console.log(lastSearch, lastSearchEntries, lastSelectedEntry)
+		if (lastSearch && lastSearchEntries) {
 			this.setState({
 				searchKey: JSON.parse(lastSearch),
 				entries: JSON.parse(lastSearchEntries),
-				selectedEntry: JSON.parse(lastSelectedEntry),
 			})
+		}
+		if (lastSelectedEntry) {
+			this.setState({selectedEntry: JSON.parse(lastSelectedEntry)})
 		}
 	}
 
-	handleSearch = (event) => {
-		const value = event.target.value;
-		if (value.length) {
-			sessionStorage.setItem('lastSearch', JSON.stringify(value));
+	onSearch = (event) => {
+		const searchKey = event.target.value
+		this.setState({searchKey: searchKey})
+		this.handleSearch(searchKey)
+	}
+
+	handleSearch = (searchKey) => {
+		if (searchKey.length) {
+			sessionStorage.setItem('lastSearch', JSON.stringify(searchKey));
 			fetch('http://localhost:3000', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({
-					searchKey: event.target.value
+					searchKey: searchKey
 				})
 			})
 				.then(res => res.json())
@@ -67,13 +75,14 @@ class Search extends Component {
 	}
 
 	render() {
-		const { selectedEntry, entries } = this.state;
+		const { selectedEntry, entries, searchKey } = this.state;
 		const { userID } = this.props;
 		return (
 			<div>
 				<SearchBar 
 					className='search-bar' 
-					searchChange={this.handleSearch}
+					searchChange={this.onSearch}
+					searchKey={searchKey}
 				/>
 				<div className='split-container'>
 					<div className='entry-list-container'>
