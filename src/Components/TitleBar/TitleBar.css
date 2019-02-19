@@ -55,11 +55,12 @@
 
 .button-container {
 	position: absolute;
-	height: 50px;
-	width: auto;
+	height: 100%;
+	width: 80px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: space-around;
 	top: 0;
 	right: 0;
 }
@@ -68,6 +69,6 @@
 	background: transparent;
 	outline: none;
 	border: none;
-	width: 40px;
-	height: 100%;
+	width: 30px;
+	height: 30px;
 }

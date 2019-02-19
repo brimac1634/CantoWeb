@@ -18,7 +18,6 @@ class Search extends Component {
 		const lastSearch = sessionStorage.getItem('lastSearch')
 		const lastSearchEntries = sessionStorage.getItem('lastSearchEntries')
 		const lastSelectedEntry = sessionStorage.getItem('lastSelectedEntry')
-		console.log(lastSearch, lastSearchEntries, lastSelectedEntry)
 		if (lastSearch && lastSearchEntries) {
 			this.setState({
 				searchKey: JSON.parse(lastSearch),
@@ -61,6 +60,8 @@ class Search extends Component {
 				})
 				.catch(err => console.log('unable to retrieve entries'))
 		} else {
+			sessionStorage.setItem('lastSearch', JSON.stringify(''));
+			sessionStorage.setItem('lastSearchEntries', JSON.stringify([]));
 			this.setState({
 				entries: []
 			})
@@ -88,6 +89,7 @@ class Search extends Component {
 					<div className='entry-list-container'>
 						<EntriesList  
 							entries={entries}
+							searchKey={searchKey}
 							selectEntry={this.handleEntrySelect}
 						/>
 					</div>

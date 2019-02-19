@@ -2,12 +2,12 @@ import React from 'react';
 import './EntriesList.css';
 import EntryRow from './EntryRow/EntryRow';
 
-const EntryList = ({ entries, selectEntry }) => {
+const EntryList = ({ entries, selectEntry, searchKey }) => {
 	let ghostRows = [0,1,2,3,4,5,6]
 	return (
 		<div className='entry-list'>
 			{
-				entries.length
+				searchKey.length
 				?   entries.map(entry => {
 						return (
 							<EntryRow

@@ -34,7 +34,7 @@
 .bottom-divider {
 	content: '';
 	display: block;
-	background: var(--cantoDarkBlue);
+	background: var(--cantoDarkGray);
 	width: 100%;
 	height: 1px;
 }

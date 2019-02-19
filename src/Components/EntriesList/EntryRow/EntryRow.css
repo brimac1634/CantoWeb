@@ -9,7 +9,7 @@
 	border-radius: 4px;
 	padding: 10px;
 	margin: 10px;
-	box-shadow: var(--cantoShadow);
+	border: solid 1px var(--cantoDarkGray);
 	transition: all 0.3s ease-in-out;
 	cursor: pointer;
 	white-space: nowrap;
@@ -20,8 +20,8 @@
 }
 
 .entry-row:hover {
-	background: #e8e8e8;
 	transform: scale(1.02);
+	box-shadow: var(--cantoShadow);
 }
 
 .entry-row > * {

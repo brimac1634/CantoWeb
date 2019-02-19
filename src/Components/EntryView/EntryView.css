@@ -1,12 +1,18 @@
 .entry-view {
 	height: 90%;
 	width: 90%;
-	box-shadow: var(--cantoShadow);
+	border: solid 1px var(--cantoDarkGray);
 	border-radius: 4px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
+	transition: all 0.3s ease-in-out;
+}
+
+.entry-view:hover {
+	box-shadow: var(--cantoShadow);
+	transform: scale(1.02);
 }
 
 .inner-entry-view {
