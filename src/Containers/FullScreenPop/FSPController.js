@@ -10,7 +10,7 @@ class FSPController extends Component {
 		}
 	}
 
-	animateOut = () => {
+	handleAnimateOut = () => {
 		this.setState({
 				animateOut: true,
 			})
@@ -25,7 +25,7 @@ class FSPController extends Component {
 	togglePopUp = () => {
 		const { popUpIsShowing } = this.state;
 		if (popUpIsShowing) {
-			this.animateOut()
+			this.handleAnimateOut()
 		} else {
 			this.setState({
 				popUpIsShowing: !this.state.popUpIsShowing,

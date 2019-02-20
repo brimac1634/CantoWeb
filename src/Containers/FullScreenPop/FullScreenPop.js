@@ -13,7 +13,6 @@ class FullScreenPop extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.content)
 		if (this.content.current.firstChild) {
 			const rect = this.content.current.getBoundingClientRect();
 			this.setState({
@@ -28,7 +27,7 @@ class FullScreenPop extends Component {
 	render() {
 		const { width, height } = this.state;
 		const { togglePopUp, animateOut, children } = this.props;
-
+		
 		let popType = 'animate-in'
 		let fadeType = 'animate-fade-in'
 

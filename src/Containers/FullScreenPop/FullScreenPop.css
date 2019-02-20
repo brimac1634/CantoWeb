@@ -13,13 +13,11 @@
 
 .pop-up {
 	position: relative;
-  box-sizing: border-box;
 	background: var(--cantoWhite);
-	padding: 20px 30px;
 	box-shadow: var(--cantoFloatShadow);
 	border-radius: 4px;
 	z-index: 99;
-	color: var(--cantoDarkBlue);
+  overflow: hidden;
 }
 
 .close {

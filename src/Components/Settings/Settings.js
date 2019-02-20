@@ -5,6 +5,7 @@ import IconListItem from '../IconListItem/IconListItem';
 import FullScreenPop from '../../Containers/FullScreenPop/FullScreenPop';
 import FSPController from '../../Containers/FullScreenPop/FSPController';
 import FSPTrigger from '../../Containers/FullScreenPop/FSPTrigger';
+import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
 
 const Settings = ({ userEmail, signInToggle, updateUser }) => {
 	let userIsLoggedIn = false;
@@ -43,7 +44,7 @@ const Settings = ({ userEmail, signInToggle, updateUser }) => {
 							/>
 						</FSPTrigger>
 						<FullScreenPop>
-							<div style={{width: '400px', height: '600px', background: 'blue'}}></div>
+							<DictionaryHelp />
 						</FullScreenPop>
 					</FSPController>
 				</div>
