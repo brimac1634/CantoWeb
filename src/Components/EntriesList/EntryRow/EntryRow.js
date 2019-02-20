@@ -36,9 +36,7 @@ const EntryRow = (props) => {
 						<div><p>{jyutping}</p></div>
 						<div><p>普: {mandarinword}</p></div>
 					</div>
-				:   <div 
-						className='entry-row ghost'
-					>
+				:   <div className='entry-row ghost'>
 						<div className='top-left'>
 							<div className='ghost-div'>&nbsp;</div>
 							<div className='ghost-div'>&nbsp;</div>

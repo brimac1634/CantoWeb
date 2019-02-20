@@ -63,6 +63,7 @@
 .canto-class h3 {
 	font-size: 38px;
 	margin-right: 8px;
+	font-family: 'Heebo', sans-serif;
 }
 
 .entry-btn {
@@ -71,6 +72,3 @@
 	outline: none;
 }
 
-.ghost-div {
-	/*margin: 0;*/
-}

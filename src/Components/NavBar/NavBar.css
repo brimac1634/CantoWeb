@@ -1,6 +1,7 @@
 .nav-bar {
 	background: var(--cantoDarkBlue);
 	text-align: center;
+	box-shadow: var(--cantoShadow)
 }
 
 
@@ -17,5 +18,4 @@
 .icon-button {
 	width: 100%;
 	height: 80px;
-
 }

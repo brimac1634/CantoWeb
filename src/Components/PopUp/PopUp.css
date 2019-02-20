@@ -17,7 +17,7 @@
 	width: 340px;
 	height: 400px;
 	padding: 20px 30px;
-	box-shadow: 0 2px 2px 1px #ccc;
+	box-shadow: var(--cantoFloatShadow);
 	border-radius: 4px;
 	z-index: 99;
 	color: var(--cantoDarkBlue);

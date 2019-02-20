@@ -10,7 +10,6 @@ class Favorites extends Component {
 		this.state = {
 			selectedEntry: '',
 			entries: [],
-			searchKey: '',
 		}
 	}
 
@@ -39,16 +38,6 @@ class Favorites extends Component {
 		.catch(err => console.log('unable to retrieve favorites'))
 	}
 
-	onSearch = (event) => {
-		const searchKey = event.target.value
-		this.setState({searchKey: searchKey})
-		this.handleSearch(searchKey)
-	}
-
-	handleSearch = (searchKey) => {
-
-	}
-
 	handleEntrySelect = (entry) => {
 		this.setState({
 			selectedEntry: entry
@@ -56,23 +45,24 @@ class Favorites extends Component {
 	}
 
 	render() {
-		const { selectedEntry, entries, searchKey } = this.state;
+		const { selectedEntry, entries } = this.state;
 		const { userID } = this.props;
 		return (
 			<div>
 				<SearchBar 
-					className='search-bar' 
-					searchChange={this.handleSearch}
-					searchKey={searchKey}
+					className='search-bar'
+					hideInput='true'
 				/>
 				<div className='split-container'>
 					<div className='entry-list-container'>
 						<EntriesList  
 							entries={entries}
 							selectEntry={this.handleEntrySelect}
-							searchKey={searchKey}
+							searchKey=''
+							isFavoritePage='true'
 						/>
 					</div>
+					<div className='divider'></div>
 					<div className='entry-view-container'>
 						<EntryView 
 							entry={selectedEntry}

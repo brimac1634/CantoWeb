@@ -7,7 +7,7 @@
 	--cantoWhite: #f9f9f9;
   --cantoGray: #e0e0e0;
   --cantoDarkGray: #d1d1d1;
-  --cantoShadow: 0 1px 6px 0 #ccc;;
+  --cantoShadow: 0 1px 6px 0 rgba(0, 0, 0, 0.14);
   --cantoFloatShadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
 }
 
