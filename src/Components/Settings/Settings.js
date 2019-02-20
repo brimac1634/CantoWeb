@@ -2,6 +2,9 @@ import React from 'react';
 import './Settings.css';
 import Logo from '../Logo/Logo';
 import IconListItem from '../IconListItem/IconListItem';
+import FullScreenPop from '../../Containers/FullScreenPop/FullScreenPop';
+import FSPController from '../../Containers/FullScreenPop/FSPController';
+import FSPTrigger from '../../Containers/FullScreenPop/FSPTrigger';
 
 const Settings = ({ userEmail, signInToggle, updateUser }) => {
 	let userIsLoggedIn = false;
@@ -10,7 +13,6 @@ const Settings = ({ userEmail, signInToggle, updateUser }) => {
 	}
 
 	const handleInfo = () => {
-		console.log(123);
 	}
 
 	const handleHelp = () => {
@@ -32,7 +34,19 @@ const Settings = ({ userEmail, signInToggle, updateUser }) => {
 			</div>
 			<div className='list-divider'>&nbsp;</div>
 			<div className='setting-list'>
-				<IconListItem icon='info' title='What is CantoTalk?' handleClick={handleInfo}/>
+				<div className='settings-item'>
+					<FSPController>
+						<FSPTrigger>
+							<IconListItem 
+								icon='info' 
+								title='What is CantoTalk?'
+							/>
+						</FSPTrigger>
+						<FullScreenPop>
+							<div style={{width: '400px', height: '600px', background: 'blue'}}></div>
+						</FullScreenPop>
+					</FSPController>
+				</div>
 				<IconListItem icon='agenda' title='Dictionary Help' handleClick={handleHelp}/>
 				<IconListItem icon='paper-plane' title='Contact' handleClick={handleContact}/>
 				<div className='list-divider'>&nbsp;</div>

@@ -26,7 +26,6 @@ class PopOver extends Component {
 		const { 
 		togglePopOver,
 		animateOut,
-		triggerRect,
 		triggerRect: {
 			x,
 			y,

@@ -16,7 +16,7 @@ const PopUp = ({ animateOut, removePopUpEnd, removePopUpBegin, children }) => {
 
 	return (
 		<div className={`shade-background ${fadeType}`}>
-			<div className={`sign-in-box ${popType}`}>
+			<div className={`pop-up ${popType}`}>
 				<button className='close' onClick={removePopUpBegin}>
 					<Icon 
 						icon='multiply' 

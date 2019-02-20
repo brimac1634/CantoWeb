@@ -13,9 +13,8 @@
 
 .pop-up {
 	position: relative;
+  box-sizing: border-box;
 	background: var(--cantoWhite);
-	width: 340px;
-	height: 400px;
 	padding: 20px 30px;
 	box-shadow: var(--cantoFloatShadow);
 	border-radius: 4px;

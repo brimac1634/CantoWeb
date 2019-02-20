@@ -1,23 +1,15 @@
-.list-item-btn {
-	width: 100%;
-	height: 50px;
-	border: none;
-	background: var(--cantoGray);
-	outline: none;
-}
-
 .list-item {
 	width: 100%;
-	height: 100%;
+	height: 50px;
 	box-sizing: border-box;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	flex-direction: row;
-	
+	background: var(--cantoGray);
 }
 
-.list-item-btn:hover {
+.list-item:hover {
 	background: var(--cantoDarkGray);
 	cursor: pointer;
 }
