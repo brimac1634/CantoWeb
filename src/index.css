@@ -97,6 +97,13 @@ code {
   margin: 5px 0;
 }
 
+.list-divider {
+  width: 90%;
+  height: 1px;
+  background: var(--cantoDarkBlue);
+  margin: 8px 0;
+}
+
 /*--------Scroll Bar------------*/
 
 /* width */

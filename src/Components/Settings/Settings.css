@@ -1,15 +1,15 @@
-.profile {
+.settings {
 	width: 250px;
-	height: 350px;
+	height: auto;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	text-align: center;
+	background: var(--cantoGray)
 }
 
 .top-bar {
-	position: absolute;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
@@ -28,10 +28,16 @@
 	padding-left: 10px;
 }
 
+.top-bar p {
+	font-size: 16px;
+}
+
 .setting-list {
-	position: absolute;
-	left: 0;
-	bottom: 0;
 	width: 100%;
-	height: calc(100% - 60px);
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	background: var(--cantoGray);
 }

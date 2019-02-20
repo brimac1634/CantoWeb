@@ -6,7 +6,6 @@ import Controller from '../../Containers/PopOver/Controller';
 import Trigger from '../../Containers/PopOver/Trigger';
 import PopOver from '../../Containers/PopOver/PopOver';
 import Settings from '../Settings/Settings';
-import Profile from '../Profile/Profile';
 
 const TitleBar = ({ current, signInToggle, userEmail, updateUser }) => {
 	return (
@@ -26,32 +25,17 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser }) => {
 							<Icon 
 								icon='user-3' 
 								className='icon' 
-								width={22}
+								width={26}
 								color='cantoWhite'
 							/>
 						</button>
 					</Trigger>
 					<PopOver>
-						<Profile 
+						<Settings 
 							userEmail={userEmail} 
 							signInToggle={signInToggle}
 							updateUser={updateUser} 
 						/>
-					</PopOver>
-				</Controller>
-				<Controller>
-					<Trigger>
-						<button className='button'>
-							<Icon 
-								icon='settings-6' 
-								className='icon' 
-								width={22}
-								color='cantoWhite'
-							/>
-						</button>
-					</Trigger>
-					<PopOver>
-						<Settings />
 					</PopOver>
 				</Controller>
 			</div>

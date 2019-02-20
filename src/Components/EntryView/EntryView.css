@@ -25,8 +25,6 @@
 	overflow-y: auto;
 }
 
-
-
 .entry-btn-container {
 	position: absolute;
 	width: 35px;
@@ -71,4 +69,8 @@
 	border-style: none;
 	background: transparent;
 	outline: none;
+}
+
+.ghost-div {
+	/*margin: 0;*/
 }
