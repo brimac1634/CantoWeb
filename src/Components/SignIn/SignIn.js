@@ -46,8 +46,8 @@ class SignIn extends Component {
 	onUserSubmit = () => {
 		const { updateUser, removePopUpBegin } = this.props;
 		const { title, email, password } = this.state;
-		const emailIsValid = validateEmail(email);
-		const passwordIsValid = validatePassword(password);
+		const emailIsValid = this.validateEmail(email);
+		const passwordIsValid = this.validatePassword(password);
 		if (!emailIsValid && !passwordIsValid) {
 			//give alert that there is missing info
 		} else if (!emailIsValid) {
