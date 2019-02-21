@@ -11,13 +11,14 @@
 	z-index: 99;
 }
 
-.pop-up {
+.pop-div {
 	position: relative;
 	background: var(--cantoWhite);
 	box-shadow: var(--cantoFloatShadow);
 	border-radius: 4px;
 	z-index: 99;
   overflow: hidden;
+  display: inline-block;
 }
 
 .close {

@@ -41,7 +41,7 @@ class FullScreenPop extends Component {
 		return (
 			<div className={`shade-background ${fadeType}`}>
 				<div 
-					className={`pop-up ${popType}`} 
+					className={`pop-div ${popType}`} 
 					style={{width: `${width}px`, height: `${height}px`}}
 				>
 					<button className='close' onClick={togglePopUp}>

@@ -4,7 +4,7 @@ import './DictionaryHelp.css';
 const DictionaryHelp = () => {
 	return (
 		<div className='dict-help'>
-			<p>Hello</p>
+			
 		</div>
 	);
 		
