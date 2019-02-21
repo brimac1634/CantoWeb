@@ -28,7 +28,7 @@ class FSPController extends Component {
 			this.handleAnimateOut()
 		} else {
 			this.setState({
-				popUpIsShowing: !this.state.popUpIsShowing,
+				popUpIsShowing: true,
 				animateOut: false,
 			})
 		}

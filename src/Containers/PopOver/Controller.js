@@ -54,15 +54,11 @@ class Controller extends Component {
 		if (showPopOver) {
 			this.animateOut()
 		} else {
-			this.setPopOverState()
+			this.setState({
+				showPopOver: !this.state.showPopOver,
+				animateOut: false,
+			})
 		}
-	}
-
-	setPopOverState = () => {
-		this.setState({
-			showPopOver: !this.state.showPopOver,
-			animateOut: false,
-		})
 	}
 
 	render() {
@@ -75,7 +71,7 @@ class Controller extends Component {
 		      } else {
 		      	if (showPopOver) {
 		      		return ReactDOM.createPortal(
-			            <span>
+			            <span onClick={event => event.stopPropagation()}>
 				            {React.cloneElement(child, { togglePopOver: this.togglePopOver, showPopOver: showPopOver, triggerRect: triggerRect, animateOut: animateOut })}
 				        </span>
 				        , document.body

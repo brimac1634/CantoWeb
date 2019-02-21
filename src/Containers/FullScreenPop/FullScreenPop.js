@@ -21,8 +21,6 @@ class FullScreenPop extends Component {
 			})
 		}
 	}
-
-
 	
 	render() {
 		const { width, height } = this.state;

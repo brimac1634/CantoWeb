@@ -13,9 +13,6 @@ const Settings = ({ userEmail, signInToggle, updateUser }) => {
 		userIsLoggedIn = true
 	}
 
-	const handleInfo = () => {
-	}
-
 	const handleHelp = () => {
 		console.log(456)
 	}
