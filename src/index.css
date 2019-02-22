@@ -100,7 +100,7 @@ code {
 .list-divider {
   width: 90%;
   height: 1px;
-  background: var(--cantoDarkBlue);
+  background: var(--cantoDarkGray);
   margin: 8px 0;
 }
 

@@ -1,19 +1,15 @@
 .sign-in-container {
-	height: 100%;
-	width: 100%;
+	width: 320px;
+	height: auto;
+	padding: 20px 30px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.logo-container {
-	height: 55px;
-	width: 55px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 10px
+.sign-in-container p {
+	margin: 4px;
 }
 
 .sign-in-input {

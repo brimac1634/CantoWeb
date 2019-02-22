@@ -44,7 +44,7 @@ class SignIn extends Component {
 	}
 
 	onUserSubmit = () => {
-		const { updateUser, removePopUpBegin } = this.props;
+		const { updateUser } = this.props;
 		const { title, email, password } = this.state;
 		const emailIsValid = this.validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
@@ -69,7 +69,6 @@ class SignIn extends Component {
 					.then(user => {
 						console.log(user)
 						updateUser(user)
-						removePopUpBegin()
 					})
 
 			} else {
@@ -85,7 +84,6 @@ class SignIn extends Component {
 					.then(res => res.json())
 					.then(user => {
 						updateUser(user)
-						removePopUpBegin()
 					})
 					.catch(console.log)
 			}
@@ -97,17 +95,15 @@ class SignIn extends Component {
 		const { title, signInButton, alternateButton} = this.state;
 		return (
 			<div className='sign-in-container'>
-				<div className='logo-container'>
-					<Logo />
-				</div>
+				<Logo iconSize='50px' />
 				<h2>{title}</h2>
-				<label>Email</label>
+				<p>Email</p>
 				<input 
 					className='sign-in-input input-field' 
 					type='email'
 					onChange={this.onEmailChange}
 				/>
-				<label>Password</label>
+				<p>Password</p>
 				<input 
 					className='sign-in-input input-field' 
 					type='password'

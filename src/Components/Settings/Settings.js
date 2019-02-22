@@ -6,10 +6,12 @@ import FullScreenPop from '../../Containers/FullScreenPop/FullScreenPop';
 import FSPController from '../../Containers/FullScreenPop/FSPController';
 import FSPTrigger from '../../Containers/FullScreenPop/FSPTrigger';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
+import SignIn from '../SignIn/SignIn';
 
 const Settings = ({ userEmail, signInToggle, updateUser }) => {
 	let userIsLoggedIn = false;
-	if (userEmail != null) {
+	if (userEmail != null && userEmail !== '') {
+		console.log(userEmail)
 		userIsLoggedIn = true
 	}
 
@@ -23,13 +25,13 @@ const Settings = ({ userEmail, signInToggle, updateUser }) => {
 
 	return (
 		<div className='settings'>
-			<div className='top-bar'>
-				<Logo />
-				{userIsLoggedIn 
+			<div className='logo-bar'>
+				<Logo iconSize='50px' />
+			</div>
+			{userIsLoggedIn 
 					? <p>{userEmail}</p> 
 					: <h4>Welcome to CantoTalk!</h4>
 				}
-			</div>
 			<div className='list-divider'>&nbsp;</div>
 			<div className='setting-list'>
 				<div className='settings-item'>
@@ -50,8 +52,19 @@ const Settings = ({ userEmail, signInToggle, updateUser }) => {
 				<div className='list-divider'>&nbsp;</div>
 				{userIsLoggedIn
 					? <IconListItem icon='exit-1' title='Logout' handleClick={()=>updateUser('')}/>
-					: <IconListItem icon='login' title='Sign In' handleClick={signInToggle}/>
+					: <FSPController>
+						<FSPTrigger>
+							<IconListItem 
+								icon='login' 
+								title='Sign In'
+							/>
+						</FSPTrigger>
+						<FullScreenPop>
+							<SignIn updateUser={updateUser} />
+						</FullScreenPop>
+					  </FSPController>
 				}
+				<div className='list-divider'>&nbsp;</div>
 			</div>
 		</div>
 	);

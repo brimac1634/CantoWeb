@@ -6,12 +6,12 @@
 	justify-content: flex-start;
 	align-items: center;
 	flex-direction: row;
-	background: var(--cantoGray);
+	background: transparent;
 	padding: 8px 20px;
 }
 
 .list-item:hover {
-	background: var(--cantoDarkGray);
+	background: var(--cantoGray);
 	cursor: pointer;
 }
 
