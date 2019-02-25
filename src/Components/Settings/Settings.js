@@ -6,7 +6,7 @@ import FullScreenPop from '../../Containers/FullScreenPop/FullScreenPop';
 import FSPController from '../../Containers/FullScreenPop/FSPController';
 import FSPTrigger from '../../Containers/FullScreenPop/FSPTrigger';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
-import SignIn from '../SignIn/SignIn';
+import SignIn from '../../Containers/SignIn/SignIn';
 
 const Settings = ({ userEmail, signInToggle, updateUser }) => {
 	let userIsLoggedIn = false;

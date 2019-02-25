@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import MediaQuery from 'react-responsive';
 import TitleBar from './Components/TitleBar/TitleBar';
-import NavBar from './Components/NavBar/NavBar';
+import NavBar from './Containers/NavBar/NavBar';
 import MainView from './Containers/MainView';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
 

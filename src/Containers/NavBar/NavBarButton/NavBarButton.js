@@ -1,7 +1,7 @@
 import React from 'react';
 import './NavBarButton.css'
 import {Link} from 'react-router-dom';
-import Icon from '../../Icon/Icon';
+import Icon from '../../../Components/Icon/Icon';
 
 
 const NavBarButton = ({ to, title, icon, buttonStatus, selectButton, isSelected }) => {

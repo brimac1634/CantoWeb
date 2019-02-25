@@ -8,7 +8,7 @@ import Controller from '../../Containers/PopOver/Controller';
 import Trigger from '../../Containers/PopOver/Trigger';
 import PopOver from '../../Containers/PopOver/PopOver';
 import Settings from '../Settings/Settings';
-import PopOverNav from '../NavBar/PopOverNav/PopOverNav';
+import PopOverNav from '../../Containers/NavBar/PopOverNav/PopOverNav';
 
 const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange }) => {
 	return (

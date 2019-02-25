@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './SignIn.css';
-import Logo from '../Logo/Logo';
+import Logo from '../../Components/Logo/Logo';
 
 class SignIn extends Component {
 	constructor(props) {

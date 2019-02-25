@@ -2,7 +2,7 @@ import React from 'react';
 import './PopOverNav.css';
 import navSections from '../navSections';
 import {Link} from 'react-router-dom';
-import IconListItem from '../../IconListItem/IconListItem';
+import IconListItem from '../../../Components/IconListItem/IconListItem';
 
 const PopOverNav = ({navChange}) => {
 
