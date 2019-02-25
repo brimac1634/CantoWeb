@@ -2,6 +2,7 @@ import React from 'react';
 import './TitleBar.css';
 import MediaQuery from 'react-responsive';
 import LogoFull from '../LogoFull/LogoFull';
+import Logo from '../Logo/Logo';
 import Icon from '../Icon/Icon';
 import Controller from '../../Containers/PopOver/Controller';
 import Trigger from '../../Containers/PopOver/Trigger';
@@ -14,7 +15,12 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser }) => {
 		<div className='title-bar'>
 			<div className='slanted-div logo-div'></div>
 			<div className='title-logo-container'>
-				<LogoFull className='title-logo'/>
+				<MediaQuery minWidth={575}>
+					<LogoFull className='title-logo'/>
+				</MediaQuery>
+				<MediaQuery maxWidth={574}>
+					<Logo iconSize='30'/>
+				</MediaQuery>
 			</div>
 			<div className='slanted-div current-div'></div>
 			<div className='current-container'>

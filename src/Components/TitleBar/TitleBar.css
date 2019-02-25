@@ -28,7 +28,10 @@
 	height: 100%;
 	top: 0;
 	left: 0;
-
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
 .title-logo {
@@ -36,7 +39,6 @@
 	top: 0;
 	left: 0;
 	margin: 10px 20px;
-	
 }
 
 .current-container {
@@ -74,4 +76,32 @@
 	width: 28px;
 	height: 28px;
 	margin-left: 10px;
+}
+
+@media screen and (max-width: 575px) {
+    .title-logo-container {
+  	    width: 100px;
+    }
+
+	.slanted-div {
+		width: 190px;
+		transform: rotateZ(55deg);
+	}
+
+	.logo-div {
+		height: 280px;
+		top: -80px;
+		left: -140px;
+	}
+
+	.current-div {
+		top: -30px;
+		height: 80px;
+		left: 40px;
+	}
+
+	.current-container {
+		width: 200px;
+		left: 48px;
+	}
 }
