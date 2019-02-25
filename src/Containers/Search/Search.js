@@ -101,8 +101,6 @@ class Search extends Component {
 			entryViewMobile = 'visible-entry-view'
 		}
 
-		console.log(entryViewMobile);
-
 		return (
 			<div>
 				<SearchBar 

@@ -23,7 +23,7 @@ class App extends Component {
     }
   }
 
-  handleNavChange = (title) => this.setState({ current: title });
+  handleNavChange = (title) => this.setState({ current: title })
 
   updateUser = (user) => {
     const { id, email } = user;
@@ -48,6 +48,7 @@ class App extends Component {
           userEmail={userEmail}
           current={current}
           updateUser={this.updateUser}
+          navChange={this.handleNavChange}
         />
         <MediaQuery minWidth={950}>
           <NavBar 

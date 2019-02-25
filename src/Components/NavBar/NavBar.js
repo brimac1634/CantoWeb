@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './NavBar.css';
 import NavBarButton from './NavBarButton/NavBarButton';
+import navSections from './navSections';
 
 class NavBar extends Component {
 	constructor(props) {
@@ -18,33 +19,11 @@ class NavBar extends Component {
 
 	render() {
 		const { selected } = this.state;
-		let sections = [
-			{
-				title: 'Search',
-				to: '/',
-				icon: 'search',
-			},
-			{
-				title: 'Favorites',
-				to: '/Favorites',
-				icon: 'like-2',
-			},
-			{
-				title: 'Word Of The Day',
-				to: '/WordOfTheDay',
-				icon: 'calendar-7',
-			},
-			{
-				title: 'Learn',
-				to: '/Learn',
-				icon: 'windows',
-			},
-		]
 
 		return (
 			<div className='nav-bar'>
 				<div className='nav-list'>
-					{sections.map(section => {
+					{navSections.map(section => {
 						let isSelected = false
 						if (section.title === selected) {
 							isSelected = true
