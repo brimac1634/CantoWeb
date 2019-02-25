@@ -16,12 +16,7 @@
 	white-space: nowrap;
 }
 
-.entry-row:active {
-	transform: scale(9.98);
-}
-
 .entry-row:hover {
-	transform: scale(1.02);
 	box-shadow: var(--cantoShadow);
 }
 
