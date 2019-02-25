@@ -6,16 +6,17 @@ class Trigger extends Component {
 		this.selectedElement = React.createRef()
 	}
 
-	componentDidMount() {
-		const { setPositition } = this.props;
+	getRectandToggle = () => {
+		const { togglePopOver, setPositition } = this.props;
 		const rect = this.selectedElement.current.getBoundingClientRect()
 		setPositition(rect);
+		togglePopOver()
 	}
 
 	render() {
-		const { togglePopOver, children } = this.props;
+		const { children } = this.props;
 		const childrenWithProps = React.Children.map(children, child => {
-	      	 return React.cloneElement(child, { onClick: togglePopOver, ref: this.selectedElement })      
+	      	 return React.cloneElement(child, { onClick: this.getRectandToggle, ref: this.selectedElement })      
 	    });
 
 		return (

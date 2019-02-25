@@ -27,6 +27,7 @@ class Controller extends Component {
 	}
 
 	setPositition = (rect) => {
+		console.log(rect);
 		this.setState({
 			triggerRect: {
 				x: rect.x,
