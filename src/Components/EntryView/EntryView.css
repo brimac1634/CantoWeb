@@ -1,6 +1,7 @@
 .entry-view {
 	height: 90%;
 	width: 90%;
+	background: var(--cantoWhite);
 	border: solid 1px var(--cantoDarkGray);
 	border-radius: 4px;
 	display: flex;
@@ -33,7 +34,7 @@
 	right: 0;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-around;
 }
 
 .top-group {

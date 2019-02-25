@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Search.css';
+import MediaQuery from 'react-responsive';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
@@ -9,6 +10,7 @@ class Search extends Component {
 		super()
 		this.state = {
 			selectedEntry: '',
+			mobileSelectedEntry: '',
 			searchKey: '',
 			entries: [],
 		}
@@ -27,6 +29,20 @@ class Search extends Component {
 		if (lastSelectedEntry) {
 			this.setState({selectedEntry: JSON.parse(lastSelectedEntry)})
 		}
+	}
+
+	componentDidUpdate(){
+	  setTimeout(() => {
+	    if(this.state.mobileSelectedEntry){
+	      window.addEventListener('click', this.clearMobileEntry)
+	    } else {
+	      window.removeEventListener('click', this.clearMobileEntry)
+	    }
+	  }, 0)
+	}
+
+	clearMobileEntry = () => {
+		this.setState({mobileSelectedEntry: ''})
 	}
 
 	onSearch = (event) => {
@@ -71,13 +87,22 @@ class Search extends Component {
 	handleEntrySelect = (entry) => {
 		sessionStorage.setItem('lastSelectedEntry', JSON.stringify(entry));
 		this.setState({
-			selectedEntry: entry
+			selectedEntry: entry,
+			mobileSelectedEntry: entry.entryID,
 		})
 	}
 
 	render() {
-		const { selectedEntry, entries, searchKey } = this.state;
+		const { selectedEntry, entries, searchKey, mobileSelectedEntry } = this.state;
 		const { userID } = this.props;
+
+		let entryViewMobile = 'hidden-entry-view'
+		if (mobileSelectedEntry) {
+			entryViewMobile = 'visible-entry-view'
+		}
+
+		console.log(entryViewMobile);
+
 		return (
 			<div>
 				<SearchBar 
@@ -85,22 +110,41 @@ class Search extends Component {
 					searchChange={this.onSearch}
 					searchKey={searchKey}
 				/>
-				<div className='split-container'>
-					<div className='entry-list-container'>
-						<EntriesList  
-							entries={entries}
-							searchKey={searchKey}
-							selectEntry={this.handleEntrySelect}
-						/>
+				<MediaQuery minWidth={700}>
+					<div className='split-container'>
+						<div className='entry-list-container'>
+							<EntriesList  
+								entries={entries}
+								searchKey={searchKey}
+								selectEntry={this.handleEntrySelect}
+							/>
+						</div>
+						<div className='divider'></div>
+						<div className='entry-view-container'>
+							<EntryView 
+								entry={selectedEntry}
+								userID={userID}
+							/>
+						</div>
 					</div>
-					<div className='divider'></div>
-					<div className='entry-view-container'>
-						<EntryView 
-							entry={selectedEntry}
-							userID={userID}
-						/>
+				</MediaQuery>
+				<MediaQuery maxWidth={699}>
+					<div className='split-container'>
+						<div className='entry-list-container'>
+							<EntriesList  
+								entries={entries}
+								searchKey={searchKey}
+								selectEntry={this.handleEntrySelect}
+							/>
+						</div>
+						<div className={`entry-view-container ${entryViewMobile}`}>
+							<EntryView 
+								entry={selectedEntry}
+								userID={userID}
+							/>
+						</div>
 					</div>
-				</div>
+				</MediaQuery>
 			</div>
 		);
 	}
