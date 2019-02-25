@@ -7,6 +7,7 @@ import Controller from '../../Containers/PopOver/Controller';
 import Trigger from '../../Containers/PopOver/Trigger';
 import PopOver from '../../Containers/PopOver/PopOver';
 import Settings from '../Settings/Settings';
+import PopOverNav from '../PopOverNav/PopOverNav';
 
 const TitleBar = ({ current, signInToggle, userEmail, updateUser }) => {
 	return (
@@ -33,11 +34,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser }) => {
 							</button>
 						</Trigger>
 						<PopOver>
-							<Settings 
-								userEmail={userEmail} 
-								signInToggle={signInToggle}
-								updateUser={updateUser} 
-							/>
+							<PopOverNav />
 						</PopOver>
 					</Controller>
 				</MediaQuery>

@@ -104,6 +104,11 @@ code {
   margin: 8px 0;
 }
 
+@media screen and (max-width: 950px) {
+  
+
+}
+
 /*--------Scroll Bar------------*/
 
 /* width */
