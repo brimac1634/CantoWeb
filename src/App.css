@@ -22,12 +22,20 @@
 }
 
 .main-view {
-	position: absolute;
-	left: 140px;
-	top: 50px;
-	right: 0;
+	position: fixed;
+	height: calc(100% - 50px);
+	width: calc(100% - 140px);
 	bottom: 0;
+	right: 0;
 	overflow: hidden;
+}
+
+@media screen and (max-width: 950px) {
+  
+    .main-view {
+	  	width: 100%;
+    }
+
 }
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import './TitleBar.css';
+import MediaQuery from 'react-responsive';
 import LogoFull from '../LogoFull/LogoFull';
 import Icon from '../Icon/Icon';
 import Controller from '../../Containers/PopOver/Controller';
@@ -19,6 +20,27 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser }) => {
 				<h3 className='current'>{current}</h3>
 			</div>
 			<div className='button-container'>
+				<MediaQuery maxWidth={950}>
+					<Controller>
+						<Trigger>
+							<button className='button'>
+								<Icon 
+									icon='menu-4' 
+									className='icon' 
+									width={26}
+									color='cantoWhite'
+								/>
+							</button>
+						</Trigger>
+						<PopOver>
+							<Settings 
+								userEmail={userEmail} 
+								signInToggle={signInToggle}
+								updateUser={updateUser} 
+							/>
+						</PopOver>
+					</Controller>
+				</MediaQuery>
 				<Controller>
 					<Trigger>
 						<button className='button'>

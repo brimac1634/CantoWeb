@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import MediaQuery from 'react-responsive';
 import TitleBar from './Components/TitleBar/TitleBar';
 import NavBar from './Components/NavBar/NavBar';
 import MainView from './Containers/MainView';
@@ -12,7 +13,7 @@ class App extends Component {
       userID: '',
       userEmail: '',
   	}
-  }
+  }  
 
   componentDidMount() {
     const cachedUser = localStorage.getItem('user');
@@ -48,11 +49,13 @@ class App extends Component {
           current={current}
           updateUser={this.updateUser}
         />
-      	<NavBar 
-          className='nav-bar' 
-          current={this.state.current} 
-          navChange={this.handleNavChange}
-        />
+        <MediaQuery minWidth={950}>
+          <NavBar 
+            className='nav-bar' 
+            current={this.state.current} 
+            navChange={this.handleNavChange}
+          />
+        </MediaQuery>
   	    <MainView className='main-view' userID={userID}/>
       </div>
     );

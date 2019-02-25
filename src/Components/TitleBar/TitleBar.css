@@ -56,13 +56,15 @@
 .button-container {
 	position: absolute;
 	height: 100%;
-	width: 50px;
+	width: 80px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: flex-end;
 	top: 0;
 	right: 0;
+	box-sizing: border-box;
+	padding-right: 10px;
 }
 
 .button {
@@ -71,4 +73,5 @@
 	border: none;
 	width: 28px;
 	height: 28px;
+	margin-left: 10px;
 }

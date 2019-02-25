@@ -27,7 +27,6 @@ class Controller extends Component {
 	}
 
 	setPositition = (rect) => {
-		console.log(rect);
 		this.setState({
 			triggerRect: {
 				x: rect.x,
@@ -83,7 +82,7 @@ class Controller extends Component {
 	    });
 
 	    return (
-	    	<div style={{width: '100%', height: '100%'}}>
+	    	<div style={{width: 'auto', height: 'auto'}}>
 		    	{childrenWithProps}
 	    	</div>
 	    );
