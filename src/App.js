@@ -4,6 +4,7 @@ import MediaQuery from 'react-responsive';
 import TitleBar from './Components/TitleBar/TitleBar';
 import NavBar from './Components/NavBar/NavBar';
 import MainView from './Containers/MainView';
+import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
 
 class App extends Component {
   constructor (props) {
@@ -12,6 +13,11 @@ class App extends Component {
   		current: 'Search',
       userID: '',
       userEmail: '',
+      alert: {
+        title: '',
+        message: '',
+        showAlert: true,
+      }
   	}
   }  
 
@@ -24,6 +30,19 @@ class App extends Component {
   }
 
   handleNavChange = (title) => this.setState({ current: title })
+
+  presentAlert = (title, message) => {
+    this.setState({
+      alert: {
+        title: title,
+        message: message,
+        showAlert: true,
+      }
+    })
+    setTimeout(() => {
+      this.setState({alert: {showAlert: false}})
+    }, 3000)
+  }
 
   updateUser = (user) => {
     const { id, email } = user;
@@ -38,7 +57,8 @@ class App extends Component {
     const { 
       current,
       userID,
-      userEmail
+      userEmail,
+      alert,
     } = this.state;
 
     return (
@@ -58,6 +78,11 @@ class App extends Component {
           />
         </MediaQuery>
   	    <MainView className='main-view' userID={userID}/>
+        <PopUpAlert 
+          title={alert.title} 
+          message={alert.message} 
+          showAlert={alert.showAlert}
+        />
       </div>
     );
   }

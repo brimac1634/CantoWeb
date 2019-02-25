@@ -1,0 +1,20 @@
+.alert {
+	position: absolute;
+	box-sizing: border-box;
+	width: 250px;
+	height: 100px;
+	padding: 10px;
+	border-radius: 4px;
+	left: 50px;
+	transition: all 0.4s;
+	background: var(--cantoPink);
+	box-shadow: var(--cantoFloatShadow);
+}
+
+.alertIsVisible {
+	bottom: 10px;
+}
+
+.alertIsHidden {
+	bottom: -100px;
+}
