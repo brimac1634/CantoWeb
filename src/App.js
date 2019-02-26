@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
+import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import TitleBar from './Components/TitleBar/TitleBar';
 import NavBar from './Containers/NavBar/NavBar';
 import MainView from './Containers/MainView';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
+import { setUser } from './actions';
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => dispatch(setUser(user))
+  }
+}
 
 class App extends Component {
   constructor (props) {
   	super();
   	this.state = {
   		current: 'Search',
-      userID: '',
-      userEmail: '',
       alert: {
         title: '',
         message: '',
@@ -24,8 +30,9 @@ class App extends Component {
   componentDidMount() {
     const cachedUser = localStorage.getItem('user');
     if (cachedUser) {
+      const { updateUser } = this.props;
       const user = JSON.parse(cachedUser)
-      this.setState({userID: user.id, userEmail: user.email})
+      updateUser(user);
     }
   }
 
@@ -44,30 +51,17 @@ class App extends Component {
     }, 3000)
   }
 
-  updateUser = (user) => {
-    const { id, email } = user;
-    localStorage.setItem('user', JSON.stringify(user));
-    this.setState({
-      userID: id,
-      userEmail: email
-    })
-  }
-
   render() {
     const { 
       current,
-      userID,
-      userEmail,
       alert,
     } = this.state;
 
     return (
       <div>
         <TitleBar 
-          className='title-bar' 
-          userEmail={userEmail}
+          className='title-bar'
           current={current}
-          updateUser={this.updateUser}
           navChange={this.handleNavChange}
         />
         <MediaQuery minWidth={950}>
@@ -77,7 +71,7 @@ class App extends Component {
             navChange={this.handleNavChange}
           />
         </MediaQuery>
-  	    <MainView className='main-view' userID={userID}/>
+  	    <MainView className='main-view' />
         <PopUpAlert 
           title={alert.title} 
           message={alert.message} 
@@ -88,4 +82,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, mapDispatchToProps)(App);

@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
 import './EntryView.css';
+import { connect } from 'react-redux';
 import Icon from '../Icon/Icon';
+
+const mapStateToProps = state => {
+	return {
+		user: state.user
+	}
+}
 
 class EntryView extends Component {
 	constructor(props) {
@@ -12,7 +19,9 @@ class EntryView extends Component {
 
 	render() {
 		const {
-			userID,
+			user:{
+				id
+			},
 			entry,
 			entry: {
 				entryID,
@@ -56,8 +65,8 @@ class EntryView extends Component {
 				.catch(err => console.log('Unable to check favorite'))
 		}
 
-		if (entryID != null && userID != null) {
-			checkIfFavorite(entryID, userID)
+		if (entryID != null && id != null) {
+			checkIfFavorite(entryID, id)
 		}
 
 		const toggleFavorite = (entryID, userID, cantoWord) => {
@@ -92,7 +101,7 @@ class EntryView extends Component {
 							<div className='entry-btn-container'>
 								<button 
 									className='entry-btn' 
-									onClick={() => toggleFavorite(entryID, userID, cantoword)}
+									onClick={() => toggleFavorite(entryID, id, cantoword)}
 								>
 									<Icon 
 										icon='like-2' 
@@ -159,4 +168,4 @@ class EntryView extends Component {
 	
 }
 
-export default EntryView;
+export default connect(mapStateToProps)(EntryView);

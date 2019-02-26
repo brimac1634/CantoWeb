@@ -11,19 +11,19 @@ const MainView = ({ userID }) => {
 			<Switch>
 				<Route 
 					exact path='/' 
-					render={(props) => <Search {...props} userID={userID}/>}
+					component={Search}
 				/>
 				<Route 
 					path='/Favorites' 
-					render={(props) => <Favorites {...props} userID={userID}/>}
+					component={Favorites}
 				/>
 				<Route 
 					path='/WordOfTheDay' 
-					render={(props) => <WordOfTheDay {...props} userID={userID}/>}
+					component={WordOfTheDay}
 				/>
 				<Route 
 					path='/Learn' 
-					render={(props) => <Learn {...props} userID={userID}/>}
+					component={Learn}
 				/>
 			</Switch>
 		</div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Settings.css';
+import { connect } from 'react-redux';
 import Logo from '../Logo/Logo';
 import IconListItem from '../IconListItem/IconListItem';
 import FullScreenPop from '../../Containers/FullScreenPop/FullScreenPop';
@@ -7,11 +8,24 @@ import FSPController from '../../Containers/FullScreenPop/FSPController';
 import FSPTrigger from '../../Containers/FullScreenPop/FSPTrigger';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
 import SignIn from '../../Containers/SignIn/SignIn';
+import { setUser } from '../../actions';
 
-const Settings = ({ userEmail, signInToggle, updateUser }) => {
+const mapStateToProps = state => {
+	return {
+		user: state.user
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		updateUser: (user) => dispatch(setUser(user))
+	}
+}
+
+const Settings = ({ user: { id, email }, updateUser }) => {
+	
 	let userIsLoggedIn = false;
-	if (userEmail != null && userEmail !== '') {
-		console.log(userEmail)
+	if (email != null && email.length) {
 		userIsLoggedIn = true
 	}
 
@@ -29,7 +43,7 @@ const Settings = ({ userEmail, signInToggle, updateUser }) => {
 				<Logo iconSize='50px' />
 			</div>
 			{userIsLoggedIn 
-					? <p>{userEmail}</p> 
+					? <p>{email}</p> 
 					: <h4>Welcome to CantoTalk!</h4>
 				}
 			<div className='list-divider'>&nbsp;</div>
@@ -60,7 +74,7 @@ const Settings = ({ userEmail, signInToggle, updateUser }) => {
 							/>
 						</FSPTrigger>
 						<FullScreenPop>
-							<SignIn updateUser={updateUser} />
+							<SignIn />
 						</FullScreenPop>
 					  </FSPController>
 				}
@@ -70,4 +84,4 @@ const Settings = ({ userEmail, signInToggle, updateUser }) => {
 	);
 		
 }
-export default Settings;
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

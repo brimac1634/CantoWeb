@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import '../Search/Search.css';
+import { connect } from 'react-redux';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
+
+const mapStateToProps = state => {
+	return {
+		user: state.user
+	}
+}
 
 class Favorites extends Component {
 	constructor() {
@@ -14,9 +21,9 @@ class Favorites extends Component {
 	}
 
 	componentDidMount() {
-		const { userID } = this.props;
-		if (userID) {
-			this.updateFavoritesList(userID);
+		const { user: { id } } = this.props;
+		if (id) {
+			this.updateFavoritesList(id);
 		} else {
 			//ask user to sign in
 		}
@@ -46,7 +53,6 @@ class Favorites extends Component {
 
 	render() {
 		const { selectedEntry, entries } = this.state;
-		const { userID } = this.props;
 		return (
 			<div>
 				<SearchBar 
@@ -66,7 +72,6 @@ class Favorites extends Component {
 					<div className='entry-view-container'>
 						<EntryView 
 							entry={selectedEntry}
-							userID={userID}
 							updateEntries={this.updateFavoritesList}
 							updateSelected={this.handleEntrySelect}
 						/>
@@ -78,4 +83,4 @@ class Favorites extends Component {
 	
 }
 
-export default Favorites;
+export default connect(mapStateToProps)(Favorites);

@@ -56,11 +56,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange }) =
 						</button>
 					</Trigger>
 					<PopOver>
-						<Settings 
-							userEmail={userEmail} 
-							signInToggle={signInToggle}
-							updateUser={updateUser} 
-						/>
+						<Settings />
 					</PopOver>
 				</Controller>
 			</div>

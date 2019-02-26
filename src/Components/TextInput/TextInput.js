@@ -2,8 +2,9 @@ import React from 'react';
 import './TextInput.css'
 import Icon from '../Icon/Icon';
 
-const TextInput = ({ placeHolder, icon, handleChange, value, height }) => {
+const TextInput = ({ placeHolder, icon, handleChange, value, height, isPassword }) => {
 	const inputHeight = height ? height : '44px';
+	const type = isPassword ? 'password' : null;
 	return (
 		<div className='input-group' style={{height: `${inputHeight}`}}>
 			{icon != null &&
@@ -20,6 +21,7 @@ const TextInput = ({ placeHolder, icon, handleChange, value, height }) => {
 				placeholder={placeHolder}
 				onChange={handleChange}
 				value={value}
+				type={type}
 			/>
 		</div>
 	);

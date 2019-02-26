@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
 import './SignIn.css';
+import { connect } from 'react-redux';
 import Logo from '../../Components/Logo/Logo';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
+import { setUser } from '../../actions';
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		updateUser: (user) => dispatch(setUser(user))
+	}
+}
 
 class SignIn extends Component {
 	constructor(props) {
-		super()
+		super(props)
 		this.state = {
 			title: 'Login',
 			signInButton: 'Sign In',
@@ -45,8 +53,13 @@ class SignIn extends Component {
 		return password.length >= 6 ? true : false;
 	}
 
-	onUserSubmit = () => {
+	handleUpdateUser = (user) => {
 		const { updateUser } = this.props;
+		localStorage.setItem('user', JSON.stringify(user));
+		updateUser(user);
+	}
+
+	onUserSubmit = () => {
 		const { title, email, password } = this.state;
 		const emailIsValid = this.validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
@@ -69,8 +82,7 @@ class SignIn extends Component {
 				})
 					.then(res => res.json())
 					.then(user => {
-						console.log(user)
-						updateUser(user)
+						this.handleUpdateUser(user)
 					})
 
 			} else {
@@ -85,7 +97,7 @@ class SignIn extends Component {
 				})
 					.then(res => res.json())
 					.then(user => {
-						updateUser(user)
+						this.handleUpdateUser(user)
 					})
 					.catch(console.log)
 			}
@@ -107,6 +119,7 @@ class SignIn extends Component {
 				<TextInput 
 					icon='locked-4' 
 					placeHolder='Password'
+					isPassword='true'
 					handleChange={this.onPasswordChange}
 				/>
 				<Button 
@@ -124,4 +137,4 @@ class SignIn extends Component {
 		);
 	}
 }
-export default SignIn;
+export default connect(null, mapDispatchToProps)(SignIn);
