@@ -21,9 +21,9 @@ class Favorites extends Component {
 	}
 
 	componentDidMount() {
-		const { user: { id } } = this.props;
-		if (id) {
-			this.updateFavoritesList(id);
+		const { user: { userID } } = this.props;
+		if (userID) {
+			this.updateFavoritesList(userID);
 		} else {
 			//ask user to sign in
 		}

@@ -20,7 +20,7 @@ class EntryView extends Component {
 	render() {
 		const {
 			user:{
-				id
+				userID
 			},
 			entry,
 			entry: {
@@ -65,8 +65,8 @@ class EntryView extends Component {
 				.catch(err => console.log('Unable to check favorite'))
 		}
 
-		if (entryID != null && id != null) {
-			checkIfFavorite(entryID, id)
+		if (entryID != null && userID != null) {
+			checkIfFavorite(entryID, userID)
 		}
 
 		const toggleFavorite = (entryID, userID, cantoWord) => {
@@ -101,7 +101,7 @@ class EntryView extends Component {
 							<div className='entry-btn-container'>
 								<button 
 									className='entry-btn' 
-									onClick={() => toggleFavorite(entryID, id, cantoword)}
+									onClick={() => toggleFavorite(entryID, userID, cantoword)}
 								>
 									<Icon 
 										icon='like-2' 

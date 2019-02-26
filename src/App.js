@@ -6,7 +6,7 @@ import TitleBar from './Components/TitleBar/TitleBar';
 import NavBar from './Containers/NavBar/NavBar';
 import MainView from './Containers/MainView';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
-import { setUser } from './actions';
+import { setUser } from './Containers/SignIn/actions';
 
 const mapDispatchToProps = (dispatch) => {
   return {

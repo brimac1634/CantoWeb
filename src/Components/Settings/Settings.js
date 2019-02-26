@@ -8,7 +8,7 @@ import FSPController from '../../Containers/FullScreenPop/FSPController';
 import FSPTrigger from '../../Containers/FullScreenPop/FSPTrigger';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
 import SignIn from '../../Containers/SignIn/SignIn';
-import { setUser } from '../../actions';
+import { setUser } from '../../Containers/SignIn/actions';
 
 const mapStateToProps = state => {
 	return {
@@ -22,10 +22,10 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const Settings = ({ user: { id, email }, updateUser }) => {
+const Settings = ({ user: { userEmail }, updateUser }) => {
 	
 	let userIsLoggedIn = false;
-	if (email != null && email.length) {
+	if (userEmail != null && userEmail.length) {
 		userIsLoggedIn = true
 	}
 
@@ -43,7 +43,7 @@ const Settings = ({ user: { id, email }, updateUser }) => {
 				<Logo iconSize='50px' />
 			</div>
 			{userIsLoggedIn 
-					? <p>{email}</p> 
+					? <p>{userEmail}</p> 
 					: <h4>Welcome to CantoTalk!</h4>
 				}
 			<div className='list-divider'>&nbsp;</div>

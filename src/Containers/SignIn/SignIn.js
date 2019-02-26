@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Logo from '../../Components/Logo/Logo';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
-import { setUser } from '../../actions';
+import { setUser } from './actions';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -81,7 +81,11 @@ class SignIn extends Component {
 					})
 				})
 					.then(res => res.json())
-					.then(user => {
+					.then(userData => {
+						const user = {
+							userID: userData.id,
+							userEmail: userData.email,
+						}
 						this.handleUpdateUser(user)
 					})
 
@@ -96,7 +100,11 @@ class SignIn extends Component {
 					})
 				})
 					.then(res => res.json())
-					.then(user => {
+					.then(userData => {
+						const user = {
+							userID: userData.id,
+							userEmail: userData.email,
+						}
 						this.handleUpdateUser(user)
 					})
 					.catch(console.log)

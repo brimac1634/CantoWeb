@@ -2,14 +2,9 @@ import { UPDATE_USER } from './constants';
 
 const initialState = {
 	user: {
-		id: '',
-        email: '',
-	},
-	alert: {
-        title: '',
-        message: '',
-        showAlert: false,
-    },
+		userID: '',
+        userEmail: '',
+	}
 }
 
 export const updateUser = (state=initialState, action={}) => {

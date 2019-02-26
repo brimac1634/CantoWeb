@@ -5,10 +5,10 @@ import { createStore } from 'redux';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { updateUser } from './reducers';
+import { rootReducer } from './rootReducer';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(updateUser)
+const store = createStore(rootReducer)
 
 ReactDOM.render((
 	<BrowserRouter>
