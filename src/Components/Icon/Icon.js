@@ -2,23 +2,9 @@ import React from 'react';
 import './Icon.css';
 import iconPaths from './selection.json';
 
-const Icon = ({ iconType, icon, iconStyle, width, title, color }) => {
+const Icon = ({ iconType, icon, iconSize, title, color }) => {
 
-	let iconWidth = 20;
-	let style = 'light';
-	let type = 'icon-btn';
-
-	if (width != null) {
-		iconWidth = width
-	}
-
-	if (iconStyle != null) {
-		style = iconStyle;
-	}
-
-	if (iconType === 'icon') {
-		type = 'icon'
-	}
+	const size = iconSize ? iconSize : 20;
 
 	const fillColor = (color) => {
 		switch (color) {
@@ -44,11 +30,10 @@ const Icon = ({ iconType, icon, iconStyle, width, title, color }) => {
 	}
 
 	return (
-		<div className={type}>
+		<div className='icon'>
 			<svg 
-				className={style} 
-				width={`${iconWidth}px`} 
-				height={`${iconWidth}px`} 
+				width={`${size}px`} 
+				height={`${size}px`} 
 				viewBox="0 0 1024 1024"
 				style={{fill: `${fillColor(color)}`}}
 			>

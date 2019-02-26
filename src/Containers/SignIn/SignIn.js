@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import './SignIn.css';
 import Logo from '../../Components/Logo/Logo';
+import Button from '../../Components/Button/Button';
+import TextInput from '../../Components/TextInput/TextInput';
 
 class SignIn extends Component {
 	constructor(props) {
@@ -97,23 +99,20 @@ class SignIn extends Component {
 			<div className='sign-in-container'>
 				<Logo iconSize='50px' />
 				<h2>{title}</h2>
-				<p>Email</p>
-				<input 
-					className='sign-in-input input-field' 
-					type='email'
-					onChange={this.onEmailChange}
+				<TextInput 
+					icon='user-3' 
+					placeHolder='Email Address'
+					handleChange={this.onEmailChange}
 				/>
-				<p>Password</p>
-				<input 
-					className='sign-in-input input-field' 
-					type='password'
-					onChange={this.onPasswordChange}
+				<TextInput 
+					icon='locked-4' 
+					placeHolder='Password'
+					handleChange={this.onPasswordChange}
 				/>
-				<input 
-					className='btn' 
-					type='submit' 
-					value={signInButton}
-					onClick={this.onUserSubmit}
+				<Button 
+					buttonType='full' 
+					title={signInButton}
+					handleClick={this.onUserSubmit}
 				/>
 				<p 
 					className='register' 

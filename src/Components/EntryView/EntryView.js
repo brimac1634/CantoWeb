@@ -96,7 +96,7 @@ class EntryView extends Component {
 								>
 									<Icon 
 										icon='like-2' 
-										width='35' 
+										iconSize='35' 
 										iconStyle='dark'
 										color={
 											isFavorited
@@ -106,7 +106,11 @@ class EntryView extends Component {
 									/>
 								</button>
 								<button className='entry-btn'>
-									<Icon icon='speaker-5' width='35' iconStyle='dark'/>
+									<Icon 
+										icon='speaker-5' 
+										iconSize='35' 
+										iconStyle='dark'
+									/>
 								</button>
 							</div>
 							<div className='top-group'>

@@ -34,7 +34,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange }) =
 								<Icon 
 									icon='menu-4' 
 									className='icon' 
-									width={26}
+									iconSize={26}
 									color='cantoWhite'
 								/>
 							</button>
@@ -50,7 +50,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange }) =
 							<Icon 
 								icon='user-3' 
 								className='icon' 
-								width={26}
+								iconSize={26}
 								color='cantoWhite'
 							/>
 						</button>

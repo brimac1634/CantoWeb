@@ -20,7 +20,7 @@ const NavBarButton = ({ to, title, icon, buttonStatus, selectButton, isSelected 
 					icon={icon} 
 					className='icon-button' 
 					title={title}
-					iconStyle={buttonStatus}
+					iconSize='20'
 					color={color}
 				/>
 			</Link>

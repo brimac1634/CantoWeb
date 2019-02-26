@@ -1,0 +1,53 @@
+.input-group {
+	border: solid 1px var(--cantoDarkGray);
+	border-radius: 4px;
+	box-sizing: border-box;
+	height: 44px;
+	width: 100%;
+	padding: 5px 10px;
+	margin: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	transition: all .3s;
+}
+
+.input-group:focus-within {
+	border: solid 1px var(--cantoDarkBlue);
+}
+
+.icon-group {
+	height: auto;
+	width: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.input-icon {
+	width: auto;
+	height: auto;
+	padding-right: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.input-divider {
+	background: linear-gradient(to bottom, transparent, var(--cantoDarkGray), var(--cantoDarkGray), var(--cantoDarkGray), transparent);
+	width: 1px;
+	height: 95%;
+}
+
+.text-input {
+	width: 100%;
+	height: auto;
+	margin: 10px;
+	outline: none;
+	border: none;
+	background: transparent;
+	font-size: 16px;
+	color: var(--cantoDarkBlue);
+}

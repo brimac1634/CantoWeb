@@ -9,7 +9,7 @@ const IconListItem = ({ icon, title, handleClick }) => {
 				<Icon 
 					icon={icon} 
 					iconType='icon' 
-					width='22' 
+					iconSize='22' 
 					color='cantoDarkBlue'
 				/>
 			</div>
