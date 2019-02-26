@@ -2,9 +2,10 @@ import React from 'react';
 import './TextInput.css'
 import Icon from '../Icon/Icon';
 
-const TextInput = ({ placeHolder, icon, handleChange }) => {
+const TextInput = ({ placeHolder, icon, handleChange, value, height }) => {
+	const inputHeight = height ? height : '44px';
 	return (
-		<div className='input-group'>
+		<div className='input-group' style={{height: `${inputHeight}`}}>
 			{icon != null &&
 				<div className='icon-group'>
 					<div className='input-icon'>
@@ -16,8 +17,9 @@ const TextInput = ({ placeHolder, icon, handleChange }) => {
 			
 			<input 
 				className='text-input'
-				placeHolder={placeHolder}
+				placeholder={placeHolder}
 				onChange={handleChange}
+				value={value}
 			/>
 		</div>
 	);
