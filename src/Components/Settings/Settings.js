@@ -12,7 +12,7 @@ import { setUser } from '../../Containers/SignIn/actions';
 
 const mapStateToProps = state => {
 	return {
-		user: state.user
+		user: state.user.user
 	}
 }
 
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const Settings = ({ user: { userEmail }, updateUser }) => {
-	
+	console.log(userEmail);
 	let userIsLoggedIn = false;
 	if (userEmail != null && userEmail.length) {
 		userIsLoggedIn = true

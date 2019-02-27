@@ -7,7 +7,7 @@ import EntryView from '../../Components/EntryView/EntryView';
 
 const mapStateToProps = state => {
 	return {
-		user: state.user
+		user: state.user.user
 	}
 }
 

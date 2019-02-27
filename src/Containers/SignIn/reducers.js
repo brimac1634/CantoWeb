@@ -5,7 +5,7 @@ const initialState = {
 		userID: '',
         userEmail: '',
 	}
-}
+} 
 
 export const updateUser = (state=initialState, action={}) => {
 	switch(action.type) {

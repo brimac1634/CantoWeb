@@ -5,7 +5,7 @@ import Icon from '../Icon/Icon';
 
 const mapStateToProps = state => {
 	return {
-		user: state.user
+		user: state.user.user
 	}
 }
 
