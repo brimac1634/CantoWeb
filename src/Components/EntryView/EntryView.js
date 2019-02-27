@@ -2,10 +2,17 @@ import React, {Component} from 'react';
 import './EntryView.css';
 import { connect } from 'react-redux';
 import Icon from '../Icon/Icon';
+import { setAlert } from '../../Components/PopUpAlert/actions';
 
 const mapStateToProps = state => {
 	return {
 		user: state.user.user
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		presentAlert: (alert) => dispatch(setAlert(alert)),
 	}
 }
 
@@ -35,7 +42,9 @@ class EntryView extends Component {
 				englishsentence
 			},
 			updateEntries,
-			updateSelected
+			updateSelected,
+			presentAlert,
+			isFavoritePage
 		} = this.props;
 
 		const { isFavorited } = this.state;
@@ -57,7 +66,6 @@ class EntryView extends Component {
 			})
 				.then(data => data.json())
 				.then(favorited => {
-					console.log(favorited)
 					if (favorited !== isFavorited) {
 						this.setState({isFavorited: favorited})
 					}
@@ -66,7 +74,7 @@ class EntryView extends Component {
 		}
 
 		if (entryID != null && userID != null) {
-			checkIfFavorite(entryID, userID)
+			checkIfFavorite(entryID, userID);
 		}
 
 		const toggleFavorite = (entryID, userID, cantoWord) => {
@@ -81,12 +89,27 @@ class EntryView extends Component {
 					})
 				})
 					.then(data => data.json())
-					.then(result => {
-						if (result === 'deleted') {
-							updateEntries(userID)
-							updateSelected('')
+					.then(favorited => {
+						this.setState({isFavorited: favorited})
+						let title = '';
+						let message = '';
+						if (!favorited) {
+							if (isFavoritePage) {
+								updateEntries(userID)
+								updateSelected('')
+							}
+							title = 'Removed'
+							message = `"${cantoWord}" has been removed from your favorites.`
+						} else {
+							title = 'Added'
+							message = `"${cantoWord}" has been added to your favorites.`
 						}
-						checkIfFavorite(entryID, userID)
+						const alert = {
+					        title: title,
+					        message: message,
+					        showAlert: true,
+					    }
+					    presentAlert(alert);
 					})
 					.catch(err => console.log('Unable to toggle favorite'))
 			} else {
@@ -168,4 +191,4 @@ class EntryView extends Component {
 	
 }
 
-export default connect(mapStateToProps)(EntryView);
+export default connect(mapStateToProps, mapDispatchToProps)(EntryView);

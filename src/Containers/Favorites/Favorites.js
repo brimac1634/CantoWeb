@@ -74,6 +74,7 @@ class Favorites extends Component {
 							entry={selectedEntry}
 							updateEntries={this.updateFavoritesList}
 							updateSelected={this.handleEntrySelect}
+							isFavoritePage='true'
 						/>
 					</div>
 				</div>

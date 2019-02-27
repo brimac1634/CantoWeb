@@ -30,7 +30,7 @@ const PopUpAlert = ({ alert: { title, message, showAlert }, presentAlert }) => {
 
 	return (
 		<div className={`alert ${alertStatus}`}>
-			<h3>{title}</h3>
+			<h4>{title}</h4>
 			<p>{message}</p>
 		</div>
 	);

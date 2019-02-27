@@ -6,14 +6,15 @@
 	padding: 10px;
 	border-radius: 4px;
 	right: 50px;
-	transition: all 0.5s;
+	transition: all 0.3s linear;
 	background: var(--cantoWhite);
 	box-shadow: var(--cantoFloatShadow);
 	text-align: center;
 }
 
-.alert h3 {
+.alert h4 {
 	margin: 0 0 10px 0;
+	font-family: 'Heebo', sans-serif;
 }
 
 .alert p {
