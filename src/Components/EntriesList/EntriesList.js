@@ -7,7 +7,7 @@ const EntryList = ({ entries, selectEntry, searchKey, isFavoritePage }) => {
 	return (
 		<div className='entry-list'>
 			{
-				searchKey.length || isFavoritePage
+				entries.length || isFavoritePage
 				?   entries.map(entry => {
 						return (
 							<EntryRow

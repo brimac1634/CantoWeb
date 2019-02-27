@@ -63,7 +63,7 @@ class Search extends Component {
 			})
 				.then(res => res.json())
 				.then(entries => {
-					if (entries.length) {
+					if (entries.constructor === Array) {
 						sessionStorage.setItem('lastSearchEntries', JSON.stringify(entries));
 						this.setState({
 							entries: entries
