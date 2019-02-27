@@ -2,17 +2,26 @@
 	position: absolute;
 	box-sizing: border-box;
 	width: 250px;
-	height: 100px;
+	height: auto;
 	padding: 10px;
 	border-radius: 4px;
-	left: 50px;
-	transition: all 0.4s;
-	background: var(--cantoPink);
+	right: 50px;
+	transition: all 0.5s;
+	background: var(--cantoWhite);
 	box-shadow: var(--cantoFloatShadow);
+	text-align: center;
+}
+
+.alert h3 {
+	margin: 0 0 10px 0;
+}
+
+.alert p {
+	margin: 0;
 }
 
 .alertIsVisible {
-	bottom: 10px;
+	bottom: 20px;
 }
 
 .alertIsHidden {

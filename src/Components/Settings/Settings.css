@@ -30,6 +30,10 @@
 	font-size: 16px;
 }
 
+.welcome {
+	margin: 10px 0;
+}
+
 .setting-list {
 	width: 100%;
 	height: auto;

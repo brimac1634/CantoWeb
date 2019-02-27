@@ -9,6 +9,7 @@ import FSPTrigger from '../../Containers/FullScreenPop/FSPTrigger';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
 import SignIn from '../../Containers/SignIn/SignIn';
 import { setUser } from '../../Containers/SignIn/actions';
+import { setAlert } from '../../Components/PopUpAlert/actions';
 
 const mapStateToProps = state => {
 	return {
@@ -18,12 +19,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		updateUser: (user) => dispatch(setUser(user))
+		updateUser: (user) => dispatch(setUser(user)),
+		presentAlert: (alert) => dispatch(setAlert(alert)),
 	}
 }
 
-const Settings = ({ user: { userEmail }, updateUser }) => {
-	console.log(userEmail);
+const Settings = ({ user: { userEmail }, updateUser, presentAlert }) => {
 	let userIsLoggedIn = false;
 	if (userEmail != null && userEmail.length) {
 		userIsLoggedIn = true
@@ -37,14 +38,24 @@ const Settings = ({ user: { userEmail }, updateUser }) => {
 		console.log(789)
 	}
 
+	const handleLogout = () => {
+		updateUser('');
+		const alert = {
+	        title: 'Logout Successful',
+	        message: 'You have successfully been logged out.',
+	        showAlert: true,
+	    }
+	    presentAlert(alert);
+	}
+
 	return (
 		<div className='settings'>
 			<div className='logo-bar'>
 				<Logo iconSize='50px' />
 			</div>
 			{userIsLoggedIn 
-					? <p>{userEmail}</p> 
-					: <h4>Welcome to CantoTalk!</h4>
+					? <p className='welcome'>{userEmail}</p> 
+					: <p className='welcome'>Welcome to CantoTalk!</p>
 				}
 			<div className='list-divider'>&nbsp;</div>
 			<div className='setting-list'>
@@ -65,7 +76,7 @@ const Settings = ({ user: { userEmail }, updateUser }) => {
 				<IconListItem icon='paper-plane' title='Contact' handleClick={handleContact}/>
 				<div className='list-divider'>&nbsp;</div>
 				{userIsLoggedIn
-					? <IconListItem icon='exit-1' title='Logout' handleClick={()=>updateUser('')}/>
+					? <IconListItem icon='exit-1' title='Logout' handleClick={handleLogout}/>
 					: <FSPController>
 						<FSPTrigger>
 							<IconListItem 
@@ -78,7 +89,6 @@ const Settings = ({ user: { userEmail }, updateUser }) => {
 						</FullScreenPop>
 					  </FSPController>
 				}
-				<div className='list-divider'>&nbsp;</div>
 			</div>
 		</div>
 	);

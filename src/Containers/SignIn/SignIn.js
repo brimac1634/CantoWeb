@@ -5,10 +5,12 @@ import Logo from '../../Components/Logo/Logo';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
 import { setUser } from './actions';
+import { setAlert } from '../../Components/PopUpAlert/actions';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		updateUser: (user) => dispatch(setUser(user))
+		updateUser: (user) => dispatch(setUser(user)),
+		presentAlert: (alert) => dispatch(setAlert(alert)),
 	}
 }
 
@@ -61,6 +63,7 @@ class SignIn extends Component {
 
 	onUserSubmit = () => {
 		const { title, email, password } = this.state;
+		const { presentAlert } = this.props;
 		const emailIsValid = this.validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
 		if (!emailIsValid && !passwordIsValid) {
@@ -86,8 +89,15 @@ class SignIn extends Component {
 							userID: userData.id,
 							userEmail: userData.email,
 						}
+						const alert = {
+					        title: 'Login Successful',
+					        message: `You are now logged in as "${user.userEmail}".`,
+					        showAlert: true,
+					    }
 						this.handleUpdateUser(user)
+						presentAlert(alert)
 					})
+					.catch(err => console.log('Unable to login'))
 
 			} else {
 				//register
@@ -105,7 +115,13 @@ class SignIn extends Component {
 							userID: userData.id,
 							userEmail: userData.email,
 						}
+						const alert = {
+					        title: 'Registration Successful',
+					        message: `You are now logged in as "${user.userEmail}".`,
+					        showAlert: true,
+					    }
 						this.handleUpdateUser(user)
+						presentAlert(alert);
 					})
 					.catch(console.log)
 			}
