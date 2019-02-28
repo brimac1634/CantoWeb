@@ -31,16 +31,6 @@ class Search extends Component {
 		}
 	}
 
-	componentDidUpdate(){
-	  setTimeout(() => {
-	    if(this.state.mobileSelectedEntry){
-	      window.addEventListener('click', this.clearMobileEntry)
-	    } else {
-	      window.removeEventListener('click', this.clearMobileEntry)
-	    }
-	  }, 0)
-	}
-
 	clearMobileEntry = () => {
 		this.setState({mobileSelectedEntry: ''})
 	}
@@ -135,6 +125,10 @@ class Search extends Component {
 								selectEntry={this.handleEntrySelect}
 							/>
 						</div>
+						{mobileSelectedEntry
+							? <div className='invisible-div' onClick={this.clearMobileEntry}>&nbsp;</div>
+							: null
+						}
 						<div className={`entry-view-container ${entryViewMobile}`}>
 							<EntryView 
 								entry={selectedEntry}

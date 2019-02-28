@@ -48,6 +48,15 @@
 
 }
 
+.invisible-div {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
 @media screen and (max-width: 700px) {
     .entry-list-container {
 		width: 100%;

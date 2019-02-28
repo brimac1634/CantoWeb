@@ -118,11 +118,8 @@ class EntryView extends Component {
 		}
 
 		const togglePlay = (entryID) => {
-			console.log('playing')
 			const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
-			audio.play()
-			console.log('stopped')
-		}
+			audio.play()		}
 
 		return (
 			<div className='entry-view'>
