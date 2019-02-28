@@ -20,7 +20,7 @@ class EntryView extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isFavorited: false
+			isFavorited: false,
 		}
 	}
 
@@ -117,6 +117,13 @@ class EntryView extends Component {
 			}
 		}
 
+		const togglePlay = (entryID) => {
+			console.log('playing')
+			const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
+			audio.play()
+			console.log('stopped')
+		}
+
 		return (
 			<div className='entry-view'>
 				{entry !== ''
@@ -137,7 +144,10 @@ class EntryView extends Component {
 										}
 									/>
 								</button>
-								<button className='entry-btn'>
+								<button 
+									className='entry-btn'
+									onClick={() => togglePlay(entryID)}
+								>
 									<Icon 
 										icon='speaker-5' 
 										iconSize='35' 
