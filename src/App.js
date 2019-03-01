@@ -10,7 +10,7 @@ import { setUser } from './Containers/SignIn/actions';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateUser: (user) => dispatch(setUser(user))
+    updateUser: (user) => dispatch(setUser(user)),
   }
 }
 
@@ -19,11 +19,6 @@ class App extends Component {
   	super();
   	this.state = {
   		current: 'Search',
-      alert: {
-        title: '',
-        message: '',
-        showAlert: true,
-      }
   	}
   }  
 
@@ -38,24 +33,8 @@ class App extends Component {
 
   handleNavChange = (title) => this.setState({ current: title })
 
-  presentAlert = (title, message) => {
-    this.setState({
-      alert: {
-        title: title,
-        message: message,
-        showAlert: true,
-      }
-    })
-    setTimeout(() => {
-      this.setState({alert: {showAlert: false}})
-    }, 3000)
-  }
-
   render() {
-    const { 
-      current,
-      alert,
-    } = this.state;
+    const { current } = this.state;
 
     return (
       <div>

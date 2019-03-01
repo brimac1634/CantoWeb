@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import '../Search/Search.css';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
+import { setMobileEntry } from '../Search/actions';
 
 const mapStateToProps = state => {
 	return {
-		user: state.user.user
+		user: state.user.user,
+		mobileSelectedEntry: state.invDiv.mobileEntry,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		triggerInvDiv: (entryID) => dispatch(setMobileEntry(entryID))
 	}
 }
 
@@ -27,7 +36,10 @@ class Favorites extends Component {
 		} else {
 			//ask user to sign in
 		}
-		
+	}
+
+	componentWillUnmount() {
+		this.clearMobileEntry();
 	}
 
 	updateFavoritesList = (userID) => {
@@ -46,42 +58,84 @@ class Favorites extends Component {
 	}
 
 	handleEntrySelect = (entry) => {
+		const {triggerInvDiv} = this.props;
 		this.setState({
 			selectedEntry: entry
 		})
+		triggerInvDiv(entry.entryID);
 	}
+
+	clearMobileEntry = () => {
+	    const {triggerInvDiv} = this.props;
+	    triggerInvDiv('');
+	};
 
 	render() {
 		const { selectedEntry, entries } = this.state;
+		const { mobileSelectedEntry } = this.props;
+
+		let entryViewMobile = 'hidden-entry-view'
+		if (mobileSelectedEntry) {
+			entryViewMobile = 'visible-entry-view'
+		}
+
 		return (
 			<div>
 				<SearchBar 
 					className='search-bar'
 					hideInput='true'
 				/>
-				<div className='split-container'>
-					<div className='entry-list-container'>
-						<EntriesList  
-							entries={entries}
-							selectEntry={this.handleEntrySelect}
-							searchKey=''
-							isFavoritePage='true'
-						/>
+				<MediaQuery minWidth={700}>
+					<div className='split-container'>
+						<div className='entry-list-container'>
+							<EntriesList  
+								entries={entries}
+								selectEntry={this.handleEntrySelect}
+								searchKey=''
+								isFavoritePage='true'
+							/>
+						</div>
+						<div className='divider'></div>
+						<div className='entry-view-container'>
+							<EntryView 
+								entry={selectedEntry}
+								updateEntries={this.updateFavoritesList}
+								updateSelected={this.handleEntrySelect}
+								isFavoritePage='true'
+							/>
+						</div>
 					</div>
-					<div className='divider'></div>
-					<div className='entry-view-container'>
-						<EntryView 
-							entry={selectedEntry}
-							updateEntries={this.updateFavoritesList}
-							updateSelected={this.handleEntrySelect}
-							isFavoritePage='true'
-						/>
+				</MediaQuery>
+				<MediaQuery maxWidth={699}>
+					<div className='split-container'>
+						<div className='entry-list-container'>
+							<EntriesList  
+								entries={entries}
+								searchKey=''
+								selectEntry={this.handleEntrySelect}
+								isFavoritePage='true'
+							/>
+						</div>
+						{mobileSelectedEntry
+				              ? <div className='invisible-div' onClick={this.clearMobileEntry}>&nbsp;</div>
+				              : null
+				        }
+						<div 
+							className={`entry-view-container ${entryViewMobile}`}
+						>
+							<EntryView 
+								entry={selectedEntry}
+								updateEntries={this.updateFavoritesList}
+								updateSelected={this.handleEntrySelect}
+								isFavoritePage='true'
+							/>
+						</div>
 					</div>
-				</div>
+				</MediaQuery>
 			</div>
 		);
 	}
 	
 }
 
-export default connect(mapStateToProps)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

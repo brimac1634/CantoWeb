@@ -1,0 +1,1 @@
+export const TRIGGER_INV_DIV = 'TRIGGER_INV_DIV';

@@ -1,16 +1,29 @@
 import React, { Component } from 'react';
 import './Search.css';
+import {connect} from 'react-redux';
 import MediaQuery from 'react-responsive';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
+import {setMobileEntry} from './actions';
+
+const mapStateToProps = state => {
+  return {
+    mobileSelectedEntry: state.invDiv.mobileEntry
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		triggerInvDiv: (entryID) => dispatch(setMobileEntry(entryID))
+	}
+}
 
 class Search extends Component {
 	constructor(props) {
 		super()
 		this.state = {
 			selectedEntry: '',
-			mobileSelectedEntry: '',
 			searchKey: '',
 			entries: [],
 		}
@@ -31,10 +44,10 @@ class Search extends Component {
 		}
 	}
 
-	clearMobileEntry = () => {
-		this.setState({mobileSelectedEntry: ''})
+	componentWillUnmount() {
+		this.clearMobileEntry();
 	}
-
+	
 	onSearch = (event) => {
 		const searchKey = event.target.value
 		this.setState({searchKey: searchKey})
@@ -75,16 +88,22 @@ class Search extends Component {
 	}
 
 	handleEntrySelect = (entry) => {
+		const {triggerInvDiv} = this.props;
 		sessionStorage.setItem('lastSelectedEntry', JSON.stringify(entry));
 		this.setState({
 			selectedEntry: entry,
-			mobileSelectedEntry: entry.entryID,
 		})
+		triggerInvDiv(entry.entryID);
 	}
 
+	clearMobileEntry = () => {
+	    const {triggerInvDiv} = this.props;
+	    triggerInvDiv('');
+	};
+
 	render() {
-		const { selectedEntry, entries, searchKey, mobileSelectedEntry } = this.state;
-		const { userID } = this.props;
+		const { selectedEntry, entries, searchKey } = this.state;
+		const { userID, mobileSelectedEntry } = this.props;
 
 		let entryViewMobile = 'hidden-entry-view'
 		if (mobileSelectedEntry) {
@@ -126,10 +145,12 @@ class Search extends Component {
 							/>
 						</div>
 						{mobileSelectedEntry
-							? <div className='invisible-div' onClick={this.clearMobileEntry}>&nbsp;</div>
-							: null
-						}
-						<div className={`entry-view-container ${entryViewMobile}`}>
+				              ? <div className='invisible-div' onClick={this.clearMobileEntry}>&nbsp;</div>
+				              : null
+				        }
+						<div 
+							className={`entry-view-container ${entryViewMobile}`}
+						>
 							<EntryView 
 								entry={selectedEntry}
 								userID={userID}
@@ -143,4 +164,4 @@ class Search extends Component {
 	
 }
 
-export default Search;
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
