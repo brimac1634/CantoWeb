@@ -7,6 +7,7 @@ import FullScreenPop from '../../Containers/FullScreenPop/FullScreenPop';
 import FSPController from '../../Containers/FullScreenPop/FSPController';
 import FSPTrigger from '../../Containers/FullScreenPop/FSPTrigger';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
+import WhatIsCantoTalk from '../WhatIsCantoTalk/WhatIsCantoTalk';
 import SignIn from '../../Containers/SignIn/SignIn';
 import { setUser } from '../../Containers/SignIn/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
@@ -28,10 +29,6 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert }) => {
 	let userIsLoggedIn = false;
 	if (userEmail != null && userEmail.length) {
 		userIsLoggedIn = true
-	}
-
-	const handleHelp = () => {
-		console.log(456)
 	}
 	
 	const handleContact = () => {
@@ -68,11 +65,23 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert }) => {
 							/>
 						</FSPTrigger>
 						<FullScreenPop>
+							<WhatIsCantoTalk />
+						</FullScreenPop>
+					</FSPController>
+				</div>
+				<div className='settings-item'>
+					<FSPController>
+						<FSPTrigger>
+							<IconListItem 
+								icon='agenda' 
+								title='Dictionary Help' 
+							/>
+						</FSPTrigger>
+						<FullScreenPop>
 							<DictionaryHelp />
 						</FullScreenPop>
 					</FSPController>
 				</div>
-				<IconListItem icon='agenda' title='Dictionary Help' handleClick={handleHelp}/>
 				<IconListItem icon='paper-plane' title='Contact' handleClick={handleContact}/>
 				<div className='list-divider'>&nbsp;</div>
 				{userIsLoggedIn
