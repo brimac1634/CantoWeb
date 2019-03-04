@@ -93,21 +93,25 @@ class EntryView extends Component {
 						this.setState({isFavorited: favorited})
 						let title = '';
 						let message = '';
+						let icon = '';
 						if (!favorited) {
 							if (isFavoritePage) {
 								updateEntries(userID)
 								updateSelected('')
 							}
-							title = 'Removed'
+							title = 'Favorite Removed'
 							message = `"${cantoWord}" has been removed from your favorites.`
+							icon = 'dislike-1'
 						} else {
-							title = 'Added'
+							title = 'Favorite Added'
 							message = `"${cantoWord}" has been added to your favorites.`
+							icon = 'like-2'
 						}
 						const alert = {
 					        title: title,
 					        message: message,
 					        showAlert: true,
+					        icon: icon,
 					    }
 					    presentAlert(alert);
 					})

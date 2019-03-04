@@ -10,6 +10,9 @@
 	background: var(--cantoWhite);
 	box-shadow: var(--cantoFloatShadow);
 	text-align: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 .alert h4 {
@@ -27,4 +30,28 @@
 
 .alertIsHidden {
 	bottom: -100px;
+}
+
+.alert-icon-group {
+	height: 100%;
+	width: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.alert-input-icon {
+	width: auto;
+	height: auto;
+	padding-right: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.input-divider {
+	background: linear-gradient(to bottom, transparent, var(--cantoDarkGray), var(--cantoDarkGray), var(--cantoDarkGray), transparent);
+	width: 1px;
+	height: 95%;
 }

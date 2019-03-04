@@ -1,5 +1,6 @@
 import React from 'react';
 import './PopUpAlert.css';
+import Icon from '../Icon/Icon';
 import { connect } from 'react-redux';
 import { setAlert } from './actions';
 
@@ -15,7 +16,8 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const PopUpAlert = ({ alert: { title, message, showAlert }, presentAlert }) => {
+const PopUpAlert = ({ alert: { title, message, showAlert, icon }, presentAlert }) => {
+	console.log(icon);
 	let alertStatus = showAlert ? 'alertIsVisible' : 'alertIsHidden'
 	if (showAlert) {
 		setTimeout(() => {
@@ -23,6 +25,7 @@ const PopUpAlert = ({ alert: { title, message, showAlert }, presentAlert }) => {
 		        title: '',
 		        message: '',
 		        showAlert: false,
+		        icon: '',
 		    }
 		    presentAlert(clearAlert);
 		}, 4000)
@@ -30,8 +33,18 @@ const PopUpAlert = ({ alert: { title, message, showAlert }, presentAlert }) => {
 
 	return (
 		<div className={`alert ${alertStatus}`}>
-			<h4>{title}</h4>
-			<p>{message}</p>
+			{icon != null &&
+				<div className='alert-icon-group'>
+					<div className='alert-input-icon'>
+						<Icon iconSize='32' icon={icon} color='cantoBlue'/>
+					</div>
+					<div className='input-divider'>&nbsp;</div>
+				</div>
+			}
+			<div className='message'>
+				<h4>{title}</h4>
+				<p>{message}</p>
+			</div>
 		</div>
 	);
 }

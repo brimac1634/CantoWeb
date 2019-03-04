@@ -5,6 +5,7 @@ const initialState = {
         title: '',
         message: '',
         showAlert: false,
+        icon: '',
     }
 }
 
