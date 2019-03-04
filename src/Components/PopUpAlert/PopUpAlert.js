@@ -32,7 +32,7 @@ const PopUpAlert = ({ alert: { title, message, showAlert, icon }, presentAlert }
 
 	return (
 		<div className={`alert ${alertStatus}`}>
-			{icon.length &&
+			{icon != null &&
 				<div className='alert-icon-group'>
 					<div className='alert-input-icon'>
 						<Icon iconSize='32' icon={icon} color='cantoBlue'/>

@@ -116,7 +116,7 @@ class EntryView extends Component {
 					.catch(err => console.log('Unable to toggle favorite'))
 			} else {
 				//present pop up "you must be signed in to favorite words"
-				presentPopUp(SignIn);
+				
 			}
 		}
 
@@ -195,6 +195,7 @@ class EntryView extends Component {
 								<div className='ghost-div'>&nbsp;</div>
 							</div>
 						</div>}
+
 			</div>
 			
 		);

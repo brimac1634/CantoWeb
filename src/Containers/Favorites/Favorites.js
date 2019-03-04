@@ -82,8 +82,8 @@ class Favorites extends Component {
 			? 'visible-entry-view'
 			: 'hidden-entry-view'
 
-		const PopUp = user ? null : presentPopUp(SignIn)
-
+		const PopUp = user.userID.length > 0 ? null : presentPopUp(SignIn)
+		
 
 		return (
 			<div>
@@ -138,7 +138,7 @@ class Favorites extends Component {
 						</div>
 					</div>
 				</MediaQuery>
-				{user != null &&
+				{user.userID.length > 0 &&
 					<PopUp />
 				}
 			</div>
