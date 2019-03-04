@@ -125,6 +125,8 @@ class EntryView extends Component {
 			audio.play()		
 		}
 
+		const PopUp = user ? null : presentPopUp(SignIn)
+
 		return (
 			<div className='entry-view'>
 				{entry !== ''
