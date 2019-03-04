@@ -17,7 +17,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const PopUpAlert = ({ alert: { title, message, showAlert, icon }, presentAlert }) => {
-	console.log(icon);
 	let alertStatus = showAlert ? 'alertIsVisible' : 'alertIsHidden'
 	if (showAlert) {
 		setTimeout(() => {
@@ -33,7 +32,7 @@ const PopUpAlert = ({ alert: { title, message, showAlert, icon }, presentAlert }
 
 	return (
 		<div className={`alert ${alertStatus}`}>
-			{icon != null &&
+			{icon.length &&
 				<div className='alert-icon-group'>
 					<div className='alert-input-icon'>
 						<Icon iconSize='32' icon={icon} color='cantoBlue'/>

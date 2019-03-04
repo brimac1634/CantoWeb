@@ -37,6 +37,7 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert }) => {
 
 	const handleLogout = () => {
 		updateUser('');
+		localStorage.setItem('user', '');
 		const alert = {
 	        title: 'Logout Successful',
 	        message: 'You have successfully been logged out.',

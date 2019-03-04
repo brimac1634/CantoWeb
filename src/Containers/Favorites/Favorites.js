@@ -5,6 +5,8 @@ import MediaQuery from 'react-responsive';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
+import presentPopUp from '../FullScreenPop/presentPopUp';
+import SignIn from '../SignIn/SignIn';
 import { setMobileEntry } from '../Search/actions';
 
 const mapStateToProps = state => {
@@ -34,6 +36,8 @@ class Favorites extends Component {
 		if (userID) {
 			this.updateFavoritesList(userID);
 		} else {
+			console.log('nobody signed in')
+
 			//ask user to sign in
 		}
 	}
@@ -72,12 +76,14 @@ class Favorites extends Component {
 
 	render() {
 		const { selectedEntry, entries } = this.state;
-		const { mobileSelectedEntry } = this.props;
+		const { mobileSelectedEntry, user } = this.props;
 
-		let entryViewMobile = 'hidden-entry-view'
-		if (mobileSelectedEntry) {
-			entryViewMobile = 'visible-entry-view'
-		}
+		const entryViewMobile = mobileSelectedEntry
+			? 'visible-entry-view'
+			: 'hidden-entry-view'
+
+		const PopUp = user ? null : presentPopUp(SignIn)
+
 
 		return (
 			<div>
@@ -132,6 +138,9 @@ class Favorites extends Component {
 						</div>
 					</div>
 				</MediaQuery>
+				{user != null &&
+					<PopUp />
+				}
 			</div>
 		);
 	}

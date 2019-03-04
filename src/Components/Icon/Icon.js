@@ -20,13 +20,12 @@ const Icon = ({ iconType, icon, iconSize, title, color }) => {
 
 	function getPath(iconName) {
 	  const icon = iconPaths.icons.find(icon => icon.properties.name === iconName);
-
-		  if (icon) {
-		    return icon.icon.paths.join(' ');
-		  } else {
-		    console.warn(`icon ${iconName} does not exist.`);
-		    return '';
-		  }
+	  if (icon) {
+	    return icon.icon.paths.join(' ');
+	  } else {
+	    console.warn(`icon ${iconName} does not exist.`);
+	    return '';
+	  }
 	}
 
 	return (

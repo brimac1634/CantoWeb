@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import './EntryView.css';
 import { connect } from 'react-redux';
 import Icon from '../Icon/Icon';
+import SignIn from '../../Containers/SignIn/SignIn';
+import presentPopUp from '../../Containers/FullScreenPop/presentPopUp';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 
 const mapStateToProps = state => {
@@ -49,11 +51,7 @@ class EntryView extends Component {
 
 		const { isFavorited } = this.state;
 
-		let clLabel = 'cl: ';
-
-		if (!classifier) {
-			clLabel = '';
-		}
+		const clLabel = classifier ? 'cl: ' : '';
 
 		const checkIfFavorite = (entryID, userID) => {
 			fetch('http://localhost:3000/Favorites/isFavorited', {
@@ -73,7 +71,7 @@ class EntryView extends Component {
 				.catch(err => console.log('Unable to check favorite'))
 		}
 
-		if (entryID != null && userID != null) {
+		if (entryID != null && userID != null && userID.toString().length) {
 			checkIfFavorite(entryID, userID);
 		}
 
@@ -118,12 +116,14 @@ class EntryView extends Component {
 					.catch(err => console.log('Unable to toggle favorite'))
 			} else {
 				//present pop up "you must be signed in to favorite words"
+				presentPopUp(SignIn);
 			}
 		}
 
 		const togglePlay = (entryID) => {
 			const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
-			audio.play()		}
+			audio.play()		
+		}
 
 		return (
 			<div className='entry-view'>
