@@ -1,7 +1,9 @@
 .dict-help {
-	width: 600px;
-	height: 400px;
+	max-width: 600px;
+	max-height: 400px;
 	padding: 20px 25px;
 	box-sizing: border-box;
 	text-align: center;
+	overflow-y: auto;
 }
+

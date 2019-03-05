@@ -1,5 +1,5 @@
 .what-is-cantotalk {
-	width: 350px;
+	max-width: 450px;
 	height: auto;
 	padding: 10px 20px;
 	box-sizing: border-box;
@@ -20,6 +20,6 @@
 	margin-left: 10px;
 }
 
-.dict-help h3 {
+.what-is-cantotalk h3 {
 	margin: 0 0 30px 0;
 }

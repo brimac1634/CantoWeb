@@ -12,12 +12,19 @@
 	margin: 10px;
 	border: solid 1px var(--cantoDarkGray);
 	transition: all 0.3s ease-in-out;
-	cursor: pointer;
 	white-space: nowrap;
 }
 
-.entry-row:hover {
+.real {
+	cursor: pointer;
+}
+
+.real:hover {
 	box-shadow: var(--cantoShadow);
+}
+
+.demo {
+	cursor: default;
 }
 
 .entry-row > * {
@@ -28,7 +35,6 @@
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
-
 }
 
 .entry-row p {
@@ -53,5 +59,15 @@
 .top-left .ghost-div {
 	height: 100%;
 	margin: 0;
+}
+
+.hover-box {
+	border: solid 1px transparent;
+	border-radius: 4px;
+	transition: all 0.2s ease-in-out;
+}
+
+.hover-box:hover {
+	border: solid 1px #333;
 }
 

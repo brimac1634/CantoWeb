@@ -19,9 +19,14 @@ const DictionaryHelp = () => {
 	return (
 		<div className='dict-help'>
 			<h3>How do I use this dictionary?</h3>
-			<p>This dictionary is designed around spoken Cantonese, and the day to day vocabulary that is regularly spoken among locals. You can start using the dictionary by navigating to the search page and using the search bar. The search bar can accept English, Mandarin, Jyutping, or Cantonese, making it easy to find translations. Once your search returns matching results, you will see translations like in the diagram below. Take note of what the different sections represent:</p>
+			<div className='list-divider'></div>
+			<p>This dictionary is designed around spoken Cantonese, and the day to day vocabulary that is regularly spoken among locals. You can start using the dictionary by navigating to the search page and using the search bar. The search bar can accept English, Mandarin, Jyutping, or Cantonese, making it easy to find translations. Once your search returns matching results, you will see translations like in the diagram below. Hover over the different sections of the key below to see what it all is!</p>
 			<div className='row-diagram'>
-				<EntryRow entry={demoEntry} />
+				<EntryRow 
+					entry={demoEntry} 
+					isDemo={true} 
+					className='demo-row'
+				/>
 			</div>  
 		</div>
 	);
