@@ -76,14 +76,18 @@ class Favorites extends Component {
 
 	render() {
 		const { selectedEntry, entries } = this.state;
-		const { mobileSelectedEntry, user } = this.props;
+		const { mobileSelectedEntry, user: {userID} } = this.props;
 
 		const entryViewMobile = mobileSelectedEntry
 			? 'visible-entry-view'
 			: 'hidden-entry-view'
 
-		const PopUp = user.userID.length > 0 ? null : presentPopUp(SignIn)
-		
+		const renderPopUp = () => {
+			if (userID === '' || userID == null) {
+				const PopUp = presentPopUp(SignIn)
+				return <PopUp />
+			}
+		}
 
 		return (
 			<div>
@@ -138,9 +142,7 @@ class Favorites extends Component {
 						</div>
 					</div>
 				</MediaQuery>
-				{user.userID.length > 0 &&
-					<PopUp />
-				}
+				{renderPopUp()}
 			</div>
 		);
 	}

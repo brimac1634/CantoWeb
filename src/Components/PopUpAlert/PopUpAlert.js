@@ -30,16 +30,22 @@ const PopUpAlert = ({ alert: { title, message, showAlert, icon }, presentAlert }
 		}, 4000)
 	}
 
-	return (
-		<div className={`alert ${alertStatus}`}>
-			{icon != null &&
+	const renderIcon = () => {
+		if (icon !== '' && icon != null) {
+			return (
 				<div className='alert-icon-group'>
 					<div className='alert-input-icon'>
 						<Icon iconSize='32' icon={icon} color='cantoBlue'/>
 					</div>
 					<div className='input-divider'>&nbsp;</div>
 				</div>
-			}
+			);
+		}
+	}
+
+	return (
+		<div className={`alert ${alertStatus}`}>
+			{renderIcon()}
 			<div className='message'>
 				<h4>{title}</h4>
 				<p>{message}</p>
