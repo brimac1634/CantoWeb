@@ -1,6 +1,9 @@
 .entry-view {
-	height: 90%;
-	width: 90%;
+	height: calc(100% - 20px);
+	width: calc(100% - 20px);
+	display: block;
+	padding: 30px;
+	box-sizing: border-box;
 	background: var(--cantoWhite);
 	border: solid 1px var(--cantoDarkGray);
 	border-radius: 4px;
@@ -17,8 +20,9 @@
 
 .inner-entry-view {
 	position: relative;
-	height: 85%;
-	width: 85%;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -27,13 +31,18 @@
 
 .entry-btn-container {
 	position: absolute;
-	width: 35px;
-	height: 90px;
+	width: auto;
+	height: auto;
 	top: 0;
 	right: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
+	align-items: center;
+}
+
+.entry-btn-container * {
+	margin: 0;
 }
 
 .top-group {
@@ -80,5 +89,11 @@
 
 	.entry-view:hover {
 		box-shadow: var(--cantoFloatShadow);
+	}
+}
+
+@media screen and (min-height: 768px) {
+	.entry-view  {
+		max-height: 600px;
 	}
 }

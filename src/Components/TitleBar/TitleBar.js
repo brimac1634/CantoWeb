@@ -1,6 +1,7 @@
 import React from 'react';
 import './TitleBar.css';
 import MediaQuery from 'react-responsive';
+import ReactTooltip from 'react-tooltip'
 import LogoFull from '../LogoFull/LogoFull';
 import Logo from '../Logo/Logo';
 import Icon from '../Icon/Icon';
@@ -30,14 +31,19 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange }) =
 				<MediaQuery maxWidth={950}>
 					<Controller>
 						<Trigger>
-							<button className='button'>
-								<Icon 
-									icon='menu-4' 
-									className='icon' 
-									iconSize={26}
-									color='cantoWhite'
-								/>
-							</button>
+							<div>
+								<div data-tip='Menu' data-for='menu' data-offset="{'left': -10}" >
+									<button className='button' >
+										<Icon 
+											icon='menu-4' 
+											className='icon' 
+											iconSize={26}
+											color='cantoWhite'
+										/>
+									</button>
+								</div>
+								<ReactTooltip effect='solid' delayShow={1000} place='left' id='menu' type='light'/>
+							</div>
 						</Trigger>
 						<PopOver>
 							<PopOverNav navChange={navChange} />
@@ -46,14 +52,19 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange }) =
 				</MediaQuery>
 				<Controller>
 					<Trigger>
-						<button className='button'>
-							<Icon 
-								icon='user-3' 
-								className='icon' 
-								iconSize={26}
-								color='cantoWhite'
-							/>
-						</button>
+						<div>
+							<div data-tip='Profile Settings' data-for='user' data-offset="{'left': -10}">
+								<button className='button'>
+									<Icon 
+										icon='user-3' 
+										className='icon' 
+										iconSize={26}
+										color='cantoWhite'
+									/>
+								</button>
+							</div>
+							<ReactTooltip effect='solid' id='user' delayShow={1000} place='left' type='light'/>
+						</div>
 					</Trigger>
 					<PopOver>
 						<Settings />

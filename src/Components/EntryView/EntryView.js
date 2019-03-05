@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './EntryView.css';
+import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux';
 import Icon from '../Icon/Icon';
 import SignIn from '../../Containers/SignIn/SignIn';
@@ -132,31 +133,39 @@ class EntryView extends Component {
 				{entry !== ''
 					?   <div className='inner-entry-view'>
 							<div className='entry-btn-container'>
-								<button 
-									className='entry-btn' 
-									onClick={() => toggleFavorite(entryID, userID, cantoword)}
-								>
-									<Icon 
-										icon='like-2' 
-										iconSize='35' 
-										iconStyle='dark'
-										color={
-											isFavorited
-											? 'cantoPink'
-											: 'cantoDarkBlue'
-										}
-									/>
-								</button>
-								<button 
-									className='entry-btn'
-									onClick={() => togglePlay(entryID)}
-								>
-									<Icon 
-										icon='speaker-5' 
-										iconSize='35' 
-										iconStyle='dark'
-									/>
-								</button>
+								<p data-tip="Toggle Favorite" >
+									<button 
+										className='entry-btn' 
+										onClick={() => toggleFavorite(entryID, userID, cantoword)}
+									>
+										<Icon 
+											icon='like-2' 
+											iconSize='35' 
+											iconStyle='dark'
+											color={
+												isFavorited
+												? 'cantoPink'
+												: 'cantoDarkBlue'
+											}
+										/>
+										
+										
+									</button>
+								</p>
+								<ReactTooltip effect='solid' delayShow={1000}/>
+								<p data-tip="Play Audio Clip" >
+									<button 
+										className='entry-btn'
+										onClick={() => togglePlay(entryID)}
+									>
+										<Icon 
+											icon='speaker-5' 
+											iconSize='35' 
+											iconStyle='dark'
+										/>
+									</button>
+								</p>
+								<ReactTooltip effect='solid' delayShow={1000}/>
 							</div>
 							<div className='top-group'>
 								<div className='canto-class'>

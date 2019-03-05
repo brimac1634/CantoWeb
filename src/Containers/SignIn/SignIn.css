@@ -1,5 +1,5 @@
 .sign-in-container {
-	width: 320px;
+	max-width: 320px;
 	height: auto;
 	padding: 20px 30px;
 	display: flex;
