@@ -2,9 +2,9 @@ import React from 'react';
 import './SearchBar.css';
 import TextInput from '../TextInput/TextInput';
 
-const SearchBar = ( {searchField, searchChange, searchKey, hideInput} ) => {
+const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobileEntry} ) => {
 	return (
-		<div className='search-bar'>
+		<div className='search-bar' onClick={clearMobileEntry}>
 			<div className='search-container'>
 				{hideInput
 					?	null

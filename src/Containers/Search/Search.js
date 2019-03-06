@@ -116,6 +116,7 @@ class Search extends Component {
 					className='search-bar' 
 					searchChange={this.onSearch}
 					searchKey={searchKey}
+					clearMobileEntry={this.clearMobileEntry}
 				/>
 				<MediaQuery minWidth={700}>
 					<div className='split-container'>

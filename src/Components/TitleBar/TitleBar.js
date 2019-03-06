@@ -1,5 +1,6 @@
 import React from 'react';
 import './TitleBar.css';
+import {connect} from 'react-redux';
 import MediaQuery from 'react-responsive';
 import ReactTooltip from 'react-tooltip'
 import LogoFull from '../LogoFull/LogoFull';
@@ -10,10 +11,17 @@ import Trigger from '../../Containers/PopOver/Trigger';
 import PopOver from '../../Containers/PopOver/PopOver';
 import Settings from '../Settings/Settings';
 import PopOverNav from '../../Containers/NavBar/PopOverNav/PopOverNav';
+import {setMobileEntry} from '../../Containers/Search/actions';
 
-const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange }) => {
+const mapDispatchToProps = (dispatch) => {
+	return {
+		triggerInvDiv: (entryID) => dispatch(setMobileEntry(entryID))
+	}
+}
+
+const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, triggerInvDiv }) => {
 	return (
-		<div className='title-bar'>
+		<div className='title-bar' onClick={()=>triggerInvDiv('')}>
 			<div className='slanted-div logo-div'></div>
 			<div className='title-logo-container'>
 				<MediaQuery minWidth={575}>
@@ -75,4 +83,4 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange }) =
 	);
 }
 
-export default TitleBar;
+export default connect(null, mapDispatchToProps)(TitleBar);
