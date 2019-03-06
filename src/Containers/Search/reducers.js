@@ -1,13 +1,17 @@
-import { TRIGGER_INV_DIV } from './constants';
+import { TRIGGER_INV_DIV, SET_SEARCH_ROUTE } from './constants';
 
 const initialState = {
 	mobileEntry: '',
+	route: '',
 }
 
-export const triggerInvDiv = (state=initialState, action={}) => {
+export const setSearchState = (state=initialState, action={}) => {
+	console.log(action.type)
 	switch (action.type) {
 		case TRIGGER_INV_DIV:
 			return Object.assign({}, state, {mobileEntry: action.payload})
+		case SET_SEARCH_ROUTE:
+			return Object.assign({}, state, {route: action.payload})
 		default:
 			return state
 	}

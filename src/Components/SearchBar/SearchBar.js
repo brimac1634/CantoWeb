@@ -1,13 +1,28 @@
 import React from 'react';
 import './SearchBar.css';
+import { connect } from 'react-redux';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
+import { setSearchRoute } from '../../Containers/Search/actions';
 
-const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobileEntry} ) => {
+const mapStateToProps = state => {
+	return {
+		searchRoute: state.search.route
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setSearchRoute: (route) => dispatch(setSearchRoute(route)),
+	}
+}
+
+const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobileEntry, searchRoute} ) => {
+	console.log(searchRoute);
 	return (
 		<div className='search-bar' onClick={clearMobileEntry}>
 			<div className='recent-container'>
-				<Button title='Recent' buttonType='ghost' icon='time'/>
+				<Button title='Recent' buttonType='ghost' icon='time' handleClick={()=>setSearchRoute('recentEntries')}/>
 			</div>
 			<div className='search-container'>
 				{hideInput
@@ -27,4 +42,4 @@ const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobil
 	);
 }
 
-export default SearchBar;
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

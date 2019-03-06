@@ -9,7 +9,7 @@ import {setMobileEntry} from './actions';
 
 const mapStateToProps = state => {
   return {
-    mobileSelectedEntry: state.invDiv.mobileEntry
+    mobileSelectedEntry: state.search.mobileEntry
   }
 }
 

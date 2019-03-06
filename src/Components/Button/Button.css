@@ -16,13 +16,20 @@
 	align-items: center;
 }
 
-.full p,
-.ghost p {
+.with-icon {
 	margin: 0 0 0 10px;
+}
+
+.without-icon {
+	margin: 0;
 }
 
 .full {
 	background: linear-gradient(to bottom right, #1a588e, var(--cantoDarkBlue));
+	color: var(--cantoWhite);
+}
+
+.full p {
 	color: var(--cantoWhite);
 }
 
