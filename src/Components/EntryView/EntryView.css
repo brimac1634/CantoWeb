@@ -47,6 +47,7 @@
 
 .inner-entry-view p {
 	font-size: 18px;
+	margin: 10px 0;
 }
 
 .canto-class {
@@ -84,6 +85,10 @@
 	max-height: 40px;
 	min-width: 50px;
 	margin: 5px;
+}
+
+.entry-section {
+	margin-bottom: 30px;
 }
 
 @media screen and (max-width: 700px) {

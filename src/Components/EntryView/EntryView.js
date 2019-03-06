@@ -133,7 +133,7 @@ class EntryView extends Component {
 				{entry !== ''
 					?   <div className='inner-entry-view'>
 							<div className='entry-btn-container'>
-								<p data-tip="Toggle Favorite" >
+								<div data-tip="Toggle Favorite" >
 									<button 
 										className='entry-btn' 
 										onClick={() => toggleFavorite(entryID, userID, cantoword)}
@@ -151,9 +151,9 @@ class EntryView extends Component {
 										
 										
 									</button>
-								</p>
+								</div>
 								<ReactTooltip effect='solid' delayShow={1000}/>
-								<p data-tip="Play Audio Clip" >
+								<div data-tip="Play Audio Clip" >
 									<button 
 										className='entry-btn'
 										onClick={() => togglePlay(entryID)}
@@ -164,21 +164,21 @@ class EntryView extends Component {
 											iconStyle='dark'
 										/>
 									</button>
-								</p>
+								</div>
 								<ReactTooltip effect='solid' delayShow={1000}/>
 							</div>
-							<div className='top-group'>
+							<div className='top-group entry-section'>
 								<div className='canto-class'>
 									<h3>{cantoword}</h3>
 									<p>{clLabel}{classifier}</p>
 								</div>
 								<div><p>{jyutping}</p></div>
 							</div>
-							<div>
+							<div className='entry-section'>
 								<div><p>En: {englishword}</p></div>
 								<div><p>普: {mandarinword}</p></div>
 							</div>
-							<div>
+							<div className='entry-section'>
 								<div><p>{cantosentence}</p></div>
 								<div><p>{jyutpingsentence}</p></div>
 								<div><p>{englishsentence}</p></div>
@@ -189,7 +189,7 @@ class EntryView extends Component {
 								<div className='ghost-div'>&nbsp;</div>
 								<div className='ghost-div'>&nbsp;</div>
 							</div>
-							<div className='top-group'>
+							<div className='top-group entry-section'>
 								<div className='canto-class'>
 									<div className='ghost-div'>&nbsp;</div>
 									<div className='ghost-div'>&nbsp;</div>
@@ -198,11 +198,11 @@ class EntryView extends Component {
 									<div className='ghost-div'>&nbsp;</div>
 								</div>
 							</div>
-							<div>
+							<div className='entry-section'>
 								<div className='ghost-div'>&nbsp;</div>
 								<div className='ghost-div'>&nbsp;</div>
 							</div>
-							<div>
+							<div className='entry-section'>
 								<div className='ghost-div'>&nbsp;</div>
 								<div className='ghost-div'>&nbsp;</div>
 								<div className='ghost-div'>&nbsp;</div>
