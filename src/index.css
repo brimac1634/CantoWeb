@@ -55,10 +55,6 @@ code {
   background: var(--cantoGray);
 }
 
-.ghost-div p {
-  margin: 0;
-}
-
 .list-divider {
   width: 95%;
   height: 1px;

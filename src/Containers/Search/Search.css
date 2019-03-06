@@ -36,7 +36,8 @@
 	height: 100%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
+	overflow-y: auto;
 }
 
 .hidden-entry-view {
@@ -68,6 +69,7 @@
 		height: 90%;
 		left: 0;
 		transition: all 0.4s;
+		overflow: hidden;
 	}
 
 	.split-container {
