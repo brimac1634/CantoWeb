@@ -3,7 +3,7 @@
 	top: 0;
 	right: 0;
 	width: 100%;
-	height: 40px;
+	height: 44px;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
@@ -28,6 +28,10 @@
 	background: var(--cantoDarkGray);
 	width: 100%;
 	height: 1px;
+}
+
+.recent-container {
+	margin-right: auto;
 }
 
 @media screen and (max-width: 575px) {

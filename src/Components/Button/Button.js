@@ -1,14 +1,19 @@
 import React from 'react';
 import './Button.css'
+import Icon from '../Icon/Icon';
 
-const Button = ({ title, handleClick, buttonType }) => {
+const Button = ({ title, handleClick, buttonType, icon }) => {
+	const type = buttonType ? buttonType : 'full';
 	return (
-		<button 
-			className={buttonType} 
+		<div 
+			className={type} 
 			onClick={handleClick}
 		>
-			{title}
-		</button>
+			{icon 
+				? <Icon icon={icon} iconSize='18'/>
+				: null}	
+			<p>{title}</p>
+		</div>
 	);
 }
 

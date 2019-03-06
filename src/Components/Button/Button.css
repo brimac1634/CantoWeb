@@ -3,15 +3,22 @@
 	width: auto;
 	height: auto;
 	border-radius: 4px;
-	outline: none;
 	font-size: 16px;
 	cursor: pointer;
-	transition: all .3s;
+	transition: all .3s linear;
 	margin: 10px;
-	padding: 10px 20px;
+	padding: 5px 15px;
 	text-align: center;
 	box-sizing: border-box;
 	border: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.full p,
+.ghost p {
+	margin: 0 0 0 10px;
 }
 
 .full {
@@ -22,14 +29,14 @@
 .ghost {
 	color: var(--cantoBlue);
 	background: transparent;
+	border: solid 1px var(--cantoGray);
 }
 
 .full:hover {
 	background: linear-gradient(to bottom right, #2170b5, var(--cantoDarkBlue));
-	transform: scale(1.02);
 }
 
 .ghost:hover {
 	color: #1a588e;
-	transform: scale(1.02);
+	border: solid 1px var(--cantoDarkBlue);
 }

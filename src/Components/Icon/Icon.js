@@ -2,7 +2,7 @@ import React from 'react';
 import './Icon.css';
 import iconPaths from './selection.json';
 
-const Icon = ({ iconType, icon, iconSize, title, color }) => {
+const Icon = ({ icon, iconSize, title, color }) => {
 
 	const size = iconSize ? iconSize : 20;
 
