@@ -3,9 +3,8 @@
 	box-sizing: border-box;
 	width: auto;
 	height: 80px;
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 	align-items: center;
 	border-radius: 4px;
 	padding: 10px;
@@ -15,8 +14,13 @@
 	white-space: nowrap;
 }
 
+.entry-row h3,
+.entry-row p {
+	margin: 0;
+}
+
 .real {
-	cursor: pointer;
+	cursor: pointer; 
 }
 
 .real:hover {
@@ -28,8 +32,7 @@
 }
 
 .entry-row > * {
-	width: 50%;
-	height: 50%;
+	padding: 0 5px;
 	text-align: left;
 	display: flex;
 	flex-direction: row;
@@ -49,16 +52,6 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-family: 'Heebo', sans-serif;
-}
-
-.ghost * {
-	height: 40%;
-	margin: 0;
-}
-
-.top-left .ghost-div {
-	height: 100%;
-	margin: 0;
 }
 
 .hover-box {

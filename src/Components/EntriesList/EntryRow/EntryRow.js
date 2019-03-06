@@ -73,14 +73,14 @@ const EntryRow = (props) => {
 			}
 		} else {
 			return (
-				<div className='entry-row ghost'>
+				<div className={`entry-row ${rowType}`}>
 					<div className='top-left'>
 						<div className='ghost-div'>&nbsp;</div>
 						<div className='ghost-div'>&nbsp;</div>
 					</div>
-					<div className='ghost-div'>&nbsp;</div>
-					<div className='ghost-div'>&nbsp;</div>
-					<div className='ghost-div'>&nbsp;</div>
+					<div><div className='ghost-div'>&nbsp;</div></div>
+					<div><div className='ghost-div'>&nbsp;</div></div>
+					<div><div className='ghost-div'>&nbsp;</div></div>
 				</div>
 			);
 		}

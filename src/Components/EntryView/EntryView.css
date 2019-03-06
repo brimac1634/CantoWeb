@@ -97,3 +97,9 @@
 		max-height: 600px;
 	}
 }
+
+@media screen and (min-width: 1200px) {
+	.entry-view {
+		padding: 40px 60px;
+	}
+}

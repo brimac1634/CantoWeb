@@ -186,15 +186,17 @@ class EntryView extends Component {
 						</div>
 					:   <div className='inner-entry-view'>
 							<div className='entry-btn-container'>
-								<div className='ghost-div'/>
-								<div className='ghost-div'/>
+								<div className='ghost-div'>&nbsp;</div>
+								<div className='ghost-div'>&nbsp;</div>
 							</div>
 							<div className='top-group'>
 								<div className='canto-class'>
 									<div className='ghost-div'>&nbsp;</div>
 									<div className='ghost-div'>&nbsp;</div>
 								</div>
-								<div className='ghost-div'>&nbsp;</div>
+								<div>
+									<div className='ghost-div'>&nbsp;</div>
+								</div>
 							</div>
 							<div>
 								<div className='ghost-div'>&nbsp;</div>
