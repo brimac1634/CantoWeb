@@ -22,7 +22,15 @@ const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobil
 	return (
 		<div className='search-bar' onClick={clearMobileEntry}>
 			<div className='recent-container'>
-				<Button title='Recent' buttonType='ghost' icon='time' handleClick={()=>setRoute('recentEntries')}/>
+				<Button 
+					title='Recent' 
+					buttonType='ghost' 
+					icon='time' 
+					isSelected={searchRoute === 'recentEntries'
+									? true
+									: false}
+					handleClick={()=>setRoute('recentEntries')}
+				/>
 			</div>
 			<div className='search-container'>
 				{hideInput

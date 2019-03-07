@@ -43,7 +43,7 @@
 	background: linear-gradient(to bottom right, #2170b5, var(--cantoDarkBlue));
 }
 
-.ghost:hover {
-	color: #1a588e;
+.ghost:hover,
+.selected-button {
 	border: solid 1px var(--cantoDarkBlue);
 }

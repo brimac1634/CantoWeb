@@ -2,12 +2,13 @@ import React from 'react';
 import './Button.css'
 import Icon from '../Icon/Icon';
 
-const Button = ({ title, handleClick, buttonType, icon }) => {
+const Button = ({ title, handleClick, buttonType, icon, isSelected }) => {
 	const type = buttonType ? buttonType : 'full';
-	const titleType = icon ? 'with-icon' : 'without-icon'
+	const titleType = icon ? 'with-icon' : 'without-icon';
+	const buttonSelect = isSelected ? 'selected-button' : null;
 	return (
 		<div 
-			className={type} 
+			className={`${type} ${buttonSelect}`} 
 			onClick={handleClick}
 		>
 			{icon 
