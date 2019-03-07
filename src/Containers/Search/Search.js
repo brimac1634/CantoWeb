@@ -9,7 +9,9 @@ import {setMobileEntry} from './actions';
 
 const mapStateToProps = state => {
   return {
-    mobileSelectedEntry: state.search.mobileEntry
+  	user: state.user.user,
+    mobileSelectedEntry: state.search.mobileEntry,
+    searchRoute: state.search.route
   }
 }
 
@@ -87,13 +89,54 @@ class Search extends Component {
 		}
 	}
 
+	renderRecentEntries = (userID) => {
+		fetch('http://localhost:3000/recent', {
+				method: 'post',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({
+					userID: userID
+				})
+			})
+				.then(res => res.json())
+				.then(recentEntries => {
+					if (recentEntries.constructor === Array) {
+						this.setState({
+							entries: recentEntries,
+						})
+					} else {
+						this.setState({
+							entries: []
+						})
+					}
+				})
+				.catch(err => console.log('unable to retrieve recent entries.'))
+	}
+
 	handleEntrySelect = (entry) => {
-		const {triggerInvDiv} = this.props;
+		const {triggerInvDiv, user: {userID}} = this.props;
 		sessionStorage.setItem('lastSelectedEntry', JSON.stringify(entry));
 		this.setState({
 			selectedEntry: entry,
 		})
 		triggerInvDiv(entry.entryID);
+		console.log(userID)
+		if (userID !== '' && userID != null) {
+			this.addEntryToRecent(userID, entry.entryID);
+		}
+	}
+
+	addEntryToRecent = (userID, entryID) => {
+		fetch('http://localhost:3000/recent/add', {
+				method: 'post',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({
+					userID: userID,
+					entryID: entryID
+				})
+			})
+				.then(res => res.json())
+				.then(console.log)
+				.catch(err => console.log('unable to add to recently viewed.'))
 	}
 
 	clearMobileEntry = () => {
@@ -103,11 +146,13 @@ class Search extends Component {
 
 	render() {
 		const { selectedEntry, entries, searchKey } = this.state;
-		const { userID, mobileSelectedEntry } = this.props;
+		const { userID, mobileSelectedEntry, searchRoute } = this.props;
+		const entryViewMobile = mobileSelectedEntry 
+			? 'visible-entry-view' 
+			: 'hidden-entry-view'
 
-		let entryViewMobile = 'hidden-entry-view'
-		if (mobileSelectedEntry) {
-			entryViewMobile = 'visible-entry-view'
+		if (searchRoute === 'recentEntries') {
+			this.renderRecentEntries(userID);
 		}
 
 		return (

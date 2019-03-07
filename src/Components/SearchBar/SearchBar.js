@@ -19,6 +19,14 @@ const mapDispatchToProps = (dispatch) => {
 
 const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobileEntry, searchRoute, setRoute} ) => {
 
+	const handleSearchRoute = (route) => {
+		if (route === searchRoute) {
+			setRoute('');
+		} else {
+			setRoute(route);
+		}
+	}
+
 	return (
 		<div className='search-bar' onClick={clearMobileEntry}>
 			<div className='recent-container'>
@@ -29,7 +37,7 @@ const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobil
 					isSelected={searchRoute === 'recentEntries'
 									? true
 									: false}
-					handleClick={()=>setRoute('recentEntries')}
+					handleClick={()=>handleSearchRoute('recentEntries')}
 				/>
 			</div>
 			<div className='search-container'>

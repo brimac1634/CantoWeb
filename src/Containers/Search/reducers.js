@@ -6,7 +6,6 @@ const initialState = {
 }
 
 export const setSearchState = (state=initialState, action={}) => {
-	console.log(action.type)
 	switch (action.type) {
 		case TRIGGER_INV_DIV:
 			return Object.assign({}, state, {mobileEntry: action.payload})
