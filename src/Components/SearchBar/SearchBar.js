@@ -1,6 +1,7 @@
 import React from 'react';
 import './SearchBar.css';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
 import { setSearchRoute } from '../../Containers/Search/actions';
@@ -30,15 +31,27 @@ const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobil
 	return (
 		<div className='search-bar' onClick={clearMobileEntry}>
 			<div className='recent-container'>
-				<Button 
-					title='Recent' 
-					buttonType='ghost' 
-					icon='time' 
-					isSelected={searchRoute === 'recentEntries'
-									? true
-									: false}
-					handleClick={()=>handleSearchRoute('recentEntries')}
-				/>
+				<MediaQuery minWidth={575}>
+					<Button 
+						title='Recent' 
+						buttonType='ghost' 
+						icon='time' 
+						isSelected={searchRoute === 'recentEntries'
+										? true
+										: false}
+						handleClick={()=>handleSearchRoute('recentEntries')}
+					/>
+				</MediaQuery>
+				<MediaQuery maxWidth={574}>
+					<Button 
+						buttonType='ghost' 
+						icon='time' 
+						isSelected={searchRoute === 'recentEntries'
+										? true
+										: false}
+						handleClick={()=>handleSearchRoute('recentEntries')}
+					/>
+				</MediaQuery>
 			</div>
 			<div className='search-container'>
 				{hideInput
