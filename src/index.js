@@ -10,7 +10,7 @@ import { rootReducer } from './rootReducer';
 import * as serviceWorker from './serviceWorker';
 
 const logger = createLogger();
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(logger))
 
 ReactDOM.render((
 	<BrowserRouter>

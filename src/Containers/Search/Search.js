@@ -28,6 +28,8 @@ class Search extends Component {
 			selectedEntry: '',
 			searchKey: '',
 			entries: [],
+			previousEntries: [],
+			previousSelectedEntry: '',
 		}
 	}
 
@@ -43,6 +45,29 @@ class Search extends Component {
 		}
 		if (lastSelectedEntry) {
 			this.setState({selectedEntry: JSON.parse(lastSelectedEntry)})
+		}
+	}
+
+	componentDidUpdate(prevProps) {
+		const {user: {userID}, searchRoute} = this.props;
+		const { 
+			entries, 
+			selectedEntry, 
+			previousEntries, 
+			previousSelectedEntry } = this.state;
+
+		if (prevProps.searchRoute !== searchRoute && searchRoute === 'recentEntries') {
+			this.setState({
+				previousEntries: entries,
+				previousSelectedEntry: selectedEntry,
+				selectedEntry: '',
+			})
+			this.renderRecentEntries(userID)
+		} else if (prevProps.searchRoute !== '' && searchRoute === '') {
+			this.setState({
+				entries: previousEntries,
+				selectedEntry: previousSelectedEntry,
+			})
 		}
 	}
 
@@ -119,7 +144,6 @@ class Search extends Component {
 			selectedEntry: entry,
 		})
 		triggerInvDiv(entry.entryID);
-		console.log(userID)
 		if (userID !== '' && userID != null) {
 			this.addEntryToRecent(userID, entry.entryID);
 		}
@@ -146,14 +170,10 @@ class Search extends Component {
 
 	render() {
 		const { selectedEntry, entries, searchKey } = this.state;
-		const { userID, mobileSelectedEntry, searchRoute } = this.props;
+		const { mobileSelectedEntry } = this.props;
 		const entryViewMobile = mobileSelectedEntry 
 			? 'visible-entry-view' 
 			: 'hidden-entry-view'
-
-		if (searchRoute === 'recentEntries') {
-			this.renderRecentEntries(userID);
-		}
 
 		return (
 			<div>
@@ -176,7 +196,6 @@ class Search extends Component {
 						<div className='entry-view-container'>
 							<EntryView 
 								entry={selectedEntry}
-								userID={userID}
 							/>
 						</div>
 					</div>
@@ -199,7 +218,6 @@ class Search extends Component {
 						>
 							<EntryView 
 								entry={selectedEntry}
-								userID={userID}
 							/>
 						</div>
 					</div>
