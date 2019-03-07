@@ -13,16 +13,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		setSearchRoute: (route) => dispatch(setSearchRoute(route)),
+		setRoute: (route) => dispatch(setSearchRoute(route)),
 	}
 }
 
-const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobileEntry, searchRoute} ) => {
-	console.log(searchRoute);
+const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobileEntry, searchRoute, setRoute} ) => {
+
 	return (
 		<div className='search-bar' onClick={clearMobileEntry}>
 			<div className='recent-container'>
-				<Button title='Recent' buttonType='ghost' icon='time' handleClick={()=>setSearchRoute('recentEntries')}/>
+				<Button title='Recent' buttonType='ghost' icon='time' handleClick={()=>setRoute('recentEntries')}/>
 			</div>
 			<div className='search-container'>
 				{hideInput

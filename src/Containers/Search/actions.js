@@ -7,5 +7,5 @@ export const setMobileEntry = (entryID) => ({
 
 export const setSearchRoute = (route) => ({
 	type: SET_SEARCH_ROUTE,
-	payload: route
+	payload: route 
 })
