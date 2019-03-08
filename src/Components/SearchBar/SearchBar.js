@@ -1,6 +1,7 @@
 import React from 'react';
 import './SearchBar.css';
 import { connect } from 'react-redux';
+import OptionAlert from '../OptionAlert/OptionAlert';
 import MediaQuery from 'react-responsive';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
