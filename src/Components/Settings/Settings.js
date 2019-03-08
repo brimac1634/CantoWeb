@@ -9,6 +9,7 @@ import FSPTrigger from '../../Containers/FullScreenPop/FSPTrigger';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
 import WhatIsCantoTalk from '../WhatIsCantoTalk/WhatIsCantoTalk';
 import SignIn from '../../Containers/SignIn/SignIn';
+import {renderComponentAlert} from '../../Containers/ComponentAlert/ComponentAlert';
 import { setUser } from '../../Containers/SignIn/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 
@@ -87,17 +88,11 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert }) => {
 				<div className='list-divider'>&nbsp;</div>
 				{userIsLoggedIn
 					? <IconListItem icon='exit-1' title='Logout' handleClick={handleLogout}/>
-					: <FSPController>
-						<FSPTrigger>
-							<IconListItem 
-								icon='login' 
-								title='Sign In'
-							/>
-						</FSPTrigger>
-						<FullScreenPop>
-							<SignIn />
-						</FullScreenPop>
-					  </FSPController>
+					: <IconListItem 
+							icon='login' 
+							title='Sign In'
+							handleClick={()=>renderComponentAlert(DictionaryHelp)}
+						/>
 				}
 			</div>
 		</div>

@@ -40,7 +40,6 @@ class FullScreenPop extends Component {
 
 		return (
 			<div className={`shaded-background ${fadeType}`}>
-				Hello there
 				<div 
 					className={`pop-div ${popType}`} 
 					style={{width: `${width}px`, height: `${height}px`}}

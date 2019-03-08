@@ -1,118 +1,119 @@
 import React, { Component } from 'react'
 import './ComponentAlert.css';
-import { render, unmountComponentAtNode } from 'react-dom'
+import ReactDOM, { render, unmountComponentAtNode } from 'react-dom'
+import Icon from '../../Components/Icon/Icon';
 
-export default class ComponentAlert extends Component {
-  static defaultProps = {
-    buttons: [
-      {
-        label: 'Cancel',
-        onClick: () => null
-      },
-      {
-        label: 'Confirm',
-        onClick: () => null
+const componentAlert = (WrappedComponent) => {
+  class ComponentAlert extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        width: '',
+        height: '',
+        animateOut: false,
       }
-    ],
-    willUnmount: () => null,
-    onClickOutside: () => null,
-    onKeypressEscape: () => null
-  }
-
-  handleClickButton = button => {
-    if (button.onClick) button.onClick()
-    this.close()
-  }
-
-  handleClickOverlay = (event) => {
-    const { onClickOutside } = this.props
-    if (event.target === this.overlay) {
-      onClickOutside()
-      this.close()
+      this.content = React.createRef();
     }
-  }
 
-  close = () => {
-    removeBodyClass()
-    removeOptionAlert()
-  }
+    componentDidMount() {
+        if (this.content.current.firstChild) {
+          const rect = this.content.current.getBoundingClientRect();
+          this.setState({
+            width: rect.width,
+            height: rect.height,
+          })
+        }
+      }
 
-  keyboardClose = event => {
-    const { onKeypressEscape } = this.props
-    if (event.keyCode === 27) {
-      onKeypressEscape(event)
-      this.close()
+    close = () => {
+      removeBodyClass()
+      removeComponentAlert()
     }
-  }
 
-  componentDidMount = () => {
-    document.addEventListener('keydown', this.keyboardClose, false)
-  }
+    handleAnimateOut = () => {
+      this.setState({
+          animateOut: true,
+        })
+      setTimeout(() => {
+        this.setState({
+          animateOut: false,
+        })
+        this.close()
+      }, 800)
+    }
 
-  componentWillUnmount = () => {
-    document.removeEventListener('keydown', this.keyboardClose, false)
-    this.props.willUnmount()
-  }
+    render () {
+      const { width, height, animateOut } = this.state;
+      const { WrappedComponent } = this.props;
 
-  render () {
-    const { title, message, buttons } = this.props
+      const fadeType = animateOut ? 'animate-fade-out' : 'animate-fade-in';
 
-    return (
-      <div
-        className='alert-overlay'
-        ref={dom => (this.overlay = dom)}
-        onClick={this.handleClickOverlay}
-      >
-        <div className='option-alert'>
-          <div className='option-alert-body'>
-            {title && <h2>{title}</h2>}
-            {message}
-            <div className='option-alert-button-group'>
-              {buttons.map((button, i) => (
-                <Button
-                  key={i}
-                  title={button.label}
-                  buttonType='ghost'
-                  width='80px'
-                  handleClick={() => this.handleClickButton(button)}
-                />
-              ))}
+      return (
+        ReactDOM.createPortal(
+          <div
+            className='component-overlay'
+            ref={dom => (this.overlay = dom)}
+            onClick={this.handleClickOverlay}
+          >
+            <div className='component-alert'>
+              <div 
+                className={`component-alert-body ${fadeType}`}
+                style={{width: `${width}px`, height: `${height}px`}}
+              >
+                <button className='close' onClick={this.handleAnimateOut}>
+                  <Icon 
+                    icon='multiply' 
+                    iconStyle='dark' 
+                    width='15'
+                  />
+                </button>
+                <div ref={this.content}>
+                  <WrappedComponent 
+                    handleClose={this.handleAnimateOut}
+                    {...this.props}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    )
+        , document.body
+        )
+      )
+    }
   }
+  return ComponentAlert;
 }
+export default componentAlert;
 
 
-function createOptionAlert (properties) {
-  let divTarget = document.getElementById('option-alert')
+function createComponentAlert (component) {
+  let divTarget = document.getElementById('component-alert')
+  const AlertWithComponent = componentAlert(component);
   if (divTarget) {
-    render(<OptionAlert {...properties} />, divTarget)
+    render(<AlertWithComponent />, divTarget)
   } else {
     divTarget = document.createElement('div')
-    divTarget.id = 'option-alert'
+    divTarget.id = 'component-alert'
     document.body.appendChild(divTarget)
-    render(<OptionAlert {...properties} />, divTarget)
+    render(<AlertWithComponent />, divTarget)
   }
 }
 
-function removeOptionAlert () {
-  const target = document.getElementById('option-alert')
+function removeComponentAlert () {
+  const target = document.getElementById('component-alert')
   unmountComponentAtNode(target)
   target.parentNode.removeChild(target)
 }
 
 function addBodyClass () {
-  document.body.classList.add('option-alert-body-element')
+  document.body.classList.add('component-alert-body-element')
 }
 
 function removeBodyClass () {
-  document.body.classList.remove('option-alert-body-element')
+  document.body.classList.remove('component-alert-body-element')
 }
 
-export function componentAlert (properties) {
+export function renderComponentAlert (component) {
   addBodyClass()
-  createOptionAlert(properties)
+  createComponentAlert(component)
 }

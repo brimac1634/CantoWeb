@@ -1,0 +1,60 @@
+.component-alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: rgba(6, 38, 66, 0.62);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+.component-alert-body {
+  padding: 10px;
+  box-sizing: border-box;
+  background: var(--cantoWhite);
+  border-radius: 4px;
+  box-shadow: var(--cantoFloatShadow);
+}
+
+.close {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  top: 10px;
+  right: 10px;
+  outline: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.animate-fade-in {
+  animation: component-alert-fadeIn 0.5s 0.2s forwards;
+}
+
+.animate-fade-out {
+  animation: component-alert-fadeOut 0.5s 0.2s forwards;
+}
+
+
+@keyframes component-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes component-alert-fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
