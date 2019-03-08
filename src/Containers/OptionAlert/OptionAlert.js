@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './OptionAlert.css';
 import { render, unmountComponentAtNode } from 'react-dom'
+import Button from '../../Components/Button/Button';
 
 export default class OptionAlert extends Component {
   static defaultProps = {
@@ -34,8 +35,7 @@ export default class OptionAlert extends Component {
 
   close = () => {
     removeBodyClass()
-    removeElementReconfirm()
-    removeSVGBlurReconfirm()
+    removeOptionAlert()
   }
 
   keyboardClose = event => {
@@ -66,16 +66,17 @@ export default class OptionAlert extends Component {
       >
         <div className='option-alert'>
           <div className='option-alert-body'>
-            {title && <h1>{title}</h1>}
+            {title && <h2>{title}</h2>}
             {message}
             <div className='option-alert-button-group'>
               {buttons.map((button, i) => (
-                <button
+                <Button
                   key={i}
-                  onClick={() => this.handleClickButton(button)}
-                >
-                  {button.label}
-                </button>
+                  title={button.label}
+                  buttonType='ghost'
+                  width='80px'
+                  handleClick={() => this.handleClickButton(button)}
+                />
               ))}
             </div>
           </div>
@@ -85,40 +86,12 @@ export default class OptionAlert extends Component {
   }
 }
 
-function createSVGBlurReconfirm () {
-  // If has svg ignore to create the svg
-  const svg = document.getElementById('option-alert-firm-svg')
-  if (svg) return
-  const svgNS = 'http://www.w3.org/2000/svg'
-  const feGaussianBlur = document.createElementNS(svgNS, 'feGaussianBlur')
-  feGaussianBlur.setAttribute('stdDeviation', '0.3')
 
-  const filter = document.createElementNS(svgNS, 'filter')
-  filter.setAttribute('id', 'gaussian-blur')
-  filter.appendChild(feGaussianBlur)
-
-  const svgElem = document.createElementNS(svgNS, 'svg')
-  svgElem.setAttribute('id', 'option-alert-firm-svg')
-  svgElem.setAttribute('class', 'option-alert-svg')
-  svgElem.appendChild(filter)
-
-  document.body.appendChild(svgElem)
-}
-
-function removeSVGBlurReconfirm () {
-  const svg = document.getElementById('option-alert-firm-svg')
-  svg.parentNode.removeChild(svg)
-  document.body.children[0].classList.remove('option-alert-blur')
-}
-
-function createElementReconfirm (properties) {
+function createOptionAlert (properties) {
   let divTarget = document.getElementById('option-alert')
   if (divTarget) {
-    // Rerender - the mounted ReactConfirmAlert
     render(<OptionAlert {...properties} />, divTarget)
   } else {
-    // Mount the ReactConfirmAlert component
-    document.body.children[0].classList.add('option-alert-blur')
     divTarget = document.createElement('div')
     divTarget.id = 'option-alert'
     document.body.appendChild(divTarget)
@@ -126,7 +99,7 @@ function createElementReconfirm (properties) {
   }
 }
 
-function removeElementReconfirm () {
+function removeOptionAlert () {
   const target = document.getElementById('option-alert')
   unmountComponentAtNode(target)
   target.parentNode.removeChild(target)
@@ -140,8 +113,7 @@ function removeBodyClass () {
   document.body.classList.remove('option-alert-body-element')
 }
 
-export function confirmAlert (properties) {
+export function optionAlert (properties) {
   addBodyClass()
-  createSVGBlurReconfirm()
-  createElementReconfirm(properties)
+  createOptionAlert(properties)
 }

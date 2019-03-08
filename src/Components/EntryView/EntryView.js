@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './EntryView.css';
 import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux';
-import { confirmAlert } from '../OptionAlert/OptionAlert';
+import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import Icon from '../Icon/Icon';
 import SignIn from '../../Containers/SignIn/SignIn';
 import presentPopUp from '../../Containers/FullScreenPop/presentPopUp';
@@ -117,8 +117,7 @@ class EntryView extends Component {
 					})
 					.catch(err => console.log('Unable to toggle favorite'))
 			} else {
-				//present pop up "you must be signed in to favorite words"
-				confirmAlert({
+				optionAlert({
 				    title: 'Please sign in.',
 				    message: 'You must be signed in to save favorites. Would you like to sign in or register now?',
 				    buttons: [
@@ -128,7 +127,7 @@ class EntryView extends Component {
 				      },
 				      {
 				        label: 'No',
-				        onClick: () => alert('Click No')
+				        onClick: null
 				      }
 				    ]
 			    })
