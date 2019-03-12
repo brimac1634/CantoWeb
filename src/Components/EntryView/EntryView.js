@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import Icon from '../Icon/Icon';
 import SignIn from '../../Containers/SignIn/SignIn';
-import presentPopUp from '../../Containers/FullScreenPop/presentPopUp';
+import {renderComponentAlert} from '../../Containers/ComponentAlert/ComponentAlert';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 
 const mapStateToProps = state => {
@@ -123,7 +123,7 @@ class EntryView extends Component {
 				    buttons: [
 				      {
 				        label: 'Yes',
-				        onClick: () => alert('Click Yes')
+				        onClick: () => renderComponentAlert(SignIn)
 				      },
 				      {
 				        label: 'No',
@@ -138,8 +138,6 @@ class EntryView extends Component {
 			const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
 			audio.play()		
 		}
-
-		const PopUp = userID ? null : presentPopUp(SignIn)
 
 		return (
 			<div className='entry-view'>
