@@ -39,7 +39,7 @@ const componentAlert = (WrappedComponent) => {
           animateOut: false,
         })
         this.close()
-      }, 1000)
+      }, 5000)
     }
 
     render () {
@@ -55,7 +55,7 @@ const componentAlert = (WrappedComponent) => {
           >
             <div className='component-alert'>
               <div 
-                className={`component-alert-body ${fadeType}`}
+                className='component-alert-body'
                 style={{width: `${width}px`, height: `${height}px`}}
               >
                 <button className='close' onClick={this.handleAnimateOut}>

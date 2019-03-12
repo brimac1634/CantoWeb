@@ -58,32 +58,16 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert }) => {
 				}
 			<div className='list-divider'>&nbsp;</div>
 			<div className='setting-list'>
-				<div className='settings-item'>
-					<FSPController>
-						<FSPTrigger>
-							<IconListItem 
-								icon='info' 
-								title='What is CantoTalk?'
-							/>
-						</FSPTrigger>
-						<FullScreenPop>
-							<WhatIsCantoTalk />
-						</FullScreenPop>
-					</FSPController>
-				</div>
-				<div className='settings-item'>
-					<FSPController>
-						<FSPTrigger>
-							<IconListItem 
-								icon='agenda' 
-								title='Dictionary Help' 
-							/>
-						</FSPTrigger>
-						<FullScreenPop>
-							<DictionaryHelp />
-						</FullScreenPop>
-					</FSPController>
-				</div>
+				<IconListItem 
+					icon='info' 
+					title='What is CantoTalk?'
+					handleClick={()=>renderComponentAlert(WhatIsCantoTalk)} 
+				/>
+				<IconListItem 
+					icon='agenda' 
+					title='Dictionary Help'
+					handleClick={()=>renderComponentAlert(DictionaryHelp)} 
+				/>
 				<IconListItem icon='paper-plane' title='Contact' handleClick={handleContact}/>
 				<div className='list-divider'>&nbsp;</div>
 				{userIsLoggedIn
@@ -91,7 +75,7 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert }) => {
 					: <IconListItem 
 							icon='login' 
 							title='Sign In'
-							handleClick={()=>renderComponentAlert(DictionaryHelp)}
+							handleClick={()=>renderComponentAlert(SignIn)}
 						/>
 				}
 			</div>
