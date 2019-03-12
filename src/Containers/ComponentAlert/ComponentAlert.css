@@ -1,4 +1,8 @@
-.component-alert-overlay {
+body.component-alert-body-element {
+  overflow: hidden;
+}
+
+.component-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,6 +17,7 @@
 }
 
 .component-alert-body {
+  position: relative;
   padding: 10px;
   box-sizing: border-box;
   background: var(--cantoWhite);
@@ -32,11 +37,11 @@
   cursor: pointer;
 }
 
-.animate-fade-in {
+.alert-fade-in {
   animation: component-alert-fadeIn 0.5s 0.2s forwards;
 }
 
-.animate-fade-out {
+.alert-fade-out {
   animation: component-alert-fadeOut 0.5s 0.2s forwards;
 }
 

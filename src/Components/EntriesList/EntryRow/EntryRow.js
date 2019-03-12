@@ -26,31 +26,31 @@ const EntryRow = (props) => {
 				return (
 					<div className={`entry-row ${rowType}`}>
 						<div className='top-left'>
-							<p data-tip="Cantonese">
+							<div data-tip="Cantonese">
 								<h3 className='hover-box'>{cantoword}</h3>
-							</p>
+							</div>
 							<ReactTooltip effect='solid'/>
-							<p data-tip="Classifier" >
+							<div data-tip="Classifier" >
 							<p className='hover-box'>{clLabel}{classifier}</p>
-							</p>
+							</div>
 							<ReactTooltip effect="solid"/>
 						</div>
 						<div>
-							<p data-tip="English" >
+							<div data-tip="English" >
 								<p className='hover-box'>En: {englishword}</p>
-							</p>
+							</div>
 							<ReactTooltip effect="solid"/>
 						</div>
 						<div>
-							<p data-tip="Jyutping" >
+							<div data-tip="Jyutping" >
 								<p className='hover-box'>{jyutping}</p>
-							</p>
+							</div>
 							<ReactTooltip effect="solid"/>
 						</div>
 						<div>
-							<p data-tip="Mandarin" >
+							<div data-tip="Mandarin" >
 								<p className='hover-box'>普: {mandarinword}</p>
-							</p>
+							</div>
 							<ReactTooltip effect="solid"/>
 						</div>
 					</div>

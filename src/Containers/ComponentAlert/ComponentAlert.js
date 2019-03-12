@@ -4,7 +4,7 @@ import ReactDOM, { render, unmountComponentAtNode } from 'react-dom'
 import Icon from '../../Components/Icon/Icon';
 
 const componentAlert = (WrappedComponent) => {
-  class ComponentAlert extends Component {
+  return class extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -16,14 +16,14 @@ const componentAlert = (WrappedComponent) => {
     }
 
     componentDidMount() {
-        if (this.content.current.firstChild) {
-          const rect = this.content.current.getBoundingClientRect();
-          this.setState({
-            width: rect.width,
-            height: rect.height,
-          })
-        }
+      if (this.content.current.firstChild) {
+        const rect = this.content.current.firstChild.getBoundingClientRect();
+        this.setState({
+          width: rect.width,
+          height: rect.height,
+        })
       }
+    }
 
     close = () => {
       removeBodyClass()
@@ -39,21 +39,19 @@ const componentAlert = (WrappedComponent) => {
           animateOut: false,
         })
         this.close()
-      }, 800)
+      }, 1000)
     }
 
     render () {
       const { width, height, animateOut } = this.state;
-      const { WrappedComponent } = this.props;
 
-      const fadeType = animateOut ? 'animate-fade-out' : 'animate-fade-in';
+      const fadeType = animateOut ? 'alert-fade-out' : 'alert-fade-in';
 
       return (
         ReactDOM.createPortal(
           <div
-            className='component-overlay'
+            className={`component-overlay ${fadeType}`}
             ref={dom => (this.overlay = dom)}
-            onClick={this.handleClickOverlay}
           >
             <div className='component-alert'>
               <div 
@@ -77,14 +75,10 @@ const componentAlert = (WrappedComponent) => {
             </div>
           </div>
         , document.body
-        )
-      )
+      ))
     }
   }
-  return ComponentAlert;
 }
-export default componentAlert;
-
 
 function createComponentAlert (component) {
   let divTarget = document.getElementById('component-alert')

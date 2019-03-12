@@ -12,7 +12,7 @@ import { setMobileEntry } from '../Search/actions';
 const mapStateToProps = state => {
 	return {
 		user: state.user.user,
-		mobileSelectedEntry: state.invDiv.mobileEntry,
+		mobileSelectedEntry: state.search.mobileEntry,
 	}
 }
 
@@ -85,6 +85,7 @@ class Favorites extends Component {
 		const renderPopUp = () => {
 			if (userID === '' || userID == null) {
 				const PopUp = presentPopUp(SignIn)
+				console.log(PopUp);
 				return <PopUp />
 			}
 		}
