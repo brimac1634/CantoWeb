@@ -4,7 +4,7 @@ import ReactDOM, { render, unmountComponentAtNode } from 'react-dom'
 import Icon from '../../Components/Icon/Icon';
 
 const componentAlert = (WrappedComponent) => {
-  return class extends Component {
+  class ComponentAlert extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -78,6 +78,7 @@ const componentAlert = (WrappedComponent) => {
       ))
     }
   }
+  return ComponentAlert;
 }
 
 function createComponentAlert (component) {
