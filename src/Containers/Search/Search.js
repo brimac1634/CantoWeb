@@ -5,19 +5,21 @@ import MediaQuery from 'react-responsive';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
-import {setMobileEntry} from './actions';
+import {setMobileEntry, setSearchKey} from './actions';
 
 const mapStateToProps = state => {
   return {
   	user: state.user.user,
     mobileSelectedEntry: state.search.mobileEntry,
-    searchRoute: state.search.route
+    searchRoute: state.search.route,
+    searchKey: state.search.searchKey
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		triggerInvDiv: (entryID) => dispatch(setMobileEntry(entryID))
+		triggerInvDiv: (entryID) => dispatch(setMobileEntry(entryID)),
+		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey))
 	}
 }
 
@@ -26,7 +28,6 @@ class Search extends Component {
 		super()
 		this.state = {
 			selectedEntry: '',
-			searchKey: '',
 			entries: [],
 			previousEntries: [],
 			previousSelectedEntry: '',
@@ -39,9 +40,9 @@ class Search extends Component {
 		const lastSelectedEntry = sessionStorage.getItem('lastSelectedEntry')
 		if (lastSearch && lastSearchEntries) {
 			this.setState({
-				searchKey: JSON.parse(lastSearch),
 				entries: JSON.parse(lastSearchEntries),
 			})
+			setSearchKey(JSON.parse(lastSearch))
 		}
 		if (lastSelectedEntry) {
 			this.setState({selectedEntry: JSON.parse(lastSelectedEntry)})
@@ -49,12 +50,16 @@ class Search extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {user: {userID}, searchRoute} = this.props;
+		const {user: {userID}, searchRoute, searchKey} = this.props;
 		const { 
 			entries, 
 			selectedEntry, 
 			previousEntries, 
 			previousSelectedEntry } = this.state;
+
+		if (prevProps.searchKey !== searchKey) {
+			this.handleSearch(searchKey);
+		}
 
 		if (prevProps.searchRoute !== searchRoute && searchRoute === 'recentEntries') {
 			this.setState({
@@ -76,13 +81,13 @@ class Search extends Component {
 	}
 	
 	onSearch = (event) => {
+		const { setSearchKey } = this.props;
 		const searchKey = event.target.value
-		this.setState({searchKey: searchKey})
-		this.handleSearch(searchKey)
+		setSearchKey(searchKey);
 	}
 
 	handleSearch = (searchKey) => {
-		if (searchKey.length) {
+		if (searchKey) {
 			sessionStorage.setItem('lastSearch', JSON.stringify(searchKey));
 			fetch('http://localhost:3000', {
 				method: 'post',
@@ -169,8 +174,8 @@ class Search extends Component {
 	};
 
 	render() {
-		const { selectedEntry, entries, searchKey } = this.state;
-		const { mobileSelectedEntry } = this.props;
+		const { selectedEntry, entries } = this.state;
+		const { mobileSelectedEntry, searchKey } = this.props;
 		const entryViewMobile = mobileSelectedEntry 
 			? 'visible-entry-view' 
 			: 'hidden-entry-view'
