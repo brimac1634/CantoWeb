@@ -19,7 +19,7 @@ const store = createStore(rootReducer, applyMiddleware(logger, routerMiddleware(
 ReactDOM.render((
 	<Provider store={store}>
 		<Router history={history}>
-			<Route exact path="/" component={App} />
+			<Route path="/" component={App} />
 		</Router>
 	</Provider>
 	), document.getElementById('root'));
