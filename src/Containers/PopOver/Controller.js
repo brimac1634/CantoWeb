@@ -27,7 +27,6 @@ class Controller extends Component {
 	}
 
 	closeOnClick = () => {
-		console.log('closing')
 		const clickEvent = new MouseEvent("click", {
 		    "view": window,
 		    "bubbles": true,
