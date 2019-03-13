@@ -30,7 +30,8 @@ class PopOver extends Component {
 			x,
 			y,
 		},
-		children } = this.props;
+		children,
+		closeOnClick } = this.props;
 
 		let popType = 'animate-in'
 
@@ -39,7 +40,7 @@ class PopOver extends Component {
 		}
 
 		const childrenWithProps = React.Children.map(children, child => {
-	      	 return React.cloneElement(child, { togglePopOver: togglePopOver})      
+	      	 return React.cloneElement(child, { togglePopOver: togglePopOver, closeOnClick: closeOnClick})      
 	    });
 
 		return (

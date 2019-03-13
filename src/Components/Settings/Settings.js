@@ -1,6 +1,7 @@
 import React from 'react';
 import './Settings.css';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import IconListItem from '../IconListItem/IconListItem';
 import FullScreenPop from '../../Containers/FullScreenPop/FullScreenPop';
@@ -26,10 +27,20 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const Settings = ({ user: { userEmail }, updateUser, presentAlert }) => {
+const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick }) => {
 	let userIsLoggedIn = false;
 	if (userEmail != null && userEmail.length) {
 		userIsLoggedIn = true
+	}
+
+	const handleWhatIs = () => {
+		renderComponentAlert(WhatIsCantoTalk)
+		closeOnClick()
+	}
+
+	const handleDictionaryHelp = () => {
+		renderComponentAlert(DictionaryHelp)
+		closeOnClick()
 	}
 	
 	const handleContact = () => {
@@ -61,23 +72,24 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert }) => {
 				<IconListItem 
 					icon='info' 
 					title='What is CantoTalk?'
-					handleClick={()=>renderComponentAlert(WhatIsCantoTalk)} 
+					handleClick={handleWhatIs} 
 				/>
 				<IconListItem 
 					icon='agenda' 
 					title='Dictionary Help'
-					handleClick={()=>renderComponentAlert(DictionaryHelp)} 
+					handleClick={handleDictionaryHelp} 
 				/>
 				<IconListItem icon='paper-plane' title='Contact' handleClick={handleContact}/>
 				<div className='list-divider'>&nbsp;</div>
-				{userIsLoggedIn
-					? <IconListItem icon='exit-1' title='Logout' handleClick={handleLogout}/>
-					: <IconListItem 
-							icon='login' 
-							title='Sign In'
-							handleClick={()=>renderComponentAlert(SignIn)}
-						/>
-				}
+				<Link to='/SignIn' className='link-item' onClick={closeOnClick}>
+					{userIsLoggedIn
+						? <IconListItem icon='exit-1' title='Logout' handleClick={handleLogout}/>
+						: <IconListItem 
+								icon='login' 
+								title='Sign In'
+							/>
+					}
+				</Link>
 			</div>
 		</div>
 	);

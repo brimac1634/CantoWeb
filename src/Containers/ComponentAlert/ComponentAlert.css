@@ -14,6 +14,7 @@ body.component-alert-body-element {
   justify-content: center;
   align-items: center;
   opacity: 0;
+  animation: component-alert-fadeIn 0.5s 0.2s forwards;
 }
 
 .component-alert-body {
@@ -37,14 +38,6 @@ body.component-alert-body-element {
   cursor: pointer;
 }
 
-.alert-fade-in {
-  animation: component-alert-fadeIn 0.5s 0.2s forwards;
-}
-
-.alert-fade-out {
-  animation: component-alert-fadeOut 0.5s 0.2s forwards;
-}
-
 
 @keyframes component-alert-fadeIn {
   from {
@@ -52,14 +45,5 @@ body.component-alert-body-element {
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes component-alert-fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
   }
 }

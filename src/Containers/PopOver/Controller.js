@@ -26,6 +26,16 @@ class Controller extends Component {
 	  }, 0)
 	}
 
+	closeOnClick = () => {
+		console.log('closing')
+		const clickEvent = new MouseEvent("click", {
+		    "view": window,
+		    "bubbles": true,
+		    "cancelable": false
+		});
+		window.dispatchEvent(clickEvent)
+	}
+
 	setPositition = (rect) => {
 		this.setState({
 			triggerRect: {
@@ -72,7 +82,7 @@ class Controller extends Component {
 		      	if (showPopOver) {
 		      		return ReactDOM.createPortal(
 			            <span onClick={event => event.stopPropagation()}>
-				            {React.cloneElement(child, { togglePopOver: this.togglePopOver, showPopOver: showPopOver, triggerRect: triggerRect, animateOut: animateOut })}
+				            {React.cloneElement(child, { togglePopOver: this.togglePopOver, showPopOver: showPopOver, triggerRect: triggerRect, animateOut: animateOut, closeOnClick: this.closeOnClick })}
 				        </span>
 				        , document.body
 			        )

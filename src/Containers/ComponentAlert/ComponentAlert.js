@@ -10,7 +10,6 @@ const componentAlert = (WrappedComponent) => {
       this.state = {
         width: '',
         height: '',
-        animateOut: false,
       }
       this.content = React.createRef();
     }
@@ -30,27 +29,13 @@ const componentAlert = (WrappedComponent) => {
       removeComponentAlert()
     }
 
-    handleAnimateOut = () => {
-      this.setState({
-          animateOut: true,
-        })
-      setTimeout(() => {
-        this.setState({
-          animateOut: false,
-        })
-        this.close()
-      }, 5000)
-    }
-
     render () {
-      const { width, height, animateOut } = this.state;
-
-      const fadeType = animateOut ? 'alert-fade-out' : 'alert-fade-in';
+      const { width, height } = this.state;
 
       return (
         ReactDOM.createPortal(
           <div
-            className={`component-overlay ${fadeType}`}
+            className='component-overlay'
             ref={dom => (this.overlay = dom)}
           >
             <div className='component-alert'>
@@ -58,7 +43,7 @@ const componentAlert = (WrappedComponent) => {
                 className='component-alert-body'
                 style={{width: `${width}px`, height: `${height}px`}}
               >
-                <button className='close' onClick={this.handleAnimateOut}>
+                <button className='close' onClick={this.close}>
                   <Icon 
                     icon='multiply' 
                     iconStyle='dark' 
@@ -67,7 +52,7 @@ const componentAlert = (WrappedComponent) => {
                 </button>
                 <div ref={this.content}>
                   <WrappedComponent 
-                    handleClose={this.handleAnimateOut}
+                    handleClose={this.close}
                     {...this.props}
                   />
                 </div>
