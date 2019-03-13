@@ -41,7 +41,10 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, tri
 						<Trigger>
 							<div>
 								<div data-tip='Menu' data-for='menu' data-offset="{'left': -10}" >
-									<button className='button' >
+									<button 
+										className='button' 
+										style={{marginRight: '10px'}}
+									>
 										<Icon 
 											icon='menu-4' 
 											className='icon' 
