@@ -10,7 +10,7 @@ const MainView = ({ userID }) => {
 		<div className='main-view'>
 			<Switch>
 				<Route 
-					exact path='/' 
+					path='/' 
 					component={Search}
 				/>
 				<Route 

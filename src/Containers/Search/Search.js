@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './Search.css';
 import {connect} from 'react-redux';
+import { push } from 'react-router-redux';
 import MediaQuery from 'react-responsive';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 import {setMobileEntry, setSearchKey} from './actions';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
   	user: state.user.user,
     mobileSelectedEntry: state.search.mobileEntry,
@@ -81,9 +82,10 @@ class Search extends Component {
 	}
 	
 	onSearch = (event) => {
-		const { setSearchKey } = this.props;
+		const { history, setSearchKey } = this.props;
 		const searchKey = event.target.value
 		setSearchKey(searchKey);
+		
 	}
 
 	handleSearch = (searchKey) => {
