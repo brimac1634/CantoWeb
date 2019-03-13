@@ -34,6 +34,11 @@
 	align-items: center;
 }
 
+.title-logo-container * {
+	text-decoration: none;
+	outline: none;
+}
+
 .title-logo {
 	position: absolute;
 	top: 0;

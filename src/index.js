@@ -7,15 +7,19 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { rootReducer } from './rootReducer';
+import createHistory from 'history/createBrowserHistory';
+import { routerMiddleware } from 'react-router-redux';
 import * as serviceWorker from './serviceWorker';
 
 const logger = createLogger();
-const store = createStore(rootReducer, applyMiddleware(logger))
+const history = createHistory();
+const store = createStore(rootReducer, applyMiddleware(logger, routerMiddleware(history)))
+
 
 ReactDOM.render((
 	<Provider store={store}>
-		<Router>
-			<Route path="/" component={App} />
+		<Router history={history}>
+			<Route exact path="/" component={App} />
 		</Router>
 	</Provider>
 	), document.getElementById('root'));

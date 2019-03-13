@@ -1,6 +1,7 @@
 import React from 'react';
 import './TitleBar.css';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import ReactTooltip from 'react-tooltip'
 import LogoFull from '../LogoFull/LogoFull';
@@ -24,12 +25,14 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, tri
 		<div className='title-bar' onClick={()=>triggerInvDiv('')}>
 			<div className='slanted-div logo-div'></div>
 			<div className='title-logo-container'>
-				<MediaQuery minWidth={575}>
-					<LogoFull className='title-logo'/>
-				</MediaQuery>
-				<MediaQuery maxWidth={574}>
-					<Logo iconSize='30'/>
-				</MediaQuery>
+				<Link to='/'>
+					<MediaQuery minWidth={575}>
+						<LogoFull className='title-logo'/>
+					</MediaQuery>
+					<MediaQuery maxWidth={574}>
+						<Logo iconSize='30'/>
+					</MediaQuery>
+				</Link>
 			</div>
 			<div className='slanted-div current-div'></div>
 			<div className='current-container'>

@@ -14,35 +14,28 @@
 
 .animate-in {
   opacity: 0;
-  animation: pop-over-in .6s .2s cubic-bezier(0, .9, .3, 1.2) forwards;
+  animation: pop-over-in 0.5s 0.2s forwards;
 }
 
 .animate-out {
   opacity: 1;
-  animation: pop-over-out .6s cubic-bezier(0.7, -0.19, 1, 0.09) forwards;
+  animation: pop-over-out 0.5s 0.2s forwards;
 }
 
 @keyframes pop-over-in {
   0% {
     opacity: 0;
-    transform: translateY(-3em) scale(0.7);
   }
   100% {
     opacity: 1;
-    transform: none;
   }
 }
 
 @keyframes pop-over-out {
   0% {
     opacity: 1;
-    transform: none;
-  }
-  50% {
-    opacity: 1
   }
   100% {
     opacity: 0;
-    transform: translateY(-3em) scale(0.8);
   }
 }

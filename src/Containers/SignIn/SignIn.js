@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './SignIn.css';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom'
 import Logo from '../../Components/Logo/Logo';
+import Icon from '../../Components/Icon/Icon';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
 import ReactTooltip from 'react-tooltip'
@@ -47,6 +47,11 @@ class SignIn extends Component {
 
 	onEmailChange = (event) => this.setState({ email: event.target.value })
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
+
+	handleClose = () => {
+		//return home
+		console.log(123)
+	}
 
 	validateEmail = (email) => {
 		const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -135,6 +140,13 @@ class SignIn extends Component {
 		const { title, signInButton, alternateButton} = this.state;
 		return (
 			<div className='sign-in-container'>
+				<button className='sign-in-close' onClick={this.handleClose}>
+                  <Icon 
+                    icon='multiply' 
+                    iconStyle='dark' 
+                    width='15'
+                  />
+                </button>
 				<Logo iconSize='50px' />
 				<h2>{title}</h2>
 				<TextInput 
