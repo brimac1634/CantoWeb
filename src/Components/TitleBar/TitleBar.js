@@ -40,7 +40,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, tri
 					<Controller>
 						<Trigger>
 							<div>
-								<div data-tip='Menu' data-for='menu' data-offset="{'left': -10}" >
+								<div data-tip='Menu' data-for='menu' style={{height: '28px'}}>
 									<button 
 										className='button' 
 										style={{marginRight: '10px'}}
@@ -64,7 +64,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, tri
 				<Controller>
 					<Trigger>
 						<div>
-							<div data-tip='Profile Settings' data-for='user' data-offset="{'left': -10}">
+							<div data-tip='Profile Settings' data-for='user' style={{height: '28px'}}>
 								<button className='button'>
 									<Icon 
 										icon='user-3' 

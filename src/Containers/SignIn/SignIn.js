@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Logo from '../../Components/Logo/Logo';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
+import ReactTooltip from 'react-tooltip'
 import { setUser } from './actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 
@@ -147,16 +148,28 @@ class SignIn extends Component {
 					handleChange={this.onPasswordChange}
 				/>
 				<Button 
-					buttonType='full' 
+					buttonType='ghost' 
 					title={signInButton}
 					handleClick={this.onUserSubmit}
 				/>
-				<p 
-					className='register' 
-					onClick={() => this.signInToggle(alternateButton)}
-				>
-					{alternateButton}
-				</p>
+				<div className='bottom-row'>
+					<p 
+						className='underline-button' 
+						onClick={() => this.signInToggle(alternateButton)}
+					>
+						{alternateButton}
+					</p>
+					<div data-tip={`Creating a profile allows you to
+					 <br> keep  track of your previous searches, save 
+					 <br>favorites, build your own flash card decks, and 
+					 <br>more! This will also make it possible to sync 
+					 <br>information between devices.`} data-multiline='true'>
+						<p className='underline-button right-button' >
+							why?
+						</p>
+					</div>
+					<ReactTooltip effect='solid' place='right' type='dark'/>
+				</div>
 			</div>
 		);
 	}

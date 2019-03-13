@@ -81,6 +81,7 @@ class Controller extends Component {
 	      
 	    });
 
+
 	    return (
 	    	<div style={{width: 'auto', height: 'auto'}}>
 		    	{childrenWithProps}

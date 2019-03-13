@@ -23,7 +23,14 @@
 	margin-top: 15px;
 }
 
-.register {
+.bottom-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.underline-button {
 	cursor: pointer;
 	text-decoration: underline;
 	font-size: 12px;
