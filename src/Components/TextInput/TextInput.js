@@ -2,7 +2,7 @@ import React from 'react';
 import './TextInput.css'
 import Icon from '../Icon/Icon';
 
-const TextInput = ({ placeHolder, icon, handleChange, value, height, isPassword }) => {
+const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height, isPassword }) => {
 	const inputHeight = height ? height : '44px';
 	const type = isPassword ? 'password' : null;
 	return (
@@ -20,6 +20,7 @@ const TextInput = ({ placeHolder, icon, handleChange, value, height, isPassword 
 				className='text-input'
 				placeholder={placeHolder}
 				onChange={handleChange}
+				onKeyPress={handleInput}
 				value={value}
 				type={type}
 			/>

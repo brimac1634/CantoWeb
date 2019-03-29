@@ -19,15 +19,15 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const SearchBar = withRouter(( {history, searchField, searchChange, searchKey, hideInput, clearMobileEntry, searchRoute, setRoute} ) => {
+const SearchBar = withRouter(( {history, searchField, searchChange, searchKey, hideInput, clearMobileEntry, searchRoute, setRoute, searchSubmit} ) => {
 
 	const handleSearchRoute = (route) => {
 		if (route === searchRoute) {
 			setRoute('');
-			history.push('/')
+			history.push('/Search')
 		} else {
 			setRoute(route);
-			history.push(`/${route}`)
+			history.push(`/Search/${route}`)
 		}
 	}
 
@@ -65,6 +65,7 @@ const SearchBar = withRouter(( {history, searchField, searchChange, searchKey, h
 							value={searchKey}
 							height='34px' 
 							handleChange={searchChange}
+							handleInput={searchSubmit}
 						/>
 				}
 				

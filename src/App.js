@@ -31,8 +31,8 @@ class App extends Component {
       const user = JSON.parse(cachedUser)
       updateUser(user);
     }
-    const { match, history } = this.props;
-    if (match.path === '/') {
+    const { location, history } = this.props;
+    if (location.pathname === '/') {
       history.push('/Search')
     }
   }
