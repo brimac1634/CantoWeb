@@ -1,7 +1,7 @@
 import React from 'react';
 import './SearchBar.css';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 import MediaQuery from 'react-responsive';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
@@ -19,43 +19,42 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobileEntry, searchRoute, setRoute} ) => {
+const SearchBar = withRouter(( {history, searchField, searchChange, searchKey, hideInput, clearMobileEntry, searchRoute, setRoute} ) => {
 
 	const handleSearchRoute = (route) => {
 		if (route === searchRoute) {
 			setRoute('');
+			history.push('/')
 		} else {
 			setRoute(route);
+			history.push(`/${route}`)
 		}
 	}
 
 	return (
 		<div className='search-bar' onClick={clearMobileEntry}>
 			<div className='recent-container'>
-				<Link to='/recent'>
-					<MediaQuery minWidth={575}>
-
-						<Button 
-							title='Recent' 
-							buttonType='ghost' 
-							icon='time' 
-							isSelected={searchRoute === 'recentEntries'
-											? true
-											: false}
-							handleClick={()=>handleSearchRoute('recentEntries')}
-						/>
-					</MediaQuery>
-					<MediaQuery maxWidth={574}>
-						<Button 
-							buttonType='ghost' 
-							icon='time' 
-							isSelected={searchRoute === 'recentEntries'
-											? true
-											: false}
-							handleClick={()=>handleSearchRoute('recentEntries')}
-						/>
-					</MediaQuery>
-				</Link>
+				<MediaQuery minWidth={575}>
+					<Button 
+						title='Recent' 
+						buttonType='ghost' 
+						icon='time' 
+						isSelected={searchRoute === 'recentEntries'
+										? true
+										: false}
+						handleClick={()=>handleSearchRoute('recentEntries')}
+					/>
+				</MediaQuery>
+				<MediaQuery maxWidth={574}>
+					<Button 
+						buttonType='ghost' 
+						icon='time' 
+						isSelected={searchRoute === 'recentEntries'
+										? true
+										: false}
+						handleClick={()=>handleSearchRoute('recentEntries')}
+					/>
+				</MediaQuery>
 			</div>
 			<div className='search-container'>
 				{hideInput
@@ -73,6 +72,6 @@ const SearchBar = ( {searchField, searchChange, searchKey, hideInput, clearMobil
 			<div className='bottom-divider'></div>
 		</div>
 	);
-}
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

@@ -6,7 +6,6 @@ import Logo from '../Logo/Logo';
 import IconListItem from '../IconListItem/IconListItem';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
 import WhatIsCantoTalk from '../WhatIsCantoTalk/WhatIsCantoTalk';
-import SignIn from '../../Containers/SignIn/SignIn';
 import {renderComponentAlert} from '../../Containers/ComponentAlert/ComponentAlert';
 import { setUser } from '../../Containers/SignIn/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
