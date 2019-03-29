@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Search.css';
 import {connect} from 'react-redux';
-import { push } from 'react-router-redux';
 import MediaQuery from 'react-responsive';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
@@ -82,7 +81,7 @@ class Search extends Component {
 	}
 	
 	onSearch = (event) => {
-		const { history, setSearchKey } = this.props;
+		const { setSearchKey } = this.props;
 		const searchKey = event.target.value
 		setSearchKey(searchKey);
 	}

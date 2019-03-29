@@ -31,6 +31,10 @@ class App extends Component {
       const user = JSON.parse(cachedUser)
       updateUser(user);
     }
+    const { match, history } = this.props;
+    if (match.path === '/') {
+      history.push('/Search')
+    }
   }
 
   handleNavChange = (title) => this.setState({ current: title })

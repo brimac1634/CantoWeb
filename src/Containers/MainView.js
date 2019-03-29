@@ -5,12 +5,12 @@ import Favorites from './Favorites/Favorites';
 import WordOfTheDay from './WordOfTheDay/WordOfTheDay';
 import Learn from './Learn/Learn';
 
-const MainView = ({ userID }) => {
+const MainView = () => {
 	return (
 		<div className='main-view'>
 			<Switch>
 				<Route 
-					path='/' 
+					path='/Search' 
 					component={Search}
 				/>
 				<Route 

@@ -1,7 +1,7 @@
 export default [
 	{
 		title: 'Search',
-		to: '/',
+		to: '/Search',
 		icon: 'search',
 	},
 	{
