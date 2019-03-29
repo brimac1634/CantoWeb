@@ -6,6 +6,7 @@ import Logo from '../Logo/Logo';
 import IconListItem from '../IconListItem/IconListItem';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
 import WhatIsCantoTalk from '../WhatIsCantoTalk/WhatIsCantoTalk';
+import SignIn from '../../Containers/SignIn/SignIn';
 import {renderComponentAlert} from '../../Containers/ComponentAlert/ComponentAlert';
 import { setUser } from '../../Containers/SignIn/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
@@ -24,6 +25,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick }) => {
+	
 	let userIsLoggedIn = false;
 	if (userEmail != null && userEmail.length) {
 		userIsLoggedIn = true
@@ -41,6 +43,7 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick 
 	
 	const handleContact = () => {
 		console.log(789)
+		closeOnClick()
 	}
 
 	const handleLogout = () => {
@@ -53,7 +56,6 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick 
 	    }
 	    presentAlert(alert);
 	}
-
 	return (
 		<div className='settings'>
 			<div className='logo-bar'>

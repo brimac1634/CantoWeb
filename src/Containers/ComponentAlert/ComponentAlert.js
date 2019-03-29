@@ -31,7 +31,7 @@ const componentAlert = (WrappedComponent) => {
 
     render () {
       const { width, height } = this.state;
-
+      
       return (
         ReactDOM.createPortal(
           <div

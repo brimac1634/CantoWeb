@@ -85,7 +85,6 @@ class Search extends Component {
 		const { history, setSearchKey } = this.props;
 		const searchKey = event.target.value
 		setSearchKey(searchKey);
-		
 	}
 
 	handleSearch = (searchKey) => {

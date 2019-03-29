@@ -15,7 +15,6 @@ const logger = createLogger();
 const history = createHistory();
 const store = createStore(rootReducer, applyMiddleware(logger, routerMiddleware(history)))
 
-
 ReactDOM.render((
 	<Provider store={store}>
 		<Router history={history}>

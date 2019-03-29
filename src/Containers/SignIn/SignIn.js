@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './SignIn.css';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
 import Icon from '../../Components/Icon/Icon';
 import Button from '../../Components/Button/Button';
@@ -140,13 +141,15 @@ class SignIn extends Component {
 		const { title, signInButton, alternateButton} = this.state;
 		return (
 			<div className='sign-in-container'>
-				<button className='sign-in-close' onClick={this.handleClose}>
-                  <Icon 
-                    icon='multiply' 
-                    iconStyle='dark' 
-                    width='15'
-                  />
-                </button>
+				<Link to='/'>
+					<button className='sign-in-close' onClick={this.handleClose}>
+	                  <Icon 
+	                    icon='multiply' 
+	                    iconStyle='dark' 
+	                    width='15'
+	                  />
+	                </button>
+                </Link>
 				<Logo iconSize='50px' />
 				<h2>{title}</h2>
 				<TextInput 
