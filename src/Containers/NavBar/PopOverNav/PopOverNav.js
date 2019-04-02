@@ -16,10 +16,9 @@ const PopOverNav = ({navChange, closeOnClick}) => {
 			{
 				navSections.map(section => {
 					const { title, to, icon } = section;
-					let mobileTitle = title;
-					if (title === 'Word Of The Day') {
-						mobileTitle = 'WOD'
-					}
+					const mobileTitle = (title === 'Word Of The Day')
+						? 'WOD'
+						: title
 
 					return(
 						<div key={title} className='link' onClick={()=>handleNavChange(mobileTitle)}>

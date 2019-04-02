@@ -2,6 +2,7 @@ import React from 'react';
 import './TitleBar.css';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {parseRoutePath} from '../../routeHelper';
 import MediaQuery from 'react-responsive';
 import ReactTooltip from 'react-tooltip'
 import LogoFull from '../LogoFull/LogoFull';

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './NavBar.css';
 import {withRouter} from 'react-router-dom';
+import {parseRoutePath} from '../../routeHelper';
 import NavBarButton from './NavBarButton/NavBarButton';
 import navSections from './navSections';
 
@@ -14,25 +15,35 @@ class NavBar extends Component {
 
 	handleRoute = () => {
 		const pathName = this.props.location.pathname;
-		let location = pathName.split('/', 2)[1];
-		location = `/${location}`
-		const {selected} = this.state;
-		const { navChange } = this.props
+		let location = parseRoutePath(pathName, 0)
 		navSections.forEach(section => {
 			if (section.to === location) {
 				location = section.title
-				console.log(section.title)
 			}
 		})
+		this.updateSection(location)
+	}
+
+	updateSection = (location) => {
+		const {selected} = this.state;
+		const { navChange } = this.props;
 		if (location !== selected) {
 			this.setState({selected: location})
 			navChange(location)
 		}
 	}
 
+	componentDidMount() {
+		this.handleRoute()
+	}
+
+	componentDidUpdate() {
+		this.handleRoute()
+	}
+
 	render() {
 		const { selected } = this.state;
-		this.handleRoute()
+
 		return (
 			<div className='nav-bar'>
 				<div className='nav-list'>
