@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Search from './Search/Search';
 import Favorites from './Favorites/Favorites';
 import WordOfTheDay from './WordOfTheDay/WordOfTheDay';
@@ -10,20 +10,23 @@ const MainView = () => {
 		<div className='main-view'>
 			<Switch>
 				<Route 
-					path='/Search' 
+					path='/search' 
 					component={Search}
 				/>
 				<Route 
-					path='/Favorites' 
+					path='/favorites' 
 					component={Favorites}
 				/>
 				<Route 
-					path='/WordOfTheDay' 
+					path='/word-of-the-day' 
 					component={WordOfTheDay}
 				/>
 				<Route 
-					path='/Learn' 
+					path='/learn' 
 					component={Learn}
+				/>
+				<Redirect 
+					to='/search'
 				/>
 			</Switch>
 		</div>

@@ -108,7 +108,7 @@ class Search extends Component {
 			: null
 		if (enterPressed) {
 			history.push({
-				pathname: '/Search/',
+				pathname: '/search/',
 				search: query
 			})
 			this.handleSearchKey(tempSearchKey);

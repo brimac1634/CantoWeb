@@ -1,22 +1,22 @@
 export default [
 	{
 		title: 'Search',
-		to: '/Search',
+		to: '/search',
 		icon: 'search',
 	},
 	{
 		title: 'Favorites',
-		to: '/Favorites',
+		to: '/favorites',
 		icon: 'like-2',
 	},
 	{
 		title: 'Word Of The Day',
-		to: '/WordOfTheDay',
+		to: '/word-of-the-day',
 		icon: 'calendar-7',
 	},
 	{
 		title: 'Learn',
-		to: '/Learn',
+		to: '/learn',
 		icon: 'windows',
 	},
 ];

@@ -33,7 +33,7 @@ class App extends Component {
     }
     const { location, history } = this.props;
     if (location.pathname === '/') {
-      history.push('/Search')
+      history.push('/search')
     }
   }
 

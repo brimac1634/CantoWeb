@@ -4,7 +4,12 @@ import navSections from '../navSections';
 import {Link} from 'react-router-dom';
 import IconListItem from '../../../Components/IconListItem/IconListItem';
 
-const PopOverNav = ({navChange}) => {
+const PopOverNav = ({navChange, closeOnClick}) => {
+
+	const handleNavChange = (mobileTitle) => {
+		closeOnClick()
+		navChange(mobileTitle)
+	}
 
 	return (
 		<div className='nav'>
@@ -17,7 +22,7 @@ const PopOverNav = ({navChange}) => {
 					}
 
 					return(
-						<div key={title} className='link' onClick={()=>navChange(mobileTitle)}>
+						<div key={title} className='link' onClick={()=>handleNavChange(mobileTitle)}>
 							<Link to={to} className='link'>
 								<IconListItem icon={icon} title={title}/>
 							</Link>
