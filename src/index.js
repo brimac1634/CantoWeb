@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
 import './index.css';
 import App from './App';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { rootReducer } from './rootReducer';
+import { ConnectedRouter } from 'connected-react-router'
+import configureStore, { history } from './configureStore';
 import * as serviceWorker from './serviceWorker';
 
-const logger = createLogger();
-const store = createStore(rootReducer, applyMiddleware(logger))
+const store = configureStore()
 
 ReactDOM.render((
 	<Provider store={store}>
-		<Router>
-			<Route path='/' component={App} />
-		</Router>
+		<ConnectedRouter history={history}>
+			<Router>
+				<Route path='/' component={App} />
+			</Router>
+		</ConnectedRouter>
 	</Provider>
 	), document.getElementById('root'));
 
