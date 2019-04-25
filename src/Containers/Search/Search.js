@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Search.css';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router'
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
 import SearchBar from '../../Components/SearchBar/SearchBar';
@@ -20,7 +21,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		triggerInvDiv: (entryID) => dispatch(setMobileEntry(entryID)),
-		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey))
+		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
+		updateSearchURL: (searchKey) => dispatch(push(searchKey)),
 	}
 }
 
@@ -100,17 +102,14 @@ class Search extends Component {
 	}
 
 	onSubmit = (event) => {
-		const { history } = this.props;
+		const { updateSearchURL } = this.props;
 		const enterPressed = (event.which === 13);
 		const {tempSearchKey} = this.state;
 		const query = tempSearchKey 
 			? `?searchkey=${tempSearchKey}` 
 			: null
 		if (enterPressed) {
-			history.push({
-				pathname: '/search/',
-				search: query
-			})
+			updateSearchURL(`/search${query}`)
 			this.handleSearchKey(tempSearchKey);
 		}
 	}
