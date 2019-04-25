@@ -11,6 +11,12 @@ import SignIn from './Containers/SignIn/SignIn';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
 import { setUser } from './Containers/SignIn/actions';
 
+const mapStateToProps = state => {
+  return {
+    pathname: state.router.location.pathname,
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(setUser(user)),
@@ -33,8 +39,8 @@ class App extends Component {
       const user = JSON.parse(cachedUser)
       updateUser(user);
     }
-    const { location } = this.props;
-    console.log(location)
+    const { pathname } = this.props;
+    console.log(pathname)
     // if (location.pathname === '/') {
     //   history.push('/search')
     // }
@@ -87,4 +93,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
