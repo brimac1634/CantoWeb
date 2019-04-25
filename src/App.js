@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import TitleBar from './Components/TitleBar/TitleBar';
@@ -13,6 +14,7 @@ import { setUser } from './Containers/SignIn/actions';
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(setUser(user)),
+    changePage: () => push('/search')
   }
 }
 
@@ -31,10 +33,11 @@ class App extends Component {
       const user = JSON.parse(cachedUser)
       updateUser(user);
     }
-    const { location, history } = this.props;
-    if (location.pathname === '/') {
-      history.push('/search')
-    }
+    const { location } = this.props;
+    console.log(location)
+    // if (location.pathname === '/') {
+    //   history.push('/search')
+    // }
   }
 
   handleNavChange = (title) => this.setState({ current: title })
