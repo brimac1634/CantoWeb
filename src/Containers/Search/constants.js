@@ -1,3 +1,2 @@
 export const TRIGGER_INV_DIV = 'TRIGGER_INV_DIV';
-export const SET_SEARCH_ROUTE = 'SET_SEARCH_ROUTE';
 export const SET_SEARCH_KEY = 'SET_SEARCH_KEY';

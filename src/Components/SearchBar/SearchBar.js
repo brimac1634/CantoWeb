@@ -1,33 +1,32 @@
 import React from 'react';
 import './SearchBar.css';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router'
 import { withRouter } from 'react-router-dom'
 import MediaQuery from 'react-responsive';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
-import { setSearchRoute } from '../../Containers/Search/actions';
 
 const mapStateToProps = state => {
 	return {
-		searchRoute: state.search.route
+		pathName: state.router.location.pathname
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		setRoute: (route) => dispatch(setSearchRoute(route)),
+		setListType: (type) => dispatch(push(type)),
 	}
 }
 
-const SearchBar = withRouter(( {history, searchField, searchChange, searchKey, hideInput, clearMobileEntry, searchRoute, setRoute, searchSubmit} ) => {
+const SearchBar = withRouter(( {setListType, searchField, searchChange, searchKey, hideInput, clearMobileEntry, pathName, searchSubmit} ) => {
 
 	const handleSearchRoute = (route) => {
-		if (route === searchRoute) {
-			setRoute('');
-			history.push('/Search')
+		console.log(route)
+		if (route === pathName) {
+			setListType('/search')
 		} else {
-			setRoute(route);
-			history.push(`/Search/${route}`)
+			setListType(route)
 		}
 	}
 
@@ -39,20 +38,20 @@ const SearchBar = withRouter(( {history, searchField, searchChange, searchKey, h
 						title='Recent' 
 						buttonType='ghost' 
 						icon='time' 
-						isSelected={searchRoute === 'recentEntries'
+						isSelected={pathName === '/search/recent'
 										? true
 										: false}
-						handleClick={()=>handleSearchRoute('recentEntries')}
+						handleClick={()=>handleSearchRoute('/search/recent')}
 					/>
 				</MediaQuery>
 				<MediaQuery maxWidth={574}>
 					<Button 
 						buttonType='ghost' 
 						icon='time' 
-						isSelected={searchRoute === 'recentEntries'
+						isSelected={pathName === '/search/recent'
 										? true
 										: false}
-						handleClick={()=>handleSearchRoute('recentEntries')}
+						handleClick={()=>handleSearchRoute('/search/recent')}
 					/>
 				</MediaQuery>
 			</div>

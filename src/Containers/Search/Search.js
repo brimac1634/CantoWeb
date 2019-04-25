@@ -13,8 +13,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
   	user: state.user.user,
     mobileSelectedEntry: state.search.mobileEntry,
-    searchRoute: state.search.route,
-    searchKey: state.search.searchKey
+    searchKey: state.search.searchKey,
+    pathName: state.router.location.pathname
   }
 }
 
@@ -60,7 +60,7 @@ class Search extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {user: {userID}, searchRoute, searchKey} = this.props;
+		const {user: {userID}, searchKey, pathName} = this.props;
 		const { 
 			entries, 
 			selectedEntry, 
@@ -71,14 +71,14 @@ class Search extends Component {
 			this.handleSearch(searchKey);
 		}
 
-		if (prevProps.searchRoute !== searchRoute && searchRoute === 'recentEntries') {
+		if (prevProps.pathName !== pathName && pathName === '/search/recent') {
 			this.setState({
 				previousEntries: entries,
 				previousSelectedEntry: selectedEntry,
 				selectedEntry: '',
 			})
 			this.renderRecentEntries(userID)
-		} else if (prevProps.searchRoute !== '' && searchRoute === '') {
+		} else if (prevProps.pathName !== '/search' && pathName === '/search') {
 			this.setState({
 				entries: previousEntries,
 				selectedEntry: previousSelectedEntry,
