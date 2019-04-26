@@ -22,7 +22,6 @@ const mapDispatchToProps = (dispatch) => {
 const SearchBar = withRouter(( {setListType, searchField, searchChange, searchKey, hideInput, clearMobileEntry, pathName, searchSubmit} ) => {
 
 	const handleSearchRoute = (route) => {
-		console.log(route)
 		if (route === pathName) {
 			setListType('/search')
 		} else {
@@ -33,30 +32,22 @@ const SearchBar = withRouter(( {setListType, searchField, searchChange, searchKe
 	return (
 		<div className='search-bar' onClick={clearMobileEntry}>
 			<div className='recent-container'>
-				<MediaQuery minWidth={575}>
-					<Button 
-						title='Recent' 
-						buttonType='ghost' 
-						icon='time' 
-						isSelected={pathName === '/search/recent'
-										? true
-										: false}
-						handleClick={()=>handleSearchRoute('/search/recent')}
-					/>
-				</MediaQuery>
 				<MediaQuery maxWidth={574}>
-					<Button 
-						buttonType='ghost' 
-						icon='time' 
-						isSelected={pathName === '/search/recent'
-										? true
-										: false}
-						handleClick={()=>handleSearchRoute('/search/recent')}
-					/>
+					{(matches) => {
+						return <Button 
+									title={matches ? null : 'Recent'}
+									buttonType='ghost' 
+									icon='time' 
+									isSelected={pathName === '/search/recent'
+													? true
+													: false}
+									handleClick={()=>handleSearchRoute('/search/recent')}
+								/>
+					}}
 				</MediaQuery>
 			</div>
 			<div className='search-container'>
-				{hideInput
+				{hideInput || pathName === '/search/recent'
 					?	null
 					:   <TextInput 
 							icon='search' 

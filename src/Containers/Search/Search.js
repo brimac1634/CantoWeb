@@ -8,6 +8,7 @@ import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 import {setMobileEntry, setSearchKey} from './actions';
+import apiRequest from '../../Helpers/apiRequest';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -117,27 +118,22 @@ class Search extends Component {
 	handleSearch = (searchKey) => {
 		if (searchKey) {
 			sessionStorage.setItem('lastSearch', JSON.stringify(searchKey));
-			fetch('http://localhost:3000', {
-				method: 'post',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({
-					searchKey: searchKey
-				})
+			apiRequest({
+				method: 'POST',
+				body: {searchKey} 
 			})
-				.then(res => res.json())
-				.then(entries => {
-					if (entries.constructor === Array) {
-						sessionStorage.setItem('lastSearchEntries', JSON.stringify(entries));
-						this.setState({
-							entries: entries
-						})
-					} else {
-						this.setState({
-							entries: []
-						})
-					}
-				})
-				.catch(err => console.log('unable to retrieve entries'))
+			.then(entries => {
+				if (Array.isArray(entries)) {
+					sessionStorage.setItem('lastSearchEntries', JSON.stringify(entries));
+					this.setState({
+						entries: entries
+					})
+				} else {
+					this.setState({
+						entries: []
+					})
+				}
+			})
 		} else {
 			sessionStorage.setItem('lastSearch', JSON.stringify(''));
 			sessionStorage.setItem('lastSearchEntries', JSON.stringify([]));
@@ -148,26 +144,22 @@ class Search extends Component {
 	}
 
 	renderRecentEntries = (userID) => {
-		fetch('http://localhost:3000/recent', {
-				method: 'post',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({
-					userID: userID
+		apiRequest({
+			endPoint: '/recent',
+			method: 'POST',
+			body: {userID} 
+		})
+		.then(recentEntries => {
+			if (Array.isArray(recentEntries)) {
+				this.setState({
+					entries: recentEntries,
 				})
-			})
-				.then(res => res.json())
-				.then(recentEntries => {
-					if (recentEntries.constructor === Array) {
-						this.setState({
-							entries: recentEntries,
-						})
-					} else {
-						this.setState({
-							entries: []
-						})
-					}
+			} else {
+				this.setState({
+					entries: []
 				})
-				.catch(err => console.log('unable to retrieve recent entries.'))
+			}
+		})
 	}
 
 	handleEntrySelect = (entry) => {
@@ -183,17 +175,12 @@ class Search extends Component {
 	}
 
 	addEntryToRecent = (userID, entryID) => {
-		fetch('http://localhost:3000/recent/add', {
-				method: 'post',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({
-					userID: userID,
-					entryID: entryID
-				})
-			})
-				.then(res => res.json())
-				.then(console.log)
-				.catch(err => console.log('unable to add to recently viewed.'))
+		apiRequest({
+			endPoint: '/recent/add',
+			method: 'POST',
+			body: {userID, entryID} 
+		})
+		.then(console.log)
 	}
 
 	clearMobileEntry = () => {
