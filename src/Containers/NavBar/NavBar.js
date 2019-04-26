@@ -1,35 +1,20 @@
 import React, {Component} from 'react';
 import './NavBar.css';
-import {withRouter} from 'react-router-dom';
-import {parseRoutePath} from '../../routeHelper';
+import { connect } from 'react-redux';
 import NavBarButton from './NavBarButton/NavBarButton';
 import navSections from './navSections';
+
+const mapStateToProps = (state, ownProps) => {
+	return {
+		pathName: state.router.location.pathname,
+	}
+}
 
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selected: 'Search',
-		}
-	}
-
-	handleRoute = () => {
-		const pathName = this.props.location.pathname;
-		let location = parseRoutePath(pathName, 0)
-		navSections.forEach(section => {
-			if (section.to === location) {
-				location = section.title
-			}
-		})
-		this.updateSection(location)
-	}
-
-	updateSection = (location) => {
-		const {selected} = this.state;
-		const { navChange } = this.props;
-		if (location !== selected) {
-			this.setState({selected: location})
-			navChange(location)
+			selected: 'search',
 		}
 	}
 
@@ -37,13 +22,27 @@ class NavBar extends Component {
 		this.handleRoute()
 	}
 
-	componentDidUpdate() {
-		this.handleRoute()
+	handleRoute = () => {
+		const { pathName } = this.props;
+		navSections.forEach(section => {
+			if (section.to === pathName) {
+				this.updateSection(section.title)
+			}
+		})
+	}
+
+	updateSection = (location) => {
+		const { selected } = this.state;
+		const { navChange } = this.props;
+		if (location !== selected) {
+			this.setState({selected: location})
+			navChange(location)
+		}
 	}
 
 	render() {
 		const { selected } = this.state;
-
+		
 		return (
 			<div className='nav-bar'>
 				<div className='nav-list'>
@@ -59,6 +58,7 @@ class NavBar extends Component {
 								icon={section.icon} 
 								title={section.title}
 								isSelected={isSelected}
+								handleSelect={this.updateSection}
 							/>
 						);
 					})}
@@ -69,4 +69,4 @@ class NavBar extends Component {
 	
 }
 
-export default withRouter(NavBar);
+export default connect(mapStateToProps)(NavBar);

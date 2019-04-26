@@ -10,6 +10,11 @@ import ReactTooltip from 'react-tooltip'
 import { setUser } from './actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 
+const mapStateToProps = (state, ownProps) => {
+	return {
+		pathName: state.router.location.pathname,
+	}
+}
 const mapDispatchToProps = (dispatch) => {
 	return {
 		updateUser: (user) => dispatch(setUser(user)),
@@ -27,7 +32,10 @@ class SignIn extends Component {
 			email: '',
 			password: '',
 		}
-		
+	}
+
+	componentDidMount(prevProps) {
+		console.log(prevProps)
 	}
 
 	signInToggle = (type) => {
@@ -190,4 +198,4 @@ class SignIn extends Component {
 		);
 	}
 }
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

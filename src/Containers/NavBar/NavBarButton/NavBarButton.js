@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import Icon from '../../../Components/Icon/Icon';
 
 
-const NavBarButton = ({ to, title, icon, buttonStatus, isSelected }) => {
+const NavBarButton = ({ to, title, icon, buttonStatus, isSelected, handleSelect }) => {
 
 	let buttonStyle = ''
 	let color = 'cantoWhite'
@@ -14,7 +14,7 @@ const NavBarButton = ({ to, title, icon, buttonStatus, isSelected }) => {
 	}
 
 	return (
-		<div className={`nav-button-container ${buttonStyle}`} >
+		<div className={`nav-button-container ${buttonStyle}`} onClick={()=>handleSelect(title)} >
 			<Link to={to} className='nav-bar-button'>
 				<Icon 
 					icon={icon} 
