@@ -2,21 +2,23 @@ import React, {Component} from 'react';
 import './EntryView.css';
 import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router'
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import Icon from '../Icon/Icon';
-import SignIn from '../../Containers/SignIn/SignIn';
-import {renderComponentAlert} from '../../Containers/ComponentAlert/ComponentAlert';
 import { setAlert } from '../../Components/PopUpAlert/actions';
+import apiRequest from '../../Helpers/apiRequest';
 
 const mapStateToProps = state => {
 	return {
-		user: state.user.user
+		userID: state.user.user.userID,
+		hash: state.router.location.hash,
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		presentAlert: (alert) => dispatch(setAlert(alert)),
+		updateURL: (path) => dispatch(push(path)),
 	}
 }
 
@@ -25,14 +27,117 @@ class EntryView extends Component {
 		super(props);
 		this.state = {
 			isFavorited: false,
+			entry: ''
 		}
 	}
 
+	componentDidUpdate(prevProps) {
+		const { hash, userID } = this.props;
+		if (hash && prevProps.hash !== hash) {
+			const entryID = hash.slice(1, hash.length)
+			apiRequest({
+				endPoint: '/entryid',
+				method: 'POST',
+				body: {entryID} 
+			})
+			.then(entry => {
+				console.log(entry)
+				this.setState({entry})
+				if (
+					entryID != null &&
+					this.validateUser(userID)
+				) {
+					this.checkIfFavorite(entryID, userID);
+				}
+			})
+		}
+	}
+
+	checkIfFavorite = (entryID, userID) => {
+		const { isFavorited } = this.state;
+		apiRequest({
+				endPoint: '/favorites/isFavorited',
+				method: 'POST',
+				body: {entryID, userID} 
+			})
+			.then(favorited => {
+				if (favorited !== isFavorited) {
+					this.setState({isFavorited: favorited})
+				}
+			})
+	}
+
+	toggleFavorite = (entryID, userID, cantoWord) => {
+		const { 
+			updateEntries,
+			updateSelected, 
+			presentAlert, 
+			isFavoritePage,
+			updateURL
+		} = this.props;
+		if (this.validateUser(userID)) {
+			apiRequest({
+				endPoint: '/favorites/toggle',
+				method: 'POST',
+				body: {entryID, userID, cantoWord} 
+			})
+			.then(favorited => {
+				this.setState({isFavorited: favorited})
+				let title = '';
+				let message = '';
+				let icon = '';
+				if (!favorited) {
+					if (isFavoritePage) {
+						updateEntries(userID)
+						updateSelected('')
+					}
+					title = 'Favorite Removed'
+					message = `"${cantoWord}" has been removed from your favorites.`
+					icon = 'dislike-1'
+				} else {
+					title = 'Favorite Added'
+					message = `"${cantoWord}" has been added to your favorites.`
+					icon = 'like-2'
+				}
+				const alert = {
+			        title,
+			        message,
+			        showAlert: true,
+			        icon,
+			    }
+			    presentAlert(alert);
+			})
+		} else {
+			optionAlert({
+			    title: 'Please sign in.',
+			    message: 'You must be signed in to save favorites. Would you like to sign in or register now?',
+			    buttons: [
+			      {
+			        label: 'Yes',
+			        onClick: () => updateURL('signin')
+			      },
+			      {
+			        label: 'No',
+			        onClick: null
+			      }
+			    ]
+		    })
+		}
+	}
+
+	togglePlay = (entryID) => {
+		const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
+		audio.play()		
+	}
+
+	validateUser = (userID) => {
+		return userID != null && userID.toString().length
+	}
+
 	render() {
+		const { userID } = this.props;
 		const {
-			user:{
-				userID
-			},
+			isFavorited,
 			entry,
 			entry: {
 				entryID,
@@ -44,100 +149,10 @@ class EntryView extends Component {
 				cantosentence,
 				jyutpingsentence,
 				englishsentence
-			},
-			updateEntries,
-			updateSelected,
-			presentAlert,
-			isFavoritePage
-		} = this.props;
-
-		const { isFavorited } = this.state;
+			}
+		} = this.state
 
 		const clLabel = classifier ? 'cl: ' : '';
-
-		const checkIfFavorite = (entryID, userID) => {
-			fetch('http://localhost:3000/Favorites/isFavorited', {
-				method: 'post',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({
-					entryID: entryID,
-					userID: userID
-				})
-			})
-				.then(data => data.json())
-				.then(favorited => {
-					if (favorited !== isFavorited) {
-						this.setState({isFavorited: favorited})
-					}
-				})
-				.catch(err => console.log('Unable to check favorite'))
-		}
-
-		if (entryID != null && userID != null && userID.toString().length) {
-			checkIfFavorite(entryID, userID);
-		}
-
-		const toggleFavorite = (entryID, userID, cantoWord) => {
-			if (userID !== '') {
-				fetch('http://localhost:3000/Favorites/toggle', {
-					method: 'post',
-					headers: {'Content-Type': 'application/json'},
-					body: JSON.stringify({
-						entryid: entryID,
-						userid: userID,
-						cantoword: cantoWord
-					})
-				})
-					.then(data => data.json())
-					.then(favorited => {
-						this.setState({isFavorited: favorited})
-						let title = '';
-						let message = '';
-						let icon = '';
-						if (!favorited) {
-							if (isFavoritePage) {
-								updateEntries(userID)
-								updateSelected('')
-							}
-							title = 'Favorite Removed'
-							message = `"${cantoWord}" has been removed from your favorites.`
-							icon = 'dislike-1'
-						} else {
-							title = 'Favorite Added'
-							message = `"${cantoWord}" has been added to your favorites.`
-							icon = 'like-2'
-						}
-						const alert = {
-					        title: title,
-					        message: message,
-					        showAlert: true,
-					        icon: icon,
-					    }
-					    presentAlert(alert);
-					})
-					.catch(err => console.log('Unable to toggle favorite'))
-			} else {
-				optionAlert({
-				    title: 'Please sign in.',
-				    message: 'You must be signed in to save favorites. Would you like to sign in or register now?',
-				    buttons: [
-				      {
-				        label: 'Yes',
-				        onClick: () => renderComponentAlert(SignIn)
-				      },
-				      {
-				        label: 'No',
-				        onClick: null
-				      }
-				    ]
-			    })
-			}
-		}
-
-		const togglePlay = (entryID) => {
-			const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
-			audio.play()		
-		}
 
 		return (
 			<div className='entry-view'>
@@ -147,7 +162,7 @@ class EntryView extends Component {
 								<div data-tip="Toggle Favorite" >
 									<button 
 										className='entry-btn' 
-										onClick={() => toggleFavorite(entryID, userID, cantoword)}
+										onClick={() => this.toggleFavorite(entryID, userID, cantoword)}
 									>
 										<Icon 
 											icon='like-2' 
@@ -167,7 +182,7 @@ class EntryView extends Component {
 								<div data-tip="Play Audio Clip" >
 									<button 
 										className='entry-btn'
-										onClick={() => togglePlay(entryID)}
+										onClick={() => this.togglePlay(entryID)}
 									>
 										<Icon 
 											icon='speaker-5' 

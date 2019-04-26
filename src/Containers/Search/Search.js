@@ -41,8 +41,9 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
-		const { search } = this.props;
-		if (search) {
+		const { search, hash } = this.props;
+		if (search || hash) {
+			// console.log(hash)
 			const values = queryString.parse(search)
 			this.handleSearchKey(values.searchkey)
 		} else {
@@ -120,6 +121,7 @@ class Search extends Component {
 		if (searchKey) {
 			sessionStorage.setItem('lastSearch', JSON.stringify(searchKey));
 			apiRequest({
+				endPoint: '/search',
 				method: 'POST',
 				body: {searchKey} 
 			})
@@ -164,7 +166,14 @@ class Search extends Component {
 	}
 
 	handleEntrySelect = (entry) => {
-		const {setMobileEntry, user: {userID}} = this.props;
+		const {
+			setMobileEntry, 
+			updateSearchURL,
+			pathName,
+			search, 
+			user: {userID}
+		} = this.props;
+		updateSearchURL(`${pathName}${search}#${entry.entryID}`)
 		sessionStorage.setItem('lastSelectedEntry', JSON.stringify(entry));
 		this.setState({
 			selectedEntry: entry,
