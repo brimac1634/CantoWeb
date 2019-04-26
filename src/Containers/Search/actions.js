@@ -1,7 +1,7 @@
-import { TRIGGER_INV_DIV, SET_SEARCH_KEY } from './constants';
+import { SET_MOBILE_ENTRY, SET_SEARCH_KEY } from './constants';
 
 export const setMobileEntry = (entryID) => ({
-	type: TRIGGER_INV_DIV,
+	type: SET_MOBILE_ENTRY,
 	payload: entryID
 })
 

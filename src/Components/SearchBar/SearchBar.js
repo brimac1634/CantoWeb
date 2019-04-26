@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import MediaQuery from 'react-responsive';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
+import {setMobileEntry} from '../../Containers/Search/actions';
 
 const mapStateToProps = state => {
 	return {
@@ -15,11 +16,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 		setListType: (type) => dispatch(push(type)),
 	}
 }
 
-const SearchBar = withRouter(( {setListType, searchField, searchChange, searchKey, hideInput, clearMobileEntry, pathName, searchSubmit} ) => {
+const SearchBar = withRouter(( {setListType, searchField, searchChange, searchKey, hideInput, pathName, searchSubmit, setMobileEntry} ) => {
 
 	const handleSearchRoute = (route) => {
 		if (route === pathName) {
@@ -30,7 +32,7 @@ const SearchBar = withRouter(( {setListType, searchField, searchChange, searchKe
 	}
 
 	return (
-		<div className='search-bar' onClick={clearMobileEntry}>
+		<div className='search-bar' onClick={()=>setMobileEntry('')}>
 			<div className='recent-container'>
 				<MediaQuery maxWidth={574}>
 					{(matches) => {

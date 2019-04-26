@@ -17,13 +17,13 @@ import {setMobileEntry} from '../../Containers/Search/actions';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		triggerInvDiv: (entryID) => dispatch(setMobileEntry(entryID))
+		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID))
 	}
 }
 
-const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, triggerInvDiv }) => {
+const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, setMobileEntry }) => {
 	return (
-		<div className='title-bar' onClick={()=>triggerInvDiv('')}>
+		<div className='title-bar' onClick={()=>setMobileEntry('')}>
 			<div className='slanted-div logo-div'></div>
 			<div className='title-logo-container'>
 				<Link to='/'>

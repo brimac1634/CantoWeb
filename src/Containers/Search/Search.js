@@ -15,13 +15,14 @@ const mapStateToProps = (state, ownProps) => {
   	user: state.user.user,
     mobileSelectedEntry: state.search.mobileEntry,
     searchKey: state.search.searchKey,
-    pathName: state.router.location.pathname
+    pathName: state.router.location.pathname,
+    search: state.router.location.search,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		triggerInvDiv: (entryID) => dispatch(setMobileEntry(entryID)),
+		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
 		updateSearchURL: (searchKey) => dispatch(push(searchKey)),
 	}
@@ -40,9 +41,9 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
-		const searchQuery = this.props.location.search
-		if (searchQuery) {
-			const values = queryString.parse(searchQuery)
+		const { search } = this.props;
+		if (search) {
+			const values = queryString.parse(search)
 			this.handleSearchKey(values.searchkey)
 		} else {
 			const lastSearch = sessionStorage.getItem('lastSearch')
@@ -163,12 +164,12 @@ class Search extends Component {
 	}
 
 	handleEntrySelect = (entry) => {
-		const {triggerInvDiv, user: {userID}} = this.props;
+		const {setMobileEntry, user: {userID}} = this.props;
 		sessionStorage.setItem('lastSelectedEntry', JSON.stringify(entry));
 		this.setState({
 			selectedEntry: entry,
 		})
-		triggerInvDiv(entry.entryID);
+		setMobileEntry(entry.entryID);
 		if (userID !== '' && userID != null) {
 			this.addEntryToRecent(userID, entry.entryID);
 		}
@@ -184,8 +185,8 @@ class Search extends Component {
 	}
 
 	clearMobileEntry = () => {
-	    const {triggerInvDiv} = this.props;
-	    triggerInvDiv('');
+	    const {setMobileEntry} = this.props;
+	    setMobileEntry('');
 	};
 
 	render() {
@@ -202,7 +203,6 @@ class Search extends Component {
 					searchChange={this.onSearch}
 					searchSubmit={this.onSubmit}
 					searchKey={tempSearchKey}
-					clearMobileEntry={this.clearMobileEntry}
 				/>
 				<MediaQuery minWidth={700}>
 					<div className='split-container'>
