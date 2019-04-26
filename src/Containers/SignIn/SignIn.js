@@ -1,23 +1,26 @@
 import React, {Component} from 'react';
 import './SignIn.css';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router'
 import {Link} from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
 import Icon from '../../Components/Icon/Icon';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
 import ReactTooltip from 'react-tooltip'
+import apiRequest from '../../Helpers/apiRequest';
 import { setUser } from './actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		pathName: state.router.location.pathname,
+		prevRoute: state.prevRoute.route,
 	}
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
 		updateUser: (user) => dispatch(setUser(user)),
+		updateURL: (path) => dispatch(push(path)),
 		presentAlert: (alert) => dispatch(setAlert(alert)),
 	}
 }
@@ -34,9 +37,6 @@ class SignIn extends Component {
 		}
 	}
 
-	componentDidMount(prevProps) {
-		console.log(prevProps)
-	}
 
 	signInToggle = (type) => {
 		if (type === 'sign in') {
@@ -58,8 +58,8 @@ class SignIn extends Component {
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 
 	handleClose = () => {
-		//return home
-		console.log(123)
+		const { updateURL, prevRoute } = this.props;
+		updateURL(prevRoute)
 	}
 
 	validateEmail = (email) => {
@@ -77,9 +77,16 @@ class SignIn extends Component {
 		updateUser(user);
 	}
 
+	createUser = (userData) => {
+		return {
+			userID: userData.id,
+			userEmail: userData.email,
+		}
+	}
+
 	onUserSubmit = () => {
 		const { title, email, password } = this.state;
-		const { presentAlert } = this.props;
+		const { presentAlert, prevRoute, updateURL } = this.props;
 		const emailIsValid = this.validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
 		if (!emailIsValid && !passwordIsValid) {
@@ -91,20 +98,13 @@ class SignIn extends Component {
 		} else {
 			if (title === 'Login') {
 				//login
-				fetch('http://localhost:3000/signin', {
-					method: 'post',
-					headers: {'Content-Type': 'application/json'},
-					body: JSON.stringify({
-						email: email,
-						password: password
-					})
+				apiRequest({
+					endPoint: '/signin',
+					method: 'POST',
+					body: {email, password} 
 				})
-					.then(res => res.json())
 					.then(userData => {
-						const user = {
-							userID: userData.id,
-							userEmail: userData.email,
-						}
+						const user = this.createUser(userData)
 						const alert = {
 					        title: 'Login Successful',
 					        message: `You are now logged in as "${user.userEmail}".`,
@@ -112,25 +112,18 @@ class SignIn extends Component {
 					    }
 						this.handleUpdateUser(user)
 						presentAlert(alert)
+						updateURL(prevRoute)
 					})
-					.catch(err => console.log('Unable to login'))
 
 			} else {
 				//register
-				fetch('http://localhost:3000/register', {
-					method: 'post',
-					headers: {'Content-Type': 'application/json'},
-					body: JSON.stringify({
-						email: email,
-						password: password
-					})
+				apiRequest({
+					endPoint: '/register',
+					method: 'POST',
+					body: {email, password} 
 				})
-					.then(res => res.json())
 					.then(userData => {
-						const user = {
-							userID: userData.id,
-							userEmail: userData.email,
-						}
+						const user = this.createUser(userData)
 						const alert = {
 					        title: 'Registration Successful',
 					        message: `You are now logged in as "${user.userEmail}".`,
@@ -138,8 +131,8 @@ class SignIn extends Component {
 					    }
 						this.handleUpdateUser(user)
 						presentAlert(alert);
+						updateURL(prevRoute)
 					})
-					.catch(console.log)
 			}
 		}
 		

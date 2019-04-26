@@ -1,0 +1,1 @@
+export const PREV_ROUTE = 'PREV_ROUTE';

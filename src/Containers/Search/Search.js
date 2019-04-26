@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
 		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
 		updateSearchURL: (searchKey) => dispatch(push(searchKey)),
 	}
-}
+} 
 
 class Search extends Component {
 	constructor(props) {

@@ -6,11 +6,13 @@ import { push } from 'connected-react-router'
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import Icon from '../Icon/Icon';
 import { setAlert } from '../../Components/PopUpAlert/actions';
+import { setPrevRoute } from '../../Routing/actions';
 import apiRequest from '../../Helpers/apiRequest';
 
 const mapStateToProps = state => {
 	return {
 		userID: state.user.user.userID,
+		pathName: state.router.location.pathname,
 		hash: state.router.location.hash,
 	}
 }
@@ -19,6 +21,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		presentAlert: (alert) => dispatch(setAlert(alert)),
 		updateURL: (path) => dispatch(push(path)),
+		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 	}
 }
 
@@ -73,7 +76,9 @@ class EntryView extends Component {
 			updateSelected, 
 			presentAlert, 
 			isFavoritePage,
-			updateURL
+			updateURL,
+			pathName,
+			setPrevRoute,
 		} = this.props;
 		if (this.validateUser(userID)) {
 			apiRequest({
@@ -114,7 +119,10 @@ class EntryView extends Component {
 			    buttons: [
 			      {
 			        label: 'Yes',
-			        onClick: () => updateURL('signin')
+			        onClick: () => {
+			        	setPrevRoute(pathName)
+			        	updateURL('signin')
+			        }
 			      },
 			      {
 			        label: 'No',
