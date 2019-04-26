@@ -14,11 +14,15 @@ class NavBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selected: 'search',
+			selected: 'Search',
 		}
 	}
 
 	componentDidMount() {
+		this.handleRoute()
+	}
+
+	componentDidUpdate(prevProps) {
 		this.handleRoute()
 	}
 

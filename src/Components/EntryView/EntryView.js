@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './EntryView.css';
 import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router'
+import { push } from 'connected-react-router';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import Icon from '../Icon/Icon';
 import { setAlert } from '../../Components/PopUpAlert/actions';
@@ -34,10 +34,23 @@ class EntryView extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { hash } = this.props;
+		if (hash) {
+			this.getEntry(hash)
+		}
+	}
+
 	componentDidUpdate(prevProps) {
-		const { hash, userID } = this.props;
+		const { hash } = this.props;
 		if (hash && prevProps.hash !== hash) {
-			const entryID = hash.slice(1, hash.length)
+			this.getEntry(hash)
+		}
+	}
+
+	getEntry = (hash) => {
+		const { userID } = this.props;
+		const entryID = hash.slice(1, hash.length)
 			apiRequest({
 				endPoint: '/entryid',
 				method: 'POST',
@@ -53,7 +66,6 @@ class EntryView extends Component {
 					this.checkIfFavorite(entryID, userID);
 				}
 			})
-		}
 	}
 
 	checkIfFavorite = (entryID, userID) => {

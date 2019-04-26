@@ -59,6 +59,7 @@ class SignIn extends Component {
 
 	handleClose = () => {
 		const { updateURL, prevRoute } = this.props;
+		console.log(prevRoute)
 		updateURL(prevRoute)
 	}
 

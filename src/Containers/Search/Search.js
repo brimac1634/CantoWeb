@@ -41,9 +41,8 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
-		const { search, hash } = this.props;
-		if (search || hash) {
-			// console.log(hash)
+		const { search } = this.props;
+		if (search) {
 			const values = queryString.parse(search)
 			this.handleSearchKey(values.searchkey)
 		} else {
@@ -199,7 +198,7 @@ class Search extends Component {
 	};
 
 	render() {
-		const { selectedEntry, entries, tempSearchKey } = this.state;
+		const { entries, tempSearchKey } = this.state;
 		const { mobileSelectedEntry, searchKey } = this.props;
 		const entryViewMobile = mobileSelectedEntry 
 			? 'visible-entry-view' 
@@ -224,9 +223,7 @@ class Search extends Component {
 						</div>
 						<div className='divider'></div>
 						<div className='entry-view-container'>
-							<EntryView 
-								entry={selectedEntry}
-							/>
+							<EntryView />
 						</div>
 					</div>
 				</MediaQuery>
@@ -246,9 +243,7 @@ class Search extends Component {
 						<div 
 							className={`entry-view-container ${entryViewMobile}`}
 						>
-							<EntryView 
-								entry={selectedEntry}
-							/>
+							<EntryView />
 						</div>
 					</div>
 				</MediaQuery>
