@@ -9,6 +9,7 @@ import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 import {setMobileEntry, setSearchKey} from './actions';
+import {setLoading} from '../MainView/actions';
 import apiRequest from '../../Helpers/apiRequest';
 
 const mapStateToProps = (state, ownProps) => {
@@ -26,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
 		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
 		updateSearchURL: (searchKey) => dispatch(push(searchKey)),
+		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 } 
 
@@ -38,7 +40,6 @@ class Search extends Component {
 			previousEntries: [],
 			previousSelectedEntry: '',
 			tempSearchKey: '',
-			loading: false,
 		}
 	}
 
@@ -119,8 +120,9 @@ class Search extends Component {
 	}
 
 	handleSearch = (searchKey) => {
+		const { setLoading } = this.props;
 		if (searchKey) {
-			this.setState({loading: true})
+			setLoading(true)
 			sessionStorage.setItem('lastSearch', JSON.stringify(searchKey));
 			apiRequest({
 				endPoint: '/search',
@@ -138,9 +140,7 @@ class Search extends Component {
 						entries: []
 					})
 				}
-				setTimeout(() => {
-					this.setState({loading: false})
-				}, 5000)
+				setLoading(false)
 			})
 		} else {
 			sessionStorage.setItem('lastSearch', JSON.stringify(''));
@@ -199,7 +199,7 @@ class Search extends Component {
 			method: 'POST',
 			body: {userID, entryID} 
 		})
-		.then(console.log)
+		.catch(() => console.log('unable to save recent'))
 	}
 
 	clearMobileEntry = () => {
@@ -208,7 +208,7 @@ class Search extends Component {
 	};
 
 	render() {
-		const { entries, tempSearchKey, loading } = this.state;
+		const { entries, tempSearchKey } = this.state;
 		const { mobileSelectedEntry, searchKey } = this.props;
 		const entryViewMobile = mobileSelectedEntry 
 			? 'visible-entry-view' 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import TitleBar from './Components/TitleBar/TitleBar';
 import NavBar from './Containers/NavBar/NavBar';
-import MainView from './Containers/MainView';
+import MainView from './Containers/MainView/MainView';
 import SignIn from './Containers/SignIn/SignIn';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
 import { setUser } from './Containers/SignIn/actions';
