@@ -4,7 +4,7 @@ import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
-import { validateUser } from '../../Helpers/helpers';
+import { validateUser, serverError } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 import { setPrevRoute } from '../../Routing/actions';
@@ -93,38 +93,43 @@ class EntryView extends Component {
 			pathName,
 			setPrevRoute,
 		} = this.props;
-		if (this.validateUser(userID)) {
+		if (validateUser(userID)) {
 			apiRequest({
 				endPoint: '/favorites/toggle',
 				method: 'POST',
 				body: {entryID, userID, cantoWord} 
 			})
 			.then(favorited => {
-				this.setState({isFavorited: favorited})
-				let title = '';
-				let message = '';
-				let icon = '';
-				if (!favorited) {
-					if (isFavoritePage) {
-						updateEntries(userID)
-						updateSelected('')
-					}
-					title = 'Favorite Removed'
-					message = `"${cantoWord}" has been removed from your favorites.`
-					icon = 'dislike-1'
+				if (favorited.error) {
+					serverError()
 				} else {
-					title = 'Favorite Added'
-					message = `"${cantoWord}" has been added to your favorites.`
-					icon = 'like-2'
+					this.setState({isFavorited: favorited})
+					let title = '';
+					let message = '';
+					let icon = '';
+					if (!favorited) {
+						if (isFavoritePage) {
+							updateEntries(userID)
+							updateSelected('')
+						}
+						title = 'Favorite Removed'
+						message = `"${cantoWord}" has been removed from your favorites.`
+						icon = 'dislike-1'
+					} else {
+						title = 'Favorite Added'
+						message = `"${cantoWord}" has been added to your favorites.`
+						icon = 'like-2'
+					}
+					const alert = {
+				        title,
+				        message,
+				        showAlert: true,
+				        icon,
+				    }
+				    presentAlert(alert);
 				}
-				const alert = {
-			        title,
-			        message,
-			        showAlert: true,
-			        icon,
-			    }
-			    presentAlert(alert);
 			})
+			.catch(err => serverError())
 		} else {
 			optionAlert({
 			    title: 'Please sign in.',
@@ -191,8 +196,6 @@ class EntryView extends Component {
 												: 'cantoDarkBlue'
 											}
 										/>
-										
-										
 									</button>
 								</div>
 								<ReactTooltip effect='solid' delayShow={1000}/>

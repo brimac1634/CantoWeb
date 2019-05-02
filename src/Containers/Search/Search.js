@@ -38,6 +38,7 @@ class Search extends Component {
 			previousEntries: [],
 			previousSelectedEntry: '',
 			tempSearchKey: '',
+			loading: false,
 		}
 	}
 
@@ -119,6 +120,7 @@ class Search extends Component {
 
 	handleSearch = (searchKey) => {
 		if (searchKey) {
+			this.setState({loading: true})
 			sessionStorage.setItem('lastSearch', JSON.stringify(searchKey));
 			apiRequest({
 				endPoint: '/search',
@@ -136,6 +138,9 @@ class Search extends Component {
 						entries: []
 					})
 				}
+				setTimeout(() => {
+					this.setState({loading: false})
+				}, 5000)
 			})
 		} else {
 			sessionStorage.setItem('lastSearch', JSON.stringify(''));
@@ -203,7 +208,7 @@ class Search extends Component {
 	};
 
 	render() {
-		const { entries, tempSearchKey } = this.state;
+		const { entries, tempSearchKey, loading } = this.state;
 		const { mobileSelectedEntry, searchKey } = this.props;
 		const entryViewMobile = mobileSelectedEntry 
 			? 'visible-entry-view' 
