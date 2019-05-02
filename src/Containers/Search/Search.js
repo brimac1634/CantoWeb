@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
+import { serverError } from '../../Helpers/helpers';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
@@ -152,14 +153,18 @@ class Search extends Component {
 			body: {userID} 
 		})
 		.then(recentEntries => {
-			if (Array.isArray(recentEntries)) {
-				this.setState({
-					entries: recentEntries,
-				})
+			if (recentEntries.error) {
+				serverError()
 			} else {
-				this.setState({
-					entries: []
-				})
+				if (Array.isArray(recentEntries)) {
+					this.setState({
+						entries: recentEntries,
+					})
+				} else {
+					this.setState({
+						entries: []
+					})
+				}
 			}
 		})
 	}

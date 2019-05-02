@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import {Link} from 'react-router-dom';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
+import { serverError } from '../../Helpers/helpers';
 import Logo from '../../Components/Logo/Logo';
 import Icon from '../../Components/Icon/Icon';
 import Button from '../../Components/Button/Button';
@@ -35,6 +36,7 @@ class SignIn extends Component {
 			alternateButton: 'register',
 			email: '',
 			password: '',
+			failCount: 0,
 		}
 	}
 
@@ -87,8 +89,8 @@ class SignIn extends Component {
 	}
 
 	onUserSubmit = () => {
-		const { title, email, password } = this.state;
-		const { presentAlert, prevRoute, updateURL } = this.props;
+		const { title, email, password, failCount } = this.state;
+		
 		const emailIsValid = this.validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
 		if (!emailIsValid && !passwordIsValid) {
@@ -120,37 +122,37 @@ class SignIn extends Component {
 					.then(userData => {
 						if (userData.error) {
 							const { name } = userData.error;
-							if (name === 'DatabaseError') {
-								optionAlert({
-								    title: 'Server Issue',
-								    message: 'There appears to be an issue with our server. Please check back shortly.',
-							    })
+							if (name === 'ServerError') {
+								serverError()
 							} else if (name === 'ValidationError') {
-								optionAlert({
-								    title: 'Invalid Credentials',
-								    message: 'The information you have entered does not match our records. Would you like to register now?',
-								    buttons: [
-								    	{
-								    		label: 'No',
-									        onClick: () => null
-								    	},
-								    	{
-								    		label: 'Yes',
-									        onClick: () => this.signInToggle('register')
-								    	},
-								    ]
-							    })
+								this.setState({
+									failCount: failCount + 1
+								})
+								if (failCount <= 2) {
+									optionAlert({
+									    title: 'Invalid Credentials',
+									    message: 'The information you have entered does not match our records.',
+								    })
+								} else {
+									this.setState({failCount: 0})
+									optionAlert({
+									    title: 'Invalid Credentials',
+									    message: 'The information you have entered does not match our records. Would you like to register?',
+									    buttons: [
+									    	{
+									    		label: 'Yes',
+										        onClick: () => this.signInToggle('register')
+									    	},
+									    	{
+									    		label: 'No',
+										        onClick: () => null
+									    	},
+									    ]
+								    })
+								}
 							}
 						} else {
-							const user = this.createUser(userData)
-							const alert = {
-						        title: 'Login Successful',
-						        message: `You are now logged in as "${user.userEmail}".`,
-						        showAlert: true,
-						    }
-							this.handleUpdateUser(user)
-							presentAlert(alert)
-							updateURL(prevRoute)
+							this.handleLogin(title, userData)
 						}
 					})
 
@@ -162,19 +164,35 @@ class SignIn extends Component {
 					body: {email, password} 
 				})
 					.then(userData => {
-						const user = this.createUser(userData)
-						const alert = {
-					        title: 'Registration Successful',
-					        message: `You are now logged in as "${user.userEmail}".`,
-					        showAlert: true,
-					    }
-						this.handleUpdateUser(user)
-						presentAlert(alert);
-						updateURL(prevRoute)
+						if (userData.error) {
+							serverError()
+						} else {
+							this.handleLogin(title, userData)
+						}
 					})
 			}
 		}
-		
+    }
+
+    handleLogin = (type, userData) => {
+    	const { presentAlert, prevRoute, updateURL } = this.props;
+    	const user = this.createUser(userData)
+    	let title = '';
+
+    	if (type === 'Login') {
+    		title = 'Login Successful'
+    	} else if (type === 'Register') {
+    		title = 'Registration Successful'
+    	}
+
+		const alert = {
+	        title: title,
+	        message: `You are now logged in as "${user.userEmail}".`,
+	        showAlert: true,
+	    }
+		this.handleUpdateUser(user)
+		presentAlert(alert);
+		updateURL(prevRoute)
     }
 
 	render() {
