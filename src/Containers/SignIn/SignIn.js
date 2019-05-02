@@ -3,6 +3,7 @@ import './SignIn.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import {Link} from 'react-router-dom';
+import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import Logo from '../../Components/Logo/Logo';
 import Icon from '../../Components/Icon/Icon';
 import Button from '../../Components/Button/Button';
@@ -92,10 +93,22 @@ class SignIn extends Component {
 		const passwordIsValid = this.validatePassword(password);
 		if (!emailIsValid && !passwordIsValid) {
 			//give alert that there is missing info
+			optionAlert({
+				    title: 'Invalid Credentials',
+				    message: 'The information you have entered is incorrect.',
+			    })
 		} else if (!emailIsValid) {
 			//give alert that email is incorrect
+			optionAlert({
+				    title: 'Invalid Email Address',
+				    message: 'The email address you have entered is incomplete.',
+			    })
 		} else if (!passwordIsValid) {
 			//give alert that password must contain 6 characters
+			optionAlert({
+				    title: 'Invalid Password',
+				    message: 'The password you have entered is incomplete. Please note that passwords must contain at least 6 characters.',
+			    })
 		} else {
 			if (title === 'Login') {
 				//login
@@ -105,15 +118,40 @@ class SignIn extends Component {
 					body: {email, password} 
 				})
 					.then(userData => {
-						const user = this.createUser(userData)
-						const alert = {
-					        title: 'Login Successful',
-					        message: `You are now logged in as "${user.userEmail}".`,
-					        showAlert: true,
-					    }
-						this.handleUpdateUser(user)
-						presentAlert(alert)
-						updateURL(prevRoute)
+						if (userData.error) {
+							const { name } = userData.error;
+							if (name === 'DatabaseError') {
+								optionAlert({
+								    title: 'Server Issue',
+								    message: 'There appears to be an issue with our server. Please check back shortly.',
+							    })
+							} else if (name === 'ValidationError') {
+								optionAlert({
+								    title: 'Invalid Credentials',
+								    message: 'The information you have entered does not match our records. Would you like to register now?',
+								    buttons: [
+								    	{
+								    		label: 'No',
+									        onClick: () => null
+								    	},
+								    	{
+								    		label: 'Yes',
+									        onClick: () => this.signInToggle('register')
+								    	},
+								    ]
+							    })
+							}
+						} else {
+							const user = this.createUser(userData)
+							const alert = {
+						        title: 'Login Successful',
+						        message: `You are now logged in as "${user.userEmail}".`,
+						        showAlert: true,
+						    }
+							this.handleUpdateUser(user)
+							presentAlert(alert)
+							updateURL(prevRoute)
+						}
 					})
 
 			} else {

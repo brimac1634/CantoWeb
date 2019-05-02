@@ -1,3 +1,4 @@
+
 export default ({
 	endPoint = '',
 	method = 'GET',
@@ -13,5 +14,5 @@ export default ({
 	.then(data => {
 		return data
 	})
-	.catch(err => console.log(err))
+	.catch(err => console.log('nope'))
 }

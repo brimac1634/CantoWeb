@@ -7,13 +7,9 @@ export default class OptionAlert extends Component {
   static defaultProps = {
     buttons: [
       {
-        label: 'Cancel',
+        label: 'Okay',
         onClick: () => null
       },
-      {
-        label: 'Confirm',
-        onClick: () => null
-      }
     ],
     willUnmount: () => null,
     onClickOutside: () => null,

@@ -4,6 +4,7 @@ import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
+import { validateUser } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 import { setPrevRoute } from '../../Routing/actions';
@@ -61,7 +62,7 @@ class EntryView extends Component {
 				this.setState({entry})
 				if (
 					entryID != null &&
-					this.validateUser(userID)
+					validateUser(userID)
 				) {
 					this.checkIfFavorite(entryID, userID);
 				}
@@ -148,10 +149,6 @@ class EntryView extends Component {
 	togglePlay = (entryID) => {
 		const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
 		audio.play()		
-	}
-
-	validateUser = (userID) => {
-		return userID != null && userID.toString().length
 	}
 
 	render() {
