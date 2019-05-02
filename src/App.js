@@ -12,22 +12,19 @@ import { setUser } from './Containers/SignIn/actions';
 
 const mapStateToProps = state => {
   return {
-    pathname: state.router.location.pathname,
+    pathName: state.router.location.pathname,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateUser: (user) => dispatch(setUser(user))
+    updateUser: (user) => dispatch(setUser(user)),
   }
 }
 
 class App extends Component {
   constructor (props) {
   	super();
-  	this.state = {
-  		current: 'Search',
-  	}
   }  
 
   componentDidMount() {
@@ -39,21 +36,17 @@ class App extends Component {
     }
   }
 
-  handleNavChange = (title) => this.setState({ current: title })
+  
 
   render() {
-    const { current } = this.state;
-
     return (
       <div>
         <TitleBar 
           className='title-bar'
-          current={current}
-          navChange={this.handleNavChange}
         />
         <Switch>
           <Route 
-            path='/SignIn' 
+            path='/signin' 
             render={()=>(
               <div className='login-background'>
                 <SignIn />
@@ -67,8 +60,6 @@ class App extends Component {
                 <MediaQuery minWidth={950}>
                   <NavBar 
                     className='nav-bar' 
-                    current={this.state.current} 
-                    navChange={this.handleNavChange}
                   />
                 </MediaQuery>
                 <MainView className='main-view' />

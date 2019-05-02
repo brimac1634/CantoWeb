@@ -10,6 +10,7 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
+
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
@@ -37,10 +38,8 @@ class NavBar extends Component {
 
 	updateSection = (location) => {
 		const { selected } = this.state;
-		const { navChange } = this.props;
 		if (location !== selected) {
 			this.setState({selected: location})
-			navChange(location)
 		}
 	}
 
@@ -73,4 +72,4 @@ class NavBar extends Component {
 	
 }
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps, null)(NavBar);

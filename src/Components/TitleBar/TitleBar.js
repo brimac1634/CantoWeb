@@ -13,6 +13,13 @@ import PopOver from '../../Containers/PopOver/PopOver';
 import Settings from '../Settings/Settings';
 import PopOverNav from '../../Containers/NavBar/PopOverNav/PopOverNav';
 import {setMobileEntry} from '../../Containers/Search/actions';
+import { routes } from '../../Routing/constants';
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    pathName: state.router.location.pathname,
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -20,7 +27,27 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, setMobileEntry }) => {
+const TitleBar = ({ pathName, setMobileEntry }) => {
+
+	const { SEARCH, FAVORITES, WORD_OF_THE_DAY, LEARN, LOGIN } = routes;
+
+	const banner = ((pathName) => {
+		switch (pathName) {
+			case SEARCH:
+				return 'Search'
+			case FAVORITES:
+				return 'Favorites'
+			case WORD_OF_THE_DAY:
+				return 'Word Of The Day'
+			case LEARN:
+				return 'Learn'
+			case LOGIN:
+				return 'Login'
+			default:
+				return ''
+		}
+	})(pathName)
+	
 	return (
 		<div className='title-bar' onClick={()=>setMobileEntry('')}>
 			<div className='slanted-div logo-div'></div>
@@ -36,7 +63,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, set
 			</div>
 			<div className='slanted-div current-div'></div>
 			<div className='current-container'>
-				<h3 className='current'>{current}</h3>
+				<h3 className='current'>{banner}</h3>
 			</div>
 			<div className='button-container'>
 				<MediaQuery maxWidth={950}>
@@ -60,7 +87,7 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, set
 							</div>
 						</Trigger>
 						<PopOver>
-							<PopOverNav navChange={navChange} />
+							<PopOverNav />
 						</PopOver>
 					</Controller>
 				</MediaQuery>
@@ -89,4 +116,4 @@ const TitleBar = ({ current, signInToggle, userEmail, updateUser, navChange, set
 	);
 }
 
-export default connect(null, mapDispatchToProps)(TitleBar);
+export default connect(mapStateToProps, mapDispatchToProps)(TitleBar);

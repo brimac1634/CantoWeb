@@ -4,11 +4,11 @@ import navSections from '../navSections';
 import {Link} from 'react-router-dom';
 import IconListItem from '../../../Components/IconListItem/IconListItem';
 
-const PopOverNav = ({navChange, closeOnClick}) => {
+const PopOverNav = ({ setBanner, closeOnClick }) => {
 
 	const handleNavChange = (mobileTitle) => {
 		closeOnClick()
-		navChange(mobileTitle)
+		setBanner(mobileTitle)
 	}
 
 	return (

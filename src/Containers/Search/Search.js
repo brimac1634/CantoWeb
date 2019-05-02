@@ -18,6 +18,7 @@ const mapStateToProps = (state, ownProps) => {
     mobileSelectedEntry: state.search.mobileEntry,
     searchKey: state.search.searchKey,
     pathName: state.router.location.pathname,
+    hash: state.router.location.hash,
     search: state.router.location.search,
   }
 }
@@ -44,23 +45,25 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
-		const { search } = this.props;
+		const { search, updateSearchURL } = this.props;
 		if (search) {
 			const values = queryString.parse(search)
 			this.handleSearchKey(values.searchkey)
 		} else {
-			const lastSearch = sessionStorage.getItem('lastSearch')
-			const lastSearchEntries = sessionStorage.getItem('lastSearchEntries')
-			const lastSelectedEntry = sessionStorage.getItem('lastSelectedEntry')
+			const lastSearch = JSON.parse(sessionStorage.getItem('lastSearch'))
+			const lastSearchEntries = JSON.parse(sessionStorage.getItem('lastSearchEntries'))
+			const lastSelectedEntry = JSON.parse(sessionStorage.getItem('lastSelectedEntry'))
 			if (lastSearch && lastSearchEntries) {
 				this.setState({
-					entries: JSON.parse(lastSearchEntries),
+					entries: lastSearchEntries,
 				})
-				this.handleSearchKey(JSON.parse(lastSearch))
+				this.handleSearchKey(lastSearch)
 			}
 			if (lastSelectedEntry) {
-				this.setState({selectedEntry: JSON.parse(lastSelectedEntry)})
+				this.setState({selectedEntry: lastSelectedEntry})
 			}
+			const hash = `#${lastSelectedEntry.entryID}`
+			updateSearchURL(this.setQuery(lastSearch, hash))
 		}
 	}
 
@@ -106,15 +109,16 @@ class Search extends Component {
 		this.setState({tempSearchKey})
 	}
 
+	setQuery = (key, hash) => {
+		return `/search?searchkey=${key}${hash}` 
+	}
+
 	onSubmit = (event) => {
-		const { updateSearchURL } = this.props;
+		const { updateSearchURL, hash } = this.props;
 		const enterPressed = (event.which === 13);
 		const {tempSearchKey} = this.state;
-		const query = tempSearchKey 
-			? `?searchkey=${tempSearchKey}` 
-			: null
 		if (enterPressed) {
-			updateSearchURL(`/search${query}`)
+			updateSearchURL(this.setQuery(tempSearchKey, hash))
 			this.handleSearchKey(tempSearchKey);
 		}
 	}
