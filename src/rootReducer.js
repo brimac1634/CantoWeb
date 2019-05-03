@@ -4,7 +4,7 @@ import {updateUser} from './Containers/SignIn/reducers';
 import {presentAlert} from './Components/PopUpAlert/reducers';
 import {setSearchState} from './Containers/Search/reducers';
 import {setPrevRoute} from './Routing/reducers';
-import {setLoading} from './Containers/MainView/reducers';
+import {setLoading} from './Loading/reducers';
 
 export default history => combineReducers({
 	router: connectRouter(history),

@@ -1,17 +1,9 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import Search from '../Search/Search';
 import Favorites from '../Favorites/Favorites';
 import WordOfTheDay from '../WordOfTheDay/WordOfTheDay';
 import Learn from '../Learn/Learn';
-import { SwapSpinner } from "react-spinners-kit";
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-  	loading: state.loading.loading,
-  }
-}
 
 const MainView = ({loading}) => {
 	return (
@@ -37,20 +29,8 @@ const MainView = ({loading}) => {
 					to='/search'
 				/>
 			</Switch>
-			{
-				loading
-				? <div className='center-div'>
-					<SwapSpinner
-		                size={60}
-		                color='#ff7a8a'
-		                loading={loading}
-		            />
-	            </div>
-	            : null
-			}
-			
 		</div>
 	);
 }
 
-export default connect(mapStateToProps, null)(MainView);
+export default MainView;

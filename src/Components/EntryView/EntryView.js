@@ -8,7 +8,7 @@ import { validateUser, serverError } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 import { setPrevRoute } from '../../Routing/actions';
-import { setLoading } from '../../Containers/MainView/actions';
+import { setLoading } from '../../Loading/actions';
 import apiRequest from '../../Helpers/apiRequest';
 
 const mapStateToProps = state => {

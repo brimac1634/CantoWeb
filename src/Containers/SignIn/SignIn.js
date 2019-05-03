@@ -16,6 +16,7 @@ import ReactTooltip from 'react-tooltip'
 import apiRequest from '../../Helpers/apiRequest';
 import { setUser } from './actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
+import {setLoading} from '../../Loading/actions';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -27,6 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 		updateUser: (user) => dispatch(setUser(user)),
 		updateURL: (path) => dispatch(push(path)),
 		presentAlert: (alert) => dispatch(setAlert(alert)),
+		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 }
 
@@ -75,10 +77,10 @@ class SignIn extends Component {
 		const email = event.target.value;
 		const { initialEmailList } = this.state;
 		this.setState({ email })
-		const emailList = initialEmailList.filter(item => {
-			return item.includes(email)
-		})
-		this.setState({emailList})
+		// const emailList = initialEmailList.filter(item => {
+		// 	return item.includes(email)
+		// })
+		// this.setState({emailList})
 	}
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 
@@ -98,14 +100,17 @@ class SignIn extends Component {
 	}
 
 	handleUpdateUser = (user) => {
+		console.log(user)
 		const { userEmail } = user;
 		const { updateUser } = this.props;
 		localStorage.setItem('user', JSON.stringify(user));
 		let emailList = JSON.parse(localStorage.getItem('emailList'))
-		if (emailList != null && !emailList.includes(userEmail)) {
-			emailList.unshift(userEmail)
-			if (emailList.length > 3) {
-				emailList.pop()
+		if (emailList != null) {
+			if (!emailList.includes(userEmail)) {
+				emailList.unshift(userEmail)
+				if (emailList.length > 3) {
+					emailList.pop()
+				}
 			}
 		} else {
 			emailList = [userEmail]
@@ -123,28 +128,27 @@ class SignIn extends Component {
 
 	onUserSubmit = () => {
 		const { title, email, password, failCount } = this.state;
-		
+		const { setLoading } = this.props;
+
 		const emailIsValid = this.validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
 		if (!emailIsValid && !passwordIsValid) {
-			//give alert that there is missing info
 			optionAlert({
 				    title: 'Invalid Credentials',
 				    message: 'The information you have entered is incorrect.',
 			    })
 		} else if (!emailIsValid) {
-			//give alert that email is incorrect
 			optionAlert({
 				    title: 'Invalid Email Address',
 				    message: 'The email address you have entered is incomplete.',
 			    })
 		} else if (!passwordIsValid) {
-			//give alert that password must contain 6 characters
 			optionAlert({
 				    title: 'Invalid Password',
 				    message: 'The password you have entered is incomplete. Please note that passwords must contain at least 6 characters.',
 			    })
 		} else {
+			setLoading(true)
 			if (title === 'Login') {
 				//login
 				apiRequest({
@@ -153,7 +157,8 @@ class SignIn extends Component {
 					body: {email, password} 
 				})
 					.then(userData => {
-						if (userData.error) {
+						console.log(userData)
+						if (userData && userData.error != null) {
 							const { name } = userData.error;
 							if (name === 'ServerError') {
 								serverError()
@@ -187,6 +192,7 @@ class SignIn extends Component {
 						} else {
 							this.handleLogin(title, userData)
 						}
+						setLoading(false)
 					})
 
 			} else {
@@ -197,12 +203,14 @@ class SignIn extends Component {
 					body: {email, password} 
 				})
 					.then(userData => {
-						if (userData.error) {
+						if (userData && userData.error != null) {
 							serverError()
 						} else {
 							this.handleLogin(title, userData)
 						}
+						setLoading(false)
 					})
+					.catch(()=>serverError())
 			}
 		}
     }
@@ -245,23 +253,33 @@ class SignIn extends Component {
                 </Link>
 				<Logo iconSize='50px' />
 				<h2>{title}</h2>
-				<Controller>
-					<Trigger>
-						<div>
-							<TextInput 
-								icon='user-3' 
-								margin='10px 0'
-								placeHolder='Email Address'
-								value={email}
-								handleChange={this.onEmailChange}
+				{
+					title === 'Login'
+					?	<Controller>
+							<Trigger>
+								<div>
+									<TextInput 
+										icon='user-3' 
+										margin='10px 0'
+										placeHolder='Email Address'
+										value={email}
+										handleChange={this.onEmailChange}
+									/>
+								</div>
+							</Trigger>
+							<DropDown 
+								list={emailList} 
+								handleSelection={this.emailSelect}
 							/>
-						</div>
-					</Trigger>
-					<DropDown 
-						list={emailList} 
-						handleSelection={this.emailSelect}
-					/>
-				</Controller>
+						</Controller>
+					:   <TextInput 
+							icon='user-3' 
+							margin='10px 0'
+							placeHolder='Email Address'
+							value={email}
+							handleChange={this.onEmailChange}
+						/>
+				}
 				<TextInput 
 					icon='locked-4' 
 					placeHolder='Password'

@@ -52,7 +52,7 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 		<div className='title-bar' onClick={()=>setMobileEntry('')}>
 			<div className='slanted-div logo-div'></div>
 			<div className='title-logo-container'>
-				<Link to='/'>
+				<Link to='/' className='center-div'>
 					<MediaQuery minWidth={575}>
 						<LogoFull className='title-logo'/>
 					</MediaQuery>

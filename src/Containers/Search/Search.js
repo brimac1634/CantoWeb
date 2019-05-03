@@ -9,7 +9,7 @@ import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 import {setMobileEntry, setSearchKey} from './actions';
-import {setLoading} from '../MainView/actions';
+import {setLoading} from '../../Loading/actions';
 import apiRequest from '../../Helpers/apiRequest';
 
 const mapStateToProps = (state, ownProps) => {
