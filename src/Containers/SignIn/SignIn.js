@@ -7,6 +7,9 @@ import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import { serverError } from '../../Helpers/helpers';
 import Logo from '../../Components/Logo/Logo';
 import Icon from '../../Components/Icon/Icon';
+import Controller from '../../Helpers/Compound/Controller';
+import Trigger from '../../Helpers/Compound/Trigger';
+import DropDown from '../../Containers/DropDown/DropDown';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
 import ReactTooltip from 'react-tooltip'
@@ -37,6 +40,14 @@ class SignIn extends Component {
 			email: '',
 			password: '',
 			failCount: 0,
+			emailList: [],
+		}
+	}
+
+	componentDidMount() {
+		const emailList = JSON.parse(localStorage.getItem('emailList'))
+		if (emailList != null && emailList.length) {
+			this.setState({emailList})
 		}
 	}
 
@@ -76,8 +87,19 @@ class SignIn extends Component {
 	}
 
 	handleUpdateUser = (user) => {
+		const { userEmail } = user;
 		const { updateUser } = this.props;
 		localStorage.setItem('user', JSON.stringify(user));
+		let emailList = JSON.parse(localStorage.getItem('emailList'))
+		if (emailList != null && !emailList.contains(userEmail)) {
+			emailList.unshift(userEmail)
+			if (emailList.length > 3) {
+				emailList.pop()
+			}
+		} else {
+			emailList = [userEmail]
+		}
+		localStorage.setItem('emailList', JSON.stringify(emailList));
 		updateUser(user);
 	}
 
@@ -196,7 +218,7 @@ class SignIn extends Component {
     }
 
 	render() {
-		const { title, signInButton, alternateButton} = this.state;
+		const { title, signInButton, alternateButton, emailList} = this.state;
 		return (
 			<div className='sign-in-container'>
 				<Link to='/'>
@@ -210,11 +232,19 @@ class SignIn extends Component {
                 </Link>
 				<Logo iconSize='50px' />
 				<h2>{title}</h2>
-				<TextInput 
-					icon='user-3' 
-					placeHolder='Email Address'
-					handleChange={this.onEmailChange}
-				/>
+				<Controller>
+					<Trigger>
+						<div>
+							<TextInput 
+								icon='user-3' 
+								margin='10px 0'
+								placeHolder='Email Address'
+								handleChange={this.onEmailChange}
+							/>
+						</div>
+					</Trigger>
+					<DropDown list={emailList} />
+				</Controller>
 				<TextInput 
 					icon='locked-4' 
 					placeHolder='Password'

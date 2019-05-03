@@ -5,7 +5,7 @@ class Controller extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			showPopOver: false,
+			show: false,
 			animateOut: false,
 			triggerRect: {
 				x: '',
@@ -18,7 +18,7 @@ class Controller extends Component {
 
 	componentDidUpdate(){
 	  setTimeout(() => {
-	    if(this.state.showPopOver){
+	    if(this.state.show){
 	      window.addEventListener('click', this.animateOut)
 	    } else {
 	      window.removeEventListener('click', this.animateOut)
@@ -52,19 +52,19 @@ class Controller extends Component {
 			})
 		setTimeout(() => {
 			this.setState({
-			showPopOver: false,
+			show: false,
 			animateOut: false,
 		})
 		}, 800)
 	}
 
-	togglePopOver = () => {
-		const { showPopOver } = this.state;
-		if (showPopOver) {
+	toggle = () => {
+		const { show } = this.state;
+		if (show) {
 			this.animateOut()
 		} else {
 			this.setState({
-				showPopOver: !this.state.showPopOver,
+				show: !this.state.show,
 				animateOut: false,
 			})
 		}
@@ -72,16 +72,16 @@ class Controller extends Component {
 
 	render() {
 		const { children } = this.props;
-		const { showPopOver, triggerRect, animateOut } = this.state;
+		const { show, triggerRect, animateOut } = this.state;
 
 		const childrenWithProps = React.Children.map(children, child => {
 		      if (child.type.name === 'Trigger') {
-		      	 return React.cloneElement(child, { togglePopOver: this.togglePopOver, setPositition: this.setPositition })
+		      	 return React.cloneElement(child, { toggle: this.toggle, setPositition: this.setPositition })
 		      } else {
-		      	if (showPopOver) {
+		      	if (show) {
 		      		return ReactDOM.createPortal(
 			            <span onClick={event => event.stopPropagation()}>
-				            {React.cloneElement(child, { togglePopOver: this.togglePopOver, showPopOver: showPopOver, triggerRect: triggerRect, animateOut: animateOut, closeOnClick: this.closeOnClick })}
+				            {React.cloneElement(child, { toggle: this.toggle, show: show, triggerRect: triggerRect, animateOut: animateOut, closeOnClick: this.closeOnClick })}
 				        </span>
 				        , document.body
 			        )

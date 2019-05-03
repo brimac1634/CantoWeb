@@ -1,0 +1,49 @@
+.pop-over,
+.drop-down {
+	position: absolute;
+  left: 20px;
+  top: 20px;
+  border-radius: 4px;
+  background: var(--cantoWhite);
+  display: inline-block;
+  z-index: 98;
+  overflow: hidden;
+}
+
+.pop-over {
+  box-shadow: var(--cantoFloatShadow);
+}
+
+.drop-down {
+  box-shadow: var(--cantoShadow);
+}
+
+/*---------animations----------*/
+
+.animate-in {
+  opacity: 0;
+  animation: pop-over-in 0.5s 0.2s forwards;
+}
+
+.animate-out {
+  opacity: 1;
+  animation: pop-over-out 0.5s 0.2s forwards;
+}
+
+@keyframes pop-over-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-over-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

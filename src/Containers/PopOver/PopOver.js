@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './PopOver.css';
+import '../../Helpers/Compound/Compound.css';
 
 class PopOver extends Component {
 	constructor(props) {
@@ -24,7 +24,7 @@ class PopOver extends Component {
 	render() {
 		const { width, height } = this.state;
 		const { 
-		togglePopOver,
+		toggle,
 		animateOut,
 		triggerRect: {
 			x,
@@ -40,7 +40,7 @@ class PopOver extends Component {
 		}
 
 		const childrenWithProps = React.Children.map(children, child => {
-	      	 return React.cloneElement(child, { togglePopOver: togglePopOver, closeOnClick: closeOnClick})      
+	      	 return React.cloneElement(child, { togglePopOver: toggle, closeOnClick: closeOnClick})      
 	    });
 
 		return (

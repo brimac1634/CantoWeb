@@ -1,8 +1,9 @@
 .sign-in-container {
 	position: relative;
+	box-sizing: border-box;
 	max-width: 320px;
 	height: auto;
-	padding: 20px 30px;
+	padding: 20px 40px;
 	border-radius: 4px;
 	display: flex;
 	flex-direction: column;

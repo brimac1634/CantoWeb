@@ -7,8 +7,8 @@ import ReactTooltip from 'react-tooltip'
 import LogoFull from '../LogoFull/LogoFull';
 import Logo from '../Logo/Logo';
 import Icon from '../Icon/Icon';
-import Controller from '../../Containers/PopOver/Controller';
-import Trigger from '../../Containers/PopOver/Trigger';
+import Controller from '../../Helpers/Compound/Controller';
+import Trigger from '../../Helpers/Compound/Trigger';
 import PopOver from '../../Containers/PopOver/PopOver';
 import Settings from '../Settings/Settings';
 import PopOverNav from '../../Containers/NavBar/PopOverNav/PopOverNav';

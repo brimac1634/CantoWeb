@@ -5,8 +5,6 @@ import MediaQuery from 'react-responsive';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
-import presentPopUp from '../FullScreenPop/presentPopUp';
-import SignIn from '../SignIn/SignIn';
 import { setMobileEntry } from '../Search/actions';
 
 const mapStateToProps = state => {
@@ -84,9 +82,7 @@ class Favorites extends Component {
 
 		const renderPopUp = () => {
 			if (userID === '' || userID == null) {
-				const PopUp = presentPopUp(SignIn)
-				console.log(PopUp);
-				return <PopUp />
+				//ask if want to sign in
 			}
 		}
 

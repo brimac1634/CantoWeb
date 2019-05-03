@@ -7,10 +7,10 @@ class Trigger extends Component {
 	}
 
 	getRectandToggle = () => {
-		const { togglePopOver, setPositition } = this.props;
+		const { toggle, setPositition } = this.props;
 		const rect = this.selectedElement.current.getBoundingClientRect()
 		setPositition(rect);
-		togglePopOver()
+		toggle()
 	}
 
 	render() {

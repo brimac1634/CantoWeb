@@ -2,11 +2,11 @@ import React from 'react';
 import './TextInput.css'
 import Icon from '../Icon/Icon';
 
-const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height, isPassword }) => {
+const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height, isPassword, margin, handleClick }) => {
 	const inputHeight = height ? height : '44px';
 	const type = isPassword ? 'password' : null;
 	return (
-		<div className='input-group' style={{height: `${inputHeight}`}}>
+		<div className='input-group' style={{height: `${inputHeight}`, margin: margin ? margin : '10px'}} onClick={handleClick}>
 			{icon != null &&
 				<div className='icon-group'>
 					<div className='input-icon'>
