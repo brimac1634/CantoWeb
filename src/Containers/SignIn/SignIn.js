@@ -47,7 +47,10 @@ class SignIn extends Component {
 	componentDidMount() {
 		const emailList = JSON.parse(localStorage.getItem('emailList'))
 		if (emailList != null && emailList.length) {
-			this.setState({emailList})
+			this.setState({
+				initialEmailList: emailList,
+				emailList
+			})
 		}
 	}
 
@@ -68,7 +71,15 @@ class SignIn extends Component {
 		}
 	}
 
-	onEmailChange = (event) => this.setState({ email: event.target.value })
+	onEmailChange = (event) => {
+		const email = event.target.value;
+		const { initialEmailList } = this.state;
+		this.setState({ email })
+		const emailList = initialEmailList.filter(item => {
+			return item.includes(email)
+		})
+		this.setState({emailList})
+	}
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 
 	handleClose = () => {
@@ -91,7 +102,7 @@ class SignIn extends Component {
 		const { updateUser } = this.props;
 		localStorage.setItem('user', JSON.stringify(user));
 		let emailList = JSON.parse(localStorage.getItem('emailList'))
-		if (emailList != null && !emailList.contains(userEmail)) {
+		if (emailList != null && !emailList.includes(userEmail)) {
 			emailList.unshift(userEmail)
 			if (emailList.length > 3) {
 				emailList.pop()

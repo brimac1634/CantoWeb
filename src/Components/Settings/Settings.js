@@ -6,6 +6,7 @@ import Logo from '../Logo/Logo';
 import IconListItem from '../IconListItem/IconListItem';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
 import WhatIsCantoTalk from '../WhatIsCantoTalk/WhatIsCantoTalk';
+import { routes } from '../../Routing/constants';
 import {renderComponentAlert} from '../../Containers/ComponentAlert/ComponentAlert';
 import { setUser } from '../../Containers/SignIn/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
@@ -50,8 +51,9 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 	}
 
 	const handleLogin = () => {
+		const { LOGIN } = routes;
 		setPrevRoute(pathName)
-		updateURL('/signin')
+		updateURL(LOGIN)
 		closeOnClick()
 	}
 

@@ -5,17 +5,17 @@ import Icon from '../Icon/Icon';
 const IconListItem = ({ icon, title, handleClick }) => {
 	return (
 		<div className='list-item' onClick={handleClick}>
-			<div className='list-icon-container'>
-				{
-					icon &&
+			{
+				icon &&
+				<div className='list-icon-container'>
 					<Icon 
 						icon={icon}
 						iconType='icon' 
 						iconSize='22' 
 						color='cantoDarkBlue'
 					/>
-				}
-			</div>
+				</div>
+			}
 			<p>{title}</p>
 		</div>
 	);
