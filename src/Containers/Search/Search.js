@@ -10,6 +10,7 @@ import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 import {setMobileEntry, setSearchKey} from './actions';
 import {setLoading} from '../../Loading/actions';
+import { setTempSearch } from '../../Components/SearchBar/actions';
 import apiRequest from '../../Helpers/apiRequest';
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,6 +21,7 @@ const mapStateToProps = (state, ownProps) => {
     pathName: state.router.location.pathname,
     hash: state.router.location.hash,
     search: state.router.location.search,
+    tempSearchKey: state.temp.key,
   }
 }
 
@@ -29,6 +31,7 @@ const mapDispatchToProps = (dispatch) => {
 		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
 		updateSearchURL: (searchKey) => dispatch(push(searchKey)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
+		setTempSearch: (key) => dispatch(setTempSearch(key)),
 	}
 } 
 
@@ -100,27 +103,8 @@ class Search extends Component {
 
 	handleSearchKey = (key) => {
 		const { setSearchKey } = this.props;
-		this.setState({tempSearchKey: key})
+		
 		setSearchKey(key)
-	}
-	
-	onSearch = (event) => {
-		const tempSearchKey = event.target.value;
-		this.setState({tempSearchKey})
-	}
-
-	setQuery = (key, hash) => {
-		return `/search?searchkey=${key}${hash}` 
-	}
-
-	onSubmit = (event) => {
-		const { updateSearchURL, hash } = this.props;
-		const enterPressed = (event.which === 13);
-		const {tempSearchKey} = this.state;
-		if (enterPressed) {
-			updateSearchURL(this.setQuery(tempSearchKey, hash))
-			this.handleSearchKey(tempSearchKey);
-		}
 	}
 
 	handleSearch = (searchKey) => {
@@ -212,8 +196,8 @@ class Search extends Component {
 	};
 
 	render() {
-		const { entries, tempSearchKey } = this.state;
-		const { mobileSelectedEntry, searchKey } = this.props;
+		const { entries } = this.state;
+		const { mobileSelectedEntry, searchKey, tempSearchKey } = this.props;
 		const entryViewMobile = mobileSelectedEntry 
 			? 'visible-entry-view' 
 			: 'hidden-entry-view'
@@ -222,8 +206,6 @@ class Search extends Component {
 			<div>
 				<SearchBar 
 					className='search-bar' 
-					searchChange={this.onSearch}
-					searchSubmit={this.onSubmit}
 					searchKey={tempSearchKey}
 				/>
 				<MediaQuery minWidth={700}>

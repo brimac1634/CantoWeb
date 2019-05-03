@@ -2,7 +2,7 @@ import React from 'react';
 import '../../Helpers/Compound/Compound.css';
 import IconListItem from '../../Components/IconListItem/IconListItem';
 
-const DropDown = ({ list, animateOut, closeOnClick, handleSelection, triggerRect: {x, y, width, height}}) => {
+const DropDown = ({ list, animateOut, closeOnClick, handleSelection, adjustY, triggerRect: {x, y, width, height}}) => {
 
 	const handleSelect = (item) => {
 		handleSelection(item)
@@ -10,14 +10,16 @@ const DropDown = ({ list, animateOut, closeOnClick, handleSelection, triggerRect
 	}
 
 	let popType = animateOut ? 'animate-out' : 'animate-in'
-
+	const adjustYVal = adjustY ? adjustY : 0
+	
 	return (
 		<div 
 			className={`drop-down ${popType}`} 
-			style={{width: `${width}px`, height: `auto`, top: `${y + height - 10}px`, left: `${x}px`}}
+			style={{width: `${width}px`, height: `auto`, top: `${y + height + (adjustYVal)}px`, left: `${x}px`}}
 		>
 			<div>
-				{
+				{	
+					list !== null &&
 					list.map((item, i) => {
 						return (
 							<IconListItem 

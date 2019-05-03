@@ -77,10 +77,10 @@ class SignIn extends Component {
 		const email = event.target.value;
 		const { initialEmailList } = this.state;
 		this.setState({ email })
-		// const emailList = initialEmailList.filter(item => {
-		// 	return item.includes(email)
-		// })
-		// this.setState({emailList})
+		const emailList = initialEmailList.filter(item => {
+			return item.includes(email)
+		})
+		this.setState({emailList})
 	}
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 
@@ -257,10 +257,10 @@ class SignIn extends Component {
 					title === 'Login'
 					?	<Controller>
 							<Trigger>
-								<div>
+								<div className='center-div'>
 									<TextInput 
 										icon='user-3' 
-										margin='10px 0'
+										margin='10px 0 0 0'
 										placeHolder='Email Address'
 										value={email}
 										handleChange={this.onEmailChange}
@@ -274,7 +274,7 @@ class SignIn extends Component {
 						</Controller>
 					:   <TextInput 
 							icon='user-3' 
-							margin='10px 0'
+							margin='0'
 							placeHolder='Email Address'
 							value={email}
 							handleChange={this.onEmailChange}
@@ -282,6 +282,7 @@ class SignIn extends Component {
 				}
 				<TextInput 
 					icon='locked-4' 
+					margin='20px 0'
 					placeHolder='Password'
 					isPassword='true'
 					handleChange={this.onPasswordChange}

@@ -1,0 +1,1 @@
+export const SET_TEMP_SEARCH = 'SET_TEMP_SEARCH';

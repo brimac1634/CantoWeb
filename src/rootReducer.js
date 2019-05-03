@@ -5,6 +5,7 @@ import {presentAlert} from './Components/PopUpAlert/reducers';
 import {setSearchState} from './Containers/Search/reducers';
 import {setPrevRoute} from './Routing/reducers';
 import {setLoading} from './Loading/reducers';
+import {setTempSearch} from './Components/SearchBar/reducers';
 
 export default history => combineReducers({
 	router: connectRouter(history),
@@ -13,4 +14,5 @@ export default history => combineReducers({
 	search: setSearchState,
 	prevRoute: setPrevRoute,
 	loading: setLoading,
+	temp: setTempSearch,
 })
