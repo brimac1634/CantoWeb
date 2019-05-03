@@ -217,8 +217,10 @@ class SignIn extends Component {
 		updateURL(prevRoute)
     }
 
+    emailSelect = (email) => this.setState({email})
+
 	render() {
-		const { title, signInButton, alternateButton, emailList} = this.state;
+		const { title, email, signInButton, alternateButton, emailList} = this.state;
 		return (
 			<div className='sign-in-container'>
 				<Link to='/'>
@@ -239,11 +241,15 @@ class SignIn extends Component {
 								icon='user-3' 
 								margin='10px 0'
 								placeHolder='Email Address'
+								value={email}
 								handleChange={this.onEmailChange}
 							/>
 						</div>
 					</Trigger>
-					<DropDown list={emailList} />
+					<DropDown 
+						list={emailList} 
+						handleSelection={this.emailSelect}
+					/>
 				</Controller>
 				<TextInput 
 					icon='locked-4' 

@@ -21,9 +21,9 @@ class DropDown extends Component {
 	}
 
 	handleSelect = (item) => {
-		const { closeOnClick } = this.props;
+		const { closeOnClick, handleSelection } = this.props;
+		handleSelection(item)
 		closeOnClick()
-		console.log(item)
 	}
 	
 	render() {
