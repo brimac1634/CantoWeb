@@ -82,9 +82,11 @@ class SearchBar extends Component {
 		}
 	}
 
-	handleSearch = (word, hash) => {
-		const { updateURL, setSearchKey } = this.props;
-		updateURL(setQueryURL(word, hash))
+	handleSearch = (word) => {
+		const { updateURL, setSearchKey, hash } = this.props;
+		const url = setQueryURL(word, hash)
+		sessionStorage.setItem('searchURL', JSON.stringify(url));
+		updateURL(url)
 		setSearchKey(word);
 		this.updateSearchList(word);
 	}
@@ -124,9 +126,9 @@ class SearchBar extends Component {
 	}
 
 	wordSelect = (word) => {
-		const { setTempSearch, hash } = this.props;
+		const { setTempSearch } = this.props;
 		setTempSearch(word)
-		this.handleSearch(word, hash)
+		this.handleSearch(word)
 	}
 
 

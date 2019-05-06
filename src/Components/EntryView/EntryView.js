@@ -8,6 +8,7 @@ import { validateUser, serverError } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 import { setPrevRoute } from '../../Routing/actions';
+import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
 
 const mapStateToProps = state => {
@@ -99,6 +100,7 @@ class EntryView extends Component {
 			pathName,
 			setPrevRoute,
 		} = this.props;
+		const { LOGIN } = routes;
 		if (validateUser(userID)) {
 			apiRequest({
 				endPoint: '/favorites/toggle',
@@ -145,7 +147,7 @@ class EntryView extends Component {
 			        label: 'Yes',
 			        onClick: () => {
 			        	setPrevRoute(pathName)
-			        	updateURL('signin')
+			        	updateURL(LOGIN)
 			        }
 			      },
 			      {

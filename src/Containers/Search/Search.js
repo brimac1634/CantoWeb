@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
-import { serverError, connectionError, setQueryURL } from '../../Helpers/helpers';
+import { serverError, connectionError } from '../../Helpers/helpers';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
@@ -69,30 +69,17 @@ class Search extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {user: {userID}, searchKey, pathName} = this.props;
-		const { 
-			entries, 
-			selectedEntry, 
-			previousEntries, 
-			previousSelectedEntry } = this.state;
+		const {user: {userID}, searchKey, search, pathName} = this.props;
 		const { RECENT, FAVORITES, SEARCH } = routes;
 
-		if (prevProps.searchKey !== searchKey) {
+		if (prevProps.searchKey !== searchKey || prevProps.search !== search) {
 			this.handleSearch(searchKey);
 		}
 
 		if (prevProps.pathName !== pathName && (pathName === FAVORITES || pathName === RECENT)) {
-			this.setState({
-				previousEntries: entries,
-				previousSelectedEntry: selectedEntry,
-				selectedEntry: '',
-			})
 			this.filterEntries(userID, pathName)
 		} else if (prevProps.pathName !== SEARCH && pathName === SEARCH) {
-			this.setState({
-				entries: previousEntries,
-				selectedEntry: previousSelectedEntry,
-			})
+			this.loadSearchOnMount()
 		}
 	}
 
@@ -106,19 +93,9 @@ class Search extends Component {
 			const values = queryString.parse(search)
 			this.handleSearchKey(values.searchkey)
 		} else {
-			const lastSearch = JSON.parse(sessionStorage.getItem('lastSearch'))
-			const lastSearchEntries = JSON.parse(sessionStorage.getItem('lastSearchEntries'))
-			const lastSelectedEntry = JSON.parse(sessionStorage.getItem('lastSelectedEntry'))
-			if (lastSearch && lastSearchEntries) {
-				this.setState({
-					entries: lastSearchEntries,
-				})
-				this.handleSearchKey(lastSearch)
-			}
-			if (lastSelectedEntry) {
-				this.setState({selectedEntry: lastSelectedEntry})
-				const hash = `#${lastSelectedEntry.entryID}`
-				updateURL(setQueryURL(lastSearch, hash))
+			const cachedURL = JSON.parse(sessionStorage.getItem('searchURL'))
+			if (cachedURL != null) {
+				updateURL(cachedURL)
 			}
 		}
 	}
@@ -131,7 +108,6 @@ class Search extends Component {
 
 	handleSearch = (searchKey) => {
 		if (searchKey) {
-			sessionStorage.setItem('lastSearch', JSON.stringify(searchKey));
 			apiRequest({
 				endPoint: '/search',
 				method: 'POST',
@@ -139,7 +115,6 @@ class Search extends Component {
 			})
 			.then(entries => {
 				if (Array.isArray(entries)) {
-					sessionStorage.setItem('lastSearchEntries', JSON.stringify(entries));
 					this.setState({
 						entries: entries
 					})
@@ -150,8 +125,6 @@ class Search extends Component {
 				}
 			})
 		} else {
-			sessionStorage.setItem('lastSearch', JSON.stringify(''));
-			sessionStorage.setItem('lastSearchEntries', JSON.stringify([]));
 			this.setState({
 				entries: []
 			})
@@ -189,15 +162,12 @@ class Search extends Component {
 		const {
 			setMobileEntry, 
 			updateURL,
-			pathName,
-			search,
 			user: {userID}
 		} = this.props;
-		updateURL(`${pathName}${search}#${entry.entryID}`)
-		sessionStorage.setItem('lastSelectedEntry', JSON.stringify(entry));
-		this.setState({
-			selectedEntry: entry,
-		})
+
+		const searchURL = this.setSearchURL({entryID: entry.entryID})
+		updateURL(searchURL)
+
 		setMobileEntry(entry.entryID);
 		if (userID !== '' && userID != null) {
 			this.addEntryToRecent(userID, entry.entryID);
@@ -216,6 +186,17 @@ class Search extends Component {
 	clearMobileEntry = () => {
 	    const {setMobileEntry} = this.props;
 	    setMobileEntry('');
+	};
+
+	setSearchURL = ({path, word, entryID}) => {
+		let { pathName, search, hash } = this.props;
+		pathName = path ? path : pathName;
+		search = word ? `?searchkey=${word}` : search
+		hash = entryID ? `#${entryID}` : hash
+		const url = `${pathName}${search}${hash}`
+
+		sessionStorage.setItem('searchURL', JSON.stringify(url));
+		return url
 	};
 
 	render() {
