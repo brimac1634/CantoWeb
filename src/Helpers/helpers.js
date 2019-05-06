@@ -10,6 +10,13 @@ export const setQueryURL = (key, hash) => {
 	return `${SEARCH}?searchkey=${key}${hash}` 
 }
 
+export const connectionError = () => {
+	optionAlert({
+	    title: 'Connection Error',
+	    message: 'There appears to be an issue with the connection. Please check back shortly.',
+    })
+}
+
 export const serverError = () => {
 	optionAlert({
 	    title: 'Server Issue',

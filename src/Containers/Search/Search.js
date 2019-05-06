@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
-import { serverError, setQueryURL } from '../../Helpers/helpers';
+import { serverError, connectionError, setQueryURL } from '../../Helpers/helpers';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
-import {setMobileEntry, setSearchKey} from './actions';
-import {setLoading} from '../../Loading/actions';
+import { setMobileEntry, setSearchKey } from './actions';
+import { setLoading } from '../../Loading/actions';
 import { setTempSearch } from '../../Components/SearchBar/actions';
 import apiRequest from '../../Helpers/apiRequest';
+import { routes } from '../../Routing/constants';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -29,7 +30,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
-		updateSearchURL: (searchKey) => dispatch(push(searchKey)),
+		updateURL: (searchKey) => dispatch(push(searchKey)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
 	}
@@ -48,7 +49,7 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
-		const { search, updateSearchURL } = this.props;
+		const { search, updateURL } = this.props;
 		if (search) {
 			const values = queryString.parse(search)
 			this.handleSearchKey(values.searchkey)
@@ -65,7 +66,7 @@ class Search extends Component {
 			if (lastSelectedEntry) {
 				this.setState({selectedEntry: lastSelectedEntry})
 				const hash = `#${lastSelectedEntry.entryID}`
-				updateSearchURL(setQueryURL(lastSearch, hash))
+				updateURL(setQueryURL(lastSearch, hash))
 			}
 			
 		}
@@ -78,19 +79,20 @@ class Search extends Component {
 			selectedEntry, 
 			previousEntries, 
 			previousSelectedEntry } = this.state;
+		const { RECENT, FAVORITES, SEARCH } = routes;
 
 		if (prevProps.searchKey !== searchKey) {
 			this.handleSearch(searchKey);
 		}
 
-		if (prevProps.pathName !== pathName && pathName === '/search/recent') {
+		if (prevProps.pathName !== pathName && (pathName === FAVORITES || pathName === RECENT)) {
 			this.setState({
 				previousEntries: entries,
 				previousSelectedEntry: selectedEntry,
 				selectedEntry: '',
 			})
-			this.renderRecentEntries(userID)
-		} else if (prevProps.pathName !== '/search' && pathName === '/search') {
+			this.filterEntries(userID, pathName)
+		} else if (prevProps.pathName !== SEARCH && pathName === SEARCH) {
 			this.setState({
 				entries: previousEntries,
 				selectedEntry: previousSelectedEntry,
@@ -140,20 +142,21 @@ class Search extends Component {
 		}
 	}
 
-	renderRecentEntries = (userID) => {
+	filterEntries = (userID, filterType) => {
+		const { updateURL } = this.props;
+		const { SEARCH } = routes;
+		console.log(filterType)
 		apiRequest({
-			endPoint: '/recent',
+			endPoint: filterType,
 			method: 'POST',
 			body: {userID} 
 		})
-		.then(recentEntries => {
-			if (recentEntries.error) {
+		.then(entries => {
+			if (entries.error != null) {
 				serverError()
 			} else {
-				if (Array.isArray(recentEntries)) {
-					this.setState({
-						entries: recentEntries,
-					})
+				if (Array.isArray(entries)) {
+					this.setState({entries})
 				} else {
 					this.setState({
 						entries: []
@@ -161,17 +164,21 @@ class Search extends Component {
 				}
 			}
 		})
+		.catch(()=>{
+			connectionError()
+			updateURL(SEARCH)
+		})
 	}
 
 	handleEntrySelect = (entry) => {
 		const {
 			setMobileEntry, 
-			updateSearchURL,
+			updateURL,
 			pathName,
 			search,
 			user: {userID}
 		} = this.props;
-		updateSearchURL(`${pathName}${search}#${entry.entryID}`)
+		updateURL(`${pathName}${search}#${entry.entryID}`)
 		sessionStorage.setItem('lastSelectedEntry', JSON.stringify(entry));
 		this.setState({
 			selectedEntry: entry,

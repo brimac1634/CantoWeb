@@ -192,7 +192,10 @@ class SignIn extends Component {
 							this.handleLogin(title, userData)
 						}
 					})
-
+					.catch(()=>{
+						setLoading(false)
+						serverError()
+					})
 			} else {
 				//register
 				apiRequest({
@@ -201,6 +204,7 @@ class SignIn extends Component {
 					body: {email, password} 
 				})
 					.then(userData => {
+						setLoading(false)
 						if (userData && userData.error != null) {
 							serverError()
 						} else {
@@ -208,7 +212,10 @@ class SignIn extends Component {
 						}
 						setLoading(false)
 					})
-					.catch(()=>serverError())
+					.catch(()=>{
+						setLoading(false)
+						serverError()
+					})
 			}
 		}
     }
