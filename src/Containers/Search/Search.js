@@ -49,26 +49,24 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
-		const { search, updateURL } = this.props;
-		if (search) {
-			const values = queryString.parse(search)
-			this.handleSearchKey(values.searchkey)
-		} else {
-			const lastSearch = JSON.parse(sessionStorage.getItem('lastSearch'))
-			const lastSearchEntries = JSON.parse(sessionStorage.getItem('lastSearchEntries'))
-			const lastSelectedEntry = JSON.parse(sessionStorage.getItem('lastSelectedEntry'))
-			if (lastSearch && lastSearchEntries) {
-				this.setState({
-					entries: lastSearchEntries,
-				})
-				this.handleSearchKey(lastSearch)
-			}
-			if (lastSelectedEntry) {
-				this.setState({selectedEntry: lastSelectedEntry})
-				const hash = `#${lastSelectedEntry.entryID}`
-				updateURL(setQueryURL(lastSearch, hash))
-			}
-			
+		let { pathName, user: { userID } } = this.props;
+		if (!userID) {
+			const cachedUser = JSON.parse(localStorage.getItem('user'));
+			userID = cachedUser.userID;
+		}
+		const { SEARCH, RECENT, FAVORITES } = routes;
+		switch (pathName) {
+			case SEARCH:
+				this.loadSearchOnMount()
+				break;
+			case RECENT:
+				this.filterEntries(userID, RECENT)
+				break;
+			case FAVORITES:
+				this.filterEntries(userID, FAVORITES)
+				break;
+			default:
+				this.loadSearchOnMount()
 		}
 	}
 
@@ -102,6 +100,29 @@ class Search extends Component {
 
 	componentWillUnmount() {
 		this.clearMobileEntry();
+	}
+
+	loadSearchOnMount() {
+		const { search, updateURL } = this.props;
+		if (search) {
+			const values = queryString.parse(search)
+			this.handleSearchKey(values.searchkey)
+		} else {
+			const lastSearch = JSON.parse(sessionStorage.getItem('lastSearch'))
+			const lastSearchEntries = JSON.parse(sessionStorage.getItem('lastSearchEntries'))
+			const lastSelectedEntry = JSON.parse(sessionStorage.getItem('lastSelectedEntry'))
+			if (lastSearch && lastSearchEntries) {
+				this.setState({
+					entries: lastSearchEntries,
+				})
+				this.handleSearchKey(lastSearch)
+			}
+			if (lastSelectedEntry) {
+				this.setState({selectedEntry: lastSelectedEntry})
+				const hash = `#${lastSelectedEntry.entryID}`
+				updateURL(setQueryURL(lastSearch, hash))
+			}
+		}
 	}
 
 	handleSearchKey = (key) => {
