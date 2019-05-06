@@ -9,7 +9,6 @@ import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 import { setMobileEntry, setSearchKey } from './actions';
-import { setLoading } from '../../Loading/actions';
 import { setTempSearch } from '../../Components/SearchBar/actions';
 import apiRequest from '../../Helpers/apiRequest';
 import { routes } from '../../Routing/constants';
@@ -31,7 +30,6 @@ const mapDispatchToProps = (dispatch) => {
 		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
 		updateURL: (searchKey) => dispatch(push(searchKey)),
-		setLoading: (loading) => dispatch(setLoading(loading)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
 	}
 } 
@@ -132,9 +130,7 @@ class Search extends Component {
 	}
 
 	handleSearch = (searchKey) => {
-		const { setLoading } = this.props;
 		if (searchKey) {
-			setLoading(true)
 			sessionStorage.setItem('lastSearch', JSON.stringify(searchKey));
 			apiRequest({
 				endPoint: '/search',
@@ -152,7 +148,6 @@ class Search extends Component {
 						entries: []
 					})
 				}
-				setLoading(false)
 			})
 		} else {
 			sessionStorage.setItem('lastSearch', JSON.stringify(''));
@@ -166,7 +161,6 @@ class Search extends Component {
 	filterEntries = (userID, filterType) => {
 		const { updateURL } = this.props;
 		const { SEARCH } = routes;
-		console.log(filterType)
 		apiRequest({
 			endPoint: filterType,
 			method: 'POST',

@@ -65,7 +65,15 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 			</div>
 			<div className='slanted-div current-div'></div>
 			<div className='current-container'>
-				<h3 className='current'>{banner}</h3>
+				<MediaQuery maxWidth={574}>
+					{(matches) => {
+						return  <h3 className='current'>
+									{matches && pathName === WORD_OF_THE_DAY 
+										? 'W.O.D.'
+										: banner}
+								</h3>
+					}}
+				</MediaQuery>
 			</div>
 			<div className='button-container'>
 				<MediaQuery maxWidth={950}>

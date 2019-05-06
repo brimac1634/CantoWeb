@@ -82,6 +82,13 @@ class SearchBar extends Component {
 		}
 	}
 
+	handleSearch = (word, hash) => {
+		const { updateURL, setSearchKey } = this.props;
+		updateURL(setQueryURL(word, hash))
+		setSearchKey(word);
+		this.updateSearchList(word);
+	}
+
 	searchChange = (event) => {
 		const word = event.target.value
 		const { setTempSearch } = this.props;
@@ -92,12 +99,10 @@ class SearchBar extends Component {
 	}
 
 	searchSubmit = (event) => {
-		const { updateURL, hash, tempSearchKey, setSearchKey } = this.props;
+		const { hash, tempSearchKey } = this.props;
 		const enterPressed = (event.which === 13);
 		if (enterPressed && tempSearchKey) {
-			updateURL(setQueryURL(tempSearchKey, hash))
-			setSearchKey(tempSearchKey);
-			this.updateSearchList(tempSearchKey);
+			this.handleSearch(tempSearchKey, hash)
 		}
 	}
 
@@ -119,8 +124,9 @@ class SearchBar extends Component {
 	}
 
 	wordSelect = (word) => {
-		const { setTempSearch } = this.props;
+		const { setTempSearch, hash } = this.props;
 		setTempSearch(word)
+		this.handleSearch(word, hash)
 	}
 
 

@@ -1,4 +1,4 @@
-import {setLoading} from '../Loading/actions';
+import { setLoading } from '../Loading/actions';
 import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
 
 export default ({
@@ -8,6 +8,7 @@ export default ({
 	body = {},
 	timeout = 20000
 }) => {
+	setLoading(true)
     return Promise.race([fetch(`http://localhost:3000${endPoint}`, {
 		method,
 		headers,
@@ -18,7 +19,10 @@ export default ({
         )
     ])
     	.then(res => res.json())
-    	.then(data => data)
+    	.then(data => {
+    		setLoading(false)
+    		return data
+    	})
     	.catch(err => {
     		optionAlert({
 			    title: 'Timed Out',

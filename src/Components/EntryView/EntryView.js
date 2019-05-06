@@ -8,7 +8,6 @@ import { validateUser, serverError } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 import { setPrevRoute } from '../../Routing/actions';
-import { setLoading } from '../../Loading/actions';
 import apiRequest from '../../Helpers/apiRequest';
 
 const mapStateToProps = state => {
@@ -24,7 +23,6 @@ const mapDispatchToProps = (dispatch) => {
 		presentAlert: (alert) => dispatch(setAlert(alert)),
 		updateURL: (path) => dispatch(push(path)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
-		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 }
 
@@ -54,8 +52,6 @@ class EntryView extends Component {
 	}
 
 	getEntry = (hash) => {
-		const { setLoading } = this.props;
-		setLoading(true)
 		const { userID } = this.props;
 		const entryID = hash.slice(1, hash.length)
 			apiRequest({
@@ -74,7 +70,6 @@ class EntryView extends Component {
 					) {
 						this.checkIfFavorite(entryID, userID);
 					}
-					setLoading(false)
 				}
 			})
 			.catch(() => serverError())

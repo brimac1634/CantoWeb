@@ -16,7 +16,6 @@ import ReactTooltip from 'react-tooltip'
 import apiRequest from '../../Helpers/apiRequest';
 import { setUser } from './actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
-import {setLoading} from '../../Loading/actions';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -28,7 +27,6 @@ const mapDispatchToProps = (dispatch) => {
 		updateUser: (user) => dispatch(setUser(user)),
 		updateURL: (path) => dispatch(push(path)),
 		presentAlert: (alert) => dispatch(setAlert(alert)),
-		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 }
 
@@ -127,7 +125,6 @@ class SignIn extends Component {
 
 	onUserSubmit = () => {
 		const { title, email, password, failCount } = this.state;
-		const { setLoading } = this.props;
 
 		const emailIsValid = this.validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
@@ -147,7 +144,6 @@ class SignIn extends Component {
 				    message: 'The password you have entered is incomplete. Please note that passwords must contain at least 6 characters.',
 			    })
 		} else {
-			setLoading(true)
 			if (title === 'Login') {
 				//login
 				apiRequest({
@@ -156,7 +152,6 @@ class SignIn extends Component {
 					body: {email, password} 
 				})
 					.then(userData => {
-						setLoading(false)
 						if (userData && userData.error != null) {
 							const { name } = userData.error;
 							if (name === 'ServerError') {
@@ -193,7 +188,6 @@ class SignIn extends Component {
 						}
 					})
 					.catch(()=>{
-						setLoading(false)
 						serverError()
 					})
 			} else {
@@ -204,16 +198,13 @@ class SignIn extends Component {
 					body: {email, password} 
 				})
 					.then(userData => {
-						setLoading(false)
 						if (userData && userData.error != null) {
 							serverError()
 						} else {
 							this.handleLogin(title, userData)
 						}
-						setLoading(false)
 					})
 					.catch(()=>{
-						setLoading(false)
 						serverError()
 					})
 			}
