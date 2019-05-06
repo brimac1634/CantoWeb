@@ -54,7 +54,7 @@ class SearchBar extends Component {
 
 	handleSearchRoute = (route) => {
 		const { pathName, updateURL, userID } = this.props;
-		const { SEARCH } = routes;
+		const { SEARCH, LOGIN } = routes;
 		if (route === pathName) {
 			updateURL(SEARCH)
 		} else {
@@ -67,7 +67,7 @@ class SearchBar extends Component {
 				        label: 'Yes',
 				        onClick: () => {
 				        	setPrevRoute(pathName)
-				        	updateURL('signin')
+				        	updateURL(LOGIN)
 				        }
 				      },
 				      {
@@ -133,21 +133,34 @@ class SearchBar extends Component {
 		 const { FAVORITES, RECENT } = routes;
 		return (
 			<div className='search-bar' onClick={()=>setMobileEntry('')}>
-				<div className='recent-container'>
-					<MediaQuery maxWidth={574}>
-						{(matches) => {
-							return <Button 
+				<MediaQuery maxWidth={574}>
+					{(matches) => {
+						return <div className='filter-container'>
+									<Button 
 										title={matches ? null : 'Recent'}
 										buttonType='ghost' 
 										icon='time' 
+										height='34px'
+										margin='10px 5px'
 										isSelected={pathName === RECENT
 														? true
 														: false}
 										handleClick={()=>this.handleSearchRoute(RECENT)}
 									/>
-						}}
-					</MediaQuery>
-				</div>
+									<Button 
+										title={matches ? null : 'Favorites'}
+										buttonType='ghost' 
+										icon='like-2' 
+										height='34px'
+										margin='10px 5px'
+										isSelected={pathName === FAVORITES
+														? true
+														: false}
+										handleClick={()=>this.handleSearchRoute(FAVORITES)}
+									/>
+								</div>
+					}}
+				</MediaQuery>				
 				<div className='search-container'>
 					{pathName === RECENT || pathName === FAVORITES
 						?	null

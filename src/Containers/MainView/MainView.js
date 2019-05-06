@@ -1,32 +1,29 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Search from '../Search/Search';
-import Favorites from '../Favorites/Favorites';
 import WordOfTheDay from '../WordOfTheDay/WordOfTheDay';
 import Learn from '../Learn/Learn';
+import { routes } from '../../Routing/constants';
 
-const MainView = ({loading}) => {
+const MainView = () => {
+	const { SEARCH, WORD_OF_THE_DAY, LEARN } = routes;
 	return (
 		<div className='main-view' style={{position: 'absolute'}}>
 			<Switch>
 				<Route 
-					path='/search' 
+					path={SEARCH} 
 					component={Search}
 				/>
 				<Route 
-					path='/favorites' 
-					component={Favorites}
-				/>
-				<Route 
-					path='/word-of-the-day' 
+					path={WORD_OF_THE_DAY} 
 					component={WordOfTheDay}
 				/>
 				<Route 
-					path='/learn' 
+					path={LEARN} 
 					component={Learn}
 				/>
 				<Redirect 
-					to='/search'
+					to={SEARCH} 
 				/>
 			</Switch>
 		</div>

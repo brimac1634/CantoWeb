@@ -100,7 +100,6 @@ class SignIn extends Component {
 	}
 
 	handleUpdateUser = (user) => {
-		console.log(user)
 		const { userEmail } = user;
 		const { updateUser } = this.props;
 		localStorage.setItem('user', JSON.stringify(user));
@@ -157,7 +156,7 @@ class SignIn extends Component {
 					body: {email, password} 
 				})
 					.then(userData => {
-						console.log(userData)
+						setLoading(false)
 						if (userData && userData.error != null) {
 							const { name } = userData.error;
 							if (name === 'ServerError') {
@@ -192,7 +191,6 @@ class SignIn extends Component {
 						} else {
 							this.handleLogin(title, userData)
 						}
-						setLoading(false)
 					})
 
 			} else {

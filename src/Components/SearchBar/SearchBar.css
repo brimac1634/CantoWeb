@@ -31,8 +31,11 @@
 	height: 1px;
 }
 
-.recent-container {
+.filter-container {
 	margin-right: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 @media screen and (max-width: 575px) {

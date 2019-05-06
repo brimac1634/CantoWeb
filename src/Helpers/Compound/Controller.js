@@ -30,8 +30,10 @@ class Controller extends Component {
 
 	handleEntryKey = (event) => {
 		if (event.which === 13) {
-    		this.animateOut()
-    	}
+			this.setState({
+				show: false,
+			})
+		}
 	}
 
 	closeOnClick = () => {
