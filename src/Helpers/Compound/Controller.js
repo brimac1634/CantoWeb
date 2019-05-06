@@ -17,13 +17,21 @@ class Controller extends Component {
 	}
 
 	componentDidUpdate(){
-	  setTimeout(() => {
-	    if(this.state.show){
-	      window.addEventListener('click', this.animateOut)
-	    } else {
-	      window.removeEventListener('click', this.animateOut)
-	    }
-	  }, 0)
+		setTimeout(() => {
+		  if(this.state.show){
+		    window.addEventListener('click', this.animateOut)
+		    window.addEventListener('keydown', this.handleEntryKey)
+		  } else {
+		    window.removeEventListener('click', this.animateOut)
+		    window.removeEventListener('keydown', this.handleEntryKey)
+		  }
+		}, 0)
+	}
+
+	handleEntryKey = (event) => {
+		if (event.which === 13) {
+    		this.animateOut()
+    	}
 	}
 
 	closeOnClick = () => {
@@ -48,8 +56,8 @@ class Controller extends Component {
 
 	animateOut = () => {
 		this.setState({
-				animateOut: true,
-			})
+			animateOut: true,
+		})
 		setTimeout(() => {
 			this.setState({
 			show: false,

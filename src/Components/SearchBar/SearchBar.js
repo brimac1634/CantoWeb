@@ -3,7 +3,7 @@ import './SearchBar.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
-import { validateUser } from '../../Helpers/helpers';
+import { validateUser, setQueryURL } from '../../Helpers/helpers';
 import MediaQuery from 'react-responsive';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
@@ -39,21 +39,17 @@ class SearchBar extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			initialSearchList: [],
 			searchList: []
 		}
 	}
 
 	componentDidMount() {
 		const searchList = JSON.parse(localStorage.getItem('searchList'))
-		this.setState({searchList})
-	}
-
-	componentDidUpdate() {
-		// const { searchList } = this.state;
-		// const savedSearchList = JSON.parse(localStorage.getItem('searchList'))
-		// if (searchList !== savedSearchList) {
-		// 	this.setState({searchList: savedSearchList})
-		// }
+		this.setState({
+			initialSearchList: searchList,
+			searchList
+		})
 	}
 
 	handleSearchRoute = (route) => {
@@ -87,32 +83,39 @@ class SearchBar extends Component {
 	}
 
 	searchChange = (event) => {
+		const word = event.target.value
 		const { setTempSearch } = this.props;
-		setTempSearch(event.target.value)
+		let { initialSearchList } = this.state;
+		setTempSearch(word)
+		const searchList = initialSearchList.filter(item => item.includes(word))
+		this.setState({searchList})
 	}
 
 	searchSubmit = (event) => {
 		const { updateURL, hash, tempSearchKey, setSearchKey } = this.props;
 		const enterPressed = (event.which === 13);
-		if (enterPressed) {
-			updateURL(this.setQuery(tempSearchKey, hash))
+		if (enterPressed && tempSearchKey) {
+			updateURL(setQueryURL(tempSearchKey, hash))
 			setSearchKey(tempSearchKey);
-			let searchList = JSON.parse(localStorage.getItem('searchList'))
-			if (searchList !== null) {
-				searchList.unshift(tempSearchKey)
-				if (searchList > 5) {
-					searchList.pop()
-				}
-			} else {
-				searchList = [tempSearchKey]
-			}
-			
-			localStorage.setItem('searchList', JSON.stringify(searchList))
+			this.updateSearchList(tempSearchKey);
 		}
 	}
 
-	setQuery = (key, hash) => {
-		return `/search?searchkey=${key}${hash}` 
+	updateSearchList = (key) => {
+		let searchList = JSON.parse(localStorage.getItem('searchList'))
+			if (searchList !== null) {
+				searchList.unshift(key)
+				if (searchList.length > 15) {
+					searchList.pop()
+				}
+			} else {
+				searchList = [key]
+			}
+			this.setState({
+				searchList,
+				initialSearchList: searchList,
+			})
+			localStorage.setItem('searchList', JSON.stringify(searchList))
 	}
 
 	wordSelect = (word) => {
@@ -137,7 +140,7 @@ class SearchBar extends Component {
 										title={matches ? null : 'Recent'}
 										buttonType='ghost' 
 										icon='time' 
-										isSelected={pathName === '/search/recent'
+										isSelected={pathName === RECENT
 														? true
 														: false}
 										handleClick={()=>this.handleSearchRoute(RECENT)}
@@ -166,6 +169,7 @@ class SearchBar extends Component {
 									list={searchList} 
 									handleSelection={this.wordSelect}
 									adjustY={-5}
+									maxHeight='200px'
 								/>
 							</Controller>
 					}

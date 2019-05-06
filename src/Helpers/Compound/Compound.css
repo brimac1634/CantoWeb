@@ -16,6 +16,7 @@
 
 .drop-down {
   box-shadow: var(--cantoShadow);
+  overflow-y: auto;
 }
 
 /*---------animations----------*/

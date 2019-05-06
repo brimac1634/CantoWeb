@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
-import { serverError } from '../../Helpers/helpers';
+import { serverError, setQueryURL } from '../../Helpers/helpers';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
@@ -64,9 +64,10 @@ class Search extends Component {
 			}
 			if (lastSelectedEntry) {
 				this.setState({selectedEntry: lastSelectedEntry})
+				const hash = `#${lastSelectedEntry.entryID}`
+				updateSearchURL(setQueryURL(lastSearch, hash))
 			}
-			const hash = `#${lastSelectedEntry.entryID}`
-			updateSearchURL(this.setQuery(lastSearch, hash))
+			
 		}
 	}
 
@@ -102,8 +103,8 @@ class Search extends Component {
 	}
 
 	handleSearchKey = (key) => {
-		const { setSearchKey } = this.props;
-		
+		const { setSearchKey, setTempSearch } = this.props;
+		setTempSearch(key)
 		setSearchKey(key)
 	}
 
@@ -167,7 +168,7 @@ class Search extends Component {
 			setMobileEntry, 
 			updateSearchURL,
 			pathName,
-			search, 
+			search,
 			user: {userID}
 		} = this.props;
 		updateSearchURL(`${pathName}${search}#${entry.entryID}`)

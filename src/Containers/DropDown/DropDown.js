@@ -2,7 +2,7 @@ import React from 'react';
 import '../../Helpers/Compound/Compound.css';
 import IconListItem from '../../Components/IconListItem/IconListItem';
 
-const DropDown = ({ list, animateOut, closeOnClick, handleSelection, adjustY, triggerRect: {x, y, width, height}}) => {
+const DropDown = ({ list, animateOut, closeOnClick, maxHeight, handleSelection, adjustY, triggerRect: {x, y, width, height}}) => {
 
 	const handleSelect = (item) => {
 		handleSelection(item)
@@ -15,7 +15,7 @@ const DropDown = ({ list, animateOut, closeOnClick, handleSelection, adjustY, tr
 	return (
 		<div 
 			className={`drop-down ${popType}`} 
-			style={{width: `${width}px`, height: `auto`, top: `${y + height + (adjustYVal)}px`, left: `${x}px`}}
+			style={{width: `${width}px`, height: `auto`, maxHeight: `${maxHeight}`, top: `${y + height + (adjustYVal)}px`, left: `${x}px`}}
 		>
 			<div>
 				{	
