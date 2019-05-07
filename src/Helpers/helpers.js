@@ -10,6 +10,23 @@ export const setQueryURL = (key, hash) => {
 	return `${SEARCH}?searchkey=${key}${hash}` 
 }
 
+export const requestToLogin = (confirm) => {
+	optionAlert({
+	    title: 'Please sign in.',
+	    message: 'You must be signed in to access this capability. Would you like to sign in or register now?',
+	    buttons: [
+	      {
+	        label: 'Yes',
+	        onClick: ()=>confirm()
+	      },
+	      {
+	        label: 'No',
+	        onClick: null
+	      }
+	    ]
+    })
+}
+
 export const connectionError = () => {
 	optionAlert({
 	    title: 'Connection Error',

@@ -1,5 +1,5 @@
 import { setLoading } from '../Loading/actions';
-import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
+import { connectionError } from './helpers';
 
 export default ({
 	endPoint = '',
@@ -24,10 +24,7 @@ export default ({
     		return data
     	})
     	.catch(err => {
-    		optionAlert({
-			    title: 'Timed Out',
-			    message: 'There seems to be an issue with the connection. Please check back later!',
-		    })
+    		connectionError()
     		setLoading(false)
     	})		
 }

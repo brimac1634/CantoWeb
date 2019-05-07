@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import './SearchBar.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
-import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
-import { validateUser, setQueryURL } from '../../Helpers/helpers';
+import { validateUser, setQueryURL, requestToLogin } from '../../Helpers/helpers';
 import MediaQuery from 'react-responsive';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
@@ -59,23 +58,10 @@ class SearchBar extends Component {
 			updateURL(SEARCH)
 		} else {
 			if (route !== SEARCH && !validateUser(userID)) {
-				optionAlert({
-				    title: 'Please sign in.',
-				    message: 'You must be signed in to keep track of recently viewed entries. Would you like to sign in or register now?',
-				    buttons: [
-				      {
-				        label: 'Yes',
-				        onClick: () => {
-				        	setPrevRoute(pathName)
-				        	updateURL(LOGIN)
-				        }
-				      },
-				      {
-				        label: 'No',
-				        onClick: null
-				      }
-				    ]
-			    })
+				requestToLogin(()=>{
+					setPrevRoute(pathName)
+		        	updateURL(LOGIN)
+				})
 			} else {
 				updateURL(route)
 			}

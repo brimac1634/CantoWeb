@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
-import { serverError, connectionError } from '../../Helpers/helpers';
+import { serverError, connectionError, requestToLogin } from '../../Helpers/helpers';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 import { setMobileEntry, setSearchKey } from './actions';
 import { setTempSearch } from '../../Components/SearchBar/actions';
+import { setPrevRoute } from '../../Routing/actions';
 import apiRequest from '../../Helpers/apiRequest';
 import { routes } from '../../Routing/constants';
 
@@ -30,6 +31,7 @@ const mapDispatchToProps = (dispatch) => {
 		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
 		updateURL: (searchKey) => dispatch(push(searchKey)),
+		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
 	}
 } 
@@ -47,24 +49,27 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
-		let { pathName, user: { userID } } = this.props;
+		let { pathName, updateURL, user: { userID } } = this.props;
+		const { SEARCH, RECENT, FAVORITES, LOGIN } = routes;
+
 		if (!userID) {
-			const cachedUser = JSON.parse(localStorage.getItem('user'));
-			userID = cachedUser.userID;
+			const cachedUser = localStorage.getItem('user')
+			if (cachedUser) {
+				userID = cachedUser.userID;
+			}
 		}
-		const { SEARCH, RECENT, FAVORITES } = routes;
-		switch (pathName) {
-			case SEARCH:
-				this.loadSearchOnMount()
-				break;
-			case RECENT:
-				this.filterEntries(userID, RECENT)
-				break;
-			case FAVORITES:
-				this.filterEntries(userID, FAVORITES)
-				break;
-			default:
-				this.loadSearchOnMount()
+
+		if (pathName === SEARCH) {
+			this.loadSearchOnMount()
+		} else if (pathName === RECENT || pathName === FAVORITES) {
+			if (userID != null) {
+				this.filterEntries(userID, pathName)
+			} else {
+				requestToLogin(()=>{
+					setPrevRoute(pathName)
+		        	updateURL(LOGIN)
+				})
+			}
 		}
 	}
 
