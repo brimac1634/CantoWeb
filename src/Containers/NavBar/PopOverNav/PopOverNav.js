@@ -4,11 +4,10 @@ import navSections from '../navSections';
 import {Link} from 'react-router-dom';
 import IconListItem from '../../../Components/IconListItem/IconListItem';
 
-const PopOverNav = ({ setBanner, closeOnClick }) => {
+const PopOverNav = ({ closeOnClick }) => {
 
-	const handleNavChange = (mobileTitle) => {
+	const handlePopOver = () => {
 		closeOnClick()
-		setBanner(mobileTitle)
 	}
 
 	return (
@@ -16,12 +15,9 @@ const PopOverNav = ({ setBanner, closeOnClick }) => {
 			{
 				navSections.map(section => {
 					const { title, to, icon } = section;
-					const mobileTitle = (title === 'Word Of The Day')
-						? 'WOD'
-						: title
 
 					return(
-						<div key={title} className='link' onClick={()=>handleNavChange(mobileTitle)}>
+						<div key={title} className='link' onClick={handlePopOver}>
 							<Link to={to} className='link'>
 								<IconListItem icon={icon} title={title}/>
 							</Link>
