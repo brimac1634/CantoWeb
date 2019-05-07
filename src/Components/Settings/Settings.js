@@ -5,7 +5,6 @@ import { push } from 'connected-react-router'
 import Logo from '../Logo/Logo';
 import IconListItem from '../IconListItem/IconListItem';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
-import WhatIsCantoTalk from '../WhatIsCantoTalk/WhatIsCantoTalk';
 import { routes } from '../../Routing/constants';
 import {renderComponentAlert} from '../../Containers/ComponentAlert/ComponentAlert';
 import { setUser } from '../../Containers/SignIn/actions';
@@ -35,8 +34,10 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 		userIsLoggedIn = true
 	}
 
+	const { WHAT } = routes;
+
 	const handleWhatIs = () => {
-		renderComponentAlert(WhatIsCantoTalk)
+		updateURL(WHAT)
 		closeOnClick()
 	}
 

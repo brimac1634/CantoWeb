@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import './SignIn.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
-import {Link} from 'react-router-dom';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import { serverError } from '../../Helpers/helpers';
 import Logo from '../../Components/Logo/Logo';
-import Icon from '../../Components/Icon/Icon';
 import Controller from '../../Helpers/Compound/Controller';
 import Trigger from '../../Helpers/Compound/Trigger';
 import DropDown from '../../Containers/DropDown/DropDown';
+import HoverBox from '../../Components/HoverBox/HoverBox';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
 import ReactTooltip from 'react-tooltip'
@@ -17,11 +16,6 @@ import apiRequest from '../../Helpers/apiRequest';
 import { setUser } from './actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 
-const mapStateToProps = (state, ownProps) => {
-	return {
-		prevRoute: state.prevRoute.route,
-	}
-}
 const mapDispatchToProps = (dispatch) => {
 	return {
 		updateUser: (user) => dispatch(setUser(user)),
@@ -81,12 +75,6 @@ class SignIn extends Component {
 		this.setState({emailList})
 	}
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
-
-	handleClose = () => {
-		const { updateURL, prevRoute } = this.props;
-		console.log(prevRoute)
-		updateURL(prevRoute)
-	}
 
 	validateEmail = (email) => {
 		const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -237,77 +225,70 @@ class SignIn extends Component {
 	render() {
 		const { title, email, signInButton, alternateButton, emailList} = this.state;
 		return (
-			<div className='sign-in-container'>
-				<Link to='/'>
-					<button className='sign-in-close' onClick={this.handleClose}>
-	                  <Icon 
-	                    icon='multiply' 
-	                    iconStyle='dark' 
-	                    width='15'
-	                  />
-	                </button>
-                </Link>
-				<Logo iconSize='50px' />
-				<h2>{title}</h2>
-				{
-					title === 'Login'
-					?	<Controller>
-							<Trigger>
-								<div className='center-div'>
-									<TextInput 
-										icon='user-3' 
-										margin='10px 0 0 0'
-										placeHolder='Email Address'
-										value={email}
-										handleChange={this.onEmailChange}
-									/>
-								</div>
-							</Trigger>
-							<DropDown 
-								list={emailList} 
-								handleSelection={this.emailSelect}
+			<HoverBox>
+				<div className='sign-in-container'>
+					<Logo iconSize='50px' />
+					<h2>{title}</h2>
+					{
+						title === 'Login'
+						?	<Controller>
+								<Trigger>
+									<div className='center-div'>
+										<TextInput 
+											icon='user-3' 
+											margin='10px 0 0 0'
+											placeHolder='Email Address'
+											value={email}
+											handleChange={this.onEmailChange}
+										/>
+									</div>
+								</Trigger>
+								<DropDown 
+									list={emailList} 
+									handleSelection={this.emailSelect}
+								/>
+							</Controller>
+						:   <TextInput 
+								icon='user-3' 
+								margin='0'
+								placeHolder='Email Address'
+								value={email}
+								handleChange={this.onEmailChange}
 							/>
-						</Controller>
-					:   <TextInput 
-							icon='user-3' 
-							margin='0'
-							placeHolder='Email Address'
-							value={email}
-							handleChange={this.onEmailChange}
-						/>
-				}
-				<TextInput 
-					icon='locked-4' 
-					margin='20px 0'
-					placeHolder='Password'
-					isPassword='true'
-					handleChange={this.onPasswordChange}
-				/>
-				<Button 
-					buttonType='ghost' 
-					title={signInButton}
-					handleClick={this.onUserSubmit}
-				/>
-				<div className='bottom-row'>
-					<p 
-						className='underline-button' 
-						onClick={() => this.signInToggle(alternateButton)}
-					>
-						{alternateButton}
-					</p>
-					<div data-tip={`Creating a profile allows you to
-					 <br> keep  track of your previous searches, save 
-					 <br>favorites, build your own flash card decks, and 
-					 <br>more! This will also make it possible to sync 
-					 <br>information between devices.`} data-multiline='true'>
-						<p className='underline-button right-button' >
-							why?
+					}
+					<TextInput 
+						icon='locked-4' 
+						margin='20px 0'
+						placeHolder='Password'
+						isPassword='true'
+						handleChange={this.onPasswordChange}
+					/>
+					<Button 
+						buttonType='ghost' 
+						title={signInButton}
+						handleClick={this.onUserSubmit}
+					/>
+					<div className='bottom-row'>
+						<p 
+							className='underline-button' 
+							onClick={() => this.signInToggle(alternateButton)}
+						>
+							{alternateButton}
 						</p>
+						<div data-tip={`Creating a profile allows you to
+						 <br> keep  track of your previous searches, save 
+						 <br>favorites, build your own flash card decks, and 
+						 <br>more! This will also make it possible to sync 
+						 <br>information between devices.`} data-multiline='true'>
+							<p className='underline-button right-button' >
+								why?
+							</p>
+						</div>
+						<ReactTooltip effect='solid' place='right' type='dark'/>
 					</div>
-					<ReactTooltip effect='solid' place='right' type='dark'/>
 				</div>
-			</div>
+			</HoverBox>
 		);
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(null, mapDispatchToProps)(SignIn);

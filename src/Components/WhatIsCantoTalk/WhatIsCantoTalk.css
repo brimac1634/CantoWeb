@@ -1,10 +1,11 @@
 .what-is-cantotalk {
-	max-width: 450px;
+	max-width: 600px;
 	height: auto;
 	padding: 10px 20px;
 	box-sizing: border-box;
 	text-align: center;
 	overflow-y: auto;
+	background: var(--cantoWhite);
 }
 
 .banner-logo-container {

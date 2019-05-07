@@ -29,7 +29,15 @@ const mapDispatchToProps = (dispatch) => {
 
 const TitleBar = ({ pathName, setMobileEntry }) => {
 
-	const { SEARCH, RECENT, FAVORITES, WORD_OF_THE_DAY, LEARN, LOGIN } = routes;
+	const { 
+		SEARCH, 
+		RECENT, 
+		FAVORITES, 
+		WORD_OF_THE_DAY, 
+		LEARN, 
+		LOGIN,
+		WHAT 
+	} = routes;
 
 	const banner = ((pathName) => {
 		switch (pathName) {
@@ -45,6 +53,8 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 				return 'Learn'
 			case LOGIN:
 				return 'Login'
+			case WHAT:
+				return 'What?'
 			default:
 				return ''
 		}
