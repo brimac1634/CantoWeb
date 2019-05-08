@@ -212,7 +212,7 @@ class Search extends Component {
 			: 'hidden-entry-view'
 
 		return (
-			<div>
+			<div className='page'>
 				<SearchBar 
 					className='search-bar' 
 					searchKey={tempSearchKey}

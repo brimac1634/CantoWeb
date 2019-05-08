@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import MediaQuery from 'react-responsive';
 import TitleBar from './Components/TitleBar/TitleBar';
 import NavBar from './Containers/NavBar/NavBar';
@@ -15,7 +16,7 @@ import { SwapSpinner } from "react-spinners-kit";
 
 const mapStateToProps = state => {
   return {
-    pathName: state.router.location.pathname,
+    location: state.router.location,
     loading: state.loading.loading,
   }
 }
@@ -41,44 +42,57 @@ class App extends Component {
   }
 
   render() {
-    const { loading } = this.props;
+    const { loading, location, location: { key } } = this.props;
     const { LOGIN, WHAT, ROOT } = routes;
     return (
       <div className='app'>
         <TitleBar 
           className='title-bar'
         />
-        <Switch>
-          <Route 
-            path={LOGIN} 
-            render={()=>(
-              <div className='login-background'>
-                <SignIn />
-              </div>
-            )}
-          />
-          <Route 
-            path={WHAT} 
-            render={()=>(
-              <div className='login-background'>
-                <WhatIsCantoTalk />
-              </div>
-            )}
-          />
-          <Route 
-            path={ROOT} 
-            render={()=>(
-              <div>
-                <MediaQuery minWidth={950}>
-                  <NavBar 
-                    className='nav-bar' 
+        <Route 
+          location={location}
+          render={() => (
+            <TransitionGroup>
+              <CSSTransition
+                key={key}
+                timeout={400}
+                classNames="fade"
+              >
+                <Switch location={location}>
+                  <Route 
+                    path={LOGIN} 
+                    render={()=>(
+                      <div className='login-background'>
+                        <SignIn />
+                      </div>
+                    )}
                   />
-                </MediaQuery>
-                <MainView className='main-view' />
-              </div>
-            )} 
-          />
-        </Switch>
+                  <Route 
+                    path={WHAT} 
+                    render={()=>(
+                      <div className='login-background'>
+                        <WhatIsCantoTalk />
+                      </div>
+                    )}
+                  />
+                  <Route 
+                    path={ROOT} 
+                    render={()=>(
+                      <div>
+                        <MediaQuery minWidth={950}>
+                          <NavBar 
+                            className='nav-bar' 
+                          />
+                        </MediaQuery>
+                        <MainView className='main-view' />
+                      </div>
+                    )} 
+                  />
+                </Switch>
+              </CSSTransition>
+            </TransitionGroup>
+          )}
+        />
         <PopUpAlert 
           title={alert.title} 
           message={alert.message} 
