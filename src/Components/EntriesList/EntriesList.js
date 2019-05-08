@@ -4,20 +4,20 @@ import EntryRow from './EntryRow/EntryRow';
 
 const EntryList = ({ entries, selectEntry, searchKey, isFavoritePage }) => {
 	let ghostRows = [0,1,2,3,4,5,6]
-	let animate = 'animate-pop-in';
+
+	const getDelay = (i) => {
+		const add = i * 0.15
+		return 0.2 + add
+	}
 
 	return (
 		<div className='entry-list'>
 			{
 				entries.length || isFavoritePage
 				?   entries.map((entry, i) => {
-						const add = i * 0.2
-						const delay = 0.3 + add
-						
 						return (
 							<EntryRow
-								className={`${animate}`}
-								delay={delay}
+								delay={getDelay(i)}
 								key={entry.entryID}
 								selectEntry={selectEntry}
 								entry={entry}
@@ -30,6 +30,7 @@ const EntryList = ({ entries, selectEntry, searchKey, isFavoritePage }) => {
 							<EntryRow
 								key={i}
 								entry=''
+								delay={getDelay(i)}
 							/>
 						);
 					})

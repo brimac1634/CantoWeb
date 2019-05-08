@@ -6,7 +6,6 @@ const EntryRow = (props) => {
 
 	const {
 		selectEntry,
-		className,
 		delay,
 		entry,
 		entry: {
@@ -18,7 +17,7 @@ const EntryRow = (props) => {
 		},
 		isDemo,
 	} = props;
-	
+
 	const clLabel = classifier ? 'cl: ' : '';
 	const rowType = isDemo ? 'demo' : 'real';
 
@@ -27,8 +26,7 @@ const EntryRow = (props) => {
 			if (isDemo) {
 				return (
 					<div 
-						className={`entry-row ${rowType} ${className}`}
-						style={{animationDelay: `${delay}s`}}
+						className={`entry-row ${rowType}`}
 					>
 						<div className='top-left'>
 							<div data-tip="Cantonese">
@@ -63,7 +61,8 @@ const EntryRow = (props) => {
 			} else {
 				return (
 					<div 
-						className={`entry-row ${rowType}`}
+						className={`entry-row ${rowType} animate-pop-in`}
+						style={{animationDelay: `${delay}s`}}
 						onClick={() => selectEntry(entry)}
 					>
 						<div className='top-left'>
@@ -78,7 +77,10 @@ const EntryRow = (props) => {
 			}
 		} else {
 			return (
-				<div className={`entry-row ${rowType}`}>
+				<div 
+					className={`entry-row ${rowType} animate-pop-in`}
+					style={{animationDelay: `${delay}s`}}
+				>
 					<div className='top-left'>
 						<div className='ghost-div'>&nbsp;</div>
 						<div className='ghost-div'>&nbsp;</div>
