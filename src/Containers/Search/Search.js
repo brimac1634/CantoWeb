@@ -94,13 +94,16 @@ class Search extends Component {
 
 	loadSearchOnMount() {
 		const { search, updateURL } = this.props;
+		const { TRANSITION } = routes;
 		if (search) {
 			const values = queryString.parse(search)
 			this.handleSearchKey(values.searchkey)
 		} else {
 			const cachedURL = JSON.parse(sessionStorage.getItem('searchURL'))
 			if (cachedURL != null) {
-				updateURL(cachedURL)
+				setTimeout(()=>{
+					updateURL(cachedURL)
+				}, TRANSITION)
 			}
 		}
 	}

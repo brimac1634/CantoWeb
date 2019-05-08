@@ -50,6 +50,19 @@ class App extends Component {
           className='title-bar'
         />
         <Route 
+          path={ROOT} 
+          render={()=>(
+            <div>
+              <MediaQuery minWidth={950}>
+                <NavBar 
+                  className='nav-bar' 
+                />
+              </MediaQuery>
+              <MainView className='main-view' />
+            </div>
+          )} 
+        />
+        <Route 
           location={location}
           render={() => (
             <TransitionGroup>
@@ -74,19 +87,6 @@ class App extends Component {
                         <WhatIsCantoTalk />
                       </div>
                     )}
-                  />
-                  <Route 
-                    path={ROOT} 
-                    render={()=>(
-                      <div>
-                        <MediaQuery minWidth={950}>
-                          <NavBar 
-                            className='nav-bar' 
-                          />
-                        </MediaQuery>
-                        <MainView className='main-view' />
-                      </div>
-                    )} 
                   />
                 </Switch>
               </CSSTransition>
