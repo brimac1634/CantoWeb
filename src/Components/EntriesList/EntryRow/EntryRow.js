@@ -6,6 +6,8 @@ const EntryRow = (props) => {
 
 	const {
 		selectEntry,
+		className,
+		delay,
 		entry,
 		entry: {
 			cantoword,
@@ -16,7 +18,7 @@ const EntryRow = (props) => {
 		},
 		isDemo,
 	} = props;
-
+	
 	const clLabel = classifier ? 'cl: ' : '';
 	const rowType = isDemo ? 'demo' : 'real';
 
@@ -24,7 +26,10 @@ const EntryRow = (props) => {
 		if (entry !== '') {
 			if (isDemo) {
 				return (
-					<div className={`entry-row ${rowType}`}>
+					<div 
+						className={`entry-row ${rowType} ${className}`}
+						style={{animationDelay: `${delay}s`}}
+					>
 						<div className='top-left'>
 							<div data-tip="Cantonese">
 								<h3 className='hover-box'>{cantoword}</h3>

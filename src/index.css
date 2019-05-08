@@ -92,6 +92,40 @@ code {
     transition: opacity 200ms linear;
 }
 
+/*-----list animation-------*/
+
+.animate-pop-in {
+  opacity: 0;
+  animation: pop-in .6s cubic-bezier(0, .9, .3, 1.2) forwards;
+}
+
+.animate-pop-out {
+  opacity: 0;
+  animation: pop-out .6s cubic-bezier(0, .9, .3, 1.2) forwards;
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-4em) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop-out {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4em) scale(0.8);
+  }
+}
+
 /*--------Scroll Bar------------*/
 
 /* width */
