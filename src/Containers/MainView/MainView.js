@@ -76,7 +76,7 @@ class MainView extends Component {
 					<Route 
 						path={SEARCH} 
 						render={()=>(
-							<TransitionGroup>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}

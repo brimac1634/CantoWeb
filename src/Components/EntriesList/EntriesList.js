@@ -6,7 +6,7 @@ const EntryList = ({ entries, selectEntry, searchKey, isFavoritePage }) => {
 	let ghostRows = [0,1,2,3,4,5,6]
 
 	const getDelay = (i) => {
-		const add = i * 0.15
+		const add = i * 0.1
 		return 0 + add
 	}
 

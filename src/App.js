@@ -40,7 +40,9 @@ class App extends Component {
         <TitleBar 
           className='title-bar'
         />
-        <MainView className='main-view' />
+        <div className='main-view-container'>
+          <MainView className='main-view' />
+        </div>
         <PopUpAlert 
           title={alert.title} 
           message={alert.message} 

@@ -78,7 +78,8 @@ class Search extends Component {
 		const { RECENT, FAVORITES, SEARCH } = routes;
 
 		if (prevProps.searchKey !== searchKey || prevProps.search !== search) {
-			this.handleSearch(searchKey);
+			const values = queryString.parse(search)
+			this.handleSearchKey(values.searchkey)
 		}
 
 		if (prevProps.pathName !== pathName && (pathName === FAVORITES || pathName === RECENT)) {
@@ -112,6 +113,7 @@ class Search extends Component {
 		const { setSearchKey, setTempSearch } = this.props;
 		setTempSearch(key)
 		setSearchKey(key)
+		this.handleSearch(key)
 	}
 
 	handleSearch = (searchKey) => {
