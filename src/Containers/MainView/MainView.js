@@ -31,36 +31,55 @@ class MainView extends Component {
 
 		return (
 			<div className='main-view' style={{position: 'absolute'}}>
-				<Route 
-					location={location}
-					render={() => (
-						<TransitionGroup>
-							<CSSTransition
-								key={key}
-					            timeout={TRANSITION}
-					            classNames="fade"
-				            >
-								<Switch location={location}>
-									<Route 
-										path={SEARCH} 
-										component={Search}
-									/>
-									<Route 
-										path={WORD_OF_THE_DAY} 
-										component={WordOfTheDay}
-									/>
-									<Route 
-										path={LEARN} 
-										component={Learn}
-									/>
-									<Redirect 
-										to={SEARCH}
-									/>
-								</Switch>
-							</CSSTransition>
-						</TransitionGroup>
-					)}
-				/>
+				<Switch location={location}>
+					<Route 
+						path={SEARCH} 
+						render={()=>(
+							<TransitionGroup>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+					            	<Search />
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						path={WORD_OF_THE_DAY} 
+						render={()=>(
+							<TransitionGroup>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+					            	<WordOfTheDay />
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						path={LEARN} 
+						render={()=>(
+							<TransitionGroup>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+					            	<Learn />
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						render={()=>(
+							<Redirect to={SEARCH} />
+						)}
+					/>
+				</Switch>
 			</div>
 		);
 	}
