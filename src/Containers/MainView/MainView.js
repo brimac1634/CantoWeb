@@ -24,6 +24,7 @@ class MainView extends Component {
 			return true
 		}
 	}
+
 	render() {
 		const { SEARCH, WORD_OF_THE_DAY, LEARN, TRANSITION } = routes;
 		const { location, location: { key } } = this.props
@@ -53,7 +54,7 @@ class MainView extends Component {
 										component={Learn}
 									/>
 									<Redirect 
-										to={SEARCH} 
+										to={SEARCH}
 									/>
 								</Switch>
 							</CSSTransition>

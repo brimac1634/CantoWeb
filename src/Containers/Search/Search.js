@@ -84,6 +84,7 @@ class Search extends Component {
 		if (prevProps.pathName !== pathName && (pathName === FAVORITES || pathName === RECENT)) {
 			this.filterEntries(userID, pathName)
 		} else if (prevProps.pathName !== SEARCH && pathName === SEARCH) {
+			console.log('here')
 			this.loadSearchOnMount()
 		}
 	}

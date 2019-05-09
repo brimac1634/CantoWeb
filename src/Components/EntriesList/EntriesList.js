@@ -7,7 +7,7 @@ const EntryList = ({ entries, selectEntry, searchKey, isFavoritePage }) => {
 
 	const getDelay = (i) => {
 		const add = i * 0.15
-		return 0.2 + add
+		return 0 + add
 	}
 
 	return (

@@ -3,32 +3,14 @@ import './HoverBox.css';
 import Icon from '../../Components/Icon/Icon';
 import { Link } from 'react-router-dom';
 import { routes } from '../../Routing/constants';
-import { push } from 'connected-react-router'
-import { connect } from 'react-redux';
 
-const mapStateToProps = (state, ownProps) => {
-	return {
-		prevRoute: state.prevRoute.route,
-	}
-}
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		updateURL: (path) => dispatch(push(path)),
-	}
-}
-
-const HoverBox = ({ updateURL, prevRoute, children }) => {
+const HoverBox = ({ children, handleClick }) => {
 	const { ROOT } = routes;
-
-	const handleClose = () => {
-		updateURL(prevRoute)
-	}
 
 	return (
 		<div className='hover-box-container'>
 			<Link to={ROOT}>
-				<button className='hover-close' onClick={handleClose}>
+				<button className='hover-close' onClick={handleClick}>
                   <Icon 
                     icon='multiply' 
                     iconStyle='dark' 
@@ -41,4 +23,4 @@ const HoverBox = ({ updateURL, prevRoute, children }) => {
 	);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HoverBox);
+export default HoverBox;

@@ -30,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
 const TitleBar = ({ pathName, setMobileEntry }) => {
 
 	const { 
+		ROOT,
 		SEARCH, 
 		RECENT, 
 		FAVORITES, 
@@ -64,7 +65,7 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 		<div className='title-bar' onClick={()=>setMobileEntry('')}>
 			<div className='slanted-div logo-div'></div>
 			<div className='title-logo-container'>
-				<Link to='/' className='center-div'>
+				<Link to={ROOT} className='center-div'>
 					<MediaQuery minWidth={575}>
 						<LogoFull className='title-logo'/>
 					</MediaQuery>
