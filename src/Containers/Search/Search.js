@@ -40,11 +40,7 @@ class Search extends Component {
 	constructor(props) {
 		super()
 		this.state = {
-			selectedEntry: '',
 			entries: [],
-			previousEntries: [],
-			previousSelectedEntry: '',
-			tempSearchKey: '',
 		}
 	}
 
@@ -211,7 +207,7 @@ class Search extends Component {
 
 	render() {
 		const { entries } = this.state;
-		const { mobileSelectedEntry, searchKey, tempSearchKey } = this.props;
+		const { mobileSelectedEntry, searchKey } = this.props;
 		const entryViewMobile = mobileSelectedEntry 
 			? 'visible-entry-view' 
 			: 'hidden-entry-view'
@@ -219,8 +215,7 @@ class Search extends Component {
 		return (
 			<div className='page'>
 				<SearchBar 
-					className='search-bar' 
-					searchKey={tempSearchKey}
+					className='search-bar'
 				/>
 				<MediaQuery minWidth={700}>
 					<div className='split-container'>

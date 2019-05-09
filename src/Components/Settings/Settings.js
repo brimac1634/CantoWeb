@@ -34,9 +34,10 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 		userIsLoggedIn = true
 	}
 
-	const { WHAT } = routes;
+	const { WHAT, LOGIN } = routes;
 
 	const handleWhatIs = () => {
+		setPrevRoute(pathName)
 		updateURL(WHAT)
 		closeOnClick()
 	}
@@ -52,7 +53,6 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 	}
 
 	const handleLogin = () => {
-		const { LOGIN } = routes;
 		setPrevRoute(pathName)
 		updateURL(LOGIN)
 		closeOnClick()

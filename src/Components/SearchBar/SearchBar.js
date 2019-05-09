@@ -121,7 +121,7 @@ class SearchBar extends Component {
 	render() {
 		const { 
 			pathName,
-			searchKey,
+			tempSearchKey,
 		 } = this.props;
 		 const { searchList } = this.state;
 		 const { FAVORITES, RECENT } = routes;
@@ -165,7 +165,7 @@ class SearchBar extends Component {
 											icon='search' 
 											placeHolder='English/Cantonese/Mandarin/Jyutping'
 											margin='10px 0'
-											value={searchKey}
+											value={tempSearchKey ? tempSearchKey : ''}
 											height='34px' 
 											handleChange={this.searchChange}
 											handleInput={this.searchSubmit}

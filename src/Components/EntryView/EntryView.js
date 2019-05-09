@@ -43,16 +43,9 @@ class EntryView extends Component {
 		}
 	}
 
-	// shouldComponentUpdate(newProps) {
-	// 	const { hash } = this.props;
-	// 	return newProps.hash !== hash ? true : false
-	// }
-
 	componentDidUpdate(prevProps) {
 		const { hash } = this.props;
-		console.log(hash)
 		if (hash && prevProps.hash !== hash) {
-
 			this.getEntry(hash)
 		} else if (prevProps.hash !== hash) {
 			this.setState({entry: ''})

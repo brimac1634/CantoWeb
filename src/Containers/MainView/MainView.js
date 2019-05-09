@@ -90,7 +90,7 @@ class MainView extends Component {
 					<Route 
 						path={WORD_OF_THE_DAY} 
 						render={()=>(
-							<TransitionGroup>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
@@ -104,7 +104,7 @@ class MainView extends Component {
 					<Route 
 						path={LEARN} 
 						render={()=>(
-							<TransitionGroup>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}

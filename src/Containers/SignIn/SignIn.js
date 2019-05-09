@@ -16,6 +16,12 @@ import apiRequest from '../../Helpers/apiRequest';
 import { setUser } from './actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 
+const mapStateToProps = state => {
+	return {
+		prevRoute: state.prevRoute.route,
+	}
+}
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		updateUser: (user) => dispatch(setUser(user)),
@@ -291,4 +297,4 @@ class SignIn extends Component {
 		);
 	}
 }
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
