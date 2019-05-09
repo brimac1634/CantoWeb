@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import MediaQuery from 'react-responsive';
 import TitleBar from './Components/TitleBar/TitleBar';
-import NavBar from './Containers/NavBar/NavBar';
 import MainView from './Containers/MainView/MainView';
-import SignIn from './Containers/SignIn/SignIn';
-import WhatIsCantoTalk from './Components/WhatIsCantoTalk/WhatIsCantoTalk';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
-import { routes } from './Routing/constants';
 import { setUser } from './Containers/SignIn/actions';
 import { SwapSpinner } from "react-spinners-kit";
 
 const mapStateToProps = state => {
   return {
-    location: state.router.location,
     loading: state.loading.loading,
   }
 }
@@ -42,43 +35,12 @@ class App extends Component {
 
   render() {
     const { loading } = this.props;
-    const { LOGIN, WHAT, ROOT } = routes;
     return (
       <div className='app'>
         <TitleBar 
           className='title-bar'
         />
-        <Switch>
-          <Route 
-            path={LOGIN} 
-            render={()=>(
-              <div className='login-background'>
-                <SignIn />
-              </div>
-            )}
-          />
-          <Route 
-            path={WHAT} 
-            render={()=>(
-              <div className='login-background'>
-                <WhatIsCantoTalk />
-              </div>
-            )}
-          />
-          <Route 
-            path={ROOT} 
-            render={()=>(
-              <div>
-                <MediaQuery minWidth={950}>
-                  <NavBar 
-                    className='nav-bar' 
-                  />
-                </MediaQuery>
-                <MainView className='main-view' />
-              </div>
-            )} 
-          />
-        </Switch>
+        <MainView className='main-view' />
         <PopUpAlert 
           title={alert.title} 
           message={alert.message} 

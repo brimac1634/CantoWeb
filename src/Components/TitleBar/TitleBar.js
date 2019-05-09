@@ -3,7 +3,6 @@ import './TitleBar.css';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import MediaQuery from 'react-responsive';
-import ReactTooltip from 'react-tooltip'
 import LogoFull from '../LogoFull/LogoFull';
 import Logo from '../Logo/Logo';
 import Icon from '../Icon/Icon';
@@ -87,45 +86,37 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 				</MediaQuery>
 			</div>
 			<div className='button-container'>
-				<MediaQuery maxWidth={950}>
-					<Controller>
-						<Trigger>
-							<div>
-								<div data-tip='Menu' data-for='menu' style={{height: '28px'}}>
-									<button 
-										className='button' 
-										style={{marginRight: '10px'}}
-									>
-										<Icon 
-											icon='menu-4' 
-											className='icon' 
-											iconSize={26}
-											color='cantoWhite'
-										/>
-									</button>
-								</div>
-								<ReactTooltip effect='solid' delayShow={1000} place='left' id='menu' type='light'/>
-							</div>
-						</Trigger>
-						<PopOver>
-							<PopOverNav />
-						</PopOver>
-					</Controller>
-				</MediaQuery>
 				<Controller>
 					<Trigger>
 						<div>
-							<div data-tip='Profile Settings' data-for='user' style={{height: '28px'}}>
-								<button className='button'>
-									<Icon 
-										icon='user-3' 
-										className='icon' 
-										iconSize={26}
-										color='cantoWhite'
-									/>
-								</button>
-							</div>
-							<ReactTooltip effect='solid' id='user' delayShow={1000} place='left' type='light'/>
+							<button 
+								className='button' 
+								style={{marginRight: '10px'}}
+							>
+								<Icon 
+									icon='menu-4' 
+									className='icon' 
+									iconSize={26}
+									color='cantoWhite'
+								/>
+							</button>
+						</div>
+					</Trigger>
+					<PopOver>
+						<PopOverNav />
+					</PopOver>
+				</Controller>
+				<Controller>
+					<Trigger>
+						<div>
+							<button className='button'>
+								<Icon 
+									icon='user-3' 
+									className='icon' 
+									iconSize={26}
+									color='cantoWhite'
+								/>
+							</button>
 						</div>
 					</Trigger>
 					<PopOver>

@@ -84,7 +84,6 @@ class Search extends Component {
 		if (prevProps.pathName !== pathName && (pathName === FAVORITES || pathName === RECENT)) {
 			this.filterEntries(userID, pathName)
 		} else if (prevProps.pathName !== SEARCH && pathName === SEARCH) {
-			console.log('here')
 			this.loadSearchOnMount()
 		}
 	}
@@ -104,7 +103,7 @@ class Search extends Component {
 			if (cachedURL != null) {
 				setTimeout(()=>{
 					updateURL(cachedURL)
-				}, TRANSITION)
+				}, TRANSITION + 400)
 			}
 		}
 	}

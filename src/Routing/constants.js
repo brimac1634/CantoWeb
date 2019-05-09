@@ -1,7 +1,7 @@
 export const PREV_ROUTE = 'PREV_ROUTE';
 
 export const routes = {
-	TRANSITION: 500,
+	TRANSITION: 600,
 	ROOT: '/',
 	SEARCH: '/search',
 	RECENT: '/search/recent',
