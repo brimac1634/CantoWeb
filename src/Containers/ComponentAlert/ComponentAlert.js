@@ -18,8 +18,8 @@ const componentAlert = (WrappedComponent) => {
       if (this.content.current.firstChild) {
         const rect = this.content.current.firstChild.getBoundingClientRect();
         this.setState({
-          width: rect.width,
-          height: rect.height,
+          width: rect.width + 20,
+          height: rect.height + 20,
         })
       }
     }
@@ -30,8 +30,8 @@ const componentAlert = (WrappedComponent) => {
     }
 
     render () {
-      const { width, height } = this.state;
-      
+      let { width, height } = this.state;
+      console.log(width, height)
       return (
         ReactDOM.createPortal(
           <div
@@ -50,7 +50,7 @@ const componentAlert = (WrappedComponent) => {
                     width='15'
                   />
                 </button>
-                <div ref={this.content}>
+                <div className='inner-container' ref={this.content}>
                   <WrappedComponent 
                     handleClose={this.close}
                     {...this.props}

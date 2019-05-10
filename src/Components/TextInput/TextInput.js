@@ -2,7 +2,7 @@ import React from 'react';
 import './TextInput.css'
 import Icon from '../Icon/Icon';
 
-const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height, isPassword, margin, handleClick }) => {
+const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height, isPassword, margin, handleClick, id, isTextArea }) => {
 	const inputHeight = height ? height : '44px';
 	const type = isPassword ? 'password' : null;
 	return (
@@ -15,15 +15,28 @@ const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height
 					<div className='input-divider'>&nbsp;</div>
 				</div>
 			}
-			
-			<input 
-				className='text-input'
-				placeholder={placeHolder}
-				onChange={handleChange}
-				onKeyPress={handleInput}
-				value={value}
-				type={type}
-			/>
+			{isTextArea
+				?   <div className='text-area-container'>
+						<textarea
+							className='text-input text-area'
+							id={id}
+							placeholder={placeHolder}
+							onChange={handleChange}
+							onKeyPress={handleInput}
+							value={value}
+						/>
+					</div>
+				:   <input 
+						className='text-input'
+						id={id}
+						placeholder={placeHolder}
+						onChange={handleChange}
+						onKeyPress={handleInput}
+						value={value}
+						type={type}
+					/>
+
+			}
 		</div>
 	);
 }

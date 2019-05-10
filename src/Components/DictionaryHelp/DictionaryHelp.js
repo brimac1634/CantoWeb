@@ -28,6 +28,8 @@ const DictionaryHelp = () => {
 					className='demo-row'
 				/>
 			</div>  
+			<div className='list-divider'></div>
+			<p><strong>Jyutping (粵拼)</strong></p>
 		</div>
 	);
 		

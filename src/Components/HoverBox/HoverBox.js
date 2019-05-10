@@ -11,21 +11,23 @@ const mapStateToProps = state => {
   }
 }
 
-const HoverBox = ({ children, handleClick, prevRoute }) => {
+const HoverBox = ({ children, handleClick, prevRoute, canClose }) => {
 	const { ROOT } = routes;
 
 	return (
 		<div className='hover-box-container'>
-			<Link to={prevRoute ? prevRoute : ROOT}>
-				<button className='hover-close' onClick={handleClick}>
-                  <Icon 
-                    icon='multiply' 
-                    iconStyle='dark' 
-                    width='15'
-                  />
-                </button>
-            </Link>
-            {children}
+      {canClose &&
+        <Link to={prevRoute ? prevRoute : ROOT}>
+          <button className='hover-close' onClick={handleClick}>
+              <Icon 
+                icon='multiply' 
+                iconStyle='dark' 
+                width='15'
+              />
+            </button>
+        </Link>
+      }
+        {children}
 		</div>
 	);
 }

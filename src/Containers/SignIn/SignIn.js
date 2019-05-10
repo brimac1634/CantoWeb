@@ -3,7 +3,7 @@ import './SignIn.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
-import { serverError } from '../../Helpers/helpers';
+import { serverError, validateEmail } from '../../Helpers/helpers';
 import Logo from '../../Components/Logo/Logo';
 import Controller from '../../Helpers/Compound/Controller';
 import Trigger from '../../Helpers/Compound/Trigger';
@@ -82,11 +82,6 @@ class SignIn extends Component {
 	}
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 
-	validateEmail = (email) => {
-		const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return regexp.test(email);
-	}
-
 	validatePassword = (password) => {
 		return password.length >= 6 ? true : false;
 	}
@@ -120,7 +115,7 @@ class SignIn extends Component {
 	onUserSubmit = () => {
 		const { title, email, password, failCount } = this.state;
 
-		const emailIsValid = this.validateEmail(email);
+		const emailIsValid = validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
 		if (!emailIsValid && !passwordIsValid) {
 			optionAlert({
@@ -259,6 +254,7 @@ class SignIn extends Component {
 								margin='0'
 								placeHolder='Email Address'
 								value={email}
+								id='email'
 								handleChange={this.onEmailChange}
 							/>
 					}

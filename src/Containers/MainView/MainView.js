@@ -5,6 +5,7 @@ import WordOfTheDay from '../WordOfTheDay/WordOfTheDay';
 import Learn from '../Learn/Learn';
 import SignIn from '../../Containers/SignIn/SignIn';
 import WhatIsCantoTalk from '../../Components/WhatIsCantoTalk/WhatIsCantoTalk';
+import Contact from '../../Components/Contact/Contact';
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { routes } from '../../Routing/constants';
@@ -31,6 +32,7 @@ class MainView extends Component {
 		const { 
 			LOGIN, 
 			WHAT, 
+			CONTACT,
 			SEARCH, 
 			WORD_OF_THE_DAY, 
 			LEARN, 
@@ -44,13 +46,13 @@ class MainView extends Component {
 					<Route 
 						path={LOGIN} 
 						render={()=>(
-							<TransitionGroup>
+							<TransitionGroup className='fill'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
 						            classNames="fade"
 					            >
-					            	<div className='login-background'>
+					            	<div className='center-div'>
 					                    <SignIn />
 					                </div>
 					            </CSSTransition>
@@ -60,14 +62,30 @@ class MainView extends Component {
 					<Route 
 						path={WHAT} 
 						render={()=>(
-							<TransitionGroup>
+							<TransitionGroup className='fill'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
 						            classNames="fade"
 					            >
-					            	<div className='login-background'>
+					            	<div className='center-div'>
 					                    <WhatIsCantoTalk />
+				                    </div>
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						path={CONTACT} 
+						render={()=>(
+							<TransitionGroup className='fill'>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+					            	<div className='center-div'>
+					                    <Contact />
 					                </div>
 					            </CSSTransition>
 							</TransitionGroup>

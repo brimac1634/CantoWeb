@@ -34,7 +34,7 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 		userIsLoggedIn = true
 	}
 
-	const { WHAT, LOGIN } = routes;
+	const { WHAT, LOGIN, CONTACT } = routes;
 
 	const handleWhatIs = () => {
 		setPrevRoute(pathName)
@@ -48,7 +48,8 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 	}
 	
 	const handleContact = () => {
-		console.log(789)
+		setPrevRoute(pathName)
+		updateURL(CONTACT)
 		closeOnClick()
 	}
 
@@ -90,7 +91,11 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 					title='Dictionary Help'
 					handleClick={handleDictionaryHelp} 
 				/>
-				<IconListItem icon='paper-plane' title='Contact' handleClick={handleContact}/>
+				<IconListItem 
+					icon='paper-plane' 
+					title='Contact' 
+					href='mailto:info@cantotalk.com?Subject=I%20am%20interested%20in%20CantoTalk!'
+					handleClick={handleContact}/>
 				<div className='list-divider'>&nbsp;</div>
 				{userIsLoggedIn
 					? <IconListItem 

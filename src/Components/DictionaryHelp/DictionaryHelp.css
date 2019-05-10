@@ -1,9 +1,15 @@
 .dict-help {
 	max-width: 600px;
 	max-height: 400px;
-	padding: 20px 25px;
 	box-sizing: border-box;
+	padding: 20px 25px;
+	margin: 20px;
 	text-align: center;
 	overflow-y: auto;
+	scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  width: 0 !important;
 }
 

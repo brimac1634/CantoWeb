@@ -19,11 +19,16 @@ body.component-alert-body-element {
 
 .component-alert-body {
   position: relative;
-  padding: 10px;
   box-sizing: border-box;
   background: var(--cantoWhite);
   border-radius: 4px;
   box-shadow: var(--cantoFloatShadow);
+}
+
+.inner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .close {
