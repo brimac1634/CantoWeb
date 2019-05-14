@@ -37,7 +37,6 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 	const { WHAT, LOGIN, CONTACT } = routes;
 
 	const handleWhatIs = () => {
-		setPrevRoute(pathName)
 		updateURL(WHAT)
 		closeOnClick()
 	}

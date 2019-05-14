@@ -79,6 +79,10 @@
 	cursor: pointer;
 }
 
+.entry-btn:active {
+	transform: scale(0.8);
+}
+
 .inner-entry-view .ghost-div {
 	width: auto;
 	height: auto;

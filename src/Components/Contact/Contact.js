@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
 import './Contact.css';
-import { validateEmail } from '../../Helpers/helpers';
+import { connect } from 'react-redux';
+import { validateEmail, serverError } from '../../Helpers/helpers';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import HoverBox from '../HoverBox/HoverBox';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
 import apiRequest from '../../Helpers/apiRequest';
+import { setLoading } from '../../Loading/actions';
+import { push } from 'connected-react-router'
+
+const mapStateToProps = state => {
+	return {
+		prevRoute: state.prevRoute.route,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setLoading: (loading) => dispatch(setLoading(loading)),
+		updateURL: (path) => dispatch(push(path)),
+	}
+}
 
 class Contact extends Component {
 	constructor(props) {
@@ -29,8 +45,39 @@ class Contact extends Component {
 
 	handleSubmit = (event) => {
 		const { newMessage } = this.state;
+		const { setLoading, updateURL, prevRoute } = this.props;
 		const verified = this.verifyDetails(newMessage)
-		console.log(verified)
+		if (verified) {
+			setLoading(true)
+			apiRequest({
+				endPoint: '/contact-us',
+				method: 'POST',
+				body: newMessage 
+			})
+			.then(res => {
+				setLoading(false)
+				if (res.error) {
+					serverError()
+				} else {
+					optionAlert({
+					    title: 'Message Sent',
+					    message: 'Your message has been sent! We will reply to you ASAP.',
+					    buttons: [
+					      {
+					        label: 'Okay!',
+					        onClick: () => {
+					        	updateURL(prevRoute)
+					        }
+					      },
+					    ]
+				    })
+				}
+			})
+			.catch(() => {
+				setLoading(false)
+				serverError()
+			})
+		}
 	    event.preventDefault();
 	}
 
@@ -107,4 +154,4 @@ class Contact extends Component {
 		);
 	}	
 }
-export default Contact;
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);
