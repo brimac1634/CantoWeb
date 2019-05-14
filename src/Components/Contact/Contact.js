@@ -88,7 +88,7 @@ class Contact extends Component {
 								isTextArea={true}
 								placeHolder='Your Message'
 								margin='10px 0'
-								height='100px'
+								height='150px'
 								id='message'
 								value={this.state.message}
 								handleChange={this.handleChange}

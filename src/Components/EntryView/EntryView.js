@@ -8,6 +8,7 @@ import { validateUser, serverError } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 import { setPrevRoute } from '../../Routing/actions';
+import { setLoading } from '../../Loading/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
 
@@ -24,6 +25,7 @@ const mapDispatchToProps = (dispatch) => {
 		presentAlert: (alert) => dispatch(setAlert(alert)),
 		updateURL: (path) => dispatch(push(path)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
+		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 }
 
@@ -53,27 +55,32 @@ class EntryView extends Component {
 	}
 
 	getEntry = (hash) => {
-		const { userID } = this.props;
+		const { userID, setLoading } = this.props;
 		const entryID = hash.slice(1, hash.length)
-			apiRequest({
-				endPoint: '/entryid',
-				method: 'POST',
-				body: {entryID} 
-			})
-			.then(entry => {
-				if (entry.error) {
-					serverError()
-				} else {
-					this.setState({entry})
-					if (
-						entryID != null &&
-						validateUser(userID)
-					) {
-						this.checkIfFavorite(entryID, userID);
-					}
+		setLoading(true)
+		apiRequest({
+			endPoint: '/entryid',
+			method: 'POST',
+			body: {entryID} 
+		})
+		.then(entry => {
+			setLoading(false)
+			if (entry.error) {
+				serverError()
+			} else {
+				this.setState({entry})
+				if (
+					entryID != null &&
+					validateUser(userID)
+				) {
+					this.checkIfFavorite(entryID, userID);
 				}
-			})
-			.catch(() => serverError())
+			}
+		})
+		.catch(() => {
+			setLoading(false)
+			serverError()
+		})
 	}
 
 	checkIfFavorite = (entryID, userID) => {
@@ -99,15 +106,18 @@ class EntryView extends Component {
 			updateURL,
 			pathName,
 			setPrevRoute,
+			setLoading
 		} = this.props;
 		const { LOGIN } = routes;
 		if (validateUser(userID)) {
+			setLoading(true)
 			apiRequest({
 				endPoint: '/favorites/toggle',
 				method: 'POST',
 				body: {entryID, userID, cantoWord} 
 			})
 			.then(favorited => {
+				setLoading(false)
 				if (favorited.error) {
 					serverError()
 				} else {
@@ -137,7 +147,10 @@ class EntryView extends Component {
 				    presentAlert(alert);
 				}
 			})
-			.catch(err => serverError())
+			.catch(() => {
+				setLoading(false)
+				serverError()
+			})
 		} else {
 			optionAlert({
 			    title: 'Please sign in.',

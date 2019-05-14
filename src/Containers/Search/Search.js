@@ -9,7 +9,7 @@ import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
 import { setLoading } from '../../Loading/actions';
-import { setMobileEntry, setSearchKey } from './actions';
+import { setMobileEntry } from './actions';
 import { setTempSearch } from '../../Components/SearchBar/actions';
 import { setPrevRoute } from '../../Routing/actions';
 import apiRequest from '../../Helpers/apiRequest';
@@ -30,7 +30,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
-		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
 		updateURL: (searchKey) => dispatch(push(searchKey)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
@@ -51,9 +50,9 @@ class Search extends Component {
 		const { SEARCH, RECENT, FAVORITES, LOGIN } = routes;
 
 		if (!userID) {
-			const cachedUser = JSON.parse(localStorage.getItem('user'))
+			const cachedUser = localStorage.getItem('user')
 			if (cachedUser) {
-				userID = cachedUser.userID;
+				userID = JSON.parse(cachedUser.userID);
 			}
 		}
 		if (pathName === SEARCH) {
@@ -77,7 +76,7 @@ class Search extends Component {
 		if (prevProps.pathName !== pathName) {
 			if (pathName === FAVORITES || pathName === RECENT) {
 				this.filterEntries(userID, pathName)
-			} else {
+			} else if (pathName === SEARCH ) {
 				this.loadSearchOnMount()
 			}
 		} else if (pathName === SEARCH && prevProps.search !== search) {
@@ -108,9 +107,8 @@ class Search extends Component {
 	}
 
 	handleSearchKey = (key) => {
-		const { setSearchKey, setTempSearch } = this.props;
+		const { setTempSearch } = this.props;
 		setTempSearch(key)
-		setSearchKey(key)
 		this.handleSearch(key)
 	}
 
@@ -221,7 +219,7 @@ class Search extends Component {
 
 	render() {
 		const { entries } = this.state;
-		const { mobileSelectedEntry, searchKey } = this.props;
+		const { mobileSelectedEntry } = this.props;
 		const entryViewMobile = mobileSelectedEntry 
 			? 'visible-entry-view' 
 			: 'hidden-entry-view'
@@ -236,7 +234,6 @@ class Search extends Component {
 						<div className='entry-list-container'>
 							<EntriesList  
 								entries={entries}
-								searchKey={searchKey}
 								selectEntry={this.handleEntrySelect}
 							/>
 						</div>
@@ -251,7 +248,6 @@ class Search extends Component {
 						<div className='entry-list-container'>
 							<EntriesList  
 								entries={entries}
-								searchKey={searchKey}
 								selectEntry={this.handleEntrySelect}
 							/>
 						</div>

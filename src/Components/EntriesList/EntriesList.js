@@ -2,7 +2,7 @@ import React from 'react';
 import './EntriesList.css';
 import EntryRow from './EntryRow/EntryRow';
 
-const EntryList = ({ entries, selectEntry, searchKey, isFavoritePage }) => {
+const EntryList = ({ entries, selectEntry, isFavoritePage }) => {
 	let ghostRows = [0,1,2,3,4,5,6]
 
 	const getDelay = (i) => {

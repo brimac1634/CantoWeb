@@ -9,7 +9,6 @@ import Button from '../Button/Button';
 import { setPrevRoute } from '../../Routing/actions';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { setTempSearch } from './actions';
-import { setSearchKey } from '../../Containers/Search/actions';
 import { setLoading } from '../../Loading/actions';
 import { routes } from '../../Routing/constants';
 import Controller from '../../Helpers/Compound/Controller';
@@ -31,7 +30,6 @@ const mapDispatchToProps = (dispatch) => {
 		updateURL: (type) => dispatch(push(type)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
-		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 }
@@ -73,11 +71,10 @@ class SearchBar extends Component {
 	}
 
 	handleSearch = (word) => {
-		const { updateURL, setSearchKey, hash } = this.props;
+		const { updateURL, hash } = this.props;
 		const url = setQueryURL(word, hash)
 		sessionStorage.setItem('searchURL', JSON.stringify(url));
 		updateURL(url)
-		setSearchKey(word);
 		this.updateSearchList(word);
 	}
 

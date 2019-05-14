@@ -1,2 +1,1 @@
 export const SET_MOBILE_ENTRY = 'SET_MOBILE_ENTRY';
-export const SET_SEARCH_KEY = 'SET_SEARCH_KEY';
