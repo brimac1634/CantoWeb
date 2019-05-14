@@ -10,6 +10,7 @@ import { setPrevRoute } from '../../Routing/actions';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { setTempSearch } from './actions';
 import { setSearchKey } from '../../Containers/Search/actions';
+import { setLoading } from '../../Loading/actions';
 import { routes } from '../../Routing/constants';
 import Controller from '../../Helpers/Compound/Controller';
 import Trigger from '../../Helpers/Compound/Trigger';
@@ -31,6 +32,7 @@ const mapDispatchToProps = (dispatch) => {
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
 		setSearchKey: (searchKey) => dispatch(setSearchKey(searchKey)),
+		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 }
 
@@ -52,8 +54,10 @@ class SearchBar extends Component {
 	}
 
 	handleSearchRoute = (route) => {
-		const { pathName, updateURL, userID } = this.props;
+		const { pathName, updateURL, userID, setLoading } = this.props;
 		const { SEARCH, LOGIN } = routes;
+		setLoading(true)
+
 		if (route === pathName) {
 			updateURL(SEARCH)
 		} else {
@@ -89,9 +93,10 @@ class SearchBar extends Component {
 	}
 
 	searchSubmit = (event) => {
-		const { hash, tempSearchKey } = this.props;
+		const { hash, tempSearchKey, setLoading } = this.props;
 		const enterPressed = (event.which === 13);
 		if (enterPressed && tempSearchKey) {
+			setLoading(true)
 			this.handleSearch(tempSearchKey, hash)
 		}
 	}

@@ -8,6 +8,7 @@ import { serverError, connectionError, requestToLogin } from '../../Helpers/help
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
+import { setLoading } from '../../Loading/actions';
 import { setMobileEntry, setSearchKey } from './actions';
 import { setTempSearch } from '../../Components/SearchBar/actions';
 import { setPrevRoute } from '../../Routing/actions';
@@ -33,6 +34,7 @@ const mapDispatchToProps = (dispatch) => {
 		updateURL: (searchKey) => dispatch(push(searchKey)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
+		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 } 
 
@@ -49,12 +51,11 @@ class Search extends Component {
 		const { SEARCH, RECENT, FAVORITES, LOGIN } = routes;
 
 		if (!userID) {
-			const cachedUser = localStorage.getItem('user')
+			const cachedUser = JSON.parse(localStorage.getItem('user'))
 			if (cachedUser) {
 				userID = cachedUser.userID;
 			}
 		}
-
 		if (pathName === SEARCH) {
 			this.loadSearchOnMount()
 		} else if (pathName === RECENT || pathName === FAVORITES) {
@@ -70,18 +71,18 @@ class Search extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {user: {userID}, searchKey, search, pathName} = this.props;
+		const {user: {userID}, search, pathName} = this.props;
 		const { RECENT, FAVORITES, SEARCH } = routes;
-
-		if (prevProps.searchKey !== searchKey || prevProps.search !== search) {
+		
+		if (prevProps.pathName !== pathName) {
+			if (pathName === FAVORITES || pathName === RECENT) {
+				this.filterEntries(userID, pathName)
+			} else {
+				this.loadSearchOnMount()
+			}
+		} else if (pathName === SEARCH && prevProps.search !== search) {
 			const values = queryString.parse(search)
 			this.handleSearchKey(values.searchkey)
-		}
-
-		if (prevProps.pathName !== pathName && (pathName === FAVORITES || pathName === RECENT)) {
-			this.filterEntries(userID, pathName)
-		} else if (prevProps.pathName !== SEARCH && pathName === SEARCH) {
-			this.loadSearchOnMount()
 		}
 	}
 
@@ -92,6 +93,7 @@ class Search extends Component {
 	loadSearchOnMount() {
 		const { search, updateURL } = this.props;
 		const { TRANSITION } = routes;
+
 		if (search) {
 			const values = queryString.parse(search)
 			this.handleSearchKey(values.searchkey)
@@ -113,6 +115,7 @@ class Search extends Component {
 	}
 
 	handleSearch = (searchKey) => {
+		const { setLoading } = this.props;
 		if (searchKey) {
 			apiRequest({
 				endPoint: '/search',
@@ -120,6 +123,7 @@ class Search extends Component {
 				body: {searchKey} 
 			})
 			.then(entries => {
+				setLoading(false)
 				if (Array.isArray(entries)) {
 					this.setState({
 						entries: entries
@@ -130,6 +134,10 @@ class Search extends Component {
 					})
 				}
 			})
+			.catch(()=>{
+				setLoading(false)
+				connectionError()
+			})
 		} else {
 			this.setState({
 				entries: []
@@ -138,14 +146,16 @@ class Search extends Component {
 	}
 
 	filterEntries = (userID, filterType) => {
-		const { updateURL } = this.props;
+		const { updateURL, setLoading } = this.props;
 		const { SEARCH } = routes;
+		setLoading(true)
 		apiRequest({
 			endPoint: filterType,
 			method: 'POST',
 			body: {userID} 
 		})
 		.then(entries => {
+			setLoading(false)
 			if (entries.error != null) {
 				serverError()
 			} else {
@@ -159,6 +169,7 @@ class Search extends Component {
 			}
 		})
 		.catch(()=>{
+			setLoading(false)
 			connectionError()
 			updateURL(SEARCH)
 		})
@@ -196,12 +207,14 @@ class Search extends Component {
 
 	setSearchURL = ({path, word, entryID}) => {
 		let { pathName, search, hash } = this.props;
+		const { SEARCH } = routes;
 		pathName = path ? path : pathName;
 		search = word ? `?searchkey=${word}` : search
 		hash = entryID ? `#${entryID}` : hash
 		const url = `${pathName}${search}${hash}`
-
-		sessionStorage.setItem('searchURL', JSON.stringify(url));
+		if (pathName === SEARCH) {
+			sessionStorage.setItem('searchURL', JSON.stringify(url));
+		}
 		return url
 	};
 

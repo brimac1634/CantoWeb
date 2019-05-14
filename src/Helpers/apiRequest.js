@@ -1,4 +1,3 @@
-import { setLoading } from '../Loading/actions';
 import { connectionError } from './helpers';
 
 export default ({
@@ -8,7 +7,6 @@ export default ({
 	body = {},
 	timeout = 20000
 }) => {
-	setLoading(true)
     return Promise.race([fetch(`https://cantotalk-server.herokuapp.com${endPoint}`, {
 		method,
 		headers,
@@ -20,11 +18,9 @@ export default ({
     ])
     	.then(res => res.json())
     	.then(data => {
-    		setLoading(false)
     		return data
     	})
     	.catch(err => {
     		connectionError()
-    		setLoading(false)
     	})		
 }
