@@ -116,6 +116,7 @@ class Search extends Component {
 
 	handleSearch = (searchKey) => {
 		const { setLoading } = this.props;
+		setLoading(true)
 		if (searchKey) {
 			apiRequest({
 				endPoint: '/search',
