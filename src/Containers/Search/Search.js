@@ -170,13 +170,13 @@ class Search extends Component {
 			updateURL,
 			user: {userID}
 		} = this.props;
-
-		const searchURL = this.setSearchURL({entryID: entry.entryID})
+		const { entry_id } = entry;
+		const searchURL = this.setSearchURL({entryID: entry_id})
 		updateURL(searchURL)
 
-		setMobileEntry(entry.entryID);
+		setMobileEntry(entry_id);
 		if (userID !== '' && userID != null) {
-			this.addEntryToRecent(userID, entry.entryID);
+			this.addEntryToRecent(userID, entry_id);
 		}
 	}
 

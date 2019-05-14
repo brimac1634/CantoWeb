@@ -82,8 +82,10 @@ class SearchBar extends Component {
 		const { setTempSearch } = this.props;
 		let { initialSearchList } = this.state;
 		setTempSearch(word)
-		const searchList = initialSearchList.filter(item => item.includes(word))
-		this.setState({searchList})
+		if (initialSearchList) {
+			const searchList = initialSearchList.filter(item => item.includes(word))
+			this.setState({searchList})
+		}
 	}
 
 	searchSubmit = (event) => {

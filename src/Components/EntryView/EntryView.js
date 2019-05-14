@@ -170,15 +170,15 @@ class EntryView extends Component {
 			isFavorited,
 			entry,
 			entry: {
-				entryID,
-				cantoword,
+				entry_id,
+				canto_word,
 				classifier,
 				jyutping,
-				englishword,
-				mandarinword,
-				cantosentence,
-				jyutpingsentence,
-				englishsentence
+				english_word,
+				mandarin_word,
+				canto_sentence,
+				jyutping_sentence,
+				english_sentence
 			}
 		} = this.state
 
@@ -192,7 +192,7 @@ class EntryView extends Component {
 								<div data-tip="Toggle Favorite" >
 									<button 
 										className='entry-btn' 
-										onClick={() => this.toggleFavorite(entryID, userID, cantoword)}
+										onClick={() => this.toggleFavorite(entry_id, userID, canto_word)}
 									>
 										<Icon 
 											icon='like-2' 
@@ -210,7 +210,7 @@ class EntryView extends Component {
 								<div data-tip="Play Audio Clip" >
 									<button 
 										className='entry-btn'
-										onClick={() => this.togglePlay(entryID)}
+										onClick={() => this.togglePlay(entry_id)}
 									>
 										<Icon 
 											icon='speaker-5' 
@@ -223,19 +223,19 @@ class EntryView extends Component {
 							</div>
 							<div className='top-group entry-section'>
 								<div className='canto-class'>
-									<h3>{cantoword}</h3>
+									<h3>{canto_word}</h3>
 									<p>{clLabel}{classifier}</p>
 								</div>
 								<div><p>{jyutping}</p></div>
 							</div>
 							<div className='entry-section'>
-								<div><p>En: {englishword}</p></div>
-								<div><p>普: {mandarinword}</p></div>
+								<div><p>En: {english_word}</p></div>
+								<div><p>普: {mandarin_word}</p></div>
 							</div>
 							<div className='entry-section'>
-								<div><p>{cantosentence}</p></div>
-								<div><p>{jyutpingsentence}</p></div>
-								<div><p>{englishsentence}</p></div>
+								<div><p>{canto_sentence}</p></div>
+								<div><p>{jyutping_sentence}</p></div>
+								<div><p>{english_sentence}</p></div>
 							</div>
 						</div>
 					:   <div className='inner-entry-view'>

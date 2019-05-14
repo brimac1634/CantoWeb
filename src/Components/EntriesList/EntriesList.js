@@ -18,7 +18,7 @@ const EntryList = ({ entries, selectEntry, searchKey, isFavoritePage }) => {
 						return (
 							<EntryRow
 								delay={getDelay(i)}
-								key={entry.entryID}
+								key={entry.entry_id}
 								selectEntry={selectEntry}
 								entry={entry}
 							/>

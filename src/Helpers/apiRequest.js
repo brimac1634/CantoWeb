@@ -9,7 +9,7 @@ export default ({
 	timeout = 20000
 }) => {
 	setLoading(true)
-    return Promise.race([fetch(`http://localhost:3000${endPoint}`, {
+    return Promise.race([fetch(`https://cantotalk-server.herokuapp.com${endPoint}`, {
 		method,
 		headers,
 		body: JSON.stringify(body)

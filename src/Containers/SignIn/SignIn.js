@@ -75,10 +75,11 @@ class SignIn extends Component {
 		const email = event.target.value;
 		const { initialEmailList } = this.state;
 		this.setState({ email })
-		const emailList = initialEmailList.filter(item => {
-			return item.includes(email)
-		})
-		this.setState({emailList})
+		
+		if (initialEmailList) {
+			const emailList = initialEmailList.filter(item => item.includes(email))
+			this.setState({emailList})
+		}
 	}
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 

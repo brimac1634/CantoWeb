@@ -9,11 +9,11 @@ const EntryRow = (props) => {
 		delay,
 		entry,
 		entry: {
-			cantoword,
+			canto_word,
 			classifier,
 			jyutping,
-			englishword,
-			mandarinword
+			english_word,
+			mandarin_word
 		},
 		isDemo,
 	} = props;
@@ -30,7 +30,7 @@ const EntryRow = (props) => {
 					>
 						<div className='top-left'>
 							<div data-tip="Cantonese">
-								<h3 className='hover-box'>{cantoword}</h3>
+								<h3 className='hover-box'>{canto_word}</h3>
 							</div>
 							<ReactTooltip effect='solid'/>
 							<div data-tip="Classifier" >
@@ -40,7 +40,7 @@ const EntryRow = (props) => {
 						</div>
 						<div>
 							<div data-tip="English" >
-								<p className='hover-box'>En: {englishword}</p>
+								<p className='hover-box'>En: {english_word}</p>
 							</div>
 							<ReactTooltip effect="solid"/>
 						</div>
@@ -52,7 +52,7 @@ const EntryRow = (props) => {
 						</div>
 						<div>
 							<div data-tip="Mandarin" >
-								<p className='hover-box'>普: {mandarinword}</p>
+								<p className='hover-box'>普: {mandarin_word}</p>
 							</div>
 							<ReactTooltip effect="solid"/>
 						</div>
@@ -66,12 +66,12 @@ const EntryRow = (props) => {
 						onClick={() => selectEntry(entry)}
 					>
 						<div className='top-left'>
-							<h3>{cantoword}</h3>
+							<h3>{canto_word}</h3>
 							<p>{clLabel}{classifier}</p>
 						</div>
-						<div><p>En: {englishword}</p></div>
+						<div><p>En: {english_word}</p></div>
 						<div><p>{jyutping}</p></div>
-						<div><p>普: {mandarinword}</p></div>
+						<div><p>普: {mandarin_word}</p></div>
 					</div>
 				);
 			}
