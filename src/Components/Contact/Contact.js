@@ -106,7 +106,7 @@ class Contact extends Component {
 
 	render() {
 		return (
-			<HoverBox>
+			<div className='centered'>
 				<div className='contact'>
 					<div className='left-panel'>
 						<h1 className='pink contact-h'>Dont Be A Stranger!</h1>
@@ -150,7 +150,7 @@ class Contact extends Component {
 							/>
 					</div>
 				</div>
-			</HoverBox>
+			</div>
 		);
 	}	
 }

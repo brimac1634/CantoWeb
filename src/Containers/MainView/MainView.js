@@ -52,7 +52,7 @@ class MainView extends Component {
 						            timeout={TRANSITION}
 						            classNames="fade"
 					            >
-					            	<div className='center-div'>
+					            	<div className='center-div over-flow'>
 					                    <SignIn />
 					                </div>
 					            </CSSTransition>
@@ -68,7 +68,7 @@ class MainView extends Component {
 						            timeout={TRANSITION}
 						            classNames="fade"
 					            >
-					            	<div className='center-div'>
+					            	<div className='center-div over-flow'>
 					                    <WhatIsCantoTalk />
 				                    </div>
 					            </CSSTransition>
@@ -78,15 +78,13 @@ class MainView extends Component {
 					<Route 
 						path={CONTACT} 
 						render={()=>(
-							<TransitionGroup className='fill'>
+							<TransitionGroup className='page over-flow'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
 						            classNames="fade"
 					            >
-					            	<div className='center-div'>
-					                    <Contact />
-					                </div>
+				                    <Contact />
 					            </CSSTransition>
 							</TransitionGroup>
 						)}

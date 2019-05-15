@@ -52,7 +52,8 @@ class Search extends Component {
 		if (!userID) {
 			const cachedUser = localStorage.getItem('user')
 			if (cachedUser) {
-				userID = JSON.parse(cachedUser.userID);
+				const user = JSON.parse(cachedUser);
+				userID = user.userID
 			}
 		}
 		if (pathName === SEARCH) {

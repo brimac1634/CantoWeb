@@ -52,9 +52,8 @@ class SearchBar extends Component {
 	}
 
 	handleSearchRoute = (route) => {
-		const { pathName, updateURL, userID, setLoading } = this.props;
+		const { pathName, updateURL, userID } = this.props;
 		const { SEARCH, LOGIN } = routes;
-		setLoading(true)
 
 		if (route === pathName) {
 			updateURL(SEARCH)
