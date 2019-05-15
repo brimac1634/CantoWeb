@@ -65,3 +65,21 @@
 	border: solid 1px #333;
 }
 
+.small-demo-row {
+	margin: 10px 0;
+}
+
+.small-demo-row * {
+	font-size: 0.85em;
+}
+
+@media screen and (max-width: 360px) {
+    .entry-row h3 {
+    	font-size: 1.1em;
+    }
+
+    .entry-row p {
+    	font-size: 0.9em;
+    }
+}
+

@@ -3,6 +3,7 @@ import './DictionaryHelp.css';
 import { togglePlay } from '../../Helpers/helpers';
 import EntryRow from '../EntriesList/EntryRow/EntryRow';
 import Icon from '../Icon/Icon';
+import { initials, finals } from './jyutpingExamples';
 
 const DictionaryHelp = () => {
 
@@ -34,7 +35,7 @@ const DictionaryHelp = () => {
 			<h2>Jyutping (粵拼)</h2>
 			<p>Jyutping is the form of romanization used in this dictionary to help learners read the characters correctly without having ever heard them before. In Jyutping, each chinese character is represented by a syllable consisting of possibly an initial consonant, a final syllabic vowel plus a possible ending consonant, and lastly, the tonal pitch represented with a number. To show an example, let's look at "玩" (to play)...</p>
 			<div className='row-diagram group-row'>
-				<h1 className='example-word'>Waan2</h1>
+				<h3>Waan2</h3>
 				<button 
 					className='entry-btn'
 					onClick={() => togglePlay(45)}
@@ -49,33 +50,37 @@ const DictionaryHelp = () => {
 			<p>Below are examples of the different syllable initial sounds and final sounds including the tones. Click on a row to hear how it sounds!</p>
 			<h3>Initials</h3>
 			<div className='row-diagram'>
-				<div className='example-row'>
-					<p>p</p>
-					<p><strong>p</strong>aau2</p>
-					<p>跑</p>
-					<p>to run</p>
-				</div>
-				<div className='example-row'>
-					<p>t</p>
-					<p><strong>t</strong>au2</p>
-					<p>頭</p>
-					<p>head</p>
-				</div>
-				<div className='example-row'>
-					<p>k</p>
-					<p><strong>k</strong>aa1</p>
-					<p>卡</p>
-					<p>card</p>
-				</div>
+				{initials.map((ex, i) => {
+					return (
+						<div 
+							key={i}
+							className='example-row' 
+							onClick={() => togglePlay(ex.entryID)}
+						>
+							<p>{ex.letter}</p>
+							<p><strong>{ex.letter}</strong>{ex.example}</p>
+							<p>{ex.canto}</p>
+							<p>{ex.english}</p>
+						</div>
+					)
+				})}
 			</div>
 			<h3>Finals</h3>
 			<div className='row-diagram'>
-				<div className='example-row'>
-					<p>a</p>
-					<p>z<strong>aa3</strong></p>
-					<p>炸</p>
-					<p>deep fried</p>
-				</div>
+				{finals.map((ex, i) => {
+					return (
+						<div 
+							key={i}
+							className='example-row' 
+							onClick={() => togglePlay(ex.entryID)}
+						>
+							<p>{ex.letter}</p>
+							<p>{ex.initial}<strong>{ex.letter}</strong>{ex.tone}</p>
+							<p>{ex.canto}</p>
+							<p>{ex.english}</p>
+						</div>
+					)
+				})}
 			</div>
 			<div className='list-divider'></div>
 			<h2>Tones</h2>

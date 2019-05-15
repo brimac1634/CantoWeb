@@ -1,5 +1,6 @@
 import React from 'react';
 import './EntryRow.css';
+import MediaQuery from 'react-responsive';
 import ReactTooltip from 'react-tooltip'
 
 const EntryRow = (props) => {
@@ -25,38 +26,42 @@ const EntryRow = (props) => {
 		if (entry !== '') {
 			if (isDemo) {
 				return (
-					<div 
-						className={`entry-row ${rowType}`}
-					>
-						<div className='top-left'>
-							<div data-tip="Cantonese">
-								<h3 className='hover-box'>{canto_word}</h3>
-							</div>
-							<ReactTooltip effect='solid'/>
-							<div data-tip="Classifier" >
-							<p className='hover-box'>{clLabel}{classifier}</p>
-							</div>
-							<ReactTooltip effect="solid"/>
-						</div>
-						<div>
-							<div data-tip="English" >
-								<p className='hover-box'>En: {english_word}</p>
-							</div>
-							<ReactTooltip effect="solid"/>
-						</div>
-						<div>
-							<div data-tip="Jyutping" >
-								<p className='hover-box'>{jyutping}</p>
-							</div>
-							<ReactTooltip effect="solid"/>
-						</div>
-						<div>
-							<div data-tip="Mandarin" >
-								<p className='hover-box'>普: {mandarin_word}</p>
-							</div>
-							<ReactTooltip effect="solid"/>
-						</div>
-					</div>
+					<MediaQuery maxWidth={360}>
+						{(matches) => {
+							return  <div 
+										className={`entry-row ${rowType} ${matches && 'small-demo-row'}`}
+									>
+										<div className='top-left'>
+											<div data-tip="Cantonese">
+												<h3 className='hover-box'>{canto_word}</h3>
+											</div>
+											<ReactTooltip effect='solid'/>
+											<div data-tip="Classifier" >
+											<p className='hover-box'>{clLabel}{classifier}</p>
+											</div>
+											<ReactTooltip effect="solid"/>
+										</div>
+										<div>
+											<div data-tip="English" >
+												<p className='hover-box'>En: {english_word}</p>
+											</div>
+											<ReactTooltip effect="solid"/>
+										</div>
+										<div>
+											<div data-tip="Jyutping" >
+												<p className='hover-box'>{jyutping}</p>
+											</div>
+											<ReactTooltip effect="solid"/>
+										</div>
+										<div>
+											<div data-tip="Mandarin" >
+												<p className='hover-box'>普: {mandarin_word}</p>
+											</div>
+											<ReactTooltip effect="solid"/>
+										</div>
+									</div>
+						}}
+					</MediaQuery>
 				);
 			} else {
 				return (
