@@ -15,6 +15,7 @@ export const validateEmail = (email) => {
 	return regexp.test(email);
 }
 
+
 export const requestToLogin = (confirm) => {
 	optionAlert({
 	    title: 'Please sign in.',
