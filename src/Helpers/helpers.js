@@ -15,6 +15,10 @@ export const validateEmail = (email) => {
 	return regexp.test(email);
 }
 
+export const togglePlay = ({entryID}) => {
+	const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
+	audio.play()		
+}
 
 export const requestToLogin = (confirm) => {
 	optionAlert({

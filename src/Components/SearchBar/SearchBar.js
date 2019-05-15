@@ -183,9 +183,7 @@ class SearchBar extends Component {
 								/>
 							</Controller>
 					}
-					
 				</div>
-				<div className='bottom-divider'></div>
 			</div>
 		);
 	}

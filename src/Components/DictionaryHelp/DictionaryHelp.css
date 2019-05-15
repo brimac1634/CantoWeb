@@ -1,12 +1,56 @@
 .dict-help {
 	max-width: 600px;
-	max-height: 400px;
+	height: auto;
 	box-sizing: border-box;
-	padding: 20px 25px;
-	margin: 20px;
 	text-align: center;
-	overflow-y: auto;
-	scrollbar-width: none;
+}
+
+.row-diagram {
+	margin: 30px 0;
+}
+
+.group-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.example-word {
+	font-size: 2em;
+	margin: 10px;
+}
+
+/*Example Grid*/
+
+.example-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	box-sizing: border-box;
+	padding: 0 20px;
+	margin: 10px 0;
+	border-radius: 4px;
+	border: solid 1px var(--cantoDarkGray);
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+}
+
+.example-row > p {
+	margin: 5px;
+}
+
+.example-row:hover {
+	box-shadow: var(--cantoShadow);
+}
+
+.example {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	width: 40%;
 }
 
 ::-webkit-scrollbar {

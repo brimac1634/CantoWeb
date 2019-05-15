@@ -9,7 +9,6 @@ const componentAlert = (WrappedComponent) => {
       super(props);
       this.state = {
         width: '',
-        height: '',
       }
       this.content = React.createRef();
     }
@@ -19,7 +18,6 @@ const componentAlert = (WrappedComponent) => {
         const rect = this.content.current.firstChild.getBoundingClientRect();
         this.setState({
           width: rect.width + 20,
-          height: rect.height + 20,
         })
       }
     }
@@ -30,8 +28,7 @@ const componentAlert = (WrappedComponent) => {
     }
 
     render () {
-      let { width, height } = this.state;
-      console.log(width, height)
+      let { width } = this.state;
       return (
         ReactDOM.createPortal(
           <div
@@ -41,7 +38,7 @@ const componentAlert = (WrappedComponent) => {
             <div className='component-alert'>
               <div 
                 className='component-alert-body'
-                style={{width: `${width}px`, height: `${height}px`}}
+                style={{maxWidth: `${width}px`}}
               >
                 <button className='close' onClick={this.close}>
                   <Icon 

@@ -238,7 +238,6 @@ class Search extends Component {
 								selectEntry={this.handleEntrySelect}
 							/>
 						</div>
-						<div className='divider'></div>
 						<div className='entry-view-container'>
 							<EntryView />
 						</div>
