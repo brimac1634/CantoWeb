@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Contact.css';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import { validateEmail, serverError } from '../../Helpers/helpers';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import HoverBox from '../HoverBox/HoverBox';
@@ -105,12 +106,21 @@ class Contact extends Component {
 	}
 
 	render() {
+		const first = 'Dont Be A Stranger!';
+		const second = 'Just say Hello.';
+
 		return (
-			<div className='centered'>
+			<HoverBox>
 				<div className='contact'>
 					<div className='left-panel'>
-						<h1 className='pink contact-h'>Dont Be A Stranger!</h1>
-						<h1 className='contact-h'>Just say Hello.</h1>
+						<MediaQuery minWidth={361}>
+							<h1 className='pink contact-h'>{first}</h1>
+							<h1 className='contact-h'>{second}</h1>
+						</MediaQuery>
+						<MediaQuery maxWidth={360}>
+							<h2 className='pink contact-h'>{first}</h2>
+							<h2 className='contact-h'>{second}</h2>
+						</MediaQuery>
 						<p>Feel free to get in touch with us! Whether you need help with the application, or there is something you would like to see here, or just want to say hi, we are waiting to hear from you! 
 						</p>
 					</div>
@@ -150,7 +160,7 @@ class Contact extends Component {
 							/>
 					</div>
 				</div>
-			</div>
+			</HoverBox>
 		);
 	}	
 }

@@ -79,11 +79,19 @@ code {
   margin: 8px 0;
 }
 
-.page {
+.page,
+.page-trans {
   height: 100%;
   width: 100%;
   box-shadow: var(--cantoShadow);
+}
+
+.page {
   background: var(--cantoWhite);
+}
+
+.page-trans {
+  background: transparent;
 }
 
 /*-----Transition Animation ------*/
