@@ -33,21 +33,7 @@ const DictionaryHelp = () => {
 			</div>  
 			<div className='list-divider'></div>
 			<h2>Jyutping (粵拼)</h2>
-			<p>Jyutping is the form of romanization used in this dictionary to help learners read the characters correctly without having ever heard them before. In Jyutping, each chinese character is represented by a syllable consisting of possibly an initial consonant, a final syllabic vowel plus a possible ending consonant, and lastly, the tonal pitch represented with a number. To show an example, let's look at "玩" (to play)...</p>
-			<div className='row-diagram group-row'>
-				<h3>Waan2</h3>
-				<button 
-					className='entry-btn'
-					onClick={() => togglePlay(45)}
-				>
-					<Icon 
-						icon='speaker-5' 
-						iconSize='35' 
-						iconStyle='dark'
-					/>
-				</button>
-			</div>
-			<p>Below are examples of the different syllable initial sounds and final sounds including the tones. Click on a row to hear how it sounds!</p>
+			<p>Jyutping is the form of romanization used in this dictionary to help learners read the characters correctly without having ever heard them before. In Jyutping, each chinese character is represented by a syllable consisting of possibly an initial consonant, a final syllabic vowel plus a possible ending consonant, and lastly, the tonal pitch represented with a number. Below are examples of the different syllable initial sounds and final sounds including the tones. Click on a row to hear how it sounds!</p>
 			<h3>Initials</h3>
 			<div className='row-diagram'>
 				{initials.map((ex, i) => {
@@ -68,22 +54,33 @@ const DictionaryHelp = () => {
 			<h3>Finals</h3>
 			<div className='row-diagram'>
 				{finals.map((ex, i) => {
-					return (
-						<div 
-							key={i}
-							className='example-row' 
-							onClick={() => togglePlay(ex.entryID)}
-						>
-							<p>{ex.letter}</p>
-							<p>{ex.initial}<strong>{ex.letter}</strong>{ex.tone}</p>
-							<p>{ex.canto}</p>
-							<p>{ex.english}</p>
-						</div>
-					)
+					if (ex.divider) {
+						return (
+							<p>{ex.divider}</p>
+						)
+					} else {
+						return (
+							<div 
+								key={i}
+								className='example-row' 
+								onClick={() => togglePlay(ex.entryID)}
+							>
+								<p>{ex.letter}</p>
+								<p>{ex.initial}<strong>{ex.letter}</strong>{ex.tone}</p>
+								<p>{ex.canto}</p>
+								<p>{ex.english}</p>
+							</div>
+						)
+					}
 				})}
 			</div>
 			<div className='list-divider'></div>
 			<h2>Tones</h2>
+			<div className='list-divider'></div>
+			<h2>Extra Notes</h2>
+			<p>&#8226; You will occassionally find entries where an english word appears in the cantonese section. This is because locals actually use the english word in everyday language.</p>
+			<p>&#8226; You will occassionally find entries where there is jyutping in the cantonese section. This is because there are no written words that represent what is being spoken.</p>
+			<p>&#8226; An asterisk (*) next to a tonal number indicates that that tone is an exception to the usual tone given to that word.</p>
 		</div>
 	);
 		

@@ -136,11 +136,97 @@ export const initials = [
 
 export const finals = [
 	{
+		divider: `aa (long 'a')`
+	},
+	{
 		letter: 'aa',
 		initial: 'z',
 		tone: 3,
 		canto: '炸',
 		english: 'deep fried',
+		entryID: 45
+	},
+	{
+		letter: 'aai',
+		initial: 'f',
+		tone: 3,
+		canto: '快',
+		english: 'fast',
+		entryID: 45
+	},
+	{
+		letter: 'aau',
+		initial: 'g',
+		tone: 3,
+		canto: '教',
+		english: 'to teach',
+		entryID: 45
+	},
+	{
+		letter: 'aam',
+		initial: 'g',
+		tone: 3,
+		canto: '鑑',
+		english: 'examine',
+		entryID: 45
+	},
+	{
+		letter: 'aan',
+		initial: 'j',
+		tone: 3,
+		canto: '讚',
+		english: 'praise',
+		entryID: 45
+	},
+	{
+		letter: 'aang',
+		initial: 's',
+		tone: 1,
+		canto: '生',
+		english: 'to be born',
+		entryID: 45
+	},
+	{
+		letter: 'aap',
+		initial: 's',
+		tone: 3,
+		canto: '霎',
+		english: 'instant',
+		entryID: 45
+	},
+	{
+		letter: 'aat',
+		initial: 'b',
+		tone: 3,
+		canto: '八',
+		english: 'eight',
+		entryID: 45
+	},
+	{
+		letter: 'aak',
+		initial: 'h',
+		tone: 3,
+		canto: '嚇',
+		english: 'intimidate',
+		entryID: 45
+	},
+	{
+		divider: `a (short 'a')`
+	},
+	{
+		letter: 'ai',
+		initial: 'f',
+		tone: 3,
+		canto: '費',
+		english: 'spend',
+		entryID: 45
+	},
+	{
+		letter: 'au',
+		initial: 'g',
+		tone: 3,
+		canto: '夠',
+		english: 'enough',
 		entryID: 45
 	},
 ];
