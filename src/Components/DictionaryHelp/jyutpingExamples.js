@@ -14,67 +14,74 @@ export const directory = [
 	{
 		type: 'main',
 		ref: 'howToUse',
-		name: 'How to use'
-	},
-	{
-		type: 'sub',
-		ref: 'entryRow',
-		name: 'Content'
+		name: 'How to use',
+		children: [
+			{
+				type: 'sub',
+				ref: 'entryRow',
+				name: 'Content'
+			},
+		]
 	},
 	{
 		type: 'main',
 		ref: 'jyutping',
-		name: 'Jyutping'
-	},
-	{
-		type: 'sub',
-		ref: 'initials',
-		name: 'Initials'
-	},
-	{
-		type: 'sub',
-		ref: 'finals',
-		name: 'Finals'
-	},
-	{
-		type: 'sub-sub',
-		ref: 'a',
-		name: 'aa & a'
-	},
-	{
-		type: 'sub-sub',
-		ref: 'e',
-		name: 'e'
-	},
-	{
-		type: 'sub-sub',
-		ref: 'oe',
-		name: 'oe & eo'
-	},
-	{
-		type: 'sub-sub',
-		ref: 'i',
-		name: 'i'
-	},
-	{
-		type: 'sub-sub',
-		ref: 'o',
-		name: 'o'
-	},
-	{
-		type: 'sub-sub',
-		ref: 'u',
-		name: 'u'
-	},
-	{
-		type: 'sub-sub',
-		ref: 'yu',
-		name: 'yu'
-	},
-	{
-		type: 'sub',
-		ref: 'tones',
-		name: 'Tones'
+		name: 'Jyutping',
+		children: [
+			{
+				type: 'sub',
+				ref: 'initials',
+				name: 'Initials'
+			},
+			{
+				type: 'sub',
+				ref: 'finals',
+				name: 'Finals',
+				children: [
+					{
+						type: 'sub-sub',
+						ref: 'a',
+						name: 'aa & a'
+					},
+					{
+						type: 'sub-sub',
+						ref: 'e',
+						name: 'e'
+					},
+					{
+						type: 'sub-sub',
+						ref: 'oe',
+						name: 'oe & eo'
+					},
+					{
+						type: 'sub-sub',
+						ref: 'i',
+						name: 'i'
+					},
+					{
+						type: 'sub-sub',
+						ref: 'o',
+						name: 'o'
+					},
+					{
+						type: 'sub-sub',
+						ref: 'u',
+						name: 'u'
+					},
+					{
+						type: 'sub-sub',
+						ref: 'yu',
+						name: 'yu'
+					},
+				]
+			},
+			
+			{
+				type: 'sub',
+				ref: 'tones',
+				name: 'Tones'
+			},
+		]
 	},
 	{
 		type: 'main',

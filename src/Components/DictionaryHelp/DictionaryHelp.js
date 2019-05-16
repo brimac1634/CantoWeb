@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './DictionaryHelp.css';
 import MediaQuery from 'react-responsive';
+import Icon from '../Icon/Icon';
 import { togglePlay } from '../../Helpers/helpers';
 import EntryRow from '../EntriesList/EntryRow/EntryRow';
 import { demoEntry, directory, initials, finals } from './jyutpingExamples';
@@ -12,6 +13,18 @@ class DictionaryHelp extends Component {
 		directory.forEach(item => {
 			this[item.ref] = React.createRef();
 		})
+		this.state = {
+			parents: {
+				initial: true
+			}
+		}
+	}
+
+	handleMain = (ref) => {
+		const {parents} = this.state
+		parents[ref] = true
+		this.setState({parents})
+		this.handleScroll(ref)
 	}
 
 
@@ -20,21 +33,58 @@ class DictionaryHelp extends Component {
 			this[ref].current.scrollIntoView({ behavior: 'smooth' })
 		}
 	}
+
+	renderDirectory = (directory) => {
+		let list = []
+		
+		function renderItem(directory, parent) {
+			const {parents} = this.state
+			console.log(parents)
+			const parentOpen = parents[parent]
+			directory.forEach((item, i)=>{
+				if (parentOpen) {
+					if (item.children) {
+						
+							list.push(
+								<div className='directory-row' key={item.ref}>
+									<p 
+										className={item.type}
+										onClick={()=>this.handleMain(item.ref)}
+									>{item.name}</p>
+									<div className='arrow'>
+										<Icon 
+											icon='play-button' 
+											iconSize='13' 
+											iconStyle='dark'
+										/>
+									</div>
+								</div>
+							)
+							renderItem(item.children, item.ref)
+						
+					} else {
+						list.push(
+							<div className='directory-row' key={item.ref}>
+								<p 
+									className={item.type}
+									onClick={()=>this.handleScroll(item.ref)}
+								>{item.name}</p>
+							</div>
+						)
+					}
+				}
+			})
+		}
+		renderItem(directory, 'initial')
+		return <div>{list}</div>
+	}
 	
 	render() {
 		return (
 			<div className='dict-help' ref={this.help}>
 				<MediaQuery minWidth={800}>
 					<div className='directory'>
-						{directory.map((item, i)=>{
-							return (
-								<p 
-									key={i}
-									className={item.type}
-									onClick={()=>this.handleScroll(item.ref)}
-								>{item.name}</p>
-							)
-						})}
+						{this.renderDirectory(directory)}
 					</div>
 				</MediaQuery>
 				<div className='content'>
