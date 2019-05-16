@@ -10,6 +10,79 @@ export const demoEntry = {
 	english_sentence: 'My hobby is travelling on the weekend.',
 }
 
+export const directory = [
+	{
+		type: 'main',
+		ref: 'howToUse',
+		name: 'How to use'
+	},
+	{
+		type: 'sub',
+		ref: 'entryRow',
+		name: 'Content'
+	},
+	{
+		type: 'main',
+		ref: 'jyutping',
+		name: 'Jyutping'
+	},
+	{
+		type: 'sub',
+		ref: 'initials',
+		name: 'Initials'
+	},
+	{
+		type: 'sub',
+		ref: 'finals',
+		name: 'Finals'
+	},
+	{
+		type: 'sub-sub',
+		ref: 'a',
+		name: 'aa & a'
+	},
+	{
+		type: 'sub-sub',
+		ref: 'e',
+		name: 'e'
+	},
+	{
+		type: 'sub-sub',
+		ref: 'oe',
+		name: 'oe & eo'
+	},
+	{
+		type: 'sub-sub',
+		ref: 'i',
+		name: 'i'
+	},
+	{
+		type: 'sub-sub',
+		ref: 'o',
+		name: 'o'
+	},
+	{
+		type: 'sub-sub',
+		ref: 'u',
+		name: 'u'
+	},
+	{
+		type: 'sub-sub',
+		ref: 'yu',
+		name: 'yu'
+	},
+	{
+		type: 'sub',
+		ref: 'tones',
+		name: 'Tones'
+	},
+	{
+		type: 'main',
+		ref: 'notes',
+		name: 'Extra Notes'
+	},
+]
+
 export const initials = [
 	{
 		letter: 'p',
@@ -148,7 +221,8 @@ export const initials = [
 
 export const finals = [
 	{
-		divider: `aa (long 'a')`
+		divider: `aa (long 'a')`,
+		ref: 'a',
 	},
 	{
 		letter: 'aa',
@@ -240,5 +314,151 @@ export const finals = [
 		canto: '夠',
 		english: 'enough',
 		entryID: 45
+	},
+	{
+		letter: 'am',
+		initial: 'g',
+		tone: 3,
+		canto: '禁',
+		english: 'forbid',
+		entryID: 45
+	},
+	{
+		letter: 'an',
+		initial: 'j',
+		tone: 3,
+		canto: '震',
+		english: 'shake',
+		entryID: 45
+	},
+	{
+		letter: 'ang',
+		initial: 's',
+		tone: 3,
+		canto: '生',
+		english: 'life',
+		entryID: 45
+	},
+	{
+		letter: 'ap',
+		initial: 's',
+		tone: 3,
+		canto: '濕',
+		english: 'wet',
+		entryID: 45
+	},
+	{
+		letter: 'at',
+		initial: 'b',
+		tone: 3,
+		canto: '筆',
+		english: 'pen',
+		entryID: 45
+	},
+	{
+		letter: 'ak',
+		initial: 'h',
+		tone: 3,
+		canto: '黑',
+		english: 'dark',
+		entryID: 45
+	},
+	{
+		divider: `e (long)`,
+		ref: 'e',
+	},
+	{
+		letter: 'e',
+		initial: 'z',
+		tone: 3,
+		canto: '借',
+		english: 'borrow',
+		entryID: 45
+	},
+	{
+		letter: 'eng',
+		initial: 'l',
+		tone: 3,
+		canto: '靚',
+		english: 'beautiful',
+		entryID: 45
+	},
+	{
+		letter: 'ek',
+		initial: 't',
+		tone: 3,
+		canto: '踢',
+		english: 'kick',
+		entryID: 45
+	},
+	{
+		divider: `e (short)`
+	},
+	{
+		letter: 'ei',
+		initial: 's',
+		tone: 3,
+		canto: '四',
+		english: 'four',
+		entryID: 45
+	},
+	{
+		divider: `oe (long)`,
+		ref: 'oe',
+	},
+	{
+		letter: 'oe',
+		initial: 'h',
+		tone: 1,
+		canto: '靴',
+		english: 'boot',
+		entryID: 45
+	},
+	{
+		letter: 'oeng',
+		initial: 's',
+		tone: 1,
+		canto: '商',
+		english: 'commerce',
+		entryID: 45
+	},
+	{
+		letter: 'oek',
+		initial: 'z',
+		tone: 3,
+		canto: '着',
+		english: 'to wear',
+		entryID: 45
+	},
+	{
+		divider: `eo (short)`
+	},
+	{
+		divider: `i (long)`,
+		ref: 'i',
+	},
+	{
+		divider: `i (short)`
+	},
+	{
+		divider: `o (long)`,
+		ref: 'o',
+	},
+	{
+		divider: `o (short)`
+	},
+	{
+		divider: `u (long)`,
+		ref: 'u',
+	},
+	{
+		divider: `u (short)`
+	},
+	{
+		divider: `yu (long)`,
+		ref: 'yu',
+	},
+	{
+		divider: `yu (short)`
 	},
 ];

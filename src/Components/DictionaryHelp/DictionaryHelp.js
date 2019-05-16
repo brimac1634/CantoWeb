@@ -3,19 +3,15 @@ import './DictionaryHelp.css';
 import MediaQuery from 'react-responsive';
 import { togglePlay } from '../../Helpers/helpers';
 import EntryRow from '../EntriesList/EntryRow/EntryRow';
-import { demoEntry, initials, finals } from './jyutpingExamples';
+import { demoEntry, directory, initials, finals } from './jyutpingExamples';
 
 class DictionaryHelp extends Component {
 	constructor(props) {
 		super(props);
 		this.help = React.createRef();
-		this.howToUse = React.createRef();
-		this.entryRow = React.createRef();
-		this.jyutping = React.createRef();
-		this.initials = React.createRef();
-		this.finals = React.createRef();
-		this.tones = React.createRef();
-		this.notes = React.createRef();
+		directory.forEach(item => {
+			this[item.ref] = React.createRef();
+		})
 	}
 
 
@@ -30,34 +26,15 @@ class DictionaryHelp extends Component {
 			<div className='dict-help' ref={this.help}>
 				<MediaQuery minWidth={800}>
 					<div className='directory'>
-						<p 
-							className='main'
-							onClick={()=>this.handleScroll('howToUse')}
-						>How to use</p>
-						<p 
-							className='sub'
-							onClick={()=>this.handleScroll('entryRow')}
-						>Contents</p>
-						<p 
-							className='main'
-							onClick={()=>this.handleScroll('jyutping')}
-						>Jyutping</p>
-						<p 
-							className='sub'
-							onClick={()=>this.handleScroll('initials')}
-						>Initials</p>
-						<p 
-							className='sub'
-							onClick={()=>this.handleScroll('finals')}
-						>Finals</p>
-						<p 
-							className='sub'
-							onClick={()=>this.handleScroll('tones')}
-						>Tones</p>
-						<p 
-							className='main'
-							onClick={()=>this.handleScroll('notes')}
-						>Extra Notes</p>
+						{directory.map((item, i)=>{
+							return (
+								<p 
+									key={i}
+									className={item.type}
+									onClick={()=>this.handleScroll(item.ref)}
+								>{item.name}</p>
+							)
+						})}
 					</div>
 				</MediaQuery>
 				<div className='content'>
@@ -98,7 +75,10 @@ class DictionaryHelp extends Component {
 						{finals.map((ex, i) => {
 							if (ex.divider) {
 								return (
-									<p key={i}>{ex.divider}</p>
+									<p 
+										key={i} 
+										ref={ex.ref ? this[ex.ref] : null}
+									>{ex.divider}</p>
 								)
 							} else {
 								return (

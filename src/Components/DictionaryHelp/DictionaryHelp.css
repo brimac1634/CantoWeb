@@ -13,12 +13,22 @@
 	width: 100px;
 	height: auto;
 	text-align: left;
+	overflow-y: hidden;
+	box-sizing: border-box;
 }
 
-.directory * {
-	margin: 5px 0;
+.directory > * {
 	cursor: pointer;
+	
 }
+
+.directory p {
+	margin: 2px 0;
+	font-size: 0.95em;
+	white-space: nowrap;
+	margin-right: auto;
+}
+
 
 .content {
 	grid-column-start: content;
@@ -63,6 +73,12 @@
 	box-shadow: var(--cantoShadow);
 }
 
+.main,
+.sub,
+.sub-sub {
+	margin-right: auto;
+}
+
 .main {
 	font-weight: 600;
 }
@@ -72,6 +88,10 @@
 	text-indent: 1em;
 }
 
+.sub-sub {
+	font-weight: 100;
+	text-indent: 2em;
+}
 
 ::-webkit-scrollbar {
   width: 0 !important;
