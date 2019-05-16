@@ -1,3 +1,15 @@
+export const demoEntry = {
+	entry_id: 0,
+	canto_word: '嗜好',
+	classifier: '個 go3',
+	jyutping: 'si3 hou3',
+	english_word: 'hobby',
+	mandarin_word: '爱好',
+	canto_sentence: '我嘅嗜好係可以周圍去旅行。',
+	jyutping_sentence: 'ngo5 ge3 si3 ho3 hai6 ho2 yi5 zau1 wai4 heoi3 leoi5 hang4.',
+	english_sentence: 'My hobby is travelling on the weekend.',
+}
+
 export const initials = [
 	{
 		letter: 'p',

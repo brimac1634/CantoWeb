@@ -1,8 +1,28 @@
 .dict-help {
-	max-width: 600px;
+	max-width: 720px;
 	height: auto;
 	box-sizing: border-box;
 	text-align: center;
+	display: grid;
+	grid-template-columns: [directory] 120px [content] auto;
+}
+
+.directory {
+	position: fixed;
+	grid-column-start: directory;
+	width: 100px;
+	height: auto;
+	text-align: left;
+}
+
+.directory * {
+	margin: 5px 0;
+	cursor: pointer;
+}
+
+.content {
+	grid-column-start: content;
+	max-width: 600px;
 }
 
 .row-diagram {
@@ -43,8 +63,25 @@
 	box-shadow: var(--cantoShadow);
 }
 
+.main {
+	font-weight: 600;
+}
+
+.sub {
+	font-weight: 300;
+	text-indent: 1em;
+}
+
+
 ::-webkit-scrollbar {
   width: 0 !important;
+}
+
+@media screen and (max-width: 800px) {
+   	.content {
+		grid-column-start: directory;
+		grid-column-end: 3;
+	}
 }
 
 @media screen and (max-width: 380px) {
