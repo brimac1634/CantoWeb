@@ -441,11 +441,99 @@ export const finals = [
 		divider: `eo (short)`
 	},
 	{
+		letter: 'eoi',
+		initial: 'h',
+		tone: 1,
+		canto: '虛',
+		english: 'empty',
+		entryID: 45
+	},
+	{
+		letter: 'eon',
+		initial: 's',
+		tone: 1,
+		canto: '詢',
+		english: 'inquire',
+		entryID: 45
+	},
+	{
+		letter: 'eot',
+		initial: 'c',
+		tone: 1,
+		canto: '出',
+		english: 'out',
+		entryID: 45
+	},
+	{
 		divider: `i (long)`,
 		ref: 'i',
 	},
 	{
+		letter: 'i',
+		initial: 'z',
+		tone: 3,
+		canto: '志',
+		english: 'will',
+		entryID: 45
+	},
+	{
+		letter: 'iu',
+		initial: 'z',
+		tone: 3,
+		canto: '照',
+		english: 'shine',
+		entryID: 45
+	},
+	{
+		letter: 'im',
+		initial: 'z',
+		tone: 3,
+		canto: '佔',
+		english: 'seize',
+		entryID: 45
+	},
+	{
+		letter: 'in',
+		initial: 'z',
+		tone: 3,
+		canto: '戰',
+		english: 'war',
+		entryID: 45
+	},
+	{
+		letter: 'ip',
+		initial: 'z',
+		tone: 3,
+		canto: '接',
+		english: 'receive',
+		entryID: 45
+	},
+	{
+		letter: 'it',
+		initial: 'z',
+		tone: 3,
+		canto: '節',
+		english: 'festival',
+		entryID: 45
+	},
+	{
 		divider: `i (short)`
+	},
+	{
+		letter: 'ing',
+		initial: 'z',
+		tone: 3,
+		canto: '正',
+		english: 'proper',
+		entryID: 45
+	},
+	{
+		letter: 'ik',
+		initial: 'z',
+		tone: 1,
+		canto: '即',
+		english: 'now',
+		entryID: 45
 	},
 	{
 		divider: `o (long)`,
