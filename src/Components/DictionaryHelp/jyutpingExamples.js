@@ -540,20 +540,145 @@ export const finals = [
 		ref: 'o',
 	},
 	{
+		letter: 'o',
+		initial: 'c',
+		tone: 3,
+		canto: '錯',
+		english: 'wrong',
+		entryID: 45
+	},
+	{
+		letter: 'oi',
+		initial: '',
+		tone: 3,
+		canto: '愛',
+		english: 'love',
+		entryID: 45
+	},
+	{
+		letter: 'on',
+		initial: 'h',
+		tone: 3,
+		canto: '看',
+		english: 'look',
+		entryID: 45
+	},
+	{
+		letter: 'ong',
+		initial: 't',
+		tone: 3,
+		canto: '湯',
+		english: 'scald',
+		entryID: 45
+	},
+	{
+		letter: 'ot',
+		initial: 'h',
+		tone: 3,
+		canto: '渴',
+		english: 'thirsty',
+		entryID: 45
+	},
+	{
+		letter: 'ok',
+		initial: 'gw',
+		tone: 3,
+		canto: '國',
+		english: 'country',
+		entryID: 45
+	},
+	{
 		divider: `o (short)`
+	},
+	{
+		letter: 'ou',
+		initial: 'cou',
+		tone: 3,
+		canto: '醋',
+		english: 'vinegar',
+		entryID: 45
 	},
 	{
 		divider: `u (long)`,
 		ref: 'u',
 	},
 	{
+		letter: 'u',
+		initial: 'f',
+		tone: 1,
+		canto: '夫',
+		english: 'husband',
+		entryID: 45
+	},
+	{
+		letter: 'ui',
+		initial: 'f',
+		tone: 1,
+		canto: '灰',
+		english: 'grey',
+		entryID: 45
+	},
+	{
+		letter: 'un',
+		initial: 'f',
+		tone: 1,
+		canto: '歡',
+		english: 'joy',
+		entryID: 45
+	},
+	{
+		letter: 'ut',
+		initial: 'f',
+		tone: 3,
+		canto: '闊',
+		english: 'wide',
+		entryID: 45
+	},
+	{
 		divider: `u (short)`
+	},
+	{
+		letter: 'ung',
+		initial: 'f',
+		tone: 1,
+		canto: '風',
+		english: 'wind',
+		entryID: 45
+	},
+	{
+		letter: 'uk',
+		initial: 'f',
+		tone: 1,
+		canto: '福',
+		english: 'happiness',
+		entryID: 45
 	},
 	{
 		divider: `yu (long)`,
 		ref: 'yu',
 	},
 	{
-		divider: `yu (short)`
+		letter: 'yu',
+		initial: 'j',
+		tone: 6,
+		canto: '癒',
+		english: 'recover',
+		entryID: 45
+	},
+	{
+		letter: 'yun',
+		initial: 'j',
+		tone: 6,
+		canto: '願',
+		english: 'wish',
+		entryID: 45
+	},
+	{
+		letter: 'yut',
+		initial: 'j',
+		tone: 6,
+		canto: '月',
+		english: 'moon',
+		entryID: 45
 	},
 ];

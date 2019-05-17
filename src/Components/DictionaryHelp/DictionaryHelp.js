@@ -13,36 +13,6 @@ class DictionaryHelp extends Component {
 		directory.forEach(item => {
 			this[item.ref] = React.createRef();
 		})
-		this.state = {}
-	}
-
-	setStateForDirectory() {
-		let state = {
-			parents: {
-				topParent: true
-			}
-		}
-		function setParents(directory) {
-			directory.forEach(item => {
-				if (item.children) {
-					state.parents[item.ref] = false
-					setParents(item.children)
-				}
-			})
-		}
-		setParents(directory)
-		if (this.state === state) {
-			console.log('here')
-		} else {
-			this.setState(state)
-		}
-	}
-
-	handleMain = (ref) => {
-		let {parents} = this.state
-		parents[ref] = !parents[ref]
-		this.setState({parents})
-		this.handleScroll(ref)
 	}
 
 
@@ -51,57 +21,8 @@ class DictionaryHelp extends Component {
 			this[ref].current.scrollIntoView({ behavior: 'smooth' })
 		}
 	}
-
-	renderDirectory = (directory) => {
-		let list = []
-		
-		function renderItem(directory, parent) {
-			let parentIsOpen = true
-			if (this) {
-				const { parents } = this.state
-				parentIsOpen = parents[parent]
-			}
-			
-			if (parentIsOpen) {
-				directory.forEach((item, i)=>{
-					if (item.children) {
-							list.push(
-								<div className='directory-row' key={item.ref}>
-									<p 
-										className={item.type}
-										onClick={()=>this.handleMain(item.ref)}
-									>{item.name}</p>
-									<div className='arrow'>
-										<Icon 
-											icon='play-button' 
-											iconSize='13' 
-											iconStyle='dark'
-										/>
-									</div>
-								</div>
-							)
-							renderItem(item.children, item.ref)
-						
-					} else {
-						list.push(
-							<div className='directory-row' key={item.ref}>
-								<p 
-									className={item.type}
-									onClick={()=>this.handleScroll(item.ref)}
-								>{item.name}</p>
-							</div>
-						)
-					}
-				})
-			}
-		}
-		renderItem(directory, 'topParent')
-		return <div>{list}</div>
-	}
 	
 	render() {
-		this.setStateForDirectory()
-		console.log(this.state)
 		return (
 			<div className='dict-help' ref={this.help}>
 				<MediaQuery minWidth={800}>
