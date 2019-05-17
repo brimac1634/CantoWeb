@@ -675,3 +675,42 @@ export const finals = [
 		entryID: 45
 	},
 ];
+
+export const initials = [
+	{
+		jyutping: 'si',
+		tone: 1,
+		canto: '詩',
+		english: 'poem'
+	},
+	{
+		jyutping: 'si',
+		tone: 2,
+		canto: '詩',
+		english: 'history'
+	},
+	{
+		jyutping: 'si',
+		tone: 3,
+		canto: '詩',
+		english: 'to try'
+	},
+	{
+		jyutping: 'si',
+		tone: 4,
+		canto: '詩',
+		english: 'time'
+	},
+	{
+		jyutping: 'si',
+		tone: 5,
+		canto: '詩',
+		english: 'market'
+	},
+	{
+		jyutping: 'si',
+		tone: 6,
+		canto: '詩',
+		english: 'be'
+	},
+]

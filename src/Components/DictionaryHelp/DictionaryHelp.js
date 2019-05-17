@@ -99,6 +99,7 @@ class DictionaryHelp extends Component {
 					</div>
 					<div className='list-divider'></div>
 					<h2 ref={this.tones}>Tones</h2>
+					<p>Cantonese has six tones that can be idenitfied. To indicate the correct tone, jyutping uses number 1 through 6. Click on the examples below to hear the difference between each tone...</p>
 					<div className='list-divider'></div>
 					<h2 ref={this.notes}>Extra Notes</h2>
 					<p>&#8226; You will occassionally find entries where an english word appears in the cantonese section. This is because locals actually use the english word in everyday language.</p>
