@@ -13,16 +13,34 @@ class DictionaryHelp extends Component {
 		directory.forEach(item => {
 			this[item.ref] = React.createRef();
 		})
-		this.state = {
+		this.state = {}
+	}
+
+	setStateForDirectory() {
+		let state = {
 			parents: {
-				initial: true
+				topParent: true
 			}
+		}
+		function setParents(directory) {
+			directory.forEach(item => {
+				if (item.children) {
+					state.parents[item.ref] = false
+					setParents(item.children)
+				}
+			})
+		}
+		setParents(directory)
+		if (this.state === state) {
+			console.log('here')
+		} else {
+			this.setState(state)
 		}
 	}
 
 	handleMain = (ref) => {
-		const {parents} = this.state
-		parents[ref] = true
+		let {parents} = this.state
+		parents[ref] = !parents[ref]
 		this.setState({parents})
 		this.handleScroll(ref)
 	}
@@ -38,13 +56,15 @@ class DictionaryHelp extends Component {
 		let list = []
 		
 		function renderItem(directory, parent) {
-			const {parents} = this.state
-			console.log(parents)
-			const parentOpen = parents[parent]
-			directory.forEach((item, i)=>{
-				if (parentOpen) {
+			let parentIsOpen = true
+			if (this) {
+				const { parents } = this.state
+				parentIsOpen = parents[parent]
+			}
+			
+			if (parentIsOpen) {
+				directory.forEach((item, i)=>{
 					if (item.children) {
-						
 							list.push(
 								<div className='directory-row' key={item.ref}>
 									<p 
@@ -72,14 +92,16 @@ class DictionaryHelp extends Component {
 							</div>
 						)
 					}
-				}
-			})
+				})
+			}
 		}
-		renderItem(directory, 'initial')
+		renderItem(directory, 'topParent')
 		return <div>{list}</div>
 	}
 	
 	render() {
+		this.setStateForDirectory()
+		console.log(this.state)
 		return (
 			<div className='dict-help' ref={this.help}>
 				<MediaQuery minWidth={800}>
