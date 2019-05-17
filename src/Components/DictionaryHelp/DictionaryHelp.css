@@ -17,27 +17,15 @@
 	box-sizing: border-box;
 }
 
-.directory-row {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	align-items: center;
-}
-
-.directory-row p {
+.directory p {
 	margin: 2px 0;
 	font-size: 0.95em;
 	white-space: nowrap;
 	margin-right: auto;
 }
 
-.arrow {
-	width: 13px;
-}
-
 .directory > * {
 	cursor: pointer;
-	
 }
 
 

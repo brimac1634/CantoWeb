@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './DictionaryHelp.css';
 import MediaQuery from 'react-responsive';
-import Icon from '../Icon/Icon';
 import { togglePlay } from '../../Helpers/helpers';
 import EntryRow from '../EntriesList/EntryRow/EntryRow';
 import { demoEntry, directory, initials, finals } from './jyutpingExamples';
@@ -27,7 +26,15 @@ class DictionaryHelp extends Component {
 			<div className='dict-help' ref={this.help}>
 				<MediaQuery minWidth={800}>
 					<div className='directory'>
-						{this.renderDirectory(directory)}
+						{directory.map((item, i)=>{
+							return (
+								<p 
+									key={i}
+									className={item.type}
+									onClick={()=>this.handleScroll(item.ref)}
+								>{item.name}</p>
+							)
+						})}
 					</div>
 				</MediaQuery>
 				<div className='content'>
