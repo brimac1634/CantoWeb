@@ -18,10 +18,15 @@
 }
 
 .directory p {
-	margin: 2px 0;
+	margin: 0;
 	font-size: 0.95em;
 	white-space: nowrap;
 	margin-right: auto;
+	transition: all .2s linear;
+}
+
+.directory p:hover {
+	background: var(--cantoGray);
 }
 
 .directory > * {
@@ -51,6 +56,10 @@
 }
 
 /*Example Grid*/
+
+.example-divider {
+	margin: 35px 0 10px 0;
+}
 
 .example-row {
 	display: grid;
@@ -90,6 +99,7 @@
 .sub-sub {
 	font-weight: 100;
 	text-indent: 2em;
+	color: #666;
 }
 
 ::-webkit-scrollbar {

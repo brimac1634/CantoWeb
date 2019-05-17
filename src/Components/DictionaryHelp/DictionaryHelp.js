@@ -77,6 +77,7 @@ class DictionaryHelp extends Component {
 								return (
 									<p 
 										key={i} 
+										className='example-divider'
 										ref={ex.ref ? this[ex.ref] : null}
 									>{ex.divider}</p>
 								)
