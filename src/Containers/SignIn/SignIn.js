@@ -12,8 +12,8 @@ import DropDown from '../../Containers/DropDown/DropDown';
 import HoverBox from '../../Components/HoverBox/HoverBox';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
-import ReactTooltip from 'react-tooltip'
 import apiRequest from '../../Helpers/apiRequest';
+import { routes } from '../../Routing/constants';
 import { setUser } from './actions';
 import { setLoading } from '../../Loading/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
@@ -21,6 +21,7 @@ import { setAlert } from '../../Components/PopUpAlert/actions';
 const mapStateToProps = state => {
 	return {
 		prevRoute: state.prevRoute.route,
+		pathName: state.router.location.pathname,
 	}
 }
 
@@ -48,29 +49,40 @@ class SignIn extends Component {
 	}
 
 	componentDidMount() {
-		const emailList = JSON.parse(localStorage.getItem('emailList'))
-		if (emailList != null && emailList.length) {
-			this.setState({
-				initialEmailList: emailList,
-				emailList
-			})
-		}
-	}
-
-
-	signInToggle = (type) => {
-		if (type === 'sign in') {
+		const { LOGIN, REGISTER } = routes;
+		const { pathName } = this.props;
+		if (pathName === LOGIN) {
 			this.setState({
 				title: 'Login',
 				signInButton: 'Sign In',
 				alternateButton: 'register',
 			})
-		} else if (type === 'register') {
+
+			const emailList = JSON.parse(localStorage.getItem('emailList'))
+			if (emailList != null && emailList.length) {
+				this.setState({
+					initialEmailList: emailList,
+					emailList
+				})
+			}
+		} else if (pathName === REGISTER) {
 			this.setState({
 				title: 'Register',
 				signInButton: 'Register',
 				alternateButton: 'sign in',
 			})
+		}
+		
+	}
+
+
+	signInToggle = (type) => {
+		const { updateURL } = this.props;
+		const { LOGIN, REGISTER } = routes;
+		if (type === 'sign in') {
+			updateURL(LOGIN)
+		} else if (type === 'register') {
+			updateURL(REGISTER)
 		}
 	}
 
@@ -234,10 +246,12 @@ class SignIn extends Component {
 
 	render() {
 		const { title, email, signInButton, alternateButton, emailList} = this.state;
+		const { LOGIN } = routes;
+		const { pathName } = this.props;
 
-		const first = title === 'Login' ? 'Welcome Back!' : 'Welcome to CantoTalk!'
-		const second = title === 'Login' ? 'We\'re happy to see you' : 'But Why Register?'
-		const message = title === 'Login'
+		const first = pathName === LOGIN ? 'Welcome Back!' : 'Welcome to CantoTalk!'
+		const second = pathName === LOGIN ? 'We\'re happy to see you' : 'But Why Register?'
+		const message = pathName === LOGIN
 			? 'Don\'t forget to use your CantoTalk profile to its fullest by keeping track of learned words and practicing with the flash card desk!'
 			: 'Creating a profile allows you to keep track of your previous searches, save favorites, build your own flash card decks, and more! This will also make it possible to sync information between devices. '
 		return (
@@ -256,9 +270,9 @@ class SignIn extends Component {
 					</div>
 					<div className='right-panel'>
 						<Logo iconSize='50px' />
-						<h2>{title}</h2>
+						<h2 className='right-title'>{title}</h2>
 						{
-							title === 'Login'
+							pathName === LOGIN
 							?	<Controller>
 									<Trigger>
 										<div className='center-div'>
@@ -295,10 +309,23 @@ class SignIn extends Component {
 						<Button 
 							buttonType='ghost' 
 							title={signInButton}
-							margin='10px 0'
+							margin='0 0 30px 0'
 							handleClick={this.onUserSubmit} 
 						/>
 						<div className='bottom-row'>
+							<p className='mini'>Forgot your password?</p>
+							<p 
+								className='underline-button' 
+								onClick={() => this.signInToggle(alternateButton)}
+							>Reset</p>
+						</div>
+						<div className='bottom-row'>
+							<p className='mini'>
+								{pathName === LOGIN
+									? 'New to CantoTalk?'
+									: 'Already Registered?'
+								}
+							</p>
 							<p 
 								className='underline-button' 
 								onClick={() => this.signInToggle(alternateButton)}

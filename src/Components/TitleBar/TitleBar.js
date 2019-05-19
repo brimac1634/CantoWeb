@@ -36,6 +36,7 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 		WORD_OF_THE_DAY, 
 		LEARN, 
 		LOGIN,
+		REGISTER,
 		WHAT,
 		CONTACT 
 	} = routes;
@@ -54,6 +55,8 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 				return 'Learn'
 			case LOGIN:
 				return 'Login'
+			case REGISTER:
+				return 'Register'
 			case WHAT:
 				return 'What?'
 			case CONTACT:

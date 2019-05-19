@@ -25,19 +25,12 @@
 	height: 100%;
 }
 
-/*.sign-in-container {
-	max-width: 320px;
-	height: auto;
-	padding: 20px 40px;
-	border-radius: 4px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}*/
-
 .sign-in-container p {
 	margin: 4px;
+}
+
+.right-title {
+	margin-bottom: 30px;
 }
 
 .sign-in-input {
@@ -56,8 +49,12 @@
 	justify-content: center;
 }
 
+.mini,
+.underline-button {
+	font-size: 12px;
+}
+
 .underline-button {
 	cursor: pointer;
 	text-decoration: underline;
-	font-size: 12px;
 }

@@ -81,14 +81,14 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 			<div className='list-divider'>&nbsp;</div>
 			<div className='setting-list'>
 				<IconListItem 
-					icon='info' 
-					title='What is CantoTalk?'
-					handleClick={handleWhatIs} 
-				/>
-				<IconListItem 
 					icon='agenda' 
 					title='Dictionary Help'
 					handleClick={handleDictionaryHelp} 
+				/>
+				<IconListItem 
+					icon='info' 
+					title='What is CantoTalk?'
+					handleClick={handleWhatIs} 
 				/>
 				<IconListItem 
 					icon='paper-plane' 

@@ -9,6 +9,7 @@ export const routes = {
 	WORD_OF_THE_DAY: '/word-of-the-day',
 	LEARN: '/learn',
 	LOGIN: '/signin',
+	REGISTER: '/register',
 	WHAT: '/what-is-cantotalk',
 	CONTACT: '/contact-us'
 }
