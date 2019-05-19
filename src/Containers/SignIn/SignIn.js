@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import { serverError, validateEmail } from '../../Helpers/helpers';
+import MediaQuery from 'react-responsive';
 import Logo from '../../Components/Logo/Logo';
 import Controller from '../../Helpers/Compound/Controller';
 import Trigger from '../../Helpers/Compound/Trigger';
@@ -233,68 +234,78 @@ class SignIn extends Component {
 
 	render() {
 		const { title, email, signInButton, alternateButton, emailList} = this.state;
+
+		const first = title === 'Login' ? 'Welcome Back!' : 'Welcome to CantoTalk!'
+		const second = title === 'Login' ? 'We\'re happy to see you' : 'But Why Register?'
+		const message = title === 'Login'
+			? 'Don\'t forget to use your CantoTalk profile to its fullest by keeping track of learned words and practicing with the flash card desk!'
+			: 'Creating a profile allows you to keep track of your previous searches, save favorites, build your own flash card decks, and more! This will also make it possible to sync information between devices. '
 		return (
 			<HoverBox>
 				<div className='sign-in-container'>
-					<Logo iconSize='50px' />
-					<h2>{title}</h2>
-					{
-						title === 'Login'
-						?	<Controller>
-								<Trigger>
-									<div className='center-div'>
-										<TextInput 
-											icon='user-3' 
-											margin='10px 0 0 0'
-											placeHolder='Email Address'
-											value={email}
-											handleChange={this.onEmailChange}
-										/>
-									</div>
-								</Trigger>
-								<DropDown 
-									list={emailList} 
-									handleSelection={this.emailSelect}
+					<div className='left-panel'>
+						<MediaQuery minWidth={361}>
+							<h1 className='pink contact-h'>{first}</h1>
+							<h1 className='contact-h'>{second}</h1>
+						</MediaQuery>
+						<MediaQuery maxWidth={360}>
+							<h2 className='pink contact-h'>{first}</h2>
+							<h2 className='contact-h'>{second}</h2>
+						</MediaQuery>
+						<p>{message}</p>
+					</div>
+					<div className='right-panel'>
+						<Logo iconSize='50px' />
+						<h2>{title}</h2>
+						{
+							title === 'Login'
+							?	<Controller>
+									<Trigger>
+										<div className='center-div'>
+											<TextInput 
+												icon='user-3' 
+												margin='10px 0 0 0'
+												placeHolder='Email Address'
+												value={email}
+												handleChange={this.onEmailChange}
+											/>
+										</div>
+									</Trigger>
+									<DropDown 
+										list={emailList} 
+										handleSelection={this.emailSelect}
+									/>
+								</Controller>
+							:   <TextInput 
+									icon='user-3' 
+									margin='0'
+									placeHolder='Email Address'
+									value={email}
+									id='email'
+									handleChange={this.onEmailChange}
 								/>
-							</Controller>
-						:   <TextInput 
-								icon='user-3' 
-								margin='0'
-								placeHolder='Email Address'
-								value={email}
-								id='email'
-								handleChange={this.onEmailChange}
-							/>
-					}
-					<TextInput 
-						icon='locked-4' 
-						margin='20px 0'
-						placeHolder='Password'
-						isPassword='true'
-						handleChange={this.onPasswordChange}
-					/>
-					<Button 
-						buttonType='ghost' 
-						title={signInButton}
-						handleClick={this.onUserSubmit}
-					/>
-					<div className='bottom-row'>
-						<p 
-							className='underline-button' 
-							onClick={() => this.signInToggle(alternateButton)}
-						>
-							{alternateButton}
-						</p>
-						<div data-tip={`Creating a profile allows you to
-						 <br> keep  track of your previous searches, save 
-						 <br>favorites, build your own flash card decks, and 
-						 <br>more! This will also make it possible to sync 
-						 <br>information between devices.`} data-multiline='true'>
-							<p className='underline-button right-button' >
-								why?
+						}
+						<TextInput 
+							icon='locked-4' 
+							margin='20px 0'
+							placeHolder='Password'
+							isPassword='true'
+							handleChange={this.onPasswordChange}
+						/>
+						<Button 
+							buttonType='ghost' 
+							title={signInButton}
+							margin='10px 0'
+							handleClick={this.onUserSubmit} 
+						/>
+						<div className='bottom-row'>
+							<p 
+								className='underline-button' 
+								onClick={() => this.signInToggle(alternateButton)}
+							>
+								{alternateButton}
 							</p>
 						</div>
-						<ReactTooltip effect='solid' place='right' type='dark'/>
 					</div>
 				</div>
 			</HoverBox>

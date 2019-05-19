@@ -34,7 +34,6 @@ class HoverBox extends Component {
     return (
       <MediaQuery maxHeight={childHeight}>
           {(matches) => {
-            // console.log(matches)
             return  <div 
                   className={matches ? 'centered' : 'center-div'}
                 >

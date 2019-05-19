@@ -1,4 +1,31 @@
 .sign-in-container {
+	max-width: 1000px;
+	min-height: 500px;
+	padding: 20px;
+	box-sizing: border-box;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
+	background: var(--cantoWhite);
+}
+
+.left-panel,
+.right-panel {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 10px;
+	min-width: 310px;
+	width: 45%;
+	height: 100%;
+}
+
+/*.sign-in-container {
 	max-width: 320px;
 	height: auto;
 	padding: 20px 40px;
@@ -7,7 +34,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
+}*/
 
 .sign-in-container p {
 	margin: 4px;
