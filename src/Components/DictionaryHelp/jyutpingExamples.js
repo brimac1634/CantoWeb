@@ -676,7 +676,7 @@ export const finals = [
 	},
 ];
 
-export const initials = [
+export const tones = [
 	{
 		jyutping: 'si',
 		tone: 1,
@@ -686,31 +686,31 @@ export const initials = [
 	{
 		jyutping: 'si',
 		tone: 2,
-		canto: '詩',
+		canto: '史',
 		english: 'history'
 	},
 	{
 		jyutping: 'si',
 		tone: 3,
-		canto: '詩',
+		canto: '試',
 		english: 'to try'
 	},
 	{
 		jyutping: 'si',
 		tone: 4,
-		canto: '詩',
+		canto: '時',
 		english: 'time'
 	},
 	{
 		jyutping: 'si',
 		tone: 5,
-		canto: '詩',
+		canto: '市',
 		english: 'market'
 	},
 	{
 		jyutping: 'si',
 		tone: 6,
-		canto: '詩',
+		canto: '是',
 		english: 'be'
 	},
 ]

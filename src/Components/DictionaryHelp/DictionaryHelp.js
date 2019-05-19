@@ -3,7 +3,7 @@ import './DictionaryHelp.css';
 import MediaQuery from 'react-responsive';
 import { togglePlay } from '../../Helpers/helpers';
 import EntryRow from '../EntriesList/EntryRow/EntryRow';
-import { demoEntry, directory, initials, finals } from './jyutpingExamples';
+import { demoEntry, directory, initials, finals, tones } from './jyutpingExamples';
 
 class DictionaryHelp extends Component {
 	constructor(props) {
@@ -100,6 +100,20 @@ class DictionaryHelp extends Component {
 					<div className='list-divider'></div>
 					<h2 ref={this.tones}>Tones</h2>
 					<p>Cantonese has six tones that can be idenitfied. To indicate the correct tone, jyutping uses number 1 through 6. Click on the examples below to hear the difference between each tone...</p>
+					{tones.map((ex, i) => {
+							return (
+								<div 
+									key={i}
+									className='example-row' 
+									onClick={() => togglePlay(ex.entryID)}
+								>
+									<p>{ex.tone}</p>
+									<p>{ex.jyutping}<strong>{ex.tone}</strong></p>
+									<p>{ex.canto}</p>
+									<p>{ex.english}</p>
+								</div>
+							)
+						})}
 					<div className='list-divider'></div>
 					<h2 ref={this.notes}>Extra Notes</h2>
 					<p>&#8226; You will occassionally find entries where an english word appears in the cantonese section. This is because locals actually use the english word in everyday language.</p>
