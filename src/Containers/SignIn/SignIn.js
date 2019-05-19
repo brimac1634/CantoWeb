@@ -317,7 +317,7 @@ class SignIn extends Component {
 							<p 
 								className='underline-button' 
 								onClick={() => this.signInToggle(alternateButton)}
-							>Reset</p>
+							>reset</p>
 						</div>
 						<div className='bottom-row'>
 							<p className='mini'>
