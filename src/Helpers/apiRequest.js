@@ -9,7 +9,7 @@ export default ({
 }) => {
     // process.env.SERVER
     // https://cantotalk-server.herokuapp.com
-    return Promise.race([fetch(`${process.env.SERVER}${endPoint}`, {
+    return Promise.race([fetch(`${process.env.SERVER_URL}${endPoint}`, {
 		method,
 		headers,
 		body: JSON.stringify(body)
