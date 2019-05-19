@@ -7,7 +7,9 @@ export default ({
 	body = {},
 	timeout = 20000
 }) => {
-    return Promise.race([fetch(`https://cantotalk-server.herokuapp.com${endPoint}`, {
+    // process.env.SERVER
+    // https://cantotalk-server.herokuapp.com
+    return Promise.race([fetch(`${process.env.SERVER}${endPoint}`, {
 		method,
 		headers,
 		body: JSON.stringify(body)
