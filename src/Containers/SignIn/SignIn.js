@@ -67,9 +67,9 @@ class SignIn extends Component {
 	signInToggle = (type) => {
 		const { updateURL } = this.props;
 		const { LOGIN, REGISTER } = routes;
-		if (type === 'sign in') {
+		if (type === 'Sign In') {
 			updateURL(LOGIN)
-		} else if (type === 'register') {
+		} else if (type === 'Register') {
 			updateURL(REGISTER)
 		}
 	}
@@ -238,7 +238,7 @@ class SignIn extends Component {
 						</MediaQuery>
 						<p>{message}</p>
 					</div>
-					<form className='right-panel' onSubmit={this.onUserSubmit} autoComplete='on'>
+					<form className='right-panel' autoComplete='on'>
 						<h2 className='right-title'>{title}</h2>
 						<TextInput 
 							icon='user-3' 
@@ -263,7 +263,7 @@ class SignIn extends Component {
 							buttonType='ghost' 
 							title={signInButton}
 							margin='0 0 30px 0'
-							type='submit'
+							handleClick={this.onUserSubmit}
 						/>
 						<div className='bottom-row'>
 							<p 

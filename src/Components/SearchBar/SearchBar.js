@@ -92,7 +92,8 @@ class SearchBar extends Component {
 		const { hash, tempSearchKey, setLoading } = this.props;
 		const enterPressed = (event.which === 13);
 		if (enterPressed && tempSearchKey) {
-			setLoading(true)
+			setLoading(true);
+			event.target.blur();
 			this.handleSearch(tempSearchKey, hash)
 		}
 	}

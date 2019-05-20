@@ -11,6 +11,7 @@ const componentAlert = (WrappedComponent) => {
         width: '',
       }
       this.content = React.createRef();
+      this.close = this.close.bind(this);
     }
 
     componentDidMount() {
@@ -40,7 +41,7 @@ const componentAlert = (WrappedComponent) => {
                 className='component-alert-body'
                 style={{maxWidth: `${width}px`}}
               >
-                <button className='close' onClick={this.close}>
+                <button className='close' onClick={this.close} onTouchStart={this.close}>
                   <Icon 
                     icon='multiply' 
                     iconStyle='dark' 
