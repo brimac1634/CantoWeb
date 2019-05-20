@@ -41,7 +41,7 @@ const componentAlert = (WrappedComponent) => {
                 className='component-alert-body'
                 style={{maxWidth: `${width}px`}}
               >
-                <button className='close' onClick={this.close} onTouchStart={this.close}>
+                <button className='close' onClick={this.close}>
                   <Icon 
                     icon='multiply' 
                     iconStyle='dark' 

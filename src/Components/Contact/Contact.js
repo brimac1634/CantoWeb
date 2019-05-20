@@ -36,6 +36,14 @@ class Contact extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const user = JSON.parse(localStorage.getItem('user'))
+		if (user) {
+			const { userEmail } = user;
+			this.setState({email: userEmail});
+		}
+	}
+
 	handleChange = (event) => {
 		const newMessage = { ...this.state.newMessage }
 		const { id } = event.target
@@ -110,57 +118,62 @@ class Contact extends Component {
 		const second = 'Just say Hello.';
 
 		return (
-			<HoverBox>
-				<div className='contact'>
-					<div className='left-panel'>
-						<MediaQuery minWidth={361}>
-							<h1 className='pink contact-h'>{first}</h1>
-							<h1 className='contact-h'>{second}</h1>
-						</MediaQuery>
-						<MediaQuery maxWidth={360}>
-							<h2 className='pink contact-h'>{first}</h2>
-							<h2 className='contact-h'>{second}</h2>
-						</MediaQuery>
-						<p>Feel free to get in touch with us! Whether you need help with the application, or there is something you would like to see here, or just want to say hi, we are waiting to hear from you! 
-						</p>
-					</div>
-					<div className='right-panel'>
-					        <TextInput 
-								placeHolder='Name'
-								margin='10px 0'
-								height='34px'
-								id='name'
-								value={this.state.name}
-								handleChange={this.handleChange}
-							/>
-							<TextInput 
-								placeHolder='Email Address'
-								margin='10px 0'
-								height='34px'
-								id='email'
-								// value={this.state.email}
-								handleChange={this.handleChange}
-							/>
-							<TextInput 
-								isTextArea={true}
-								placeHolder='Your Message'
-								margin='10px 0'
-								height='150px'
-								id='message'
-								value={this.state.message}
-								handleChange={this.handleChange}
-							/>
-							<Button 
-								title='Send!'
-								buttonType='ghost' 
-								icon='paper-plane' 
-								height='34px'
-								margin='10px 0'
-								handleClick={this.handleSubmit}
-							/>
-					</div>
-				</div>
-			</HoverBox>
+			<MediaQuery maxWidth={574}>
+				{(matches) => {
+				return (
+					<HoverBox>
+						<div className='contact'>
+							<div className='left-panel'>
+								<MediaQuery minWidth={361}>
+									<h1 className='pink contact-h'>{first}</h1>
+									<h1 className='contact-h'>{second}</h1>
+								</MediaQuery>
+								<MediaQuery maxWidth={360}>
+									<h2 className='pink contact-h'>{first}</h2>
+									<h2 className='contact-h'>{second}</h2>
+								</MediaQuery>
+								<p>Feel free to get in touch with us! Whether you need help with the application, or there is something you would like to see here, or just want to say hi, we are waiting to hear from you! 
+								</p>
+							</div>
+							<div className='right-panel'>
+							        <TextInput 
+										placeHolder='Name'
+										margin='10px 0'
+										height={matches ? '44px' : '34px'}
+										id='name'
+										value={this.state.name}
+										handleChange={this.handleChange}
+									/>
+									<TextInput 
+										placeHolder='Email Address'
+										margin='10px 0'
+										height={matches ? '44px' : '34px'}
+										id='email'
+										value={this.state.email}
+										handleChange={this.handleChange}
+									/>
+									<TextInput 
+										isTextArea={true}
+										placeHolder='Your Message'
+										margin='10px 0'
+										height='150px'
+										id='message'
+										value={this.state.message}
+										handleChange={this.handleChange}
+									/>
+									<Button 
+										title='Send!'
+										buttonType='ghost' 
+										icon='paper-plane' 
+										height={matches ? '44px' : '34px'}
+										margin='10px 0'
+										handleClick={this.handleSubmit}
+									/>
+							</div>
+						</div>
+					</HoverBox>
+				)}}
+			</MediaQuery>
 		);
 	}	
 }

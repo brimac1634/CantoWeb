@@ -71,7 +71,7 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 	return (
 		<div className='settings'>
 			{userIsLoggedIn 
-				? <p className='welcome'>Weclome, {userEmail}</p> 
+				? <p className='welcome'>{userEmail}</p> 
 				: <p className='welcome'>Welcome to CantoTalk!</p>
 			}
 			<div className='list-divider'>&nbsp;</div>
