@@ -51,10 +51,10 @@ class SearchBar extends Component {
 		})
 	}
 
-	handleSearchRoute = (route) => {
+	handleSearchRoute = (e, route) => {
 		const { pathName, updateURL, userID } = this.props;
 		const { SEARCH, LOGIN } = routes;
-
+		e.target.blur();
 		if (route === pathName) {
 			updateURL(SEARCH)
 		} else {
@@ -144,7 +144,7 @@ class SearchBar extends Component {
 								isSelected={pathName === RECENT
 												? true
 												: false}
-								handleClick={()=>this.handleSearchRoute(RECENT)}
+								handleClick={e=>this.handleSearchRoute(e, RECENT)}
 							/>
 							<Button 
 								title={matches ? null : 'Favorites'}
@@ -155,7 +155,7 @@ class SearchBar extends Component {
 								isSelected={pathName === FAVORITES
 												? true
 												: false}
-								handleClick={()=>this.handleSearchRoute(FAVORITES)}
+								handleClick={e=>this.handleSearchRoute(e, FAVORITES)}
 							/>
 						</div>
 						<div className='search-container'>

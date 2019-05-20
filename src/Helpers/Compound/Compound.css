@@ -1,3 +1,7 @@
+.compound-span {
+  overflow: hidden;
+}
+
 .pop-over,
 .drop-down {
 	position: absolute;

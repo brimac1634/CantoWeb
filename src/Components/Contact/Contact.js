@@ -40,7 +40,13 @@ class Contact extends Component {
 		const user = JSON.parse(localStorage.getItem('user'))
 		if (user) {
 			const { userEmail } = user;
-			this.setState({email: userEmail});
+			this.setState({
+				newMessage: {
+					name: '',
+					email: userEmail,
+					message: '',
+				}
+			});
 		}
 	}
 
@@ -114,6 +120,7 @@ class Contact extends Component {
 	}
 
 	render() {
+		const { name, email, message } = this.state.newMessage;
 		const first = 'Dont Be A Stranger!';
 		const second = 'Just say Hello.';
 
@@ -141,7 +148,7 @@ class Contact extends Component {
 										margin='10px 0'
 										height={matches ? '44px' : '34px'}
 										id='name'
-										value={this.state.name}
+										value={name}
 										handleChange={this.handleChange}
 									/>
 									<TextInput 
@@ -149,7 +156,7 @@ class Contact extends Component {
 										margin='10px 0'
 										height={matches ? '44px' : '34px'}
 										id='email'
-										value={this.state.email}
+										value={email}
 										handleChange={this.handleChange}
 									/>
 									<TextInput 
@@ -158,7 +165,7 @@ class Contact extends Component {
 										margin='10px 0'
 										height='150px'
 										id='message'
-										value={this.state.message}
+										value={message}
 										handleChange={this.handleChange}
 									/>
 									<Button 

@@ -90,7 +90,7 @@ class Controller extends Component {
 		      } else {
 		      	if (show) {
 		      		return ReactDOM.createPortal(
-			            <span onClick={event => event.stopPropagation()}>
+			            <span className='compound-span' onClick={event => event.stopPropagation()}>
 				            {React.cloneElement(child, { toggle: this.toggle, show: show, triggerRect: triggerRect, animateOut: animateOut, closeOnClick: this.closeOnClick })}
 				        </span>
 				        , document.body
