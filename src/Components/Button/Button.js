@@ -2,14 +2,15 @@ import React from 'react';
 import './Button.css'
 import Icon from '../Icon/Icon';
 
-const Button = ({ title, handleClick, buttonType, icon, isSelected, width, height, margin }) => {
-	const type = buttonType ? buttonType : 'full';
+const Button = ({ title, handleClick, buttonType, icon, isSelected, width, height, margin, type }) => {
+	const style = buttonType ? buttonType : 'full';
 	const titleType = icon ? 'with-icon' : 'without-icon';
 	const buttonSelect = isSelected ? 'selected-button' : null;
 	return (
 		<div 
-			className={`${type} ${buttonSelect}`} 
+			className={`${style} ${buttonSelect}`} 
 			onClick={handleClick}
+			type={type}
 			style={{
 				width: `${width ? width : 'auto'}`, 
 				height: `${height ? height : 'auto'}`,

@@ -52,12 +52,14 @@
 
 .mini,
 .underline-button {
-	font-size: 12px;
+	font-size: 14px;
+	color: #444;
 }
 
 .underline-button {
 	cursor: pointer;
-	text-decoration: underline;
+	color: var(--cantoBlue);
+	font-weight: bold
 }
 
 @media screen and (max-width: 575px) {

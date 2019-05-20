@@ -5,10 +5,6 @@ import { push } from 'connected-react-router'
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import { serverError, validateEmail } from '../../Helpers/helpers';
 import MediaQuery from 'react-responsive';
-import Logo from '../../Components/Logo/Logo';
-import Controller from '../../Helpers/Compound/Controller';
-import Trigger from '../../Helpers/Compound/Trigger';
-import DropDown from '../../Containers/DropDown/DropDown';
 import HoverBox from '../../Components/HoverBox/HoverBox';
 import Button from '../../Components/Button/Button';
 import TextInput from '../../Components/TextInput/TextInput';
@@ -44,7 +40,7 @@ class SignIn extends Component {
 			email: '',
 			password: '',
 			failCount: 0,
-			emailList: [],
+			rememberMe: true,
 		}
 	}
 
@@ -55,21 +51,13 @@ class SignIn extends Component {
 			this.setState({
 				title: 'Login',
 				signInButton: 'Sign In',
-				alternateButton: 'register',
+				alternateButton: 'Register',
 			})
-
-			const emailList = JSON.parse(localStorage.getItem('emailList'))
-			if (emailList != null && emailList.length) {
-				this.setState({
-					initialEmailList: emailList,
-					emailList
-				})
-			}
 		} else if (pathName === REGISTER) {
 			this.setState({
 				title: 'Register',
 				signInButton: 'Register',
-				alternateButton: 'sign in',
+				alternateButton: 'Sign In',
 			})
 		}
 		
@@ -86,16 +74,7 @@ class SignIn extends Component {
 		}
 	}
 
-	onEmailChange = (event) => {
-		const email = event.target.value;
-		const { initialEmailList } = this.state;
-		this.setState({ email })
-		
-		if (initialEmailList) {
-			const emailList = initialEmailList.filter(item => item.includes(email))
-			this.setState({emailList})
-		}
-	}
+	onEmailChange = (event) => this.setState({ email: event.target.value })
 	onPasswordChange = (event) => this.setState({ password: event.target.value })
 
 	validatePassword = (password) => {
@@ -103,21 +82,8 @@ class SignIn extends Component {
 	}
 
 	handleUpdateUser = (user) => {
-		const { userEmail } = user;
 		const { updateUser } = this.props;
 		localStorage.setItem('user', JSON.stringify(user));
-		let emailList = JSON.parse(localStorage.getItem('emailList'))
-		if (emailList != null) {
-			if (!emailList.includes(userEmail)) {
-				emailList.unshift(userEmail)
-				if (emailList.length > 3) {
-					emailList.pop()
-				}
-			}
-		} else {
-			emailList = [userEmail]
-		}
-		localStorage.setItem('emailList', JSON.stringify(emailList));
 		updateUser(user);
 	}
 
@@ -130,7 +96,6 @@ class SignIn extends Component {
 
 	onUserSubmit = () => {
 		const { title, email, password, failCount } = this.state;
-		console.log(email, password)
 		const { setLoading } = this.props;
 		const emailIsValid = validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
@@ -245,8 +210,12 @@ class SignIn extends Component {
 
     emailSelect = (email) => this.setState({email})
 
+    handleForgotPassword = () => {
+    	console.log('forgot')
+    }
+
 	render() {
-		const { title, email, signInButton, alternateButton, emailList} = this.state;
+		const { title, email, signInButton, alternateButton } = this.state;
 		const { LOGIN } = routes;
 		const { pathName } = this.props;
 
@@ -269,56 +238,38 @@ class SignIn extends Component {
 						</MediaQuery>
 						<p>{message}</p>
 					</div>
-					<div className='right-panel'>
-						<Logo iconSize='50px' />
+					<form className='right-panel' onSubmit={this.onUserSubmit} autoComplete='on'>
 						<h2 className='right-title'>{title}</h2>
-						{
-							pathName === LOGIN
-							?	<Controller>
-									<Trigger>
-										<div className='center-div'>
-											<TextInput 
-												icon='user-3' 
-												margin='10px 0 0 0'
-												placeHolder='Email Address'
-												value={email}
-												handleChange={this.onEmailChange}
-											/>
-										</div>
-									</Trigger>
-									<DropDown 
-										list={emailList} 
-										handleSelection={this.emailSelect}
-									/>
-								</Controller>
-							:   <TextInput 
-									icon='user-3' 
-									margin='0'
-									placeHolder='Email Address'
-									value={email}
-									id='email'
-									handleChange={this.onEmailChange}
-								/>
-						}
+						<TextInput 
+							icon='user-3' 
+							margin='0'
+							placeHolder='Email Address'
+							value={email}
+							id='email'
+							name='email'
+							type='text'
+							handleChange={this.onEmailChange}
+						/>
 						<TextInput 
 							icon='locked-4' 
 							margin='20px 0'
 							placeHolder='Password'
-							isPassword='true'
+							name='password'
+							type='password'
+							id='password'
 							handleChange={this.onPasswordChange}
 						/>
 						<Button 
 							buttonType='ghost' 
 							title={signInButton}
 							margin='0 0 30px 0'
-							handleClick={this.onUserSubmit} 
+							type='submit'
 						/>
 						<div className='bottom-row'>
-							<p className='mini'>Forgot your password?</p>
 							<p 
 								className='underline-button' 
-								onClick={() => this.signInToggle(alternateButton)}
-							>reset</p>
+								onClick={this.handleForgotPassword}
+							>Forgot Password</p>
 						</div>
 						<div className='bottom-row'>
 							<p className='mini'>
@@ -334,7 +285,7 @@ class SignIn extends Component {
 								{alternateButton}
 							</p>
 						</div>
-					</div>
+					</form>
 				</div>
 			</HoverBox>
 		);

@@ -2,9 +2,8 @@ import React from 'react';
 import './TextInput.css'
 import Icon from '../Icon/Icon';
 
-const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height, isPassword, margin, handleClick, id, isTextArea }) => {
+const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height, type, margin, handleClick, id, isTextArea, name }) => {
 	const inputHeight = height ? height : '44px';
-	const type = isPassword ? 'password' : null;
 	const container = isTextArea ? 'input-area-group' : 'input-group';
 	return (
 		<div className={container} style={{height: `${inputHeight}`, margin: margin ? margin : '10px'}} onClick={handleClick}>
@@ -24,6 +23,7 @@ const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height
 						onChange={handleChange}
 						onKeyPress={handleInput}
 						value={value}
+						name={name}
 					/>
 				:   <input 
 						className='text-input'
@@ -33,6 +33,7 @@ const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height
 						onKeyPress={handleInput}
 						value={value}
 						type={type}
+						name={name}
 					/>
 
 			}
