@@ -2,7 +2,6 @@ import React from 'react';
 import './Settings.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
-import Logo from '../Logo/Logo';
 import IconListItem from '../IconListItem/IconListItem';
 import DictionaryHelp from '../DictionaryHelp/DictionaryHelp';
 import { routes } from '../../Routing/constants';
@@ -71,13 +70,10 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 	}
 	return (
 		<div className='settings'>
-			<div className='logo-bar'>
-				<Logo iconSize='50px' />
-			</div>
 			{userIsLoggedIn 
-					? <p className='welcome'>{userEmail}</p> 
-					: <p className='welcome'>Welcome to CantoTalk!</p>
-				}
+				? <p className='welcome'>{userEmail}</p> 
+				: <p className='welcome'>Welcome to CantoTalk!</p>
+			}
 			<div className='list-divider'>&nbsp;</div>
 			<div className='setting-list'>
 				<IconListItem 

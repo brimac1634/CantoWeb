@@ -37,8 +37,8 @@ body.component-alert-body-element {
 
 .close {
   position: absolute;
-  height: 15px;
-  width: 15px;
+  height: 30px;
+  width: 30px;
   top: 10px;
   right: 10px;
   outline: none;

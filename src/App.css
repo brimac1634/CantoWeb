@@ -36,6 +36,14 @@
 	overflow: hidden;
 }
 
+@media screen and (max-width: 700px) {
+    .title-bar {
+		height: 60px;
+	}
 
+	.main-view-container {
+		height: calc(100% - 60px);
+	}
+}
 
 

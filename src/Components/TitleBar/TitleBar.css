@@ -48,7 +48,7 @@
 
 .current-container {
 	position: absolute;
-	height: 50px;
+	height: 100%;
 	width: 200px;
 	left: 185px;
 	display: flex;
@@ -110,5 +110,10 @@
 	.current-container {
 		width: 200px;
 		left: 48px;
+	}
+
+	.button {
+		width: 28px;
+		height: 38px;
 	}
 }
