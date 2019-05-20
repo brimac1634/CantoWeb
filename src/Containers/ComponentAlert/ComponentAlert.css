@@ -30,7 +30,8 @@ body.component-alert-body-element {
 .inner-container {
   box-sizing: border-box;
   height: inherit;
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   padding: 20px 35px;
 }
 
