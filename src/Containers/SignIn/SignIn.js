@@ -130,6 +130,7 @@ class SignIn extends Component {
 
 	onUserSubmit = () => {
 		const { title, email, password, failCount } = this.state;
+		console.log(email, password)
 		const { setLoading } = this.props;
 		const emailIsValid = validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
@@ -249,10 +250,10 @@ class SignIn extends Component {
 		const { LOGIN } = routes;
 		const { pathName } = this.props;
 
-		const first = pathName === LOGIN ? 'Welcome Back!' : 'Welcome to CantoTalk!'
-		const second = pathName === LOGIN ? 'We\'re happy to see you' : 'But Why Register?'
+		const first = pathName === LOGIN ? 'Welcome Back,' : 'Welcome to CantoTalk!'
+		const second = pathName === LOGIN ? 'we\'re happy to see you!' : 'But Why Register?'
 		const message = pathName === LOGIN
-			? 'Don\'t forget to use your CantoTalk profile to its fullest by keeping track of learned words and practicing with the flash card desk!'
+			? 'Don\'t forget to use your CantoTalk profile to its fullest by keeping track of learned words and practicing with the flash card decks!'
 			: 'Creating a profile allows you to keep track of your previous searches, save favorites, build your own flash card decks, and more! This will also make it possible to sync information between devices. '
 		return (
 			<HoverBox>
