@@ -65,7 +65,6 @@ class SignIn extends Component {
 			})
 		} else if (pathName === VERIFY) {
 			const { token } = queryString.parse(search)
-			console.log(token)
 			this.setState({ token })
 		}
 		
@@ -126,14 +125,12 @@ class SignIn extends Component {
 
 	onUserSubmit = () => {
 		const { title, email, password, failCount } = this.state;
-		const { setLoading } = this.props;
+		const { setLoading, updateURL } = this.props;
+		const { RESET } = routes;
 		const emailIsValid = validateEmail(email);
 		const passwordIsValid = this.validatePassword(password);
 		if (!emailIsValid) {
-			optionAlert({
-				    title: 'Invalid Email Address',
-				    message: 'The email address you have entered is incomplete.',
-			    })
+			this.emailIsNotCorrect()
 		} else {
 			if (title === 'Login') {
 				if (!passwordIsValid) {
@@ -174,7 +171,7 @@ class SignIn extends Component {
 										    buttons: [
 										      {
 										        label: 'Yes',
-										        onClick: ()=>this.resetPassword()
+										        onClick: ()=>updateURL(RESET)
 										      },
 										      { 
 										        label: 'No',
@@ -256,7 +253,8 @@ class SignIn extends Component {
 
     onVerifyEmail = () => {
     	const { token, password, password2 } = this.state;
-    	const { setLoading } = this.props;
+    	const { setLoading, updateURL } = this.props;
+    	const { RESET } = routes;
     	const passwordIsValid = this.validatePassword(password);
     	if (passwordIsValid && password === password2) {
     		setLoading(true)
@@ -276,7 +274,7 @@ class SignIn extends Component {
 						    buttons: [
 						      {
 						        label: 'Yes',
-						        onClick: ()=>this.resetPassword()
+						        onClick: ()=>updateURL(RESET)
 						      },
 						      { 
 						        label: 'No',
@@ -308,8 +306,13 @@ class SignIn extends Component {
     	}
     }
 
-    resetPassword = () => {
-    	console.log('forgot')
+    onResetPassword = (email) => {
+    	if (validateEmail(email)) {
+    		console.log(email)
+    		//request verification email to be sent
+    	} else {
+    		this.emailIsNotCorrect()
+    	}
     }
 
     passwordIsIncomplete = () => {
@@ -319,115 +322,156 @@ class SignIn extends Component {
 	    })
     }
 
-	render() {
-		const { title, email, signInButton, alternateButton } = this.state;
-		const { LOGIN, VERIFY } = routes;
-		const { pathName } = this.props;
+    emailIsNotCorrect = () => {
+    	optionAlert({
+		    title: 'Invalid Email Address',
+		    message: 'The email address you have entered is incomplete.',
+	    })
+    }
 
-		const first = pathName === LOGIN ? 'Welcome Back,' : 'Welcome to CantoTalk!'
-		const second = pathName === LOGIN ? 'we\'re happy to see you!' : 'But Why Register?'
-		const message = pathName === LOGIN
-			? 'Don\'t forget to use your CantoTalk profile to its fullest by keeping track of learned words and practicing with the flash card decks!'
-			: 'Creating a profile allows you to keep track of your previous searches, save favorites, build your own flash card decks, and more! This will also make it possible to sync information between devices. '
+    renderComponent = (pathName) => {
+    	const { title, email, password, password2, signInButton, alternateButton } = this.state;
+    	const { LOGIN, REGISTER, VERIFY, RESET } = routes;
+    	const { updateURL } = this.props;
+    	
+    	if (pathName === RESET || pathName === VERIFY) {
+    		const heading = pathName === RESET ? 'Reset Account' : 'New Password'
+			const line = pathName === RESET ? 'We will email you a link to reset your password.' : 'Please put your new password in both fields below.'
+    		return (
+    			<div className='sign-in-container'>
+					<div className='right-panel'>
+						<h2 className='right-title'>{heading}</h2>
+						<p>{line}</p>
+						{pathName === RESET &&
+							<TextInput 
+								icon='user-3' 
+								margin='20px 0'
+								placeHolder='Email Address'
+								value={email}
+								id='email'
+								type='text'
+								handleChange={this.onInputChange}
+							/>
+						}
+						{pathName === VERIFY &&
+							<div>
+								<TextInput 
+									icon='locked-4' 
+									margin='20px 0 0 0'
+									placeHolder='Password'
+									value={password}
+									type='password'
+									id='password'
+									handleChange={this.onInputChange}
+								/>
+								<TextInput 
+									icon='locked-4' 
+									margin='20px 0'
+									placeHolder='Retype Password'
+									value={password2}
+									type='password'
+									id='password2'
+									handleChange={this.onInputChange}
+								/>
+							</div>
+						}
+						<Button 
+							buttonType='ghost' 
+							title='Continue'
+							margin='0 0 30px 0'
+							handleClick={pathName === VERIFY
+								?	()=>this.onVerifyEmail()
+								:   ()=>this.onResetPassword(email)
+							}
+						/>
+					</div>
+				</div>
+    		)
+    	} else if (pathName === LOGIN || pathName === REGISTER) {
+    		const first = pathName === LOGIN ? 'Welcome Back,' : 'Welcome to CantoTalk!'
+			const second = pathName === LOGIN ? 'we\'re happy to see you!' : 'But Why Register?'
+			const message = pathName === LOGIN
+				? 'Don\'t forget to use your CantoTalk profile to its fullest by keeping track of learned words and practicing with the flash card decks!'
+				: 'Creating a profile allows you to keep track of your previous searches, save favorites, build your own flash card decks, and more! This will also make it possible to sync information between devices. '
+
+    		return (
+    			<div className='sign-in-container'>
+					<div className='left-panel'>
+						<MediaQuery minWidth={361}>
+							<h1 className='pink contact-h'>{first}</h1>
+							<h1 className='contact-h'>{second}</h1>
+						</MediaQuery>
+						<MediaQuery maxWidth={360}>
+							<h2 className='pink contact-h'>{first}</h2>
+							<h2 className='contact-h'>{second}</h2>
+						</MediaQuery>
+						<p>{message}</p>
+					</div>
+					<form className='right-panel' autoComplete='on'>
+						<h2 className='right-title'>{title}</h2>
+						<TextInput 
+							icon='user-3' 
+							margin={pathName === LOGIN ? '0' : '10px 0 20px 0'}
+							placeHolder='Email Address'
+							value={email}
+							id='email'
+							name='email'
+							type='text'
+							handleChange={this.onInputChange}
+						/>
+						{pathName === LOGIN &&
+							<TextInput 
+								icon='locked-4' 
+								margin='20px 0'
+								placeHolder='Password'
+								value={password}
+								name='password'
+								type='password'
+								id='password'
+								handleChange={this.onInputChange}
+							/>
+						}
+						<Button 
+							buttonType='ghost' 
+							title={signInButton}
+							margin='0 0 30px 0'
+							handleClick={this.onUserSubmit}
+						/>
+						{pathName === LOGIN &&
+							<div className='bottom-row'>
+								<p 
+									className='underline-button' 
+									onClick={()=>updateURL(RESET)}
+								>Forgot Password</p>
+							</div>
+						}
+						<div className='bottom-row'>
+							<p className='mini'>
+								{pathName === LOGIN
+									? 'New to CantoTalk?'
+									: 'Already Registered?'
+								}
+							</p>
+							<p 
+								className='underline-button' 
+								onClick={() => this.signInToggle(alternateButton)}
+							>
+								{alternateButton}
+							</p>
+						</div>
+					</form>
+				</div>
+    		)
+    	}
+
+    }
+
+	render() {
+		const { pathName } = this.props;
+		console.log(pathName)
 		return (
 			<HoverBox>
-					{pathName === VERIFY
-						?	<div className='sign-in-container'>
-								<div className='right-panel'>
-									<h2 className='right-title'>Registration</h2>
-									<p>To complete your registration, create a new password</p>
-									<TextInput 
-										icon='locked-4' 
-										margin='20px 0 0 0'
-										placeHolder='Password'
-										name='password'
-										type='password'
-										id='password'
-										handleChange={this.onInputChange}
-									/>
-									<TextInput 
-										icon='locked-4' 
-										margin='20px 0'
-										placeHolder='Retype Password'
-										name='password'
-										type='password'
-										id='password2'
-										handleChange={this.onInputChange}
-									/>
-									<Button 
-										buttonType='ghost' 
-										title='Continue'
-										margin='0 0 30px 0'
-										handleClick={this.onVerifyEmail}
-									/>
-								</div>
-							</div>
-						:   <div className='sign-in-container'>
-								<div className='left-panel'>
-									<MediaQuery minWidth={361}>
-										<h1 className='pink contact-h'>{first}</h1>
-										<h1 className='contact-h'>{second}</h1>
-									</MediaQuery>
-									<MediaQuery maxWidth={360}>
-										<h2 className='pink contact-h'>{first}</h2>
-										<h2 className='contact-h'>{second}</h2>
-									</MediaQuery>
-									<p>{message}</p>
-								</div>
-								<form className='right-panel' autoComplete='on'>
-									<h2 className='right-title'>{title}</h2>
-									<TextInput 
-										icon='user-3' 
-										margin={pathName === LOGIN ? '0' : '10px 0 20px 0'}
-										placeHolder='Email Address'
-										value={email}
-										id='email'
-										name='email'
-										type='text'
-										handleChange={this.onInputChange}
-									/>
-									{pathName === LOGIN &&
-										<TextInput 
-											icon='locked-4' 
-											margin='20px 0'
-											placeHolder='Password'
-											name='password'
-											type='password'
-											id='password'
-											handleChange={this.onInputChange}
-										/>
-									}
-									<Button 
-										buttonType='ghost' 
-										title={signInButton}
-										margin='0 0 30px 0'
-										handleClick={this.onUserSubmit}
-									/>
-									{pathName === LOGIN &&
-										<div className='bottom-row'>
-											<p 
-												className='underline-button' 
-												onClick={this.handleForgotPassword}
-											>Forgot Password</p>
-										</div>
-									}
-									<div className='bottom-row'>
-										<p className='mini'>
-											{pathName === LOGIN
-												? 'New to CantoTalk?'
-												: 'Already Registered?'
-											}
-										</p>
-										<p 
-											className='underline-button' 
-											onClick={() => this.signInToggle(alternateButton)}
-										>
-											{alternateButton}
-										</p>
-									</div>
-								</form>
-							</div>
-					}
+					{this.renderComponent(pathName)}
 			</HoverBox>
 		);
 	}

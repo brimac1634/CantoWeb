@@ -11,6 +11,7 @@ export const routes = {
 	LOGIN: '/signin',
 	REGISTER: '/register',
 	VERIFY: '/verify',
+	RESET: '/reset-account',
 	WHAT: '/what-is-cantotalk',
 	CONTACT: '/contact-us'
 }

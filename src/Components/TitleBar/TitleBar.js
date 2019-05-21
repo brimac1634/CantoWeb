@@ -38,6 +38,7 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 		LOGIN,
 		REGISTER,
 		VERIFY,
+		RESET,
 		WHAT,
 		CONTACT 
 	} = routes;
@@ -55,9 +56,10 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 			case LEARN:
 				return 'Learn'
 			case LOGIN:
+			case VERIFY:
+			case RESET:
 				return 'Login'
 			case REGISTER:
-			case VERIFY:
 				return 'Register'
 			case WHAT:
 				return 'What?'
