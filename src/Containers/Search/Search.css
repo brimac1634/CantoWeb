@@ -57,6 +57,11 @@
 	height: 100%;
 }
 
+@media screen and (max-width: 575px) {
+	.split-container {
+		top: 54px;
+	}
+}
 @media screen and (max-width: 700px) {
     .entry-list-container {
 		width: 100%;
@@ -74,5 +79,6 @@
 
 	.split-container {
 		display: block;
+		top: 
 	}
 }

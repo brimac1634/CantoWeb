@@ -32,6 +32,7 @@ class MainView extends Component {
 		const { 
 			LOGIN, 
 			REGISTER,
+			VERIFY,
 			WHAT, 
 			CONTACT,
 			SEARCH, 
@@ -45,7 +46,7 @@ class MainView extends Component {
 			<div className='main-view' style={{position: 'absolute'}}>
 				<Switch location={location}>
 					<Route 
-						path={[LOGIN, REGISTER]} 
+						path={[LOGIN, REGISTER, VERIFY]} 
 						render={()=>(
 							<TransitionGroup className='page-trans over-flow'>
 								<CSSTransition

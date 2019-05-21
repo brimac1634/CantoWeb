@@ -140,7 +140,7 @@ class SearchBar extends Component {
 								buttonType='ghost' 
 								icon='time' 
 								height={matches ? '44px' : '34px'}
-								margin='10px 5px'
+								margin='10px 5px 10px 10px'
 								isSelected={pathName === RECENT
 												? true
 												: false}

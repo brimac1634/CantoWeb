@@ -10,6 +10,7 @@ export const routes = {
 	LEARN: '/learn',
 	LOGIN: '/signin',
 	REGISTER: '/register',
+	VERIFY: '/verify',
 	WHAT: '/what-is-cantotalk',
 	CONTACT: '/contact-us'
 }
