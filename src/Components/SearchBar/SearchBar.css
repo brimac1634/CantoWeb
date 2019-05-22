@@ -9,7 +9,7 @@
 
 .search-bar-container {
 	height: 54px;
-	background: linear-gradient(var(--cantoWhite) 0%, var(--cantoWhite) 80%, transparent 100%);
+	background: linear-gradient(var(--cantoWhite) 0%, var(--cantoWhite) 80%, rgba(0,0,0, 0) 100%);
 }
 
 .search-bar {
