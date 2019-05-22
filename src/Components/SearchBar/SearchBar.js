@@ -133,56 +133,58 @@ class SearchBar extends Component {
 			<MediaQuery maxWidth={574}>
 				{(matches) => {
 				return (
-					<div className='search-bar' onClick={()=>setMobileEntry('')}>
-						<div className='filter-container'>
-							<Button 
-								title={matches ? null : 'Recent'}
-								buttonType='ghost' 
-								icon='time' 
-								height={matches ? '44px' : '34px'}
-								margin='10px 5px 10px 10px'
-								isSelected={pathName === RECENT
-												? true
-												: false}
-								handleClick={e=>this.handleSearchRoute(e, RECENT)}
-							/>
-							<Button 
-								title={matches ? null : 'Favorites'}
-								buttonType='ghost' 
-								icon='like-2' 
-								height={matches ? '44px' : '34px'}
-								margin='10px 5px'
-								isSelected={pathName === FAVORITES
-												? true
-												: false}
-								handleClick={e=>this.handleSearchRoute(e, FAVORITES)}
-							/>
-						</div>
-						<div className='search-container'>
-							{pathName === RECENT || pathName === FAVORITES
-								?	null
-								:   <Controller>
-										<Trigger>
-											<div className='center-div'>
-												<TextInput 
-													icon='search' 
-													placeHolder='English/Cantonese/Mandarin/Jyutping'
-													margin='10px 0'
-													value={tempSearchKey ? tempSearchKey : ''}
-													height={matches ? '44px' : '34px'} 
-													handleChange={this.searchChange}
-													handleInput={this.searchSubmit}
-												/>
-											</div>
-										</Trigger>
-										<DropDown 
-											list={searchList} 
-											handleSelection={this.wordSelect}
-											adjustY={-5}
-											maxHeight='200px'
-										/>
-									</Controller>
-							}
+					<div className='search-bar-container'>
+						<div className='search-bar' onClick={()=>setMobileEntry('')}>
+							<div className='filter-container'>
+								<Button 
+									title={matches ? null : 'Recent'}
+									buttonType='ghost' 
+									icon='time' 
+									height={matches ? '44px' : '34px'}
+									margin='10px 5px 10px 10px'
+									isSelected={pathName === RECENT
+													? true
+													: false}
+									handleClick={e=>this.handleSearchRoute(e, RECENT)}
+								/>
+								<Button 
+									title={matches ? null : 'Favorites'}
+									buttonType='ghost' 
+									icon='like-2' 
+									height={matches ? '44px' : '34px'}
+									margin='10px 5px'
+									isSelected={pathName === FAVORITES
+													? true
+													: false}
+									handleClick={e=>this.handleSearchRoute(e, FAVORITES)}
+								/>
+							</div>
+							<div className='search-container'>
+								{pathName === RECENT || pathName === FAVORITES
+									?	null
+									:   <Controller>
+											<Trigger>
+												<div className='center-div'>
+													<TextInput 
+														icon='search' 
+														placeHolder='English/Cantonese/Mandarin/Jyutping'
+														margin='10px 0'
+														value={tempSearchKey ? tempSearchKey : ''}
+														height={matches ? '44px' : '34px'} 
+														handleChange={this.searchChange}
+														handleInput={this.searchSubmit}
+													/>
+												</div>
+											</Trigger>
+											<DropDown 
+												list={searchList} 
+												handleSelection={this.wordSelect}
+												adjustY={-5}
+												maxHeight='200px'
+											/>
+										</Controller>
+								}
+							</div>
 						</div>
 					</div>
 				)}}

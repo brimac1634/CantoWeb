@@ -227,9 +227,6 @@ class Search extends Component {
 
 		return (
 			<div className='page'>
-				<SearchBar 
-					className='search-bar'
-				/>
 				<MediaQuery minWidth={700}>
 					<div className='split-container'>
 						<div className='entry-list-container'>
@@ -262,6 +259,9 @@ class Search extends Component {
 						</div>
 					</div>
 				</MediaQuery>
+				<SearchBar 
+					className='search-bar'
+				/>
 			</div>
 		);
 	}
