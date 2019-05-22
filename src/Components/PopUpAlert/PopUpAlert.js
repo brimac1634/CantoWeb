@@ -37,7 +37,7 @@ const PopUpAlert = ({ alert: { title, message, showAlert, icon }, presentAlert }
 					<div className='alert-input-icon'>
 						<Icon iconSize='32' icon={icon} color='cantoBlue'/>
 					</div>
-					<div className='input-divider'>&nbsp;</div>
+					<div className='pop-divider'>&nbsp;</div>
 				</div>
 			);
 		}

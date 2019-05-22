@@ -41,7 +41,7 @@
 }
 
 .input-divider {
-	background: linear-gradient(transparent 0%, var(--cantoDarkGray) 10%, var(--cantoDarkGray) 90%, transparent 100%);
+	background: var(--cantoDarkGray);
 	width: 1px;
 	height: 95%;
 	margin-right: 10px;

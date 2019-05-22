@@ -75,7 +75,7 @@ code {
 .list-divider {
   width: 95%;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--cantoDarkGray), var(--cantoDarkGray), var(--cantoDarkGray), transparent);
+  background: var(--cantoDarkGray);
   margin: 8px 0;
 }
 
