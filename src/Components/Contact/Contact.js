@@ -37,9 +37,9 @@ class Contact extends Component {
 	}
 
 	componentDidMount() {
-		const user = JSON.parse(localStorage.getItem('user'))
-		if (user) {
-			const { userEmail } = user;
+		let user = localStorage.getItem('user')
+		if (user != null && user.length) {
+			const { userEmail } = JSON.parse(user);
 			this.setState({
 				newMessage: {
 					name: '',

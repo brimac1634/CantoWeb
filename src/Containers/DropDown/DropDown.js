@@ -17,7 +17,7 @@ const DropDown = ({ list, animateOut, closeOnClick, maxHeight, handleSelection, 
 			className={`drop-down ${popType}`} 
 			style={{width: `${width}px`, height: `auto`, maxHeight: `${maxHeight}`, top: `${y + height + (adjustYVal)}px`, left: `${x}px`}}
 		>
-			<div>
+			<div className='scroll-list'>
 				{	
 					list !== null &&
 					list.map((item, i) => {
