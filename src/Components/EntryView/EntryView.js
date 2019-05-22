@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './EntryView.css';
-import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
@@ -197,37 +196,31 @@ class EntryView extends Component {
 				{entry !== ''
 					?   <div className='inner-entry-view'>
 							<div className='entry-btn-container'>
-								<div data-tip="Toggle Favorite" >
-									<button 
-										className='entry-btn' 
-										onClick={() => this.toggleFavorite(entry_id, userID, canto_word)}
-									>
-										<Icon 
-											icon='like-2' 
-											iconSize='35' 
-											iconStyle='dark'
-											color={
-												isFavorited
-												? 'cantoPink'
-												: 'cantoDarkBlue'
-											}
-										/>
-									</button>
-								</div>
-								<ReactTooltip effect='solid' delayShow={1000}/>
-								<div data-tip="Play Audio Clip" >
-									<button 
-										className='entry-btn'
-										onClick={() => togglePlay(entry_id)}
-									>
-										<Icon 
-											icon='speaker-5' 
-											iconSize='35' 
-											iconStyle='dark'
-										/>
-									</button>
-								</div>
-								<ReactTooltip effect='solid' delayShow={1000}/>
+								<button 
+									className='entry-btn' 
+									onClick={() => this.toggleFavorite(entry_id, userID, canto_word)}
+								>
+									<Icon 
+										icon='like-2' 
+										iconSize='35' 
+										iconStyle='dark'
+										color={
+											isFavorited
+											? 'cantoPink'
+											: 'cantoDarkBlue'
+										}
+									/>
+								</button>
+								<button 
+									className='entry-btn'
+									onClick={() => togglePlay(entry_id)}
+								>
+									<Icon 
+										icon='speaker-5' 
+										iconSize='35' 
+										iconStyle='dark'
+									/>
+								</button>
 							</div>
 							<div className='top-group entry-section'>
 								<div className='canto-class'>

@@ -20,7 +20,8 @@
 
 .drop-down {
   box-shadow: var(--cantoShadow);
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 /*---------animations----------*/

@@ -191,41 +191,7 @@ class SignIn extends Component {
 						})
 				}
 			} else {
-				setLoading(true)
-				//register
-				apiRequest({
-					endPoint: '/register',
-					method: 'POST',
-					body: {email} 
-				})
-					.then(userData => {
-						setLoading(false)
-						if (userData && userData.error != null) {
-							const { name } = userData.error;
-							if (name === 'EmailTakenError') {
-								optionAlert({
-								    title: 'Email Unavailable',
-								    message: userData.error.message
-							    })
-							} else if (name === 'EmailError') {
-								optionAlert({
-								    title: 'Failed To Send Verification',
-								    message: userData.error.message
-							    })
-							} else {
-								serverError()
-							}
-						} else {
-							optionAlert({
-							    title: 'Verification Email Sent',
-							    message: `Please check your email (${userData.email}) for a verification email. If you don't see the email shortly, check your spam folder.`
-						    })
-						}
-					})
-					.catch(()=>{
-						setLoading(false)
-						serverError()
-					})
+				this.handleVerification(email)
 			}
 		}
     }
@@ -306,10 +272,47 @@ class SignIn extends Component {
     	}
     }
 
+    handleVerification = (email) => {
+    	const { setLoading } = this.props;
+    	setLoading(true)
+			apiRequest({
+				endPoint: '/register',
+				method: 'POST',
+				body: {email} 
+			})
+				.then(userData => {
+					setLoading(false)
+					if (userData && userData.error != null) {
+						const { name } = userData.error;
+						if (name === 'EmailTakenError') {
+							optionAlert({
+							    title: 'Email Unavailable',
+							    message: userData.error.message
+						    })
+						} else if (name === 'EmailError') {
+							optionAlert({
+							    title: 'Failed To Send Verification',
+							    message: userData.error.message
+						    })
+						} else {
+							serverError()
+						}
+					} else {
+						optionAlert({
+						    title: 'Verification Email Sent',
+						    message: `Please check your email (${userData.email}) for a verification email. If you don't see the email shortly, check your spam folder.`
+					    })
+					}
+				})
+				.catch(()=>{
+					setLoading(false)
+					serverError()
+				})
+    }
+
     onResetPassword = (email) => {
     	if (validateEmail(email)) {
-    		console.log(email)
-    		//request verification email to be sent
+    		this.handleVerification(email)
     	} else {
     		this.emailIsNotCorrect()
     	}
