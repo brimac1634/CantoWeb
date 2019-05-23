@@ -146,13 +146,18 @@ class SignIn extends Component {
 						.then(userData => {
 							setLoading(false)
 							if (userData && userData.error != null) {
-								const { name } = userData.error;
+								const { name, title, message } = userData.error;
 								if (name === 'ServerError') {
 									serverError()
 								} else if (name === 'EmailNotRegistered') {
 									this.askToRegister({
 										title: 'Email Not Registered',
-										message: 'The email address you have entered is not registered. Would you like to register?'
+										message: 'The email address you have entered is not registered. Would you like to register now?'
+									})
+								} else if (name === 'RegistrationIncomplete') {
+									this.askToRegister({
+										title: 'Email Unconfirmed',
+										message: 'Your email address has not been confirmed and therefore your registration is incomplete. Would you like to register now?'
 									})
 								} else if (name === 'ValidationError') {
 									this.setState({
@@ -160,8 +165,8 @@ class SignIn extends Component {
 									})
 									if (failCount <= 2) {
 										optionAlert({
-										    title: 'Invalid Credentials',
-										    message: 'The information you have entered does not match our records.',
+										    title: title,
+										    message: message,
 									    })
 									} else {
 										this.setState({failCount: 0})
@@ -249,10 +254,10 @@ class SignIn extends Component {
 						    ]
 					    })
 					} else if (name === 'UserNotFound') {
-						optionAlert({
-						    title: 'Not Found',
-						    message: 'Your user profile was not found. Please register as a new user.'
-					    })
+						this.askToRegister({
+							title: 'User Not Found',
+							message: 'Your user profile was not found. Please register as a new user. Would you like to register now?'
+						})
 					}
 				} else {
 					this.handleLogin('Login', userData)
@@ -283,16 +288,16 @@ class SignIn extends Component {
 				.then(userData => {
 					setLoading(false)
 					if (userData && userData.error != null) {
-						const { name } = userData.error;
+						const { name, title, message } = userData.error;
 						if (name === 'EmailTakenError') {
 							optionAlert({
-							    title: 'Email Unavailable',
-							    message: userData.error.message
+							    title: title,
+							    message: message
 						    })
 						} else if (name === 'EmailError') {
 							optionAlert({
 							    title: 'Failed To Send Verification',
-							    message: userData.error.message
+							    message: message
 						    })
 						} else {
 							serverError()
