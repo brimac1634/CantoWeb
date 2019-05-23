@@ -1,5 +1,5 @@
 import React from 'react';
-import CantoIcon from './CantoTalkIconBlue.png';
+import CantoIcon from '../../Assets/CantoTalkIconBlue.png';
 
 const Logo = ({ iconSize }) => {
 	let height = (iconSize) ? iconSize : '100%';
