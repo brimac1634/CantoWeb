@@ -3,8 +3,6 @@
 	min-height: 500px;
 	padding: 20px;
 	box-sizing: border-box;
-	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;

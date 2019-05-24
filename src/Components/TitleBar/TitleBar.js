@@ -40,7 +40,8 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 		VERIFY,
 		RESET,
 		WHAT,
-		CONTACT 
+		CONTACT,
+		PROFILE 
 	} = routes;
 
 	const banner = ((pathName) => {
@@ -65,6 +66,8 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 				return 'What?'
 			case CONTACT:
 				return 'Contact'
+			case PROFILE:
+				return 'Profile'
 			default:
 				return ''
 		}

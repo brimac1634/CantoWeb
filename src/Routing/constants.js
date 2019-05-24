@@ -13,5 +13,6 @@ export const routes = {
 	VERIFY: '/verify',
 	RESET: '/reset-account',
 	WHAT: '/what-is-cantotalk',
-	CONTACT: '/contact-us'
+	CONTACT: '/contact-us',
+	PROFILE: '/profile'
 }

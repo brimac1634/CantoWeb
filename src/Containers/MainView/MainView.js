@@ -5,6 +5,7 @@ import WordOfTheDay from '../WordOfTheDay/WordOfTheDay';
 import Learn from '../Learn/Learn';
 import SignIn from '../../Containers/SignIn/SignIn';
 import WhatIsCantoTalk from '../../Components/WhatIsCantoTalk/WhatIsCantoTalk';
+import Profile from '../Profile/Profile';
 import Contact from '../../Components/Contact/Contact';
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -39,6 +40,7 @@ class MainView extends Component {
 			SEARCH, 
 			WORD_OF_THE_DAY, 
 			LEARN, 
+			PROFILE,
 			TRANSITION 
 		} = routes;
 		const { location, location: { key } } = this.props
@@ -56,6 +58,20 @@ class MainView extends Component {
 						            classNames="fade"
 					            >
 				                    <SignIn />
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						path={PROFILE} 
+						render={()=>(
+							<TransitionGroup className='page-trans over-flow'>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+				                    <Profile />
 					            </CSSTransition>
 							</TransitionGroup>
 						)}

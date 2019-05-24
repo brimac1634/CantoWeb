@@ -21,7 +21,7 @@ h5 {
 }
 
 p {
-  color: var(--cantoDarkBlue);
+  color: var(--cantoBlue);
 }
 
 .contact-h {
@@ -63,7 +63,8 @@ code {
 }
 
 .over-flow {
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ghost-div {

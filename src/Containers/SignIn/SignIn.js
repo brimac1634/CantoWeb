@@ -101,9 +101,11 @@ class SignIn extends Component {
 	}
 
 	createUser = (userData) => {
+		const { name, id, email } = userData;
 		return {
-			userID: userData.id,
-			userEmail: userData.email,
+			userName: name,
+			userID: id,
+			userEmail: email,
 		}
 	}
 
@@ -199,16 +201,9 @@ class SignIn extends Component {
     handleLogin = (type, userData) => {
     	const { presentAlert, prevRoute, updateURL } = this.props;
     	const user = this.createUser(userData)
-    	let title = '';
-
-    	if (type === 'Login') {
-    		title = 'Login Successful'
-    	} else if (type === 'Register') {
-    		title = 'Registration Successful'
-    	}
 
 		const alert = {
-	        title: title,
+	        title: 'Login Successful',
 	        message: `You are now logged in as "${user.userEmail}".`,
 	        showAlert: true,
 	    }

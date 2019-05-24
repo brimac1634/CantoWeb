@@ -26,14 +26,18 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick, pathName, setPrevRoute, updateURL }) => {
+const Settings = ({ user: { userName }, updateUser, presentAlert, closeOnClick, pathName, setPrevRoute, updateURL }) => {
 	
-	let userIsLoggedIn = false;
-	if (userEmail != null && userEmail.length) {
-		userIsLoggedIn = true
-	}
+	const userIsLoggedIn = (userName != null && userName.length)
+		? true
+		: false
 
-	const { WHAT, LOGIN, CONTACT } = routes;
+	const { WHAT, LOGIN, CONTACT, PROFILE } = routes;
+
+	const handleProfile = () => {
+		updateURL(PROFILE)
+		closeOnClick()
+	}
 
 	const handleWhatIs = () => {
 		updateURL(WHAT)
@@ -70,12 +74,16 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 	}
 	return (
 		<div className='settings'>
-			{userIsLoggedIn 
-				? <p className='welcome'>{userEmail}</p> 
-				: <p className='welcome'>Welcome to CantoTalk!</p>
-			}
-			<div className='list-divider'>&nbsp;</div>
 			<div className='setting-list'>
+				{userIsLoggedIn 
+					?   <IconListItem 
+							icon='user-3' 
+							title={userName}
+							handleClick={handleProfile} 
+						/>
+					:   <p className='welcome'>Welcome to CantoTalk!</p>
+				}
+				<div className='list-divider'>&nbsp;</div>
 				<IconListItem 
 					icon='agenda' 
 					title='Dictionary Help'
@@ -88,8 +96,7 @@ const Settings = ({ user: { userEmail }, updateUser, presentAlert, closeOnClick,
 				/>
 				<IconListItem 
 					icon='paper-plane' 
-					title='Contact' 
-					href='mailto:info@cantotalk.com?Subject=I%20am%20interested%20in%20CantoTalk!'
+					title='Contact'
 					handleClick={handleContact}/>
 				<div className='list-divider'>&nbsp;</div>
 				{userIsLoggedIn

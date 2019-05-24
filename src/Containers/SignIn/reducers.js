@@ -2,6 +2,7 @@ import { UPDATE_USER } from './constants';
 
 const initialState = {
 	user: {
+		userName: '',
 		userID: '',
         userEmail: '',
 	}

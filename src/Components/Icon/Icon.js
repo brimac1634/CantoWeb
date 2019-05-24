@@ -13,7 +13,7 @@ const Icon = ({ icon, iconSize, title, color }) => {
 			case 'cantoWhite': return '#f9f9f9';
 			case 'cantoGray': return '#e0e0e0';
 			case 'cantoDarkGray': return '#d1d1d1';
-			default: return '#062743';
+			default: return '#113a5d';
 		}
 	}
 

@@ -14,6 +14,7 @@ import { push } from 'connected-react-router'
 const mapStateToProps = state => {
 	return {
 		prevRoute: state.prevRoute.route,
+		user: state.user.user,
 	}
 }
 
@@ -37,13 +38,12 @@ class Contact extends Component {
 	}
 
 	componentDidMount() {
-		let user = localStorage.getItem('user')
-		if (user != null && user.length) {
-			const { userEmail } = JSON.parse(user);
+		const { user } = this.props;
+		if (user != null) {
 			this.setState({
 				newMessage: {
 					name: '',
-					email: userEmail,
+					email: user.userEmail,
 					message: '',
 				}
 			});
@@ -132,12 +132,12 @@ class Contact extends Component {
 						<div className='contact'>
 							<div className='left-panel'>
 								<MediaQuery minWidth={361}>
-									<h1 className='pink contact-h'>{first}</h1>
-									<h1 className='contact-h'>{second}</h1>
+									<h1 className='pink'>{first}</h1>
+									<h1>{second}</h1>
 								</MediaQuery>
 								<MediaQuery maxWidth={360}>
-									<h2 className='pink contact-h'>{first}</h2>
-									<h2 className='contact-h'>{second}</h2>
+									<h2 className='pink'>{first}</h2>
+									<h2>{second}</h2>
 								</MediaQuery>
 								<p>Feel free to get in touch with us! Whether you need help with the application, or there is something you would like to see here, or just want to say hi, we are waiting to hear from you! 
 								</p>
