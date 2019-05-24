@@ -3,7 +3,7 @@ import './SignIn.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
-import { serverError, validateEmail } from '../../Helpers/helpers';
+import { serverError, connectionError, validateEmail } from '../../Helpers/helpers';
 import queryString from 'query-string';
 import MediaQuery from 'react-responsive';
 import HoverBox from '../../Components/HoverBox/HoverBox';
@@ -40,6 +40,7 @@ class SignIn extends Component {
 			signInButton: 'Sign In',
 			alternateButton: 'register',
 			token: '',
+			name: '',
 			email: '',
 			password: '',
 			password2: '',
@@ -106,10 +107,10 @@ class SignIn extends Component {
 		}
 	}
 
-	askToRegister = ({title, message}) => {
+	askToRegister = (title, message) => {
 		optionAlert({
 		    title: title,
-		    message: message,
+		    message: `${message} Would you like to register now?`,
 		    buttons: [
 		    	{
 		    		label: 'Yes',
@@ -150,15 +151,9 @@ class SignIn extends Component {
 								if (name === 'ServerError') {
 									serverError()
 								} else if (name === 'EmailNotRegistered') {
-									this.askToRegister({
-										title: 'Email Not Registered',
-										message: 'The email address you have entered is not registered. Would you like to register now?'
-									})
+									this.askToRegister(title, message)
 								} else if (name === 'RegistrationIncomplete') {
-									this.askToRegister({
-										title: 'Email Unconfirmed',
-										message: 'Your email address has not been confirmed and therefore your registration is incomplete. Would you like to register now?'
-									})
+									this.askToRegister(title, message)
 								} else if (name === 'ValidationError') {
 									this.setState({
 										failCount: failCount + 1
@@ -192,7 +187,7 @@ class SignIn extends Component {
 						})
 						.catch(()=>{
 							setLoading(false)
-							serverError()
+							connectionError()
 						})
 				}
 			} else {
@@ -237,11 +232,11 @@ class SignIn extends Component {
 			.then(userData => {
 				setLoading(false)
 				if (userData && userData.error != null) {
-					const { name } = userData.error;
+					const { name, title, message } = userData.error;
 					if (name === 'PasswordTokenExpired') {
 						optionAlert({
-						    title: 'Expired',
-						    message: 'This link to create a password has expired. Would you like to reset your password now?',
+						    title,
+						    message: `${message} Would you like to reset your password now?`,
 						    buttons: [
 						      {
 						        label: 'Yes',
@@ -255,8 +250,8 @@ class SignIn extends Component {
 					    })
 					} else if (name === 'UserNotFound') {
 						this.askToRegister({
-							title: 'User Not Found',
-							message: 'Your user profile was not found. Please register as a new user. Would you like to register now?'
+							title,
+							message: `${message} Would you like to register now?`
 						})
 					}
 				} else {
@@ -265,7 +260,7 @@ class SignIn extends Component {
 			})
 			.catch(()=>{
 				setLoading(false)
-				serverError()
+				connectionError()
 			})
     	} else if (!passwordIsValid) {
     		this.passwordIsIncomplete()
@@ -278,30 +273,26 @@ class SignIn extends Component {
     }
 
     handleVerification = (email) => {
+    	const { name } = this.state;
     	const { setLoading } = this.props;
+    	const body = {
+    		name: name.length ? name : null,
+    		email
+    	}
     	setLoading(true)
 			apiRequest({
 				endPoint: '/register',
 				method: 'POST',
-				body: {email} 
+				body: body
 			})
 				.then(userData => {
 					setLoading(false)
 					if (userData && userData.error != null) {
-						const { name, title, message } = userData.error;
-						if (name === 'EmailTakenError') {
-							optionAlert({
-							    title: title,
-							    message: message
-						    })
-						} else if (name === 'EmailError') {
-							optionAlert({
-							    title: 'Failed To Send Verification',
-							    message: message
-						    })
-						} else {
-							serverError()
-						}
+						const { title, message } = userData.error;
+						optionAlert({
+						    title,
+						    message
+					    })
 					} else {
 						optionAlert({
 						    title: 'Verification Email Sent',
@@ -309,9 +300,9 @@ class SignIn extends Component {
 					    })
 					}
 				})
-				.catch(()=>{
+				.catch(err=>{
 					setLoading(false)
-					serverError()
+					connectionError()
 				})
     }
 
@@ -338,7 +329,7 @@ class SignIn extends Component {
     }
 
     renderComponent = (pathName) => {
-    	const { title, email, password, password2, signInButton, alternateButton } = this.state;
+    	const { title, email, name, password, password2, signInButton, alternateButton } = this.state;
     	const { LOGIN, REGISTER, VERIFY, RESET } = routes;
     	const { updateURL } = this.props;
     	
@@ -417,8 +408,20 @@ class SignIn extends Component {
 					</div>
 					<form className='right-panel' autoComplete='on'>
 						<h2 className='right-title'>{title}</h2>
+						{pathName === REGISTER &&
+							<TextInput 
+								icon='user-3' 
+								margin='0'
+								placeHolder='Name'
+								value={name}
+								id='name'
+								name='name'
+								type='text'
+								handleChange={this.onInputChange}
+							/>
+						}
 						<TextInput 
-							icon='user-3' 
+							icon='paper-plane-1' 
 							margin={pathName === LOGIN ? '0' : '10px 0 20px 0'}
 							placeHolder='Email Address'
 							value={email}
@@ -476,7 +479,6 @@ class SignIn extends Component {
 
 	render() {
 		const { pathName } = this.props;
-		console.log(pathName)
 		return (
 			<HoverBox>
 					{this.renderComponent(pathName)}
