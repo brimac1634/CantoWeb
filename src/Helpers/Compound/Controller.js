@@ -19,10 +19,13 @@ class Controller extends Component {
 	componentDidUpdate(){
 		setTimeout(() => {
 		  if(this.state.show){
+		  	// mousedown
 		    window.addEventListener('click', this.animateOut)
+		    window.addEventListener('touchstart', this.handleTouch)
 		    window.addEventListener('keydown', this.handleEntryKey)
 		  } else {
 		    window.removeEventListener('click', this.animateOut)
+		    window.removeEventListener('touchstart', this.handleTouch)
 		    window.removeEventListener('keydown', this.handleEntryKey)
 		  }
 		}, 0)
@@ -45,6 +48,11 @@ class Controller extends Component {
 				height: rect.height,
 			}
 		})
+	}
+
+	handleTouch = () => {
+		console.log('here')
+		this.animateOut()
 	}
 
 	animateOut = () => {
