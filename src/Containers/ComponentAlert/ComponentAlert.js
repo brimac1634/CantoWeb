@@ -22,8 +22,9 @@ const componentAlert = (WrappedComponent) => {
         })
       }
     }
-
+ 
     close = () => {
+      console.log('pressed')
       removeBodyClass()
       removeComponentAlert()
     }

@@ -6,7 +6,7 @@
 	justify-content: flex-start;
 	align-items: center;
 	text-align: center;
-	background: var(--cantoWhite)
+	background: var(--cantoWhite);
 }
 
 .logo-bar {
@@ -21,8 +21,7 @@
 	padding: 8px;
 }
 
-.top-bar p {
-	padding-left: 10px;
+.setting-list p {
 	font-size: 14px;
 }
 
@@ -51,7 +50,7 @@
 }
 
 @media screen and (max-width: 575px) {
-    .top-bar p {
+    .setting-list p {
 		font-size: 18px;
 	}
 }
