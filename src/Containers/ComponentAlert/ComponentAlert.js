@@ -29,6 +29,10 @@ const componentAlert = (WrappedComponent) => {
       removeComponentAlert()
     }
 
+    stopBubble = (event) => {
+      event.stopPropagation();
+    }
+
     render () {
       let { width } = this.state;
       return (
@@ -42,6 +46,7 @@ const componentAlert = (WrappedComponent) => {
               <div 
                 className='component-alert-body'
                 style={{maxWidth: `${width}px`}}
+                onClick={this.stopBubble}
               >
                 <button 
                   ref={this.closeButton} 
@@ -52,7 +57,7 @@ const componentAlert = (WrappedComponent) => {
                   <Icon 
                     icon='multiply' 
                     iconStyle='dark' 
-                    width='15'
+                    width='13'
                   />
                 </button>
                 <div className='inner-container' ref={this.content}>
