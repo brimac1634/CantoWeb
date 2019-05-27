@@ -14,7 +14,6 @@
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
-	
 }
 
 .input-group:focus-within,
@@ -67,4 +66,10 @@ input:-webkit-autofill:active  {
 .text-area {
 	resize: none;
 	overflow: auto;
+}
+
+@media screen and (max-width: 575px) {
+	.input-group {
+		height: 44px;
+	}
 }

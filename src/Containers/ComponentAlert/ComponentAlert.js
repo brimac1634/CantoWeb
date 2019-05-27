@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './ComponentAlert.css';
+import MediaQuery from 'react-responsive';
 import ReactDOM, { render, unmountComponentAtNode } from 'react-dom'
 import Icon from '../../Components/Icon/Icon';
 
@@ -48,18 +49,20 @@ const componentAlert = (WrappedComponent) => {
                 style={{maxWidth: `${width}px`}}
                 onClick={this.stopBubble}
               >
-                <button 
-                  ref={this.closeButton} 
-                  className='close' 
-                  onClick={this.close}
-                  onTouchEnd={this.close}
-                >
-                  <Icon 
-                    icon='multiply' 
-                    iconStyle='dark' 
-                    width='13'
-                  />
-                </button>
+                <MediaQuery minWidth={800}>
+                  <button 
+                    ref={this.closeButton} 
+                    className='close' 
+                    onClick={this.close}
+                    onTouchEnd={this.close}
+                  >
+                    <Icon 
+                      icon='multiply' 
+                      iconStyle='dark' 
+                      width='13'
+                    />
+                  </button>
+                </MediaQuery>
                 <div className='inner-container' ref={this.content}>
                   <WrappedComponent 
                     handleClose={this.close}
