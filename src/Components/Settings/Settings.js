@@ -79,6 +79,7 @@ const Settings = ({ user: { userName }, updateUser, presentAlert, closeOnClick, 
 					?   <IconListItem 
 							icon='user-3' 
 							title={userName}
+							bold={true}
 							handleClick={handleProfile} 
 						/>
 					:   <p className='welcome'>Welcome to CantoTalk!</p>

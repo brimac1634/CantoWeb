@@ -3,7 +3,7 @@ import './Profile.css';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import TextInput from '../../Components/TextInput/TextInput';
-import { serverError } from '../../Helpers/helpers';
+import { connectionError } from '../../Helpers/helpers';
 import { optionAlert } from '../OptionAlert/OptionAlert';
 import HoverBox from '../../Components/HoverBox/HoverBox';
 import Button from '../../Components/Button/Button';
@@ -11,6 +11,7 @@ import { push } from 'connected-react-router'
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
 import { setLoading } from '../../Loading/actions';
+import { setUser } from '../SignIn/actions';
 
 const mapStateToProps = state => {
 	return {
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setLoading: (loading) => dispatch(setLoading(loading)),
 		updateURL: (path) => dispatch(push(path)),
+		updateUser: (user) => dispatch(setUser(user)),
 	}
 }
 
@@ -30,41 +32,77 @@ class Profile extends Component {
 		super(props)
 		this.state = {
 			password: '',
-			user: {
-				userName: '',
-				userEmail: '',
-				userID: ''
-			}
 		}
 	}
 
-	componentDidMount() {
-		const { user } = this.props;
-		if (user != null) {
-			this.setState({user});
+	verifyDeletion = (event) => {
+		const { password } = this.state;
+		if (password.length) {
+			optionAlert({
+			    title: 'Account Deletion',
+			    message: 'Are you sure you want to delete your account and all your saved data?',
+			    buttons: [
+			    	{
+			    		label: 'Yes',
+				        onClick: () => this.handleDelete()
+			    	},
+			    	{
+			    		label: 'No',
+				        onClick: () => {}
+			    	},
+			    ]
+		    })
+		} else {
+			optionAlert({
+			    title: 'Password Needed',
+			    message: 'Your password is required to delete your account.',
+		    })
 		}
-	}
-
-	submitDelete = (event) => {
-		const { userID } = this.props;
-		setLoading(true)
-		apiRequest({
-			endPoint: '/contact-us',
-			method: 'POST',
-			body: userID 
-		})
-		.then(res => {
-
-		})
-		.catch(() => {
-			setLoading(false)
-			serverError()
-		})
+		
 	    event.preventDefault();
 	}
 
 	handleDelete = () => {
-		this.setState({isDeleting: true})
+		const { 
+			user: {
+				userEmail
+			}, 
+			updateUser, 
+			setLoading, 
+			updateURL 
+		} = this.props;
+		const { password } = this.state;
+		const { SEARCH } = routes;
+		setLoading(true)
+		apiRequest({
+			endPoint: '/delete-account',
+			method: 'POST',
+			body: {userEmail, password} 
+		})
+			.then(res => {
+				setLoading(false)
+				if (res && res.error != null) {
+					const { title, message } = res.error;
+					optionAlert({title, message})
+				} else {
+					updateUser('');
+					localStorage.setItem('user', '');
+					optionAlert({
+					    title: 'Account Deleted',
+					    message: 'Your user account has successfully been deleted.',
+					    buttons: [
+					    	{
+					    		label: 'Okay',
+						        onClick: () => updateURL(SEARCH)
+					    	},
+					    ]
+				    })
+				}
+			})
+			.catch(() => {
+				setLoading(false)
+				connectionError()
+			})
 	}
 
 	onPasswordInput = (event) => {
@@ -117,7 +155,7 @@ class Profile extends Component {
 											icon='multiply' 
 											height='44px'
 											margin='0'
-											handleClick={this.handleDelete}
+											handleClick={this.verifyDeletion}
 										/>
 									</div>
 								</div>

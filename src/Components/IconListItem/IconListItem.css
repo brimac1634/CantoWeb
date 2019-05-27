@@ -23,6 +23,16 @@
 
 .list-item p {
 	padding-left: 8px;
-	font-size: 14px;
-	color: var(--cantoDarkBlue);
+	font-size: 15px;
+	color: var(--cantoBlue);
+}
+
+.bold {
+	font-weight: bold;
+}
+
+@media screen and (max-width: 575px) {
+    .list-item p {
+		font-size: 18px;
+	}
 }

@@ -17,7 +17,6 @@ import { setAlert } from '../../Components/PopUpAlert/actions';
 
 const mapStateToProps = state => {
 	return {
-		prevRoute: state.prevRoute.route,
 		pathName: state.router.location.pathname,
 		search: state.router.location.search,
 	}
@@ -161,10 +160,7 @@ class SignIn extends Component {
 										failCount: failCount + 1
 									})
 									if (failCount <= 2) {
-										optionAlert({
-										    title: title,
-										    message: message,
-									    })
+										optionAlert({title, message})
 									} else {
 										this.setState({failCount: 0})
 										optionAlert({
@@ -199,7 +195,8 @@ class SignIn extends Component {
     }
 
     handleLogin = (type, userData) => {
-    	const { presentAlert, prevRoute, updateURL } = this.props;
+    	const { presentAlert, updateURL } = this.props;
+    	const { SEARCH } = routes;
     	const user = this.createUser(userData)
 
 		const alert = {
@@ -209,7 +206,7 @@ class SignIn extends Component {
 	    }
 		this.handleUpdateUser(user)
 		presentAlert(alert);
-		updateURL(prevRoute)
+		updateURL(SEARCH)
     }
 
     onVerifyEmail = () => {
@@ -329,7 +326,7 @@ class SignIn extends Component {
     	const { updateURL } = this.props;
     	
     	if (pathName === RESET || pathName === VERIFY) {
-    		const heading = pathName === RESET ? 'Reset Account' : 'New Password'
+    		const heading = pathName === RESET ? 'Reset Account' : 'Set Password'
 			const line = pathName === RESET ? 'We will email you a link to reset your password.' : 'Please put your new password in both fields below.'
     		return (
     			<div className='sign-in-container'>

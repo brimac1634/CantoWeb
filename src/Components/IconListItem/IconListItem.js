@@ -2,7 +2,8 @@ import React from 'react';
 import './IconListItem.css';
 import Icon from '../Icon/Icon';
 
-const IconListItem = ({ icon, title, handleClick }) => {
+const IconListItem = ({ icon, title, bold, handleClick }) => {
+	const titleStyle = bold ? 'bold' : null
 	return (
 		<div className='list-item' onClick={handleClick}>
 			{
@@ -11,12 +12,11 @@ const IconListItem = ({ icon, title, handleClick }) => {
 					<Icon 
 						icon={icon}
 						iconType='icon' 
-						iconSize='22' 
-						color='cantoDarkBlue'
+						iconSize='22'
 					/>
 				</div>
 			}
-			<p>{title}</p>
+			<p className={titleStyle}>{title}</p>
 		</div>
 	);
 }
