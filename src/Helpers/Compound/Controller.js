@@ -21,11 +21,11 @@ class Controller extends Component {
 		  if(this.state.show){
 		  	// mousedown
 		    window.addEventListener('click', this.animateOut)
-		    window.addEventListener('touchstart', this.handleTouch)
+		    window.addEventListener('touchend', this.handleTouch)
 		    window.addEventListener('keydown', this.handleEntryKey)
 		  } else {
 		    window.removeEventListener('click', this.animateOut)
-		    window.removeEventListener('touchstart', this.handleTouch)
+		    window.removeEventListener('touchend', this.animateOut)
 		    window.removeEventListener('keydown', this.handleEntryKey)
 		  }
 		}, 0)
@@ -51,6 +51,7 @@ class Controller extends Component {
 	}
 
 	handleTouch = () => {
+		//maybe set just for mobile
 		console.log('here')
 		this.animateOut()
 	}
