@@ -23,7 +23,8 @@ const componentAlert = (WrappedComponent) => {
       }
     }
     
-    close = () => {
+    close = (event) => {
+      event.stopPropagation()
       removeBodyClass()
       removeComponentAlert()
     }
@@ -35,6 +36,7 @@ const componentAlert = (WrappedComponent) => {
           <div
             className='component-overlay'
             ref={dom => (this.overlay = dom)}
+            onClick={this.close}
           >
             <div className='component-alert'>
               <div 

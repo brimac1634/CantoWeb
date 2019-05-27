@@ -49,7 +49,7 @@ class Controller extends Component {
 		})
 	}
 
-	animateOut = () => {
+	animateOut = (event) => {
 		this.setState({
 			animateOut: true,
 		})
