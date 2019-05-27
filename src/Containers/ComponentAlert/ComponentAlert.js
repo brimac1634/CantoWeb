@@ -22,9 +22,8 @@ const componentAlert = (WrappedComponent) => {
         })
       }
     }
- 
+    
     close = () => {
-      console.log('pressed')
       removeBodyClass()
       removeComponentAlert()
     }
@@ -42,7 +41,12 @@ const componentAlert = (WrappedComponent) => {
                 className='component-alert-body'
                 style={{maxWidth: `${width}px`}}
               >
-                <button className='close' onClick={this.close}>
+                <button 
+                  ref={this.closeButton} 
+                  className='close' 
+                  onClick={this.close}
+                  onTouchEnd={this.close}
+                >
                   <Icon 
                     icon='multiply' 
                     iconStyle='dark' 

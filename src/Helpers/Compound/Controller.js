@@ -19,7 +19,6 @@ class Controller extends Component {
 	componentDidUpdate(){
 		setTimeout(() => {
 		  if(this.state.show){
-		  	// mousedown
 		    window.addEventListener('click', this.animateOut)
 		    window.addEventListener('touchend', this.animateOut)
 		    window.addEventListener('keydown', this.handleEntryKey)
@@ -50,10 +49,6 @@ class Controller extends Component {
 		})
 	}
 
-	// handleTouch = () => {
-	// 	this.setState
-	// }
-
 	animateOut = () => {
 		this.setState({
 			animateOut: true,
@@ -63,7 +58,7 @@ class Controller extends Component {
 			show: false,
 			animateOut: false,
 		})
-		}, 800)
+		}, 400)
 	}
 
 	toggle = () => {
