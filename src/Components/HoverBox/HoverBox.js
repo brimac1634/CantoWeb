@@ -16,14 +16,17 @@ class HoverBox extends Component {
 	constructor(props) {
     super(props);
     this.content = React.createRef();
+    this.close = React.createRef();
     this.state = {
       childHeight: 0
     }
   }
 
   componentDidMount() {
+    const { handleClick } = this.props;
     const rect = this.content.current.getBoundingClientRect()
     this.setState({childHeight: rect.height})
+    this.close.addEventListener('touchend', handleClick)
   }
 
   render() {
@@ -40,7 +43,11 @@ class HoverBox extends Component {
                   <div className='hover-box-container'>
                     {canClose &&
                       <Link to={prevRoute ? prevRoute : ROOT}>
-                        <button className='hover-close' onClick={handleClick}>
+                        <button 
+                          ref={this.close}
+                          className='hover-close' 
+                          onClick={handleClick}
+                        >
                             <Icon 
                               icon='multiply' 
                               iconStyle='dark' 
