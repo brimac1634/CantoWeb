@@ -3,10 +3,10 @@ import './Contact.css';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import { validateEmail, serverError } from '../../Helpers/helpers';
-import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
-import HoverBox from '../HoverBox/HoverBox';
-import TextInput from '../TextInput/TextInput';
-import Button from '../Button/Button';
+import { optionAlert } from '../OptionAlert/OptionAlert';
+import HoverBox from '../../Components/HoverBox/HoverBox';
+import TextInput from '../../Components/TextInput/TextInput';
+import Button from '../../Components/Button/Button';
 import apiRequest from '../../Helpers/apiRequest';
 import { setLoading } from '../../Loading/actions';
 import { push } from 'connected-react-router'

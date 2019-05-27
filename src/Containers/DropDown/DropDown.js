@@ -2,11 +2,11 @@ import React from 'react';
 import '../../Helpers/Compound/Compound.css';
 import IconListItem from '../../Components/IconListItem/IconListItem';
 
-const DropDown = ({ list, animateOut, closeOnClick, maxHeight, handleSelection, adjustY, triggerRect: {x, y, width, height}}) => {
+const DropDown = ({ list, animateOut, toggle, maxHeight, handleSelection, adjustY, triggerRect: {x, y, width, height}}) => {
 
 	const handleSelect = (item) => {
 		handleSelection(item)
-		closeOnClick()
+		toggle()
 	}
 
 	let popType = animateOut ? 'animate-out' : 'animate-in'

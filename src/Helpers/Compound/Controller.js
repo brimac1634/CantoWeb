@@ -36,15 +36,6 @@ class Controller extends Component {
 		}
 	}
 
-	closeOnClick = () => {
-		const clickEvent = new MouseEvent("click", {
-		    "view": window,
-		    "bubbles": true,
-		    "cancelable": false
-		});
-		window.dispatchEvent(clickEvent)
-	}
-
 	setPositition = (rect) => {
 		this.setState({
 			triggerRect: {
@@ -91,7 +82,7 @@ class Controller extends Component {
 		      	if (show) {
 		      		return ReactDOM.createPortal(
 			            <span className='compound-span' onClick={event => event.stopPropagation()}>
-				            {React.cloneElement(child, { toggle: this.toggle, show: show, triggerRect: triggerRect, animateOut: animateOut, closeOnClick: this.closeOnClick })}
+				            {React.cloneElement(child, { toggle: this.toggle, show: show, triggerRect: triggerRect, animateOut: animateOut })}
 				        </span>
 				        , document.body
 			        )

@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const Settings = ({ user: { userName }, updateUser, presentAlert, closeOnClick, pathName, setPrevRoute, updateURL }) => {
+const Settings = ({ user: { userName }, updateUser, presentAlert, togglePopOver, pathName, setPrevRoute, updateURL }) => {
 	
 	const userIsLoggedIn = (userName != null && userName.length)
 		? true
@@ -36,29 +36,29 @@ const Settings = ({ user: { userName }, updateUser, presentAlert, closeOnClick, 
 
 	const handleProfile = () => {
 		updateURL(PROFILE)
-		closeOnClick()
+		togglePopOver()
 	}
 
 	const handleWhatIs = () => {
 		updateURL(WHAT)
-		closeOnClick()
+		togglePopOver()
 	}
 
 	const handleDictionaryHelp = () => {
 		renderComponentAlert(DictionaryHelp)
-		closeOnClick()
+		togglePopOver()
 	}
 	
 	const handleContact = () => {
 		setPrevRoute(pathName)
 		updateURL(CONTACT)
-		closeOnClick()
+		togglePopOver()
 	}
 
 	const handleLogin = () => {
 		setPrevRoute(pathName)
 		updateURL(LOGIN)
-		closeOnClick()
+		togglePopOver()
 	}
 
 	const handleLogout = () => {

@@ -4,11 +4,7 @@ import navSections from '../navSections';
 import {Link} from 'react-router-dom';
 import IconListItem from '../../../Components/IconListItem/IconListItem';
 
-const PopOverNav = ({ closeOnClick }) => {
-
-	const handlePopOver = () => {
-		closeOnClick()
-	}
+const PopOverNav = ({ togglePopOver }) => {
 
 	return (
 		<div className='nav'>
@@ -17,7 +13,7 @@ const PopOverNav = ({ closeOnClick }) => {
 					const { title, to, icon } = section;
 
 					return(
-						<div key={title} className='link' onClick={handlePopOver}>
+						<div key={title} className='link' onClick={togglePopOver}>
 							<Link to={to} className='link'>
 								<IconListItem icon={icon} title={title}/>
 							</Link>

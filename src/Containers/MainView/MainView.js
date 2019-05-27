@@ -6,7 +6,7 @@ import Learn from '../Learn/Learn';
 import SignIn from '../../Containers/SignIn/SignIn';
 import WhatIsCantoTalk from '../../Components/WhatIsCantoTalk/WhatIsCantoTalk';
 import Profile from '../Profile/Profile';
-import Contact from '../../Components/Contact/Contact';
+import Contact from '../Contact/Contact';
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { routes } from '../../Routing/constants';

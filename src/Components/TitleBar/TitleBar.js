@@ -10,7 +10,7 @@ import Controller from '../../Helpers/Compound/Controller';
 import Trigger from '../../Helpers/Compound/Trigger';
 import PopOver from '../../Containers/PopOver/PopOver';
 import Settings from '../Settings/Settings';
-import PopOverNav from '../../Containers/NavBar/PopOverNav/PopOverNav';
+import PopOverNav from '../NavBar/PopOverNav/PopOverNav';
 import {setMobileEntry} from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 
