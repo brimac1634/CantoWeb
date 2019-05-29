@@ -4,7 +4,7 @@ export default ({
 	endPoint = '',
 	method = 'GET',
 	headers = {'Content-Type': 'application/json'},
-	body = {},
+	body,
 	timeout = 20000
 }) => {
     return Promise.race([fetch(`${process.env.REACT_APP_SERVER_URL}${endPoint}`, {

@@ -61,11 +61,11 @@ class Calendar extends Component {
 	    return weeks;
     };
 
-		renderMonthLabel() {
-		    const { month } = this.state;
+	renderMonthLabel() {
+	    const { month } = this.state;
 
-		    return <span className="month-label">{month.format("MMMM YYYY")}</span>;
-	    }
+	    return <span className="month-label">{month.format("MMMM YYYY")}</span>;
+    };
 
 	render() {
 		return (
