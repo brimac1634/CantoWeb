@@ -14,28 +14,21 @@
 	flex-direction: row;
 }
 
-.divider {
-	height: 100%;
-	width: 1px;
-	background: var(--cantoDarkGray);
-}
-
+.entry-view-container,
 .entry-list-container {
 	position: relative;
 	width: 50%;
 	height: 100%;
 	display: flex;
 	justify-content: center;
+}
+
+.entry-list-container {
 	align-items: center;
 	overflow: hidden;
 }
 
 .entry-view-container {
-	position: relative;
-	width: 50%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
 	align-items: flex-start;
 	overflow-y: auto;
 }
@@ -79,6 +72,5 @@
 
 	.split-container {
 		display: block;
-		top: 
 	}
 }
