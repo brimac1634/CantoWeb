@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './WordOfTheDay.css';
 import EntryView from '../../Components/EntryView/EntryView';
+import Calendar from '../../Components/Calendar/Calendar';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import MediaQuery from 'react-responsive';
 
@@ -13,6 +14,10 @@ class WordOfTheDay extends Component {
 		}
 	}
 
+	handleSelect = (entry) => {
+		this.setState({selectedEntry: entry})
+	}
+
 	render() {
 		const { selectedEntry } = this.state;
 		return (
@@ -20,7 +25,7 @@ class WordOfTheDay extends Component {
 				<MediaQuery minWidth={700}>
 					<div className='split-container'>
 						<div className='half-container'>
-							hey
+							<Calendar selectEntry={this.handleSelect}/>
 						</div>
 						<div className='half-container'>
 							<EntryView 
