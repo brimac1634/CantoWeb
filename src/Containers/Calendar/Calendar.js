@@ -3,6 +3,7 @@ import './Calendar.css'
 import moment from 'moment';
 import Week from './Week';
 import DayNames from './DayNames';
+import Icon from '../../Components/Icon/Icon';
 
 class Calendar extends Component {
 	constructor(props) {
@@ -71,9 +72,21 @@ class Calendar extends Component {
 	      <section className="calendar">
 	        <header className="header">
 	          <div className="month-display calendar-row">
-	            <i className="arrow fa fa-angle-left" onClick={this.previous}/>
+	            <div className="arrow fa fa-angle-left" onClick={this.previous}>
+		            <Icon 
+						icon='fast-forward' 
+						iconSize='25'
+						color='cantoWhite'
+					/>
+				</div>
 	            {this.renderMonthLabel()}
-	            <i className="arrow fa fa-angle-right" onClick={this.next}/>
+	            <div className="arrow fa fa-angle-right" onClick={this.next}>
+		            <Icon 
+						icon='fast-forward' 
+						iconSize='25'
+						color='cantoWhite'
+					/>
+				</div>
 	          </div>
 	          <DayNames />
 	        </header>

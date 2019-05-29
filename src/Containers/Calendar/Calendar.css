@@ -24,7 +24,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--cantoBlue);
+    color: var(--cantoWhite);
     cursor: default;
     font-size:1.4rem;
     display: block;
@@ -36,7 +36,7 @@ header {
 .month-display {
     align-items: center;
     height: 50px;
-    background: var(--cantoDarkGray);
+    background: var(--cantoDarkBlue);
 }
 
 .month-label { 
@@ -55,8 +55,12 @@ header {
     align-items: center;
 }
 
+.fa-angle-left {
+    transform: rotateZ(180deg);
+}
+
 .arrow:hover {
-    background: darken(var(--cantoDarkBlue), 20%);
+    background: darken(var(--cantoDarkBlue), 50%);
 }
 
 .week {
@@ -68,7 +72,7 @@ header {
 }
 
 .day-names .day {
-    color: var(--cantoDarkGray);
+    color: var(--cantoDarkBlue);
     font-weight: bold;
     cursor: default;
     font-size: 1.2rem;
@@ -97,7 +101,7 @@ header {
 }
 
 .day:hover {
-    background: var(--cantoGray);
+    background: var(--cantoPink);
 }
 
 .day:first-child {
