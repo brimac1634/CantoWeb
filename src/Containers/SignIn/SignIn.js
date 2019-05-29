@@ -404,7 +404,7 @@ class SignIn extends Component {
 							<TextInput 
 								icon='user-3' 
 								margin='0'
-								placeHolder='Name'
+								placeHolder='Full Name'
 								value={name}
 								id='name'
 								name='name'

@@ -42,6 +42,7 @@ class Search extends Component {
 		super()
 		this.state = {
 			entries: [],
+			selectedEntry: {}
 		}
 	}
 
@@ -182,9 +183,9 @@ class Search extends Component {
 			user: {userID}
 		} = this.props;
 		const { entry_id } = entry;
+		this.setState({selectedEntry: entry})
 		const searchURL = this.setSearchURL({entryID: entry_id})
 		updateURL(searchURL)
-
 		setMobileEntry(entry_id);
 		if (userID !== '' && userID != null) {
 			this.addEntryToRecent(userID, entry_id);
@@ -219,7 +220,7 @@ class Search extends Component {
 	};
 
 	render() {
-		const { entries } = this.state;
+		const { entries, selectedEntry } = this.state;
 		const { mobileSelectedEntry } = this.props;
 		const entryViewMobile = mobileSelectedEntry 
 			? 'visible-entry-view' 
@@ -236,7 +237,9 @@ class Search extends Component {
 							/>
 						</div>
 						<div className='entry-view-container'>
-							<EntryView />
+							<EntryView 
+								selectedEntry={selectedEntry} 
+							/>
 						</div>
 					</div>
 				</MediaQuery>
@@ -255,7 +258,9 @@ class Search extends Component {
 						<div 
 							className={`entry-view-container ${entryViewMobile}`}
 						>
-							<EntryView />
+							<EntryView
+								selectedEntry={selectedEntry} 
+							/>
 						</div>
 					</div>
 				</MediaQuery>

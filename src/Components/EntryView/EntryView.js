@@ -45,11 +45,12 @@ class EntryView extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const { hash } = this.props;
-		if (hash && prevProps.hash !== hash) {
+		const { selectedEntry, userID, hash } = this.props;
+		if (prevProps.selectedEntry !== selectedEntry) {
+			this.setState({entry: selectedEntry})
+			this.checkIfFavorite(selectedEntry.entry_id, userID);
+		} else if (hash && hash !== prevProps.hash) {
 			this.getEntry(hash)
-		} else if (prevProps.hash !== hash) {
-			this.setState({entry: ''})
 		}
 	}
 
@@ -83,17 +84,20 @@ class EntryView extends Component {
 	}
 
 	checkIfFavorite = (entryID, userID) => {
+		const { setLoading } = this.props;
 		const { isFavorited } = this.state;
+		setLoading(true)
 		apiRequest({
-				endPoint: '/favorites/isFavorited',
-				method: 'POST',
-				body: {entryID, userID} 
-			})
-			.then(favorited => {
-				if (favorited !== isFavorited) {
-					this.setState({isFavorited: favorited})
-				}
-			})
+			endPoint: '/favorites/isFavorited',
+			method: 'POST',
+			body: {entryID, userID} 
+		})
+		.then(favorited => {
+			setLoading(false)
+			if (favorited !== isFavorited) {
+				this.setState({isFavorited: favorited})
+			}
+		})
 	}
 
 	toggleFavorite = (entryID, userID, cantoWord) => {
