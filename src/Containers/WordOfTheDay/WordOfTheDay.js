@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './WordOfTheDay.css';
 import EntryView from '../../Components/EntryView/EntryView';
-import Calendar from '../../Components/Calendar/Calendar';
+import Calendar from '../Calendar/Calendar';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import MediaQuery from 'react-responsive';
 
@@ -23,7 +23,7 @@ class WordOfTheDay extends Component {
 		return (
 			<div className='page word-of-day'>
 				<MediaQuery minWidth={700}>
-					<div className='split-container'>
+					<div className='wod-split'>
 						<div className='half-container'>
 							<Calendar selectEntry={this.handleSelect}/>
 						</div>
@@ -35,7 +35,7 @@ class WordOfTheDay extends Component {
 					</div>
 				</MediaQuery>
 				<MediaQuery maxWidth={699}>
-					<div className='split-container'>
+					<div className='wod-split'>
 						<div className='half-container'>
 							<EntryView 
 								selectedEntry={selectedEntry} 
@@ -43,7 +43,7 @@ class WordOfTheDay extends Component {
 						</div>
 					</div>
 					<SearchBar 
-						className='search-bar'
+						className='wod-bar'
 					/>
 				</MediaQuery>
 			</div>

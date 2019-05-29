@@ -1,0 +1,118 @@
+.vertical-center {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
+
+.calendar-row {
+    display: flex;
+    width: 100%;
+}
+
+.calendar {
+    display: block;
+    width: 100%;
+    border: solid 1px var(--cantoDarkGray);
+    border-radius: 4px;
+    margin: 10px auto;
+    font-size: 1.3rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--cantoBlue);
+    cursor: default;
+    font-size:1.4rem;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.month-display {
+    align-items: center;
+    height: 50px;
+    background: var(--cantoDarkGray);
+}
+
+.month-label { 
+   flex: 1;
+}
+
+.arrow {
+    text-align: center;
+    flex-basis: 15%;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background .2s;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow:hover {
+    background: darken(var(--cantoDarkBlue), 20%);
+}
+
+.week {
+    border-top: solid 1px var(--cantoDarkGray);   
+}
+
+.week:first-child {
+    border-top: none;
+}
+
+.day-names .day {
+    color: var(--cantoDarkGray);
+    font-weight: bold;
+    cursor: default;
+    font-size: 1.2rem;
+    height: 50px;
+}
+
+.day-names .day {
+    cursor: default;
+}
+
+.day-names .day:hover {
+    background: inherit;
+
+}
+
+.day {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex: 1;
+    height: 80px;
+    border-left: solid 1px var(--cantoDarkGray);
+    cursor: pointer;
+    transition: all .2s;
+    color: var(--cantoDarkBlue);
+}
+
+.day:hover {
+    background: var(--cantoGray);
+}
+
+.day:first-child {
+    border-left:none;
+}
+
+.today {
+    background: var(--cantoDarkGray);
+}
+
+.different-month {
+    color: var(--cantoDarkGray);
+}
+
+.selected {
+    background: var(--cantoPink);
+    color: var(--cantoWhite);
+}

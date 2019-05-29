@@ -1,6 +1,6 @@
 .entry-view {
 	height: auto;
-	width: calc(100% - 20px);
+	width: 100%;
 	display: block;
 	padding: 30px;
 	margin-top: 10px;

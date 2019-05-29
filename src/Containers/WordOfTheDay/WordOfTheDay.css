@@ -4,13 +4,13 @@
 	background: var(--cantoWhite);
 }
 
-.search-bar {
+.wod-bar {
 	position: absolute;
 	top: 0;
 	right: 0;
 }
 
-.split-container {
+.wod-split {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -23,6 +23,13 @@
 .half-container {
 	width: 50%;
 	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	box-sizing: border-box;
+	padding: 0 10px;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
 
