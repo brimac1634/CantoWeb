@@ -18,20 +18,12 @@ class Calendar extends Component {
 
 	previous() {
 	    const { month } = this.state;
-	    const pastLimit = new Date()
-	    pastLimit.setMonth(pastLimit.getMonth() - 5)
-	    if (pastLimit < month.toDate()) {
-	    	this.setState({month: month.subtract(1, 'month')});
-	    }
+    	this.setState({month: month.subtract(1, 'month')});
 	}
 
 	next() {
 	    const { month } = this.state;
-	    let date = new Date(), y = date.getFullYear(), m = date.getMonth();
-	    const firstOfMonth = new Date(y, m, 1);
-	    if (firstOfMonth > month.toDate()) {
-		    this.setState({month: month.add(1,'month')});
-		}
+	    this.setState({month: month.add(1,'month')});
 	}
 
 	select(day, entry) {
@@ -78,25 +70,51 @@ class Calendar extends Component {
 	    return <span className="month-label"><h2>{month.format("MMMM YYYY")}</h2></span>;
     };
 
+    canGoBack = () => {
+    	const { month } = this.state;
+	    const pastLimit = new Date()
+	    pastLimit.setMonth(pastLimit.getMonth() - 5)
+	    return pastLimit < month.toDate()
+    }
+
+    canGoNext = () => {
+    	const { month } = this.state;
+		let date = new Date(), y = date.getFullYear(), m = date.getMonth();
+	    const firstOfMonth = new Date(y, m, 1);
+	    return firstOfMonth > month.toDate()
+    }
+
 	render() {
+		const isFirstMonth = this.canGoBack()
+		const isLastMonth = this.canGoNext()
 		return (
 	      <section className="calendar">
 	        <header className="header">
 	          <div className="month-display calendar-row">
-	            <div className="arrow fa fa-angle-left" onClick={this.previous}>
-		            <Icon 
-						icon='fast-forward' 
-						iconSize='25'
-						color='cantoWhite'
-					/>
+	            <div 
+	            	className="arrow fa fa-angle-left" 
+	            	onClick={isFirstMonth ? this.previous : null}
+	            >
+	            	{isFirstMonth &&
+	            		<Icon 
+							icon='fast-forward' 
+							iconSize='25'
+							color='cantoWhite'
+						/>
+	            	}
 				</div>
 	            {this.renderMonthLabel()}
-	            <div className="arrow fa fa-angle-right" onClick={this.next}>
-		            <Icon 
-						icon='fast-forward' 
-						iconSize='25'
-						color='cantoWhite'
-					/>
+            	<div 
+            		className="arrow fa fa-angle-right" 
+            		onClick={isLastMonth ? this.next : null}
+            	>
+            		{isLastMonth &&
+			            <Icon 
+							icon='fast-forward' 
+							iconSize='25'
+							color='cantoWhite'
+						/>
+					}
 				</div>
 	          </div>
 	          <DayNames />

@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Heebo|Playfair+Display');
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Heebo|Noto+Sans+HK|Noto+Sans+SC|Roboto+Slab&display=swap');
 
 :root {
 	--cantoDarkBlue: #062743;
@@ -17,7 +16,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Roboto Slab', 'Noto Sans HK', 'Noto Sans SC', serif;
   color: var(--cantoBlue);
 }
 
@@ -37,7 +36,7 @@ body {
   margin: 0;
   padding: 0;
   background: var(--cantoWhite);
-  font-family: 'Heebo', 'Noto Sans TC', sans-serif;
+  font-family: 'Heebo', 'Noto Sans HK', 'Noto Sans SC', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
