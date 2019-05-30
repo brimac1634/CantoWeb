@@ -18,12 +18,20 @@ class Calendar extends Component {
 
 	previous() {
 	    const { month } = this.state;
-	    this.setState({month: month.subtract(1, 'month')});
+	    const pastLimit = new Date()
+	    pastLimit.setMonth(pastLimit.getMonth() - 5)
+	    if (pastLimit < month.toDate()) {
+	    	this.setState({month: month.subtract(1, 'month')});
+	    }
 	}
 
 	next() {
 	    const { month } = this.state;
-	    this.setState({month: month.add(1,'month')});
+	    let date = new Date(), y = date.getFullYear(), m = date.getMonth();
+	    const firstOfMonth = new Date(y, m, 1);
+	    if (firstOfMonth > month.toDate()) {
+		    this.setState({month: month.add(1,'month')});
+		}
 	}
 
 	select(day, entry) {
