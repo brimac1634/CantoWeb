@@ -146,3 +146,32 @@ header {
     background: var(--cantoPink);
     color: var(--cantoWhite);
 }
+
+@media screen and (max-width:930px) and (min-width:700px) {
+    .day {
+        height: 60px;
+    }
+
+    .day-number {
+        font-size: 0.8rem;
+    }
+    
+}
+
+@media screen and (max-width:450px) {
+    .day-names .day {
+        font-size: 0.9rem;
+    }
+
+    .day {
+        height: 50px;
+    }
+
+    .day-number {
+        font-size: 0.7rem;
+    }
+
+    .day-canto {
+        font-size: 1rem;
+    }
+}
