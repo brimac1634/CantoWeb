@@ -5,20 +5,22 @@ import Day from './Day';
 const Week = (props) => {
 	let days = [];
     let { date } = props;
-    const { month, selected, select } = props;
+    const { month, selected, select, wods } = props;
 
     for (var i = 0; i < 7; i++) {
+        const fullDate = date.format('YYYYMMDD')
         let day = {
             name: date.format("dd").substring(0, 1),
             number: date.date(),
             isCurrentMonth: date.month() === month.month(),
-            isToday: date.isSame(new Date(), "day"),
+            isToday: date.isSame(new Date(), 'day'),
             date: date
         };
         days.push(
             <Day 
                 key={i}
 	            day={day}
+                entry={wods[fullDate]}
 	            selected={selected}
 	            select={select}
             />

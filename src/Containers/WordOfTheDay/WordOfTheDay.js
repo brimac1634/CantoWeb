@@ -3,11 +3,18 @@ import './WordOfTheDay.css';
 import { connect } from 'react-redux';
 import EntryView from '../../Components/EntryView/EntryView';
 import Calendar from '../Calendar/Calendar';
-import SearchBar from '../../Components/SearchBar/SearchBar';
 import MediaQuery from 'react-responsive';
 import apiRequest from '../../Helpers/apiRequest';
+import { yyyymmdd } from '../../Helpers/helpers';
 import { setLoading } from '../../Loading/actions';
 import { connectionError } from '../../Helpers/helpers';
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    mobileSelectedEntry: state.search.mobileEntry,
+    hash: state.router.location.hash,
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -19,7 +26,7 @@ class WordOfTheDay extends Component {
 	constructor(props) {
 		super()
 		this.state = {
-			entries: [],
+			wods: [],
 			selectedEntry: {}
 		}
 	}
@@ -36,11 +43,14 @@ class WordOfTheDay extends Component {
 		})
 		.then(entries => {
 			setLoading(false)
-			console.log(entries)
 			if (Array.isArray(entries)) {
-				this.setState({
-					entries: entries
+				let wods = {}
+				entries.forEach(entry => {
+					const date = yyyymmdd(entry.date)
+					wods[date] = entry
 				})
+				console.log(wods)
+				this.setState({wods})
 			}
 		})
 		.catch(()=>{
@@ -54,13 +64,21 @@ class WordOfTheDay extends Component {
 	}
 
 	render() {
-		const { selectedEntry } = this.state;
+		const { selectedEntry, wods } = this.state;
+		const { mobileSelectedEntry } = this.props;
+		const entryViewMobile = mobileSelectedEntry 
+			? 'visible-entry-view' 
+			: 'hidden-entry-view'
+
 		return (
 			<div className='page word-of-day'>
 				<MediaQuery minWidth={700}>
 					<div className='wod-split'>
 						<div className='half-container'>
-							<Calendar selectEntry={this.handleSelect}/>
+							<Calendar 
+								wods={wods} 
+								selectEntry={this.handleSelect}
+							/>
 						</div>
 						<div className='half-container'>
 							<EntryView 
@@ -72,18 +90,27 @@ class WordOfTheDay extends Component {
 				<MediaQuery maxWidth={699}>
 					<div className='wod-split'>
 						<div className='half-container'>
-							<EntryView 
+							<Calendar 
+								wods={wods} 
+								selectEntry={this.handleSelect}
+							/>
+						</div>
+						{mobileSelectedEntry
+				              ? <div className='invisible-div' onClick={this.clearMobileEntry}>&nbsp;</div>
+				              : null
+				        }
+						<div 
+							className={`half-container ${entryViewMobile}`}
+						>
+							<EntryView
 								selectedEntry={selectedEntry} 
 							/>
 						</div>
 					</div>
-					<SearchBar 
-						className='wod-bar'
-					/>
 				</MediaQuery>
 			</div>
 		);
 	}
 }
 
-export default connect(null, mapDispatchToProps)(WordOfTheDay);
+export default connect(mapStateToProps, mapDispatchToProps)(WordOfTheDay);

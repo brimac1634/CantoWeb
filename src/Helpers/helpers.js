@@ -20,6 +20,16 @@ export const togglePlay = (entryID) => {
 	audio.play()		
 }
 
+export const yyyymmdd = (date) => {
+    const now = new Date(date);
+    const y = now.getFullYear();
+    const m = now.getMonth() + 1;
+    const d = now.getDate();
+    const mm = m < 10 ? '0' + m : m;
+    const dd = d < 10 ? '0' + d : d;
+    return '' + y + mm + dd;
+}
+
 export const requestToLogin = (confirm) => {
 	optionAlert({
 	    title: 'Please sign in.',

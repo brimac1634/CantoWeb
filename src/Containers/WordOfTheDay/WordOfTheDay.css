@@ -34,9 +34,6 @@
 
 
 @media screen and (max-width: 700px) {
-	.split-container {
-		top: 54px;
-	}
 
 	.half-container {
 		width: 100%;

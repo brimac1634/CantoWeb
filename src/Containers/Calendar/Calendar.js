@@ -35,6 +35,7 @@ class Calendar extends Component {
     }
 
     renderWeeks() {
+    	const { wods } = this.props;
 	    let weeks = [];
 	    let done = false;
 	    let date = this.state.month.clone().startOf('month').add('w' -1).day('Sunday');
@@ -48,6 +49,7 @@ class Calendar extends Component {
 	        <Week key={date} 
 	          date={date.clone()} 
 	          month={month} 
+	          wods={wods}
 	          select={(day)=>this.select(day)} 
 	          selected={selected} />
 	      );
