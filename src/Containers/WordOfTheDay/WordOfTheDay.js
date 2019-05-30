@@ -6,6 +6,7 @@ import Calendar from '../Calendar/Calendar';
 import MediaQuery from 'react-responsive';
 import apiRequest from '../../Helpers/apiRequest';
 import { yyyymmdd } from '../../Helpers/helpers';
+import { setMobileEntry } from '../Search/actions';
 import { setLoading } from '../../Loading/actions';
 import { connectionError } from '../../Helpers/helpers';
 
@@ -18,6 +19,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 } 
@@ -59,8 +61,15 @@ class WordOfTheDay extends Component {
 	}
 
 	handleSelect = (entry) => {
+		const { setMobileEntry } = this.props;
 		this.setState({selectedEntry: entry ? entry : ''})
+		setMobileEntry(entry ? entry.entry_id : '');
 	}
+
+	clearMobileEntry = () => {
+	    const {setMobileEntry} = this.props;
+	    setMobileEntry('');
+	};
 
 	render() {
 		const { selectedEntry, wods } = this.state;
@@ -99,7 +108,7 @@ class WordOfTheDay extends Component {
 				              : null
 				        }
 						<div 
-							className={`half-container ${entryViewMobile}`}
+							className={`half-container wod-entry-container ${entryViewMobile}`}
 						>
 							<EntryView
 								selectedEntry={selectedEntry} 
