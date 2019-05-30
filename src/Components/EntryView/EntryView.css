@@ -102,6 +102,11 @@
 }
 
 @media screen and (max-width: 700px) {
+	.inner-entry-view {
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+	}
+
 	.entry-view  {
 		box-shadow: var(--cantoFloatShadow);
 		height: 100%;

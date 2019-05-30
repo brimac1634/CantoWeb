@@ -48,7 +48,9 @@ class EntryView extends Component {
 		const { selectedEntry, userID, hash } = this.props;
 		if (prevProps.selectedEntry !== selectedEntry) {
 			this.setState({entry: selectedEntry, isFavorited: false})
-			this.checkIfFavorite(selectedEntry.entry_id, userID);
+			if (selectedEntry !== '') {
+				this.checkIfFavorite(selectedEntry.entry_id, userID);
+			}
 		} else if (hash && hash !== prevProps.hash) {
 			this.getEntry(hash)
 		}

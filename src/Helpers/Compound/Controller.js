@@ -20,11 +20,9 @@ class Controller extends Component {
 		setTimeout(() => {
 		  if(this.state.show){
 		    window.addEventListener('click', this.animateOut)
-		    window.addEventListener('touchend', this.animateOut)
 		    window.addEventListener('keydown', this.handleEntryKey)
 		  } else {
 		    window.removeEventListener('click', this.animateOut)
-		    window.removeEventListener('touchend', this.animateOut)
 		    window.removeEventListener('keydown', this.handleEntryKey)
 		  }
 		}, 0)

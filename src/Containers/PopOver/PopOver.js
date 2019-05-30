@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../../Helpers/Compound/Compound.css';
+import MediaQuery from 'react-responsive';
 
 class PopOver extends Component {
 	constructor(props) {
@@ -43,14 +44,32 @@ class PopOver extends Component {
 	      	 return React.cloneElement(child, { togglePopOver: toggle })      
 	    });
 
-		return (
-			<div 
-				className={`pop-over ${popType}`} 
-				style={{width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x - width - 8}px`}}
-			>
-				<div ref={this.content}>
-					{childrenWithProps}
+	    const renderPopOver = () => {
+	    	return (
+	    		<div 
+					className={`pop-over ${popType}`} 
+					style={{width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x - width - 8}px`}}
+				>
+					<div ref={this.content}>
+						{childrenWithProps}
+					</div>
 				</div>
+	    	);
+	    }
+
+		return (
+			<div>
+				<MediaQuery minWidth={700}>
+					{renderPopOver()}
+				</MediaQuery>
+				<MediaQuery maxWidth={699}>
+					<div
+			            className='back-overlay'
+			            onClick={toggle}
+			        >
+						{renderPopOver()}
+					</div>
+				</MediaQuery>
 			</div>
 		);
 	}
