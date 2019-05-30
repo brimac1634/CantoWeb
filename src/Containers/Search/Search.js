@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Search.css';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router'
+import { push } from 'connected-react-router';
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
 import { serverError, connectionError, requestToLogin } from '../../Helpers/helpers';

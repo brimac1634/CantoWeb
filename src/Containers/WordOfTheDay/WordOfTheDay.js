@@ -49,7 +49,6 @@ class WordOfTheDay extends Component {
 					const date = yyyymmdd(entry.date)
 					wods[date] = entry
 				})
-				console.log(wods)
 				this.setState({wods})
 			}
 		})
@@ -60,7 +59,7 @@ class WordOfTheDay extends Component {
 	}
 
 	handleSelect = (entry) => {
-		this.setState({selectedEntry: entry})
+		this.setState({selectedEntry: entry ? entry : ''})
 	}
 
 	render() {

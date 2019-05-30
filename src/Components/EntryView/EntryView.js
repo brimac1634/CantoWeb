@@ -47,7 +47,7 @@ class EntryView extends Component {
 	componentDidUpdate(prevProps) {
 		const { selectedEntry, userID, hash } = this.props;
 		if (prevProps.selectedEntry !== selectedEntry) {
-			this.setState({entry: selectedEntry})
+			this.setState({entry: selectedEntry, isFavorited: false})
 			this.checkIfFavorite(selectedEntry.entry_id, userID);
 		} else if (hash && hash !== prevProps.hash) {
 			this.getEntry(hash)
@@ -176,7 +176,8 @@ class EntryView extends Component {
 	}
 
 	render() {
-		const { userID } = this.props;
+		const { WORD_OF_THE_DAY } = routes;
+		const { userID, pathName } = this.props;
 		const {
 			isFavorited,
 			entry,
@@ -198,49 +199,58 @@ class EntryView extends Component {
 		return (
 			<div className='entry-view'>
 				{entry !== ''
-					?   <div className='inner-entry-view'>
-							<div className='entry-btn-container'>
-								<button 
-									className='entry-btn' 
-									onClick={() => this.toggleFavorite(entry_id, userID, canto_word)}
-								>
-									<Icon 
-										icon='like-2' 
-										iconSize='35' 
-										iconStyle='dark'
-										color={
-											isFavorited
-											? 'cantoPink'
-											: 'cantoDarkBlue'
-										}
-									/>
-								</button>
-								<button 
-									className='entry-btn'
-									onClick={() => togglePlay(entry_id)}
-								>
-									<Icon 
-										icon='speaker-5' 
-										iconSize='35' 
-										iconStyle='dark'
-									/>
-								</button>
-							</div>
-							<div className='top-group entry-section'>
-								<div className='canto-class'>
-									<h3>{canto_word}</h3>
-									<p>{clLabel}{classifier}</p>
+					?   <div>
+							{pathName === WORD_OF_THE_DAY &&
+								<div className='center-div'>
+									<h2 className='wod-date'>{new Date(entry.date).toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}
+									</h2>
 								</div>
-								<div><p>{jyutping}</p></div>
-							</div>
-							<div className='entry-section'>
-								<div><p>En: {english_word}</p></div>
-								<div><p>普: {mandarin_word}</p></div>
-							</div>
-							<div className='entry-section'>
-								<div><p>{canto_sentence}</p></div>
-								<div><p>{jyutping_sentence}</p></div>
-								<div><p>{english_sentence}</p></div>
+							}
+							<div className='inner-entry-view'>
+							
+								<div className='entry-btn-container'>
+									<button 
+										className='entry-btn' 
+										onClick={() => this.toggleFavorite(entry_id, userID, canto_word)}
+									>
+										<Icon 
+											icon='like-2' 
+											iconSize='35' 
+											iconStyle='dark'
+											color={
+												isFavorited
+												? 'cantoPink'
+												: 'cantoDarkBlue'
+											}
+										/>
+									</button>
+									<button 
+										className='entry-btn'
+										onClick={() => togglePlay(entry_id)}
+									>
+										<Icon 
+											icon='speaker-5' 
+											iconSize='35' 
+											iconStyle='dark'
+										/>
+									</button>
+								</div>
+								<div className='top-group entry-section'>
+									<div className='canto-class'>
+										<h3>{canto_word}</h3>
+										<p>{clLabel}{classifier}</p>
+									</div>
+									<div><p>{jyutping}</p></div>
+								</div>
+								<div className='entry-section'>
+									<div><p>En: {english_word}</p></div>
+									<div><p>普: {mandarin_word}</p></div>
+								</div>
+								<div className='entry-section'>
+									<div><p>{canto_sentence}</p></div>
+									<div><p>{jyutping_sentence}</p></div>
+									<div><p>{english_sentence}</p></div>
+								</div>
 							</div>
 						</div>
 					:   <div className='inner-entry-view'>

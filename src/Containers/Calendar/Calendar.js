@@ -26,12 +26,13 @@ class Calendar extends Component {
 	    this.setState({month: month.add(1,'month')});
 	}
 
-	select(day) {
-		// const { selectEntry } = this.props;
+	select(day, entry) {
+		const { selectEntry } = this.props;
 	    this.setState({
 	      selected: day.date,
 	      month: day.date.clone(),
 	    });
+	    selectEntry(entry)
     }
 
     renderWeeks() {
@@ -50,7 +51,7 @@ class Calendar extends Component {
 	          date={date.clone()} 
 	          month={month} 
 	          wods={wods}
-	          select={(day)=>this.select(day)} 
+	          select={(day, entry)=>this.select(day, entry)} 
 	          selected={selected} />
 	      );
 

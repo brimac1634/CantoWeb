@@ -88,25 +88,22 @@ header {
 
 .day-names .day:hover {
     background: inherit;
-
 }
 
 .day {
+    display: flex;
+    justify-content:center;
+    align-items: center;
     position: relative;
     flex: 1;
     height: 80px;
     border-left: solid 1px var(--cantoDarkGray);
     cursor: pointer;
     transition: all .2s;
+    overflow: hidden;
     color: var(--cantoDarkBlue);
 }
 
-.day-canto,
-.day-number {
-    display: flex;
-    justify-content:center;
-    align-items: center;
-} 
 
 .day-number {
     position: absolute;
@@ -114,11 +111,19 @@ header {
     left: 0;
     width: 25%;
     font-size: 1rem;
+    display: flex;
+    justify-content:center;
+    align-items: center;
 }
 
 .day-canto {
-    width: 100%;
-    height: 100%;
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 5px;
 }
 
 .day:hover {
