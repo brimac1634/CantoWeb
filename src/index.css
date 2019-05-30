@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo|Playfair+Display');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap');
 
 :root {
 	--cantoDarkBlue: #062743;
@@ -36,7 +37,7 @@ body {
   margin: 0;
   padding: 0;
   background: var(--cantoWhite);
-  font-family: 'Heebo', sans-serif;
+  font-family: 'Heebo', 'Noto Sans TC', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;

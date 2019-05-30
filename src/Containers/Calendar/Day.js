@@ -23,7 +23,7 @@ const Day = (props) => {
         >
             <div className='day-number'>{number}</div>
             <div className='day-canto'>
-                {entry ? entry.canto_word : null}
+                <p>{entry ? entry.canto_word : null}</p>
             </div>
         </span>
     );
