@@ -32,7 +32,7 @@
 	align-items: flex-start;
 	overflow-y: auto;
 	box-sizing: border-box;
-	padding: 0 10px
+	padding: 10px;
 }
 
 .hidden-entry-view {
