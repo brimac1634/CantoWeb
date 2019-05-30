@@ -75,7 +75,7 @@ class Calendar extends Component {
 	renderMonthLabel() {
 	    const { month } = this.state;
 
-	    return <span className="month-label">{month.format("MMMM YYYY")}</span>;
+	    return <span className="month-label"><h2>{month.format("MMMM YYYY")}</h2></span>;
     };
 
 	render() {

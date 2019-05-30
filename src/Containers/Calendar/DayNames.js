@@ -2,15 +2,14 @@ import React from 'react';
 import './Calendar.css'
 
 const DayNames = () => {
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	return (
         <div className="calendar-row day-names">
-            <span className="day">Sun</span>
-            <span className="day">Mon</span>
-            <span className="day">Tue</span>
-            <span className="day">Wed</span>
-            <span className="day">Thu</span>
-            <span className="day">Fri</span>
-            <span className="day">Sat</span>
+            {dayNames.map(day => {
+                return (
+                    <span className="day"><h4>{day}</h4></span>
+                );
+            })}
         </div>
     );
 }

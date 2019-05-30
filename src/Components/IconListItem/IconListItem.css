@@ -9,6 +9,7 @@
 	background: transparent;
 	padding: 8px 20px;
 	transition: all .2s linear;
+	overflow: hidden;
 }
 
 .list-item:hover {
@@ -25,6 +26,8 @@
 	padding-left: 8px;
 	font-size: 15px;
 	color: var(--cantoBlue);
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .bold {
