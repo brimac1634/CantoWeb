@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './SignIn.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
+import { Link } from 'react-router-dom';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import { serverError, connectionError, validateEmail } from '../../Helpers/helpers';
 import queryString from 'query-string';
@@ -44,7 +45,7 @@ class SignIn extends Component {
 			password: '',
 			password2: '',
 			failCount: 0,
-			rememberMe: true,
+			didAgree: false,
 		}
 	}
 
@@ -265,37 +266,47 @@ class SignIn extends Component {
     }
 
     handleVerification = (email) => {
-    	const { name } = this.state;
+    	const { name, didAgree } = this.state;
     	const { setLoading } = this.props;
-    	const body = {
-    		name: name.length ? name : null,
-    		email
+    	if (!/\S/.test(name)) {
+    		optionAlert({
+			    title: 'Provide your name',
+			    message: `You must provide your full name in order to proceed with regsitration.`
+		    })
+    	} else if (!didAgree) {
+    		optionAlert({
+			    title: 'Privacy Policy',
+			    message: `Please click the checkbox next to the privacy agreement in order to proceed with registration.`
+		    })
+    	} else {
+    		const body = {name, email}
+	    	setLoading(true)
+				apiRequest({
+					endPoint: '/register',
+					method: 'POST',
+					body: body
+				})
+					.then(userData => {
+						setLoading(false)
+						if (userData && userData.error != null) {
+							const { title, message } = userData.error;
+							optionAlert({
+							    title,
+							    message
+						    })
+						} else {
+							optionAlert({
+							    title: 'Verification Email Sent',
+							    message: `Please check your email (${userData.email}) for a verification email. If you don't see the email shortly, check your spam folder.`
+						    })
+						}
+					})
+					.catch(err=>{
+						setLoading(false)
+						connectionError()
+					})
     	}
-    	setLoading(true)
-			apiRequest({
-				endPoint: '/register',
-				method: 'POST',
-				body: body
-			})
-				.then(userData => {
-					setLoading(false)
-					if (userData && userData.error != null) {
-						const { title, message } = userData.error;
-						optionAlert({
-						    title,
-						    message
-					    })
-					} else {
-						optionAlert({
-						    title: 'Verification Email Sent',
-						    message: `Please check your email (${userData.email}) for a verification email. If you don't see the email shortly, check your spam folder.`
-					    })
-					}
-				})
-				.catch(err=>{
-					setLoading(false)
-					connectionError()
-				})
+    	
     }
 
     onResetPassword = (email) => {
@@ -320,9 +331,13 @@ class SignIn extends Component {
 	    })
     }
 
+    handleAgree = () => {
+    	this.setState({didAgree: !this.state.didAgree})
+    }
+
     renderComponent = (pathName) => {
     	const { title, email, name, password, password2, signInButton, alternateButton } = this.state;
-    	const { LOGIN, REGISTER, VERIFY, RESET } = routes;
+    	const { LOGIN, REGISTER, VERIFY, RESET, PRIVACY } = routes;
     	const { updateURL } = this.props;
     	
     	if (pathName === RESET || pathName === VERIFY) {
@@ -434,12 +449,30 @@ class SignIn extends Component {
 								handleChange={this.onInputChange}
 							/>
 						}
-						<Button 
-							buttonType='ghost' 
-							title={signInButton}
-							margin='0 0 30px 0'
-							handleClick={this.onUserSubmit}
-						/>
+						<div className='agree-row'>
+							<Button 
+								buttonType='ghost' 
+								title={signInButton}
+								margin='10px 20px 10px 0'
+								handleClick={this.onUserSubmit}
+							/>
+							{pathName === REGISTER &&
+								<div className='agree-row'>
+									<input 
+		                                className='checkbox'
+		                                id='checkbox'
+		                                type="checkbox" 
+		                                onChange={this.handleAgree} 
+		                                defaultChecked={this.state.privacyAgree}
+		                            />
+		                            <label 
+		                                className='checkbox-label' 
+		                                htmlFor="checkbox"
+		                            ></label>
+		                            <p className='mini'>I agree to the <Link to={PRIVACY} target='_blank' className='underline-button'>privacy policy</Link></p>
+	                            </div>
+							}
+						</div>
 						{pathName === LOGIN &&
 							<div className='bottom-row'>
 								<p 

@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
 				<h1>Welcome to our Privacy Policy</h1>
 				<h3>Your privacy is critically important to us.</h3>
 				<p>CantoTalk is located at:</p>
-				<p>CantoTalk<br/>24A, ASPEN COURT 46 HIGH STREET, SAI YING PUN <br />00000 - Hong Kong Island , Hong Kong<br/>68971180</p>
+				<p>CantoTalk<br/>24A, ASPEN COURT 46 HIGH STREET, SAI YING PUN <br />HONG KONG ISLAND, HONG KONG<br/>68971180</p>
 
 				<p>It is CantoTalk's policy to respect your privacy regarding any information we may collect while operating our website. This Privacy Policy applies to <a href="https://www.cantotalk.com">https://www.cantotalk.com</a> (hereinafter, "us", "we", or "https://www.cantotalk.com"). We respect your privacy and are committed to protecting personally identifiable information you may provide us through the Website. We have adopted this privacy policy ("Privacy Policy") to explain what information may be collected on our Website, how we use this information, and under what circumstances we may disclose the information to third parties. This Privacy Policy applies only to information we collect through the Website and does not apply to our collection of information from other sources.</p>
 				<p>This Privacy Policy, together with the Terms and conditions posted on our Website, set forth the general rules and policies governing your use of our Website. Depending on your activities when visiting our Website, you may be required to agree to additional terms and conditions.</p>
