@@ -15,6 +15,7 @@ import { routes } from '../../Routing/constants';
 import { setUser } from './actions';
 import { setLoading } from '../../Loading/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
+import config from '../../config.json';
 
 const mapStateToProps = state => {
 	return {
@@ -273,30 +274,30 @@ class SignIn extends Component {
     		email
     	}
     	setLoading(true)
-			apiRequest({
-				endPoint: '/register',
-				method: 'POST',
-				body: body
+		apiRequest({
+			endPoint: '/register',
+			method: 'POST',
+			body: body
+		})
+			.then(userData => {
+				setLoading(false)
+				if (userData && userData.error != null) {
+					const { title, message } = userData.error;
+					optionAlert({
+					    title,
+					    message
+				    })
+				} else {
+					optionAlert({
+					    title: 'Verification Email Sent',
+					    message: `Please check your email (${userData.email}) for a verification email. If you don't see the email shortly, check your spam folder.`
+				    })
+				}
 			})
-				.then(userData => {
-					setLoading(false)
-					if (userData && userData.error != null) {
-						const { title, message } = userData.error;
-						optionAlert({
-						    title,
-						    message
-					    })
-					} else {
-						optionAlert({
-						    title: 'Verification Email Sent',
-						    message: `Please check your email (${userData.email}) for a verification email. If you don't see the email shortly, check your spam folder.`
-					    })
-					}
-				})
-				.catch(err=>{
-					setLoading(false)
-					connectionError()
-				})
+			.catch(err=>{
+				setLoading(false)
+				connectionError()
+			})
     }
 
     onResetPassword = (email) => {
@@ -322,7 +323,43 @@ class SignIn extends Component {
     }
 
     responseFacebook = (response) => {
+    	const { setLoading } = this.props;
+    	if (response && response.email) {
+    		const { accessToken, name, email, userID } = response;
+    		setLoading(true)
+			apiRequest({
+				endPoint: '/api/v1/auth/facebook',
+				method: 'POST',
+				body: {name, email, userID}
+			})
+				.then(userData => {
+					const token = userData.headers.get('x-auth-token');
+					setLoading(false)
+					if (userData && userData.error != null) {
+						const { title, message } = userData.error;
+						optionAlert({
+						    title,
+						    message
+					    })
+					} else {
+						//login success
+						if (token) {
+		                    // this.setState({isAuthenticated: true, userData, token})
+		                }
+					}
+				})
+				.catch(err=>{
+					setLoading(false)
+					connectionError()
+				})
+    	} else {
+    		optionAlert({
+			    title: 'Facebook Error',
+			    message: 'There was an error logging in using Facebook. Please ensure that you are signed in to FaceBook.',
+		    })
+    	}
       console.log(response);
+
     }
 
     renderComponent = (pathName) => {
@@ -442,12 +479,14 @@ class SignIn extends Component {
 						<Button 
 							buttonType='ghost' 
 							title={signInButton}
-							margin='0 0 30px 0'
+							margin='0 0 10px 0'
 							handleClick={this.onUserSubmit}
 						/>
+						<p>or</p>
 						<FacebookLogin
-					        appId='338338156865334'
+					        appId={config.FACEBOOK_APP_ID}
 					        fields='name,email,picture'
+					        cssClass='custom-fb-button'
 					        callback={this.responseFacebook}
 					    />
 						{pathName === LOGIN &&

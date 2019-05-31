@@ -62,9 +62,27 @@
 	font-weight: bold
 }
 
+.custom-fb-button {
+	background: #4c69ba;
+	color: var(--cantoWhite);
+	height: 45px;
+	border-radius: 4px;
+	font-size: 16px;
+	padding: 5px 15px;
+	margin: 10px 0 20px 0;
+	cursor: pointer;
+	outline: none;
+}
+
+
+
 @media screen and (max-width: 575px) {
     .mini,
 	.underline-button {
 		font-size: 16px;
+	}
+
+	.custom-fb-button {
+		height: 55px;
 	}
 }
