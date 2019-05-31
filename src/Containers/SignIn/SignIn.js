@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './SignIn.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
-import FacebookLogin from 'react-facebook-login';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import { serverError, connectionError, validateEmail } from '../../Helpers/helpers';
 import queryString from 'query-string';
@@ -321,10 +320,6 @@ class SignIn extends Component {
 	    })
     }
 
-    responseFacebook = (response) => {
-      console.log(response);
-    }
-
     renderComponent = (pathName) => {
     	const { title, email, name, password, password2, signInButton, alternateButton } = this.state;
     	const { LOGIN, REGISTER, VERIFY, RESET } = routes;
@@ -445,11 +440,6 @@ class SignIn extends Component {
 							margin='0 0 30px 0'
 							handleClick={this.onUserSubmit}
 						/>
-						<FacebookLogin
-					        appId='338338156865334'
-					        fields='name,email,picture'
-					        callback={this.responseFacebook}
-					    />
 						{pathName === LOGIN &&
 							<div className='bottom-row'>
 								<p 
