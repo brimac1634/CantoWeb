@@ -41,6 +41,7 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 		RESET,
 		WHAT,
 		CONTACT,
+		PRIVACY,
 		PROFILE 
 	} = routes;
 
@@ -68,6 +69,8 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 				return 'Contact'
 			case PROFILE:
 				return 'Profile'
+			case PRIVACY:
+				return 'Privacy'
 			default:
 				return ''
 		}

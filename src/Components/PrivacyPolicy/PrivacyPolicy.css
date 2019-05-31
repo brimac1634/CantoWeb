@@ -1,0 +1,10 @@
+.policy-container {
+	display: flex;
+	justify-content: center;
+}
+
+.policy {
+	text-align: center;
+	max-width: 800px;
+	padding: 10px;
+}
