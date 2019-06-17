@@ -8,6 +8,7 @@ import { serverError, connectionError, requestToLogin } from '../../Helpers/help
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
+import SlideUpEntry from '../../Components/SlideUpEntry/SlideUpEntry';
 import { setLoading } from '../../Loading/actions';
 import { setMobileEntry } from './actions';
 import { setTempSearch } from '../../Components/SearchBar/actions';
@@ -88,7 +89,8 @@ class Search extends Component {
 	}
 
 	componentWillUnmount() {
-		this.clearMobileEntry();
+		const {setMobileEntry} = this.props;
+	    setMobileEntry('');
 	}
 
 	loadSearchOnMount() {
@@ -201,11 +203,6 @@ class Search extends Component {
 		.catch(() => console.log('unable to save recent'))
 	}
 
-	clearMobileEntry = () => {
-	    const {setMobileEntry} = this.props;
-	    setMobileEntry('');
-	};
-
 	setSearchURL = ({path, word, entryID}) => {
 		let { pathName, search, hash } = this.props;
 		const { SEARCH } = routes;
@@ -222,10 +219,7 @@ class Search extends Component {
 	render() {
 		const { entries, selectedEntry } = this.state;
 		const { mobileSelectedEntry } = this.props;
-		const entryViewMobile = mobileSelectedEntry 
-			? 'visible-entry-view' 
-			: 'hidden-entry-view'
-
+		
 		return (
 			<div className='page'>
 				<MediaQuery minWidth={700}>
@@ -251,17 +245,10 @@ class Search extends Component {
 								selectEntry={this.handleEntrySelect}
 							/>
 						</div>
-						{mobileSelectedEntry
-				              ? <div className='invisible-div' onClick={this.clearMobileEntry}>&nbsp;</div>
-				              : null
-				        }
-						<div 
-							className={`entry-view-container ${entryViewMobile}`}
-						>
-							<EntryView
-								selectedEntry={selectedEntry} 
-							/>
-						</div>
+						<SlideUpEntry 
+							isSelected={mobileSelectedEntry} 
+							selectedEntry={selectedEntry}
+						/> 
 					</div>
 				</MediaQuery>
 				<SearchBar 

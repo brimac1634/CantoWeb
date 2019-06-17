@@ -11,7 +11,6 @@ import Trigger from '../../Helpers/Compound/Trigger';
 import PopOver from '../../Containers/PopOver/PopOver';
 import Settings from '../Settings/Settings';
 import PopOverNav from '../NavBar/PopOverNav/PopOverNav';
-import {setMobileEntry} from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,13 +19,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID))
-	}
-}
-
-const TitleBar = ({ pathName, setMobileEntry }) => {
+const TitleBar = ({ pathName }) => {
 
 	const { 
 		ROOT,
@@ -79,7 +72,7 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 	return (
 		<MediaQuery maxWidth={574}>
 			{(matches) => {
-				return <div className='title-bar' onClick={()=>setMobileEntry('')}>
+				return <div className='title-bar'>
 						<div className='slanted-div logo-div'></div>
 						<div className='title-logo-container'>
 							<Link to={ROOT} className='center-div'>
@@ -148,4 +141,4 @@ const TitleBar = ({ pathName, setMobileEntry }) => {
 	);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TitleBar);
+export default connect(mapStateToProps, null)(TitleBar);

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './WordOfTheDay.css';
 import { connect } from 'react-redux';
 import EntryView from '../../Components/EntryView/EntryView';
+import SlideUpEntry from '../../Components/SlideUpEntry/SlideUpEntry';
 import Calendar from '../Calendar/Calendar';
 import MediaQuery from 'react-responsive';
 import apiRequest from '../../Helpers/apiRequest';
@@ -37,6 +38,11 @@ class WordOfTheDay extends Component {
 		this.getWordsOfDay()
 	}
 
+	componentWillUnmount() {
+		const {setMobileEntry} = this.props;
+	    setMobileEntry('');
+	}
+
 	getWordsOfDay() {
 		const { setLoading } = this.props;
 		setLoading(true)
@@ -66,17 +72,9 @@ class WordOfTheDay extends Component {
 		setMobileEntry(entry ? entry.entry_id : '');
 	}
 
-	clearMobileEntry = () => {
-	    const {setMobileEntry} = this.props;
-	    setMobileEntry('');
-	};
-
 	render() {
 		const { selectedEntry, wods } = this.state;
 		const { mobileSelectedEntry } = this.props;
-		const entryViewMobile = mobileSelectedEntry 
-			? 'visible-entry-view' 
-			: 'hidden-entry-view'
 
 		return (
 			<div className='page word-of-day'>
@@ -103,17 +101,10 @@ class WordOfTheDay extends Component {
 								selectEntry={this.handleSelect}
 							/>
 						</div>
-						{mobileSelectedEntry
-				              ? <div className='invisible-div' onClick={this.clearMobileEntry}>&nbsp;</div>
-				              : null
-				        }
-						<div 
-							className={`half-container wod-entry-container ${entryViewMobile}`}
-						>
-							<EntryView
-								selectedEntry={selectedEntry} 
-							/>
-						</div>
+						<SlideUpEntry 
+							isSelected={mobileSelectedEntry} 
+							selectedEntry={selectedEntry}
+						/>
 					</div>
 				</MediaQuery>
 			</div>
