@@ -54,7 +54,7 @@ class EntryView extends Component {
 			}
 		} else if (hash && hash !== prevProps.hash) {
 			this.getEntry(hash)
-		} else if (Object.entries(prevProps.selectedEntry).length === 0 && Object.entries(selectedEntry).length === 0 && hash) {
+		} else if (Object.entries(prevProps.selectedEntry).length === 0 && Object.entries(selectedEntry).length === 0 && hash && validateUser(userID)) {
 			this.checkIfFavorite(entry_id, userID);
 		} else if (!hash && entry !== '') {
 			this.setState({entry: ''})
