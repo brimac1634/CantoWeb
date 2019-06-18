@@ -1,9 +1,9 @@
 .hidden-entry-view {
-	transform: translateY(200%);
+	transform: translateY(100%);
 }
 
 .visible-entry-view {
-	transform: translateY(25%);
+	transform: translateY(0);
 }
 
 .back-div {
@@ -17,6 +17,11 @@
 	justify-content: center;
 	align-items: center;
 	background: var(--cantoShade);
+}
+
+.entry-view-sizer {
+	height: auto;
+	width: 100%;
 }
 
 .entry-view-container {
@@ -35,10 +40,11 @@
 	.entry-view-container {
 		position: absolute;
 		width: 100%;
-		height: auto;
+		height: 100%;
 		left: 0;
 		align-items: center;
 		transition: all 0.4s;
 		overflow: hidden;
+		pointer-events: none;
 	}
 }

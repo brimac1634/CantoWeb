@@ -26,9 +26,11 @@ const SlideUpEntry = ({ isSelected, selectedEntry, setMobileEntry }) => {
 			<div 
 				className={`entry-view-container ${entryViewMobile}`}
 			>
-				<EntryView
-					selectedEntry={selectedEntry} 
-				/>
+				<div className='entry-view-sizer'>
+					<EntryView
+						selectedEntry={selectedEntry} 
+					/>
+				</div>
 			</div>
         </span>
         , document.body
