@@ -9,6 +9,7 @@ import { SwapSpinner } from "react-spinners-kit";
 const mapStateToProps = state => {
   return {
     loading: state.loading.loading,
+    hash: state.router.location.hash,
   }
 }
 

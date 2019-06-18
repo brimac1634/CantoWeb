@@ -7,6 +7,7 @@ import { validateUser, serverError, togglePlay } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setPrevRoute } from '../../Routing/actions';
 import { setLoading } from '../../Loading/actions';
+import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
 
@@ -23,6 +24,7 @@ const mapDispatchToProps = (dispatch) => {
 		updateURL: (path) => dispatch(push(path)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
+		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 	}
 }
 
@@ -37,7 +39,7 @@ class EntryView extends Component {
 
 	componentDidMount() {
 		const { hash } = this.props;
-		if (hash) {
+		if (hash) { 
 			this.getEntry(hash)
 		}
 	}
@@ -58,7 +60,7 @@ class EntryView extends Component {
 	}
 
 	getEntry = (hash) => {
-		const { userID, setLoading } = this.props;
+		const { userID, setLoading, setMobileEntry } = this.props;
 		const entryID = hash.slice(1, hash.length)
 		setLoading(true)
 		apiRequest({
@@ -71,6 +73,7 @@ class EntryView extends Component {
 			if (entry.error) {
 				serverError()
 			} else {
+				setMobileEntry(entry.entry_id);
 				this.setState({entry})
 				if (
 					entryID != null &&
