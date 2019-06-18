@@ -77,6 +77,8 @@
 	outline: none;
 	cursor: pointer;
 	margin: 8px 0;
+	transition: all .2s;
+	
 }
 
 .entry-btn:active {

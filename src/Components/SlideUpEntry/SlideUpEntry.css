@@ -13,15 +13,14 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	background: var(--cantoShade);
 }
 
 .entry-view-sizer {
+	position: relative;
 	height: auto;
 	width: 100%;
+	cursor: default;
 }
 
 .entry-view-container {
@@ -36,6 +35,13 @@
 	padding: 10px;
 }
 
+.spinner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
 @media screen and (max-width: 700px) {
 	.entry-view-container {
 		position: absolute;
@@ -45,6 +51,6 @@
 		align-items: center;
 		transition: all 0.4s;
 		overflow: hidden;
-		pointer-events: none;
+		cursor: pointer;
 	}
 }

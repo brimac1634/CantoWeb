@@ -233,6 +233,7 @@ class Search extends Component {
 						<div className='entry-view-container'>
 							<EntryView 
 								selectedEntry={selectedEntry} 
+								updateFavs={this.filterEntries}
 							/>
 						</div>
 					</div>
@@ -248,6 +249,7 @@ class Search extends Component {
 						<SlideUpEntry 
 							isSelected={mobileSelectedEntry} 
 							selectedEntry={selectedEntry}
+							updateFavs={this.filterEntries}
 						/> 
 					</div>
 				</MediaQuery>
