@@ -8,7 +8,6 @@ import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
 import { setPrevRoute } from '../../Routing/actions';
 import { setTempSearch } from './actions';
-import { setLoading } from '../../Loading/actions';
 import { routes } from '../../Routing/constants';
 import Controller from '../../Helpers/Compound/Controller';
 import Trigger from '../../Helpers/Compound/Trigger';
@@ -18,6 +17,7 @@ const mapStateToProps = state => {
 	return {
 		pathName: state.router.location.pathname,
 		hash: state.router.location.hash,
+		search: state.router.location.search,
 		userID: state.user.user.userID,
 		tempSearchKey: state.temp.key,
 	}
@@ -28,7 +28,6 @@ const mapDispatchToProps = (dispatch) => {
 		updateURL: (type) => dispatch(push(type)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
-		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 }
 
@@ -47,6 +46,13 @@ class SearchBar extends Component {
 			initialSearchList: searchList,
 			searchList
 		})
+	}
+
+	componentDidUpdate() {
+		const { search, setTempSearch } = this.props;
+		if (!search) {
+			setTempSearch('')
+		}
 	}
 
 	handleSearchRoute = (e, route) => {
@@ -87,10 +93,9 @@ class SearchBar extends Component {
 	}
 
 	searchSubmit = (event) => {
-		const { hash, tempSearchKey, setLoading } = this.props;
+		const { hash, tempSearchKey } = this.props;
 		const enterPressed = (event.which === 13);
 		if (enterPressed && tempSearchKey) {
-			setLoading(true);
 			event.target.blur();
 			this.handleSearch(tempSearchKey, hash)
 		}

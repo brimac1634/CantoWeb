@@ -45,8 +45,8 @@ class EntryView extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const { selectedEntry, userID, hash } = this.props;
-		const { entry: { entry_id } } = this.state;
+		const { selectedEntry, userID, hash, setMobileEntry } = this.props;
+		const { entry: { entry_id }, entry } = this.state;
 		if (prevProps.selectedEntry !== selectedEntry) {
 			this.setState({entry: selectedEntry, isFavorited: false})
 			if (selectedEntry !== '' && validateUser(userID)) {
@@ -54,8 +54,11 @@ class EntryView extends Component {
 			}
 		} else if (hash && hash !== prevProps.hash) {
 			this.getEntry(hash)
-		} else if (Object.entries(prevProps.selectedEntry).length === 0 && Object.entries(selectedEntry).length === 0) {
+		} else if (Object.entries(prevProps.selectedEntry).length === 0 && Object.entries(selectedEntry).length === 0 && hash) {
 			this.checkIfFavorite(entry_id, userID);
+		} else if (!hash && entry !== '') {
+			this.setState({entry: ''})
+			setMobileEntry('');
 		}
 	}
 
@@ -104,6 +107,7 @@ class EntryView extends Component {
 				this.setState({isFavorited: favorited})
 			}
 		})
+		.catch(()=>setLoading(false))
 	}
 
 	toggleFavorite = (entryID, userID, cantoWord) => {

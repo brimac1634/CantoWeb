@@ -83,8 +83,13 @@ class Search extends Component {
 				this.loadSearchOnMount()
 			}
 		} else if (pathName === SEARCH && prevProps.search !== search) {
-			const values = queryString.parse(search)
-			this.handleSearchKey(values.searchkey)
+			if (search) {
+				const values = queryString.parse(search)
+				this.handleSearchKey(values.searchkey)
+			} else {
+				this.setState({entries: []})
+			}
+			
 		}
 	}
 
