@@ -66,7 +66,7 @@ class EntryView extends Component {
 	}
 
 	getEntry = (hash) => {
-		const { userID, setLoading, setMobileEntry } = this.props;
+		const { userID, setLoading } = this.props;
 		const entryID = hash.slice(1, hash.length)
 		setLoading(true)
 		apiRequest({
@@ -79,7 +79,6 @@ class EntryView extends Component {
 			if (entry.error) {
 				serverError()
 			} else {
-				setMobileEntry(entry.entry_id);
 				this.setState({entry})
 				if (
 					entryID != null &&

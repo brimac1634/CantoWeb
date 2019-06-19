@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch) => {
 	}
 } 
 
-const EntryList = ({ entries, selectEntry, search, updateURL }) => {
+const EntryList = ({ entries, selectEntry, searchComplete, updateURL }) => {
 	let ghostRows = [0,1,2,3,4,5,6]
 
 	const getDelay = (i) => {
@@ -22,7 +22,7 @@ const EntryList = ({ entries, selectEntry, search, updateURL }) => {
 
 	const renderMessage = () => {
 		const { CONTACT } = routes;
-		if (search.length && entries.length === 0) {
+		if (entries.length === 0 && searchComplete) {
 			return (
 				<div className='vertical'>
 					<p className='no-match'>Don't see what you're looking for?<br/>Request for it to be added!</p>
@@ -41,7 +41,7 @@ const EntryList = ({ entries, selectEntry, search, updateURL }) => {
 		<div className='entry-list'>
 			{renderMessage()}
 			{
-				entries.length || search.length
+				entries.length || searchComplete
 				?   entries.map((entry, i) => {
 						return (
 							<EntryRow

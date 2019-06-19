@@ -42,7 +42,8 @@ class Search extends Component {
 		super()
 		this.state = {
 			entries: [],
-			selectedEntry: {}
+			selectedEntry: {},
+			searchComplete: false
 		}
 	}
 
@@ -122,6 +123,7 @@ class Search extends Component {
 
 	handleSearch = (searchKey) => {
 		const { setLoading } = this.props;
+		this.setState({searchComplete: false})
 		setLoading(true)
 		if (searchKey) {
 			apiRequest({
@@ -140,9 +142,11 @@ class Search extends Component {
 						entries: []
 					})
 				}
+				this.setState({searchComplete: true})
 			})
 			.catch(()=>{
 				setLoading(false)
+				this.setState({searchComplete: true})
 				connectionError()
 			})
 		} else {
@@ -221,8 +225,8 @@ class Search extends Component {
 	};
 
 	render() {
-		const { entries, selectedEntry } = this.state;
-		const { mobileSelectedEntry, search } = this.props;
+		const { entries, selectedEntry, searchComplete } = this.state;
+		const { mobileSelectedEntry } = this.props;
 
 		
 		return (
@@ -233,7 +237,7 @@ class Search extends Component {
 							<EntriesList  
 								entries={entries}
 								selectEntry={this.handleEntrySelect}
-								search={search}
+								searchComplete={searchComplete}
 							/>
 						</div>
 						<div className='entry-view-container'>
@@ -250,7 +254,7 @@ class Search extends Component {
 							<EntriesList  
 								entries={entries}
 								selectEntry={this.handleEntrySelect}
-								search={search}
+								searchComplete={searchComplete}
 							/>
 						</div>
 						<SlideUpEntry 

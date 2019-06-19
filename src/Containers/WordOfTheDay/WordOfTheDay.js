@@ -101,7 +101,7 @@ class WordOfTheDay extends Component {
 								selectEntry={this.handleSelect}
 							/>
 						</div>
-						<SlideUpEntry 
+						<SlideUpEntry  
 							isSelected={mobileSelectedEntry} 
 							selectedEntry={selectedEntry}
 						/>
