@@ -48,9 +48,9 @@ class SearchBar extends Component {
 		})
 	}
 
-	componentDidUpdate() {
-		const { search, setTempSearch } = this.props;
-		if (!search) {
+	componentDidUpdate(prevProps) {
+		const { search, setTempSearch, tempSearchKey } = this.props;
+		if (prevProps.tempSearchKey === tempSearchKey && !search) {
 			setTempSearch('')
 		}
 	}

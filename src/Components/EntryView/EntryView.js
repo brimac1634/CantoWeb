@@ -49,10 +49,11 @@ class EntryView extends Component {
 		const { entry: { entry_id }, entry } = this.state;
 		const { WORD_OF_THE_DAY, FAVORITES } = routes;
 		if (prevProps.selectedEntry !== selectedEntry) {
+			this.setState({entry: selectedEntry})
 			if (pathName === FAVORITES) {
-				this.setState({entry: selectedEntry, isFavorited: true})
+				this.setState({isFavorited: true})
 			} else if (selectedEntry !== '' && validateUser(userID)) {
-				this.setState({entry: selectedEntry, isFavorited: false})
+				this.setState({isFavorited: false})
 				this.checkIfFavorite(selectedEntry.entry_id, userID);
 			}
 		} else if (hash && hash !== prevProps.hash) {

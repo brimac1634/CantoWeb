@@ -132,7 +132,6 @@ class Search extends Component {
 				body: {searchKey} 
 			})
 			.then(entries => {
-				setLoading(false)
 				if (Array.isArray(entries)) {
 					this.setState({
 						entries: entries
@@ -142,6 +141,7 @@ class Search extends Component {
 						entries: []
 					})
 				}
+				setLoading(false)
 				this.setState({searchComplete: true})
 			})
 			.catch(()=>{
