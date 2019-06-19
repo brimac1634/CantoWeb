@@ -48,13 +48,6 @@ class SearchBar extends Component {
 		})
 	}
 
-	componentDidUpdate(prevProps) {
-		const { search, setTempSearch, tempSearchKey } = this.props;
-		if (tempSearchKey && prevProps.tempSearchKey === tempSearchKey && !search) {
-			setTempSearch('')
-		}
-	}
-
 	handleSearchRoute = (e, route) => {
 		const { pathName, updateURL, userID } = this.props;
 		const { SEARCH, LOGIN } = routes;

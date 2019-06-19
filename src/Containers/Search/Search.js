@@ -73,7 +73,7 @@ class Search extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {user: {userID}, search, pathName} = this.props;
+		const {user: {userID}, search, pathName, setTempSearch} = this.props;
 		const { RECENT, FAVORITES, SEARCH } = routes;
 		
 		if (prevProps.pathName !== pathName) {
@@ -87,6 +87,7 @@ class Search extends Component {
 				const values = queryString.parse(search)
 				this.handleSearchKey(values.searchkey)
 			} else {
+				setTempSearch('')
 				this.setState({entries: []})
 			}
 			
