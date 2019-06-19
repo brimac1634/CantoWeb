@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './SlideUpEntry.css';
 import EntryView from '../EntryView/EntryView';
+import Icon from '../Icon/Icon';
 import { connect } from 'react-redux';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { SwapSpinner } from "react-spinners-kit";
@@ -36,6 +37,16 @@ const SlideUpEntry = ({ isSelected, selectedEntry, setMobileEntry, loading, upda
 				onClick={()=>setMobileEntry('')}
 			>
 				<div className='entry-view-sizer' onClick={event => event.stopPropagation()}>
+					<button 
+                          className='slide-up-close' 
+                          onClick={()=>setMobileEntry('')}
+                        >
+                        <Icon 
+                          icon='multiply' 
+                          iconStyle='dark' 
+                          width='15'
+                        />
+                    </button>
 					<EntryView
 						selectedEntry={selectedEntry}
 						updateFavs={updateFavs} 

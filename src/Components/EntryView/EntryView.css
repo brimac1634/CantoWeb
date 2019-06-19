@@ -118,14 +118,11 @@
 	.entry-view  {
 		box-shadow: var(--cantoFloatShadow);
 		height: 100%;
+		padding: 30px 50px;
 	}
 
 	.entry-view:hover {
 		box-shadow: var(--cantoFloatShadow);
-	}
-
-	.inner-entry-view {
-		overflow-y: auto;
 	}
 }
 

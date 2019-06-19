@@ -27,9 +27,14 @@ class HoverBox extends Component {
   }
 
   render() {
-    const { children, handleClick, prevRoute, canClose } = this.props;
+    const { children, handleClick, prevRoute, canClose, width, height } = this.props;
     const { ROOT } = routes;
     const { childHeight } = this.state;
+
+    const style = {
+      width: width ? width : null,
+      height: height ? height : null
+    }
 
     return (
       <MediaQuery maxHeight={childHeight}>
@@ -37,19 +42,19 @@ class HoverBox extends Component {
             return  <div 
                   className={matches ? 'centered' : 'center-div'}
                 >
-                  <div className='hover-box-container'>
+                  <div className='hover-box-container' style={style}>
                     {canClose &&
                       <Link to={prevRoute ? prevRoute : ROOT}>
                         <button 
                           className='hover-close' 
                           onClick={handleClick}
                         >
-                            <Icon 
-                              icon='multiply' 
-                              iconStyle='dark' 
-                              width='15'
-                            />
-                          </button>
+                          <Icon 
+                            icon='multiply' 
+                            iconStyle='dark' 
+                            width='15'
+                          />
+                        </button>
                       </Link>
                     }
                     <div ref={this.content}>

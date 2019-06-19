@@ -42,6 +42,18 @@
 	transform: translate(-50%, -50%);
 }
 
+.slide-up-close {
+	position: absolute;
+	height: 30px;
+	width: 30px;
+	top: 35px;
+	right: 10px;
+	outline: none;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
 @media screen and (max-width: 700px) {
 	.entry-view-container {
 		position: absolute;
