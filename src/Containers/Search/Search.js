@@ -20,7 +20,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
   	user: state.user.user,
     mobileSelectedEntry: state.search.mobileEntry,
-    searchKey: state.search.searchKey,
     pathName: state.router.location.pathname,
     hash: state.router.location.hash,
     search: state.router.location.search,
@@ -223,7 +222,8 @@ class Search extends Component {
 
 	render() {
 		const { entries, selectedEntry } = this.state;
-		const { mobileSelectedEntry } = this.props;
+		const { mobileSelectedEntry, search } = this.props;
+
 		
 		return (
 			<div className='page'>
@@ -233,6 +233,7 @@ class Search extends Component {
 							<EntriesList  
 								entries={entries}
 								selectEntry={this.handleEntrySelect}
+								search={search}
 							/>
 						</div>
 						<div className='entry-view-container'>
@@ -249,6 +250,7 @@ class Search extends Component {
 							<EntriesList  
 								entries={entries}
 								selectEntry={this.handleEntrySelect}
+								search={search}
 							/>
 						</div>
 						<SlideUpEntry 

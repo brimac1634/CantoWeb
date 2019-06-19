@@ -57,10 +57,15 @@ code {
 }
 
 .centered,
-.center-div {
+.center-div,
+.vertical {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.vertical {
+  flex-direction: column;
 }
 
 .over-flow {
