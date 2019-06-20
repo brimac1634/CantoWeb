@@ -15,7 +15,7 @@ import { routes } from '../../Routing/constants';
 import { setUser } from './actions';
 import { setLoading } from '../../Loading/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
-import config from '../../config.json';
+import config from '../../Helpers/config.json';
 
 const mapStateToProps = state => {
 	return {
