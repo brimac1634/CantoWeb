@@ -8,6 +8,7 @@ import { serverError, connectionError, requestToLogin } from '../../Helpers/help
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
+import SlideUpEntry from '../../Components/SlideUpEntry/SlideUpEntry';
 import { setLoading } from '../../Loading/actions';
 import { setMobileEntry } from './actions';
 import { setTempSearch } from '../../Components/SearchBar/actions';
@@ -19,7 +20,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
   	user: state.user.user,
     mobileSelectedEntry: state.search.mobileEntry,
-    searchKey: state.search.searchKey,
     pathName: state.router.location.pathname,
     hash: state.router.location.hash,
     search: state.router.location.search,
@@ -42,7 +42,8 @@ class Search extends Component {
 		super()
 		this.state = {
 			entries: [],
-			selectedEntry: {}
+			selectedEntry: {},
+			searchComplete: false
 		}
 	}
 
@@ -72,7 +73,7 @@ class Search extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {user: {userID}, search, pathName} = this.props;
+		const {user: {userID}, search, pathName, setTempSearch} = this.props;
 		const { RECENT, FAVORITES, SEARCH } = routes;
 		
 		if (prevProps.pathName !== pathName) {
@@ -82,13 +83,20 @@ class Search extends Component {
 				this.loadSearchOnMount()
 			}
 		} else if (pathName === SEARCH && prevProps.search !== search) {
-			const values = queryString.parse(search)
-			this.handleSearchKey(values.searchkey)
+			if (search) {
+				const values = queryString.parse(search)
+				this.handleSearchKey(values.searchkey)
+			} else {
+				setTempSearch('')
+				this.setState({entries: []})
+			}
+			
 		}
 	}
 
 	componentWillUnmount() {
-		this.clearMobileEntry();
+		const {setMobileEntry} = this.props;
+	    setMobileEntry('');
 	}
 
 	loadSearchOnMount() {
@@ -116,6 +124,7 @@ class Search extends Component {
 
 	handleSearch = (searchKey) => {
 		const { setLoading } = this.props;
+		this.setState({searchComplete: false})
 		setLoading(true)
 		if (searchKey) {
 			apiRequest({
@@ -124,7 +133,6 @@ class Search extends Component {
 				body: {searchKey} 
 			})
 			.then(entries => {
-				setLoading(false)
 				if (Array.isArray(entries)) {
 					this.setState({
 						entries: entries
@@ -134,9 +142,12 @@ class Search extends Component {
 						entries: []
 					})
 				}
+				setLoading(false)
+				this.setState({searchComplete: true})
 			})
 			.catch(()=>{
 				setLoading(false)
+				this.setState({searchComplete: true})
 				connectionError()
 			})
 		} else {
@@ -201,11 +212,6 @@ class Search extends Component {
 		.catch(() => console.log('unable to save recent'))
 	}
 
-	clearMobileEntry = () => {
-	    const {setMobileEntry} = this.props;
-	    setMobileEntry('');
-	};
-
 	setSearchURL = ({path, word, entryID}) => {
 		let { pathName, search, hash } = this.props;
 		const { SEARCH } = routes;
@@ -220,12 +226,10 @@ class Search extends Component {
 	};
 
 	render() {
-		const { entries, selectedEntry } = this.state;
+		const { entries, selectedEntry, searchComplete } = this.state;
 		const { mobileSelectedEntry } = this.props;
-		const entryViewMobile = mobileSelectedEntry 
-			? 'visible-entry-view' 
-			: 'hidden-entry-view'
 
+		
 		return (
 			<div className='page'>
 				<MediaQuery minWidth={700}>
@@ -234,11 +238,13 @@ class Search extends Component {
 							<EntriesList  
 								entries={entries}
 								selectEntry={this.handleEntrySelect}
+								searchComplete={searchComplete}
 							/>
 						</div>
 						<div className='entry-view-container'>
 							<EntryView 
 								selectedEntry={selectedEntry} 
+								updateFavs={this.filterEntries}
 							/>
 						</div>
 					</div>
@@ -249,19 +255,14 @@ class Search extends Component {
 							<EntriesList  
 								entries={entries}
 								selectEntry={this.handleEntrySelect}
+								searchComplete={searchComplete}
 							/>
 						</div>
-						{mobileSelectedEntry
-				              ? <div className='invisible-div' onClick={this.clearMobileEntry}>&nbsp;</div>
-				              : null
-				        }
-						<div 
-							className={`entry-view-container ${entryViewMobile}`}
-						>
-							<EntryView
-								selectedEntry={selectedEntry} 
-							/>
-						</div>
+						<SlideUpEntry 
+							isSelected={mobileSelectedEntry} 
+							selectedEntry={selectedEntry}
+							updateFavs={this.filterEntries}
+						/> 
 					</div>
 				</MediaQuery>
 				<SearchBar 

@@ -3,6 +3,7 @@
 	box-sizing: border-box;
 	width: auto;
 	height: auto;
+	border-radius: 4px;
 	background: var(--cantoWhite);
 	box-shadow: var(--cantoShadow);
 }

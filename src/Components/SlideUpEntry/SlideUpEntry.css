@@ -1,0 +1,68 @@
+.hidden-entry-view {
+	transform: translateY(100%);
+}
+
+.visible-entry-view {
+	transform: translateY(0);
+}
+
+.back-div {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--cantoShade);
+}
+
+.entry-view-sizer {
+	position: relative;
+	height: auto;
+	width: 100%;
+	cursor: default;
+}
+
+.entry-view-container {
+	position: relative;
+	width: 50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	overflow-y: auto;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.spinner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.slide-up-close {
+	position: absolute;
+	height: 30px;
+	width: 30px;
+	top: 35px;
+	right: 10px;
+	outline: none;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 700px) {
+	.entry-view-container {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		align-items: center;
+		transition: all 0.4s;
+		overflow: hidden;
+		cursor: pointer;
+	}
+}

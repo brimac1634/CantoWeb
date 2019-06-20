@@ -13,7 +13,7 @@ body.option-alert-body-element {
   right: 0;
   bottom: 0;
   z-index: 99;
-  background: rgba(6, 38, 66, 0.62);
+  background: var(--cantoShade);
   display: flex;
   justify-content: center;
   align-items: center;

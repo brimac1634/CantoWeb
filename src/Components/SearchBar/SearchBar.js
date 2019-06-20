@@ -7,9 +7,7 @@ import MediaQuery from 'react-responsive';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
 import { setPrevRoute } from '../../Routing/actions';
-import { setMobileEntry } from '../../Containers/Search/actions';
 import { setTempSearch } from './actions';
-import { setLoading } from '../../Loading/actions';
 import { routes } from '../../Routing/constants';
 import Controller from '../../Helpers/Compound/Controller';
 import Trigger from '../../Helpers/Compound/Trigger';
@@ -19,6 +17,7 @@ const mapStateToProps = state => {
 	return {
 		pathName: state.router.location.pathname,
 		hash: state.router.location.hash,
+		search: state.router.location.search,
 		userID: state.user.user.userID,
 		tempSearchKey: state.temp.key,
 	}
@@ -26,11 +25,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 		updateURL: (type) => dispatch(push(type)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
-		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 }
 
@@ -89,10 +86,9 @@ class SearchBar extends Component {
 	}
 
 	searchSubmit = (event) => {
-		const { hash, tempSearchKey, setLoading } = this.props;
+		const { hash, tempSearchKey } = this.props;
 		const enterPressed = (event.which === 13);
 		if (enterPressed && tempSearchKey) {
-			setLoading(true);
 			event.target.blur();
 			this.handleSearch(tempSearchKey, hash)
 		}
@@ -134,7 +130,7 @@ class SearchBar extends Component {
 				{(matches) => {
 				return (
 					<div className='search-bar-container'>
-						<div className='search-bar' onClick={()=>setMobileEntry('')}>
+						<div className='search-bar'>
 							<div className='filter-container'>
 								<Button 
 									title={matches ? null : 'Recent'}

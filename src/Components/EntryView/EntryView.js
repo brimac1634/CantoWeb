@@ -5,9 +5,9 @@ import { push } from 'connected-react-router';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import { validateUser, serverError, togglePlay } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
-import { setAlert } from '../../Components/PopUpAlert/actions';
 import { setPrevRoute } from '../../Routing/actions';
 import { setLoading } from '../../Loading/actions';
+import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
 
@@ -21,10 +21,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		presentAlert: (alert) => dispatch(setAlert(alert)),
 		updateURL: (path) => dispatch(push(path)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
+		setMobileEntry: (entryID) => dispatch(setMobileEntry(entryID)),
 	}
 }
 
@@ -39,21 +39,31 @@ class EntryView extends Component {
 
 	componentDidMount() {
 		const { hash } = this.props;
-		if (hash) {
+		if (hash) { 
 			this.getEntry(hash)
 		}
 	}
 
 	componentDidUpdate(prevProps) {
-		const { selectedEntry, userID, hash } = this.props;
+		const { selectedEntry, userID, hash, setMobileEntry, pathName } = this.props;
+		const { entry: { entry_id }, entry } = this.state;
+		const { WORD_OF_THE_DAY, FAVORITES } = routes;
 		if (prevProps.selectedEntry !== selectedEntry) {
-			this.setState({entry: selectedEntry, isFavorited: false})
-			if (selectedEntry !== '') {
+			this.setState({entry: selectedEntry})
+			if (pathName === FAVORITES) {
+				this.setState({isFavorited: true})
+			} else if (selectedEntry !== '' && validateUser(userID)) {
+				this.setState({isFavorited: false})
 				this.checkIfFavorite(selectedEntry.entry_id, userID);
 			}
 		} else if (hash && hash !== prevProps.hash) {
 			this.getEntry(hash)
-		}
+		} else if (Object.entries(prevProps.selectedEntry).length === 0 && Object.entries(selectedEntry).length === 0 && hash && validateUser(userID)) {
+			this.checkIfFavorite(entry_id, userID);
+		} else if (pathName !== WORD_OF_THE_DAY && !hash && entry !== '') {
+			this.setState({entry: ''})
+			setMobileEntry('');
+		} 
 	}
 
 	getEntry = (hash) => {
@@ -100,20 +110,18 @@ class EntryView extends Component {
 				this.setState({isFavorited: favorited})
 			}
 		})
+		.catch(()=>setLoading(false))
 	}
 
 	toggleFavorite = (entryID, userID, cantoWord) => {
 		const { 
-			updateEntries,
-			updateSelected, 
-			presentAlert, 
-			isFavoritePage,
+			updateFavs,
 			updateURL,
 			pathName,
 			setPrevRoute,
-			setLoading
+			setLoading,
 		} = this.props;
-		const { LOGIN } = routes;
+		const { LOGIN, FAVORITES } = routes;
 		if (validateUser(userID)) {
 			setLoading(true)
 			apiRequest({
@@ -127,29 +135,12 @@ class EntryView extends Component {
 					serverError()
 				} else {
 					this.setState({isFavorited: favorited})
-					let title = '';
-					let message = '';
-					let icon = '';
-					if (!favorited) {
-						if (isFavoritePage) {
-							updateEntries(userID)
-							updateSelected('')
+					if (pathName === FAVORITES) {
+						updateFavs(userID, FAVORITES)
+						if (!favorited) {
+							updateURL(pathName)
 						}
-						title = 'Favorite Removed'
-						message = `"${cantoWord}" has been removed from your favorites.`
-						icon = 'dislike-1'
-					} else {
-						title = 'Favorite Added'
-						message = `"${cantoWord}" has been added to your favorites.`
-						icon = 'like-2'
 					}
-					const alert = {
-				        title,
-				        message,
-				        showAlert: true,
-				        icon,
-				    }
-				    presentAlert(alert);
 				}
 			})
 			.catch(() => {
@@ -215,16 +206,18 @@ class EntryView extends Component {
 										className='entry-btn' 
 										onClick={() => this.toggleFavorite(entry_id, userID, canto_word)}
 									>
-										<Icon 
-											icon='like-2' 
-											iconSize='35' 
-											iconStyle='dark'
-											color={
-												isFavorited
-												? 'cantoPink'
-												: 'cantoDarkBlue'
-											}
-										/>
+										{isFavorited
+											?	<Icon 
+													icon='like-2-full' 
+													iconSize='35'
+													color='cantoPink'
+												/>
+											:   <Icon 
+													icon='like-2' 
+													iconSize='35'
+													color='cantoDarkBlue'
+												/>
+										}
 									</button>
 									<button 
 										className='entry-btn'

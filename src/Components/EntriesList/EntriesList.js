@@ -1,8 +1,24 @@
 import React from 'react';
 import './EntriesList.css';
 import EntryRow from './EntryRow/EntryRow';
+import Button from '../Button/Button';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
+import { routes } from '../../Routing/constants';
 
-const EntryList = ({ entries, selectEntry, isFavoritePage }) => {
+const mapStateToProps = (state, ownProps) => {
+  return {
+    search: state.router.location.search,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		updateURL: (url) => dispatch(push(url)),
+	}
+} 
+
+const EntryList = ({ entries, selectEntry, searchComplete, updateURL, search }) => {
 	let ghostRows = [0,1,2,3,4,5,6]
 
 	const getDelay = (i) => {
@@ -10,10 +26,28 @@ const EntryList = ({ entries, selectEntry, isFavoritePage }) => {
 		return 0 + add
 	}
 
+	const renderMessage = () => {
+		const { CONTACT } = routes;
+		if (entries.length === 0 && searchComplete && search) {
+			return (
+				<div className='vertical'>
+					<p className='no-match'>Don't see what you're looking for?<br/>Request for it to be added!</p>
+					<Button 
+						title='Request Word'
+						buttonType='ghost'
+						margin='10px 5px'
+						handleClick={()=>updateURL(CONTACT)}
+					/>
+				</div>
+			)
+		}
+	}
+
 	return (
 		<div className='entry-list'>
+			{renderMessage()}
 			{
-				entries.length || isFavoritePage
+				entries.length || (searchComplete && search)
 				?   entries.map((entry, i) => {
 						return (
 							<EntryRow
@@ -34,11 +68,10 @@ const EntryList = ({ entries, selectEntry, isFavoritePage }) => {
 							/>
 						);
 					})
-							
-				
 			}
+
 		</div>
 	);
 }
 
-export default EntryList;
+export default connect(mapStateToProps, mapDispatchToProps)(EntryList);
