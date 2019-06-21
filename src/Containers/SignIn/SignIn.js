@@ -335,16 +335,14 @@ class SignIn extends Component {
     responseFacebook = (response) => {
     	const { setLoading } = this.props;
     	if (response && response.email) {
-    		const { accessToken, name, email, userID } = response;
+    		const { accessToken } = response;
     		setLoading(true)
 			apiRequest({
-				endPoint: '/api/v1/auth/facebook',
+				endPoint: 'api/v1/auth/facebook',
 				method: 'POST',
-				body: {name, email, userID}
+				body: {accessToken}
 			})
 				.then(userData => {
-					const token = userData.headers.get('x-auth-token');
-					setLoading(false)
 					if (userData && userData.error != null) {
 						const { title, message } = userData.error;
 						optionAlert({
@@ -353,10 +351,15 @@ class SignIn extends Component {
 					    })
 					} else {
 						//login success
+						const token = userData.headers.get('x-auth-token');
 						if (token) {
-		                    // this.setState({isAuthenticated: true, userData, token})
+		                    localStorage.setItem('id_token', token);
 		                }
+						// if (token) {
+		    //                 // this.setState({isAuthenticated: true, userData, token})
+		    //             }
 					}
+					setLoading(false)
 				})
 				.catch(err=>{
 					setLoading(false)
