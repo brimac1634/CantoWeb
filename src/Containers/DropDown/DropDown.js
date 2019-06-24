@@ -3,7 +3,7 @@ import '../../Helpers/Compound/Compound.css';
 import IconListItem from '../../Components/IconListItem/IconListItem';
 import MediaQuery from 'react-responsive';
 
-const DropDown = ({ list, animateOut, toggle, maxHeight, handleSelection, adjustY, triggerRect: {x, y, width, height}}) => {
+const DropDown = ({ list, animateOut, toggle, maxHeight, padding, handleSelection, adjustY, triggerRect: {x, y, width, height}}) => {
 
 	const handleSelect = (item) => {
 		handleSelection(item)
@@ -28,6 +28,7 @@ const DropDown = ({ list, animateOut, toggle, maxHeight, handleSelection, adjust
 									key={i}
 									title={item} 
 									handleClick={()=>handleSelect(item)}
+									padding={padding}
 								/>
 							)
 						})

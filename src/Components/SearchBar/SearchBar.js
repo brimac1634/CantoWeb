@@ -36,7 +36,8 @@ class SearchBar extends Component {
 		super(props)
 		this.state = {
 			initialSearchList: [],
-			searchList: []
+			searchList: [],
+			searchType: 'All',
 		}
 	}
 
@@ -117,14 +118,19 @@ class SearchBar extends Component {
 		this.handleSearch(word)
 	}
 
+	handleSearchOptions = (type) => {
+		this.setState({searchType: type})
+	}
 
 	render() {
 		const { 
 			pathName,
 			tempSearchKey,
 		 } = this.props;
-		 const { searchList } = this.state;
+		 const { searchList, searchType } = this.state;
 		 const { FAVORITES, RECENT } = routes;
+		 const searchOptions = ['All', 'Can', 'Eng', 'Man', 'Jyu'];
+
 		return (
 			<MediaQuery maxWidth={574}>
 				{(matches) => {
@@ -161,12 +167,15 @@ class SearchBar extends Component {
 									:   <Controller>
 											<Trigger>
 												<div className='center-div'>
-													<TextInput 
-														icon='search' 
+													<TextInput  
+														button={searchType}
+														buttonList={searchOptions}
+														handleDropDown={this.handleSearchOptions}
 														placeHolder='English/Cantonese/Mandarin/Jyutping'
 														margin='10px 0'
 														value={tempSearchKey ? tempSearchKey : ''}
 														height={matches ? '44px' : '34px'} 
+														padding='5px'
 														handleChange={this.searchChange}
 														handleInput={this.searchSubmit}
 													/>

@@ -7,7 +7,6 @@
 	align-items: center;
 	flex-direction: row;
 	background: transparent;
-	padding: 8px 20px;
 	transition: all .2s linear;
 	overflow: hidden;
 }

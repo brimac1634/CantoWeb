@@ -2,7 +2,7 @@ import React from 'react';
 import './Button.css'
 import Icon from '../Icon/Icon';
 
-const Button = ({ title, handleClick, buttonType, icon, isSelected, width, height, margin, type }) => {
+const Button = ({ title, handleClick, buttonType, icon, isSelected, width, height, margin, padding, type }) => {
 	const style = buttonType ? buttonType : 'full';
 	const titleType = icon ? 'with-icon' : 'without-icon';
 	const buttonSelect = isSelected ? 'selected-button' : null;
@@ -14,7 +14,8 @@ const Button = ({ title, handleClick, buttonType, icon, isSelected, width, heigh
 			style={{
 				width: `${width ? width : 'auto'}`, 
 				height: `${height ? height : 'auto'}`,
-				margin: `${margin ? margin : '10px'}`
+				margin: `${margin ? margin : '10px'}`,
+				padding: `${padding ? padding : '5px 15px'}`
 			}}
 		>
 			{icon 
