@@ -5,9 +5,9 @@ export const validateUser = (userID) => {
 	return userID != null && userID.toString().length
 }
 
-export const setQueryURL = (key, hash) => {
+export const setQueryURL = (key, type, hash) => {
 	const { SEARCH } = routes;
-	return `${SEARCH}?searchkey=${key}${hash}` 
+	return `${SEARCH}?searchkey=${key}&searchtype=${type}${hash}` 
 }
 
 export const validateEmail = (email) => {

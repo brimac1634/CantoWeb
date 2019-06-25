@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import { validateUser, setQueryURL, requestToLogin } from '../../Helpers/helpers';
 import MediaQuery from 'react-responsive';
+import queryString from 'query-string';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
 import { setPrevRoute } from '../../Routing/actions';
@@ -20,7 +21,7 @@ const mapStateToProps = state => {
 		search: state.router.location.search,
 		userID: state.user.user.userID,
 		urlSearchKey: state.temp.key,
-		searchType: state.temp.searchType
+		searchType: state.temp.searchType,
 	}
 }
 
@@ -44,11 +45,17 @@ class SearchBar extends Component {
 	}
 
 	componentDidMount() {
+		const { search, setSearchType } = this.props;
 		const searchList = JSON.parse(localStorage.getItem('searchList'))
 		this.setState({
 			initialSearchList: searchList,
 			searchList
 		})
+
+		if (search) {
+			const values = queryString.parse(search)
+			setSearchType(values.searchtype)
+		} 
 	}
 
 	componentDidUpdate(prevProps) {
@@ -77,8 +84,8 @@ class SearchBar extends Component {
 	}
 
 	handleSearch = (word) => {
-		const { updateURL, hash } = this.props;
-		const url = setQueryURL(word, hash)
+		const { updateURL, hash, searchType } = this.props;
+		const url = setQueryURL(word, searchType, hash)
 		sessionStorage.setItem('searchURL', JSON.stringify(url));
 		updateURL(url)
 		this.updateSearchList(word);
@@ -136,7 +143,7 @@ class SearchBar extends Component {
 		 const { searchList, tempSearchKey } = this.state;
 		 const { FAVORITES, RECENT } = routes;
 		 const searchOptions = ['All', 'Can', 'Eng', 'Man', 'Jyu'];
-
+		 console.log(searchType)
 		return (
 			<MediaQuery maxWidth={574}>
 				{(matches) => {
