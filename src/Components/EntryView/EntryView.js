@@ -168,6 +168,58 @@ class EntryView extends Component {
 		}
 	}
 
+	playAudio = (entryID) => {
+		// setLoading(true)
+		// // apiRequest({
+		// // 	endPoint: '/stream-audio',
+		// // 	method: 'GET',
+		// // })
+		// fetch('http://localhost:3000/stream-audio', {
+		// 	method: 'GET',
+		//     headers: {'Content-Type': 'application/json'}
+		// })
+		// .then(response => response.json())
+		// .then(stream => {
+		// 	setLoading(false)
+		// 	console.log(stream)
+		// 	// if (favorited.error) {
+		// 	// 	serverError()
+		// 	// } else {
+		// 	// 	this.setState({isFavorited: favorited})
+		// 	// 	if (pathName === FAVORITES) {
+		// 	// 		updateFavs(userID, FAVORITES)
+		// 	// 		if (!favorited) {
+		// 	// 			updateURL(pathName)
+		// 	// 		}
+		// 	// 	}
+		// 	// }
+		// })
+		// .catch(() => {
+		// 	setLoading(false)
+		// 	serverError()
+		// })
+		const context = new AudioContext();
+		let audio;
+
+		fetch('http://localhost:3000/stream-audio')
+			.then(data => data.arrayBuffer())
+			.then(arrayBuffer => context.decodeAudioData(arrayBuffer))
+			.then(decodedAudio => {
+				audio = decodedAudio;
+				playBack()
+			})
+			.catch(console.log)
+
+		function playBack() {
+			const playSound = context.createBufferSource();
+			playSound.buffer = audio;
+			playSound.connect(context.destination);
+			playSound.start(context.currentTime);
+		}
+
+
+	}
+
 	render() {
 		const { WORD_OF_THE_DAY } = routes;
 		const { userID, pathName } = this.props;
@@ -221,7 +273,7 @@ class EntryView extends Component {
 									</button>
 									<button 
 										className='entry-btn'
-										onClick={() => togglePlay(entry_id)}
+										onClick={() => this.playAudio(entry_id)}
 									>
 										<Icon 
 											icon='speaker-5' 

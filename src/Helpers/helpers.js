@@ -1,5 +1,6 @@
 import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
 import { routes } from '../Routing/constants';
+import apiRequest from './apiRequest';
 
 export const validateUser = (userID) => {
 	return userID != null && userID.toString().length
@@ -16,8 +17,8 @@ export const validateEmail = (email) => {
 }
 
 export const togglePlay = (entryID) => {
-	const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
-	audio.play()		
+	// const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
+	// audio.play()		
 }
 
 export const yyyymmdd = (date) => {
