@@ -3,7 +3,7 @@ import './SignIn.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import { Link } from 'react-router-dom';
-import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
+import { optionAlert } from '../OptionAlert/OptionAlert';
 import { serverError, connectionError, validateEmail } from '../../Helpers/helpers';
 import queryString from 'query-string';
 import MediaQuery from 'react-responsive';

@@ -1,6 +1,5 @@
 import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
 import { routes } from '../Routing/constants';
-import apiRequest from './apiRequest';
 
 export const validateUser = (userID) => {
 	return userID != null && userID.toString().length
@@ -14,11 +13,6 @@ export const setQueryURL = (key, hash) => {
 export const validateEmail = (email) => {
 	const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return regexp.test(email);
-}
-
-export const togglePlay = (entryID) => {
-	// const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/cantotalk-audio-clips/entryID_1.mp3')
-	// audio.play()		
 }
 
 export const yyyymmdd = (date) => {

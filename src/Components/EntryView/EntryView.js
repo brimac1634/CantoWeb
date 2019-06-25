@@ -3,13 +3,14 @@ import './EntryView.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
-import { validateUser, serverError, togglePlay } from '../../Helpers/helpers';
+import { validateUser, serverError } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setPrevRoute } from '../../Routing/actions';
 import { setLoading } from '../../Loading/actions';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
+import audioRequest from '../../Helpers/audioRequest';
 
 const mapStateToProps = state => {
 	return {
@@ -169,55 +170,14 @@ class EntryView extends Component {
 	}
 
 	playAudio = (entryID) => {
-		// setLoading(true)
-		// // apiRequest({
-		// // 	endPoint: '/stream-audio',
-		// // 	method: 'GET',
-		// // })
-		// fetch('http://localhost:3000/stream-audio', {
-		// 	method: 'GET',
-		//     headers: {'Content-Type': 'application/json'}
-		// })
-		// .then(response => response.json())
-		// .then(stream => {
-		// 	setLoading(false)
-		// 	console.log(stream)
-		// 	// if (favorited.error) {
-		// 	// 	serverError()
-		// 	// } else {
-		// 	// 	this.setState({isFavorited: favorited})
-		// 	// 	if (pathName === FAVORITES) {
-		// 	// 		updateFavs(userID, FAVORITES)
-		// 	// 		if (!favorited) {
-		// 	// 			updateURL(pathName)
-		// 	// 		}
-		// 	// 	}
-		// 	// }
-		// })
-		// .catch(() => {
-		// 	setLoading(false)
-		// 	serverError()
-		// })
-		const context = new AudioContext();
-		let audio;
-
-		fetch('http://localhost:3000/stream-audio')
-			.then(data => data.arrayBuffer())
-			.then(arrayBuffer => context.decodeAudioData(arrayBuffer))
-			.then(decodedAudio => {
-				audio = decodedAudio;
-				playBack()
+		const { setLoading } = this.props;
+		setLoading(true)
+		audioRequest(entryID)
+			.then(() => setLoading(false))
+			.catch(()=>{
+				setLoading(false)
+				serverError()
 			})
-			.catch(console.log)
-
-		function playBack() {
-			const playSound = context.createBufferSource();
-			playSound.buffer = audio;
-			playSound.connect(context.destination);
-			playSound.start(context.currentTime);
-		}
-
-
 	}
 
 	render() {
