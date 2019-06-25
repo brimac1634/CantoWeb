@@ -3,13 +3,14 @@ import './EntryView.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
-import { validateUser, serverError, togglePlay } from '../../Helpers/helpers';
+import { validateUser, serverError } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setPrevRoute } from '../../Routing/actions';
 import { setLoading } from '../../Loading/actions';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
+import audioRequest from '../../Helpers/audioRequest';
 
 const mapStateToProps = state => {
 	return {
@@ -168,6 +169,17 @@ class EntryView extends Component {
 		}
 	}
 
+	playAudio = (entryID) => {
+		const { setLoading } = this.props;
+		setLoading(true)
+		audioRequest(entryID)
+			.then(() => setLoading(false))
+			.catch(()=>{
+				setLoading(false)
+				serverError()
+			})
+	}
+
 	render() {
 		const { WORD_OF_THE_DAY } = routes;
 		const { userID, pathName } = this.props;
@@ -221,7 +233,7 @@ class EntryView extends Component {
 									</button>
 									<button 
 										className='entry-btn'
-										onClick={() => togglePlay(entry_id)}
+										onClick={() => this.playAudio(entry_id)}
 									>
 										<Icon 
 											icon='speaker-5' 
