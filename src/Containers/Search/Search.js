@@ -24,6 +24,7 @@ const mapStateToProps = (state, ownProps) => {
     hash: state.router.location.hash,
     search: state.router.location.search,
     tempSearchKey: state.temp.key,
+    searchType: state.temp.searchType
   }
 }
 
@@ -123,14 +124,14 @@ class Search extends Component {
 	}
 
 	handleSearch = (searchKey) => {
-		const { setLoading } = this.props;
+		const { setLoading, searchType } = this.props;
 		this.setState({searchComplete: false})
 		setLoading(true)
 		if (searchKey) {
 			apiRequest({
 				endPoint: '/search',
 				method: 'POST',
-				body: {searchKey} 
+				body: {searchKey, searchType} 
 			})
 			.then(entries => {
 				if (Array.isArray(entries)) {

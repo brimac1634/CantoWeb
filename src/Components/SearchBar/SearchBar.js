@@ -7,7 +7,7 @@ import MediaQuery from 'react-responsive';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
 import { setPrevRoute } from '../../Routing/actions';
-import { setTempSearch } from './actions';
+import { setTempSearch, setSearchType } from './actions';
 import { routes } from '../../Routing/constants';
 import Controller from '../../Helpers/Compound/Controller';
 import Trigger from '../../Helpers/Compound/Trigger';
@@ -19,7 +19,8 @@ const mapStateToProps = state => {
 		hash: state.router.location.hash,
 		search: state.router.location.search,
 		userID: state.user.user.userID,
-		tempSearchKey: state.temp.key,
+		urlSearchKey: state.temp.key,
+		searchType: state.temp.searchType
 	}
 }
 
@@ -28,6 +29,7 @@ const mapDispatchToProps = (dispatch) => {
 		updateURL: (type) => dispatch(push(type)),
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
+		setSearchType: (type) => dispatch(setSearchType(type)),
 	}
 }
 
@@ -35,9 +37,9 @@ class SearchBar extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			tempSearchKey: '',
 			initialSearchList: [],
 			searchList: [],
-			searchType: 'All',
 		}
 	}
 
@@ -47,6 +49,13 @@ class SearchBar extends Component {
 			initialSearchList: searchList,
 			searchList
 		})
+	}
+
+	componentDidUpdate(prevProps) {
+		const { urlSearchKey } = this.props;
+		if (prevProps.urlSearchKey !== urlSearchKey) {
+			this.setState({tempSearchKey: urlSearchKey})
+		}
 	}
 
 	handleSearchRoute = (e, route) => {
@@ -77,9 +86,8 @@ class SearchBar extends Component {
 
 	searchChange = (event) => {
 		const word = event.target.value
-		const { setTempSearch } = this.props;
 		let { initialSearchList } = this.state;
-		setTempSearch(word)
+		this.setState({tempSearchKey: word})
 		if (initialSearchList) {
 			const searchList = initialSearchList.filter(item => item.includes(word))
 			this.setState({searchList})
@@ -87,7 +95,8 @@ class SearchBar extends Component {
 	}
 
 	searchSubmit = (event) => {
-		const { hash, tempSearchKey } = this.props;
+		const { hash } = this.props;
+		const { tempSearchKey } = this.state;
 		const enterPressed = (event.which === 13);
 		if (enterPressed && tempSearchKey) {
 			event.target.blur();
@@ -117,17 +126,14 @@ class SearchBar extends Component {
 		setTempSearch(word)
 		this.handleSearch(word)
 	}
-
-	handleSearchOptions = (type) => {
-		this.setState({searchType: type})
-	}
-
+	
 	render() {
 		const { 
 			pathName,
-			tempSearchKey,
+			searchType,
+			setSearchType
 		 } = this.props;
-		 const { searchList, searchType } = this.state;
+		 const { searchList, tempSearchKey } = this.state;
 		 const { FAVORITES, RECENT } = routes;
 		 const searchOptions = ['All', 'Can', 'Eng', 'Man', 'Jyu'];
 
@@ -170,7 +176,7 @@ class SearchBar extends Component {
 													<TextInput  
 														button={searchType}
 														buttonList={searchOptions}
-														handleDropDown={this.handleSearchOptions}
+														handleDropDown={type=>setSearchType(type)}
 														placeHolder='English/Cantonese/Mandarin/Jyutping'
 														margin='10px 0'
 														value={tempSearchKey ? tempSearchKey : ''}
