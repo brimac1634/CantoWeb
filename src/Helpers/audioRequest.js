@@ -24,8 +24,10 @@ export default (entryID) => {
     	.then(data => data.arrayBuffer())
         .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
         .then(decodedAudio => {
-            audio = decodedAudio;
-            playBack()
+            if (decodedAudio != null) {
+                audio = decodedAudio;
+                playBack()
+            }
         })
     	.catch(()=>{
             optionAlert({
