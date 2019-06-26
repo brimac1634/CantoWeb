@@ -155,6 +155,7 @@ class SearchBar extends Component {
 									buttonType='ghost' 
 									icon='time' 
 									height={matches ? '44px' : '34px'}
+									iconSize={matches ? '22' : null}
 									margin='10px 5px 10px 10px'
 									isSelected={pathName === RECENT
 													? true
@@ -166,6 +167,7 @@ class SearchBar extends Component {
 									buttonType='ghost' 
 									icon='like-2' 
 									height={matches ? '44px' : '34px'}
+									iconSize={matches ? '22' : null}
 									margin='10px 5px'
 									isSelected={pathName === FAVORITES
 													? true
@@ -187,7 +189,7 @@ class SearchBar extends Component {
 														margin='10px 0'
 														value={tempSearchKey ? tempSearchKey : ''}
 														height={matches ? '44px' : '34px'} 
-														padding='5px'
+														padding='2px 5px 2px 2px'
 														handleChange={this.searchChange}
 														handleInput={this.searchSubmit}
 													/>

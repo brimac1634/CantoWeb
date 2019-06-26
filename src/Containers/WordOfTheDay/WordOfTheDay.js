@@ -57,7 +57,10 @@ class WordOfTheDay extends Component {
 					const date = yyyymmdd(entry.date)
 					wods[date] = entry
 				})
-				this.setState({wods})
+				this.setState({
+					wods,
+					selectedEntry: entries[0]
+				})
 			}
 		})
 		.catch(()=>{

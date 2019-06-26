@@ -27,7 +27,7 @@ const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height
 				</div>
 			}
 			{button != null &&
-				<div onClick={e=>e.stopPropagation()}>
+				<div className='btn-container' onClick={e=>e.stopPropagation()}>
 					<Controller>
 						<Trigger>
 							<div className='icon-group'>

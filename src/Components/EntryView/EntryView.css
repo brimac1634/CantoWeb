@@ -118,7 +118,15 @@
 	.entry-view  {
 		box-shadow: var(--cantoFloatShadow);
 		height: 100%;
+		margin: 27px 0;
+	}
+
+	.wod_view {
 		padding: 30px 40px;
+	}
+
+	.non-wod-view {
+		padding: 50px 40px 30px 40px;
 	}
 
 	.entry-view:hover {
@@ -129,12 +137,6 @@
 @media screen and (max-width: 1000px) {
 	.wod-date {
 		font-size: 1em
-	}
-}
-
-@media screen and (max-width: 700px) {
-	.entry-view  {
-		margin: 27px 0;
 	}
 }
 

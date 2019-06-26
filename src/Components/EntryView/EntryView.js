@@ -200,12 +200,13 @@ class EntryView extends Component {
 		} = this.state
 
 		const clLabel = classifier ? 'cl: ' : '';
+		const isWOD = (pathName === WORD_OF_THE_DAY)
 
 		return (
-			<div className='entry-view'>
+			<div className={`entry-view ${isWOD ? 'wod-view' : 'non-wod-view'}`}>
 				{entry !== ''
 					?   <div>
-							{pathName === WORD_OF_THE_DAY &&
+							{isWOD &&
 								<div className='center-div'>
 									<h2 className='wod-date'>{new Date(entry.date).toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}
 									</h2>

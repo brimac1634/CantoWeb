@@ -28,6 +28,11 @@
 	align-items: center;
 	justify-content: space-around;
 	box-sizing: border-box;
+	height: 100%;
+}
+
+.btn-container {
+	height: 100%;
 }
 
 .input-icon {
