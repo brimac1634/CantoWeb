@@ -143,7 +143,6 @@ class SearchBar extends Component {
 		 const { searchList, tempSearchKey } = this.state;
 		 const { FAVORITES, RECENT } = routes;
 		 const searchOptions = ['All', 'Can', 'Eng', 'Man', 'Jyu'];
-		 console.log(searchType)
 		return (
 			<MediaQuery maxWidth={574}>
 				{(matches) => {
