@@ -1,6 +1,7 @@
 import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
 
 export default (entryID) => {
+    let AudioContext = window.AudioContext || window.webkitAudioContext;
     const context = new AudioContext();
     let audio;
         
