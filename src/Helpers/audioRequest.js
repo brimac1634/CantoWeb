@@ -6,26 +6,33 @@ export default (entryID) => {
     let audio;
     let playSound;
 
-    window.addEventListener('touchstart', (e)=>{
-        playSound.context.resume()
-        console.log(playSound.context)
-        e.stopPropagation()
-    })
+    function webAudioTouchUnlock(context) {
+        if (context.state === 'suspended' && 'ontouchstart' in window) {
+            var unlock = function() {
+                context.resume().then(function() {
+                    document.body.removeEventListener('touchstart', unlock);
+                    document.body.removeEventListener('touchend', unlock);
+                });
+            };
+
+            document.body.addEventListener('touchstart', unlock, false);
+            document.body.addEventListener('touchend', unlock, false);
+        }
+    }
 
     function playBack() {
         playSound = context.createBufferSource();
         playSound.buffer = audio;
         playSound.connect(context.destination);
         if (playSound.start) {
-                playSound.start(context.currentTime);
-            } else if (playSound.play) {
-                playSound.play(context.currentTime);
-            } else if (playSound.noteOn) {
-                playSound.noteOn(context.currentTime);
-            }
-        // if (playSound.context.state === 'suspended') {
-        //     window.dispatchEvent(new Event('touchstart'))
-        // }
+            playSound.start(context.currentTime);
+        } else if (playSound.play) {
+            playSound.play(context.currentTime);
+        } else if (playSound.noteOn) {
+            playSound.noteOn(context.currentTime);
+        }
+
+        webAudioTouchUnlock(playSound.context)
     }
 
     return Promise.race([fetch(`${process.env.REACT_APP_SERVER_URL}/stream-audio`, {
