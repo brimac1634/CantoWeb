@@ -6,11 +6,11 @@ export default (entryID) => {
     let audio;
     let playSound;
 
-    // window.addEventListener('touchstart', (e)=>{
-    //     console.log('resumed')
-    //     playSound.context.resume()
-    //     e.stopPropagation()
-    // })
+    window.addEventListener('touchstart', (e)=>{
+        playSound.context.resume()
+        console.log(playSound.context)
+        e.stopPropagation()
+    })
 
     function playBack() {
         playSound = context.createBufferSource();
