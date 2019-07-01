@@ -176,31 +176,45 @@ class EntryView extends Component {
 
 	loadAudio = (entryID) => {
 		const { setLoading } = this.props;
+		const { playSound } = this.state;
 		if (isIOS) {
-			// setLoading(true)
-			// audioRequest(entryID)
-			// 	.then(({context, arrayBuffer}) => {
-			// 		context.decodeAudioData(arrayBuffer, decodedAudio => {
-		 //                const playSound = setupPlayBack(context, decodedAudio)
-		 //                this.setState({playSound})
-		 //                console.log(playSound)
-		 //                setLoading(false)
-		 //            }, () => {
-		 //            	audioNotFound()
-		 //            	setLoading(false)
-		 //            })
-			// 	})
-			// 	.catch(()=>{
-			// 		setLoading(false)
-			// 		serverError()
-			// 	})
-			let audio = new Audio('https://cantotalk-audio-clips.s3-ap-southeast-1.amazonaws.com/entryID_3.mp3')
-			this.setState({playSound: audio})
-			this.playButton.current.addEventListener('touchstart', ()=>{
-				const { playSound } = this.state;
-				console.log(playSound)
-				playSound.play()
-			})
+			setLoading(true)
+			audioRequest(entryID)
+				.then(({context, arrayBuffer}) => {
+					context.decodeAudioData(arrayBuffer, decodedAudio => {
+		                const playSound = setupPlayBack(context, decodedAudio)
+		                this.setState({playSound})
+		                console.log(playSound)
+		                setLoading(false)
+		            }, () => {
+		            	audioNotFound()
+		            	setLoading(false)
+		            })
+				})
+				.catch(()=>{
+					setLoading(false)
+					serverError()
+				})
+			// this.playButton.current.addEventListener('touchstart', ()=>{
+			// 	const { playSound } = this.state;
+			// })
+			this.something(playSound.context)
+		}
+	}
+
+	something = (ctx) => {
+		if (ctx.state === 'suspended') {
+		    var resume = function () {
+		    ctx.resume();
+
+		    setTimeout(function () {
+		        if (ctx.state === 'running') {
+		          document.body.removeEventListener('touchend', resume,   false);
+		        }
+		    }, 0);
+		};
+
+		  document.body.addEventListener('touchend', resume, false);
 		}
 	}
 
