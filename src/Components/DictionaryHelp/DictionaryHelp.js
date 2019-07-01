@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './DictionaryHelp.css';
 import MediaQuery from 'react-responsive';
-import audioRequest from '../../Helpers/audioRequest';
+import { audioRequest } from '../../Helpers/audioRequest';
 import { serverError } from '../../Helpers/helpers';
 import EntryRow from '../EntriesList/EntryRow/EntryRow';
 import { demoEntry, directory, initials, finals, tones } from './jyutpingExamples';

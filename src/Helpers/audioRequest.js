@@ -1,48 +1,33 @@
 import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
 
-export default (entryID) => {
+export const setupPlayBack = (context, audio) => {
+    const playSound = context.createBufferSource();
+    playSound.buffer = audio;
+    playSound.connect(context.destination);
+    return playSound
+}
+
+export const audioNotFound = () => {
+    optionAlert({
+        title: 'Audio Not Found',
+        message: 'The audio clip for this entry could not be found.'
+    })
+}
+
+export const playBack = (playSound) => {
+    const context = playSound.context;
+    if (playSound.start) {
+        playSound.start(context.currentTime);
+    } else if (playSound.play) {
+        playSound.play(context.currentTime);
+    } else if (playSound.noteOn) {
+        playSound.noteOn(context.currentTime);
+    }
+}
+
+export const audioRequest = (entryID) => {
     let AudioContext = window.AudioContext || window.webkitAudioContext;
     const context = new AudioContext();
-    let audio;
-    let playSound;
-
-    function webAudioTouchUnlock(context, entryID) {
-        if (context.state === 'suspended' && 'ontouchstart' in window) {
-            var unlock = function() {
-                context.resume()
-                    .then(data=>{
-                        console.log(data)
-                        document.body.removeEventListener('touchstart', unlock);
-                        document.body.removeEventListener('touchend', unlock);
-                    })
-                    .catch(console.log)
-            };
-
-            document.body.addEventListener('touchstart', unlock, false);
-            document.body.addEventListener('touchend', unlock, false);
-        }
-    }
-
-    function playBack() {
-        playSound = context.createBufferSource();
-        playSound.buffer = audio;
-        playSound.connect(context.destination);
-        if (playSound.start) {
-            playSound.start(context.currentTime);
-        } else if (playSound.play) {
-            playSound.play(context.currentTime);
-        } else if (playSound.noteOn) {
-            playSound.noteOn(context.currentTime);
-        }
-        webAudioTouchUnlock(context, entryID)
-    }
-
-    function audioNotFound() {
-        optionAlert({
-            title: 'Audio Not Found',
-            message: 'The audio clip for this entry could not be found.'
-        })
-    }
 
     return Promise.race([fetch(`${process.env.REACT_APP_SERVER_URL}/stream-audio`, {
 		method: 'POST',
@@ -56,9 +41,10 @@ export default (entryID) => {
     	.then(data => data.arrayBuffer())
         .then(arrayBuffer => {
             context.decodeAudioData(arrayBuffer, decodedAudio => {
-                audio = decodedAudio;
-                playBack()
+                const playSound = setupPlayBack(context, decodedAudio)
+                playBack(playSound)
             }, () => audioNotFound())
+            return {context, arrayBuffer}
         })
     	.catch(() => audioNotFound())		
 }

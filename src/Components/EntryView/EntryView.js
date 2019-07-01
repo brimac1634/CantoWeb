@@ -10,7 +10,8 @@ import { setLoading } from '../../Loading/actions';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
-import audioRequest from '../../Helpers/audioRequest';
+import { setupPlayBack, audioRequest, audioNotFound, playBack } from '../../Helpers/audioRequest';
+import { isIOS } from "react-device-detect";
 
 const mapStateToProps = state => {
 	return {
@@ -32,9 +33,11 @@ const mapDispatchToProps = (dispatch) => {
 class EntryView extends Component {
 	constructor(props) {
 		super(props);
+		this.playButton = React.createRef();
 		this.state = {
 			isFavorited: false,
-			entry: ''
+			entry: '',
+			playSound: {}
 		}
 	}
 
@@ -51,6 +54,7 @@ class EntryView extends Component {
 		const { WORD_OF_THE_DAY, FAVORITES } = routes;
 		if (prevProps.selectedEntry !== selectedEntry) {
 			this.setState({entry: selectedEntry})
+			this.loadAudio(selectedEntry.entry_id)
 			if (pathName === FAVORITES) {
 				this.setState({isFavorited: true})
 			} else if (selectedEntry !== '' && validateUser(userID)) {
@@ -82,6 +86,7 @@ class EntryView extends Component {
 				serverError()
 			} else {
 				this.setState({entry})
+				this.loadAudio(entry.entry_id)
 				if (
 					entryID != null &&
 					validateUser(userID)
@@ -169,15 +174,47 @@ class EntryView extends Component {
 		}
 	}
 
-	playAudio = (entryID) => {
+	loadAudio = (entryID) => {
 		const { setLoading } = this.props;
-		setLoading(true)
-		audioRequest(entryID)
-			.then(() => setLoading(false))
-			.catch(()=>{
-				setLoading(false)
-				serverError()
-			})
+		if (isIOS) {
+			setLoading(true)
+			audioRequest(entryID)
+				.then(({context, arrayBuffer}) => {
+					context.decodeAudioData(arrayBuffer, decodedAudio => {
+		                const playSound = setupPlayBack(context, decodedAudio)
+		                this.setState({playSound})
+		                setLoading(false)
+		            }, () => {
+		            	audioNotFound()
+		            	setLoading(false)
+		            })
+				})
+				.catch(()=>{
+					setLoading(false)
+					serverError()
+				})
+			this.playButton.current.addEventListener('touchstart', this.iOSPlay)
+		}
+	}
+
+	playAudio = (entryID) => {
+		const { setLoading} = this.props;
+		if (!isIOS) {
+			setLoading(true)
+			audioRequest(entryID)
+				.then(() => setLoading(false))
+				.catch(()=>{
+					setLoading(false)
+					serverError()
+				})
+		}
+	}
+
+	iOSPlay = () => {
+		const { playSound } = this.state;
+		console.log(playSound)
+		playSound.start();
+		// playBack(playSound);
 	}
 
 	render() {
@@ -235,6 +272,7 @@ class EntryView extends Component {
 									<button 
 										className='entry-btn'
 										onClick={() => this.playAudio(entry_id)}
+										ref={this.playButton}
 									>
 										<Icon 
 											icon='speaker-5' 
