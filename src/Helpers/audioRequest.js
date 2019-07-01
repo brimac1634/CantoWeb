@@ -6,13 +6,16 @@ export default (entryID) => {
     let audio;
     let playSound;
 
-    function webAudioTouchUnlock(context) {
+    function webAudioTouchUnlock(context, entryID) {
         if (context.state === 'suspended' && 'ontouchstart' in window) {
             var unlock = function() {
-                context.resume().then(function() {
-                    document.body.removeEventListener('touchstart', unlock);
-                    document.body.removeEventListener('touchend', unlock);
-                });
+                context.resume()
+                    .then(data=>{
+                        console.log(data)
+                        document.body.removeEventListener('touchstart', unlock);
+                        document.body.removeEventListener('touchend', unlock);
+                    })
+                    .catch(console.log)
             };
 
             document.body.addEventListener('touchstart', unlock, false);
@@ -31,8 +34,14 @@ export default (entryID) => {
         } else if (playSound.noteOn) {
             playSound.noteOn(context.currentTime);
         }
+        webAudioTouchUnlock(context, entryID)
+    }
 
-        webAudioTouchUnlock(playSound.context)
+    function audioNotFound() {
+        optionAlert({
+            title: 'Audio Not Found',
+            message: 'The audio clip for this entry could not be found.'
+        })
     }
 
     return Promise.race([fetch(`${process.env.REACT_APP_SERVER_URL}/stream-audio`, {
@@ -48,15 +57,8 @@ export default (entryID) => {
         .then(arrayBuffer => {
             context.decodeAudioData(arrayBuffer, decodedAudio => {
                 audio = decodedAudio;
-
                 playBack()
-            }, error => console.error(error))
+            }, () => audioNotFound())
         })
-    	.catch(err=>{
-            console.log(err)
-            optionAlert({
-                title: 'Audio Not Found',
-                message: 'The audio clip for this entry could not be found.'
-            })
-        })		
+    	.catch(() => audioNotFound())		
 }
