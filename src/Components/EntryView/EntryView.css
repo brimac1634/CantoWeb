@@ -75,13 +75,19 @@
 	border-style: none;
 	background: transparent;
 	outline: none;
-	cursor: pointer;
 	margin: 8px 0;
 	transition: all .2s;
-	
 }
 
-.entry-btn:active {
+.entry-btn-active {
+	cursor: pointer;
+}
+
+.entry-btn-disabled {
+	cursor: default;
+}
+
+.entry-btn-active:active {
 	transform: scale(0.8);
 }
 

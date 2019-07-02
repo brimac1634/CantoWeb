@@ -242,6 +242,7 @@ class EntryView extends Component {
 
 		const clLabel = classifier ? 'cl: ' : '';
 		const isWOD = (pathName === WORD_OF_THE_DAY)
+		const active = audioAvailable ? 'entry-btn-active' : 'entry-btn-disabled'
 
 		return (
 			<div className={`entry-view ${isWOD ? 'wod-view' : 'non-wod-view'}`}>
@@ -274,7 +275,7 @@ class EntryView extends Component {
 										}
 									</button>
 									<button 
-										className='entry-btn'
+										className={`entry-btn ${active}`}
 										onClick={this.playAudio}
 										ref={this.playButton}
 									>
