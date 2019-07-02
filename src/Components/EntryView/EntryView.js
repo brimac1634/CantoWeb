@@ -11,6 +11,7 @@ import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
 import { audioRequest, setupPlayBack } from '../../Helpers/audioRequest';
+import { isIOS } from "react-device-detect";
 
 const mapStateToProps = state => {
 	return {
@@ -174,37 +175,39 @@ class EntryView extends Component {
 	}
 
 	loadAudio = (entryID) => {
-		audioRequest(entryID)
-	        .then(({context, arrayBuffer}) => {
-	          context.decodeAudioData(arrayBuffer, decodedAudio => {
-	              const playSound = setupPlayBack(context, decodedAudio)
+		if (isIOS) {
+			audioRequest(entryID)
+		        .then(({context, arrayBuffer}) => {
+		          context.decodeAudioData(arrayBuffer, decodedAudio => {
+		              const playSound = setupPlayBack(context, decodedAudio)
+		              const unlock = function() {
+		              	console.log('playing')
+		                playSound.start(0);
+		              };
 
-	              const unlock = function() {
-	                playSound.start(0);
-	                this.playButton.current.removeEventListener('touchstart', unlock);
-	                this.playButton.current.removeEventListener('touchend', unlock);
-	              };
-
-	              this.playButton.current.addEventListener('touchstart', unlock, false);
-	              this.playButton.current.addEventListener('touchend', unlock, false);
-	          }, () => {
-	            console.log('failed to load audio')
-	          })
-	        })
-	        .catch(()=>{
-	          console.log('failed to request audio')
-	        })
+		              this.playButton.current.addEventListener('touchstart', unlock, false);
+		              this.playButton.current.addEventListener('touchend', unlock, false);
+		          }, () => {
+		            console.log('failed to load audio')
+		          })
+		        })
+		        .catch(()=>{
+		          console.log('failed to request audio')
+		        })
+		}
 	}
 
 	playAudio = (entryID) => {
-		const { setLoading} = this.props;
-		setLoading(true)
-		audioRequest(entryID)
-			.then(() => setLoading(false))
-			.catch(()=>{
-				setLoading(false)
-				serverError()
-			})
+		if (!isIOS) {
+			const { setLoading} = this.props;
+			setLoading(true)
+			audioRequest(entryID)
+				.then(() => setLoading(false))
+				.catch(()=>{
+					setLoading(false)
+					serverError()
+				})
+		}
 	}
 
 	render() {
