@@ -6,6 +6,8 @@ import MainView from './Containers/MainView/MainView';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
 import { setUser } from './Containers/SignIn/actions';
 import { SwapSpinner } from "react-spinners-kit";
+import { setupPlayBack, audioRequest } from './Helpers/audioRequest';
+// import { isIOS } from "react-device-detect";
 
 const mapStateToProps = state => {
   return {
@@ -31,7 +33,33 @@ class App extends Component {
       const user = JSON.parse(cachedUser)
       updateUser(user);
     }
+    // this.unlockSound()
   }
+
+  // unlockSound = () => {
+  //   audioRequest(2)
+  //       .then(({context, arrayBuffer}) => {
+  //         context.decodeAudioData(arrayBuffer, decodedAudio => {
+  //             const playSound = setupPlayBack(context, decodedAudio)
+  //             console.log(playSound)
+
+  //             const unlock = function() {
+  //               console.log(playSound)
+  //               playSound.start(0);
+  //               document.body.removeEventListener('touchstart', unlock);
+  //               document.body.removeEventListener('touchend', unlock);
+  //             };
+
+  //             document.body.addEventListener('touchstart', unlock, false);
+  //             document.body.addEventListener('touchend', unlock, false);
+  //         }, () => {
+  //           console.log('failed to load audio')
+  //         })
+  //       })
+  //       .catch(()=>{
+  //         console.log('failed to request audio')
+  //       })
+  // }
 
   render() {
     const { loading } = this.props;

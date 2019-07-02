@@ -10,8 +10,7 @@ import { setLoading } from '../../Loading/actions';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
-import { setupPlayBack, audioRequest, audioNotFound, playBack } from '../../Helpers/audioRequest';
-import { isIOS } from "react-device-detect";
+import { audioRequest, setupPlayBack } from '../../Helpers/audioRequest';
 
 const mapStateToProps = state => {
 	return {
@@ -175,62 +174,37 @@ class EntryView extends Component {
 	}
 
 	loadAudio = (entryID) => {
-		const { setLoading } = this.props;
-		const { playSound } = this.state;
-		if (isIOS) {
-			setLoading(true)
-			audioRequest(entryID)
-				.then(({context, arrayBuffer}) => {
-					context.decodeAudioData(arrayBuffer, decodedAudio => {
-		                const playSound = setupPlayBack(context, decodedAudio)
-		                this.setState({playSound})
-		                console.log(playSound)
-		                setLoading(false)
-		            }, () => {
-		            	audioNotFound()
-		            	setLoading(false)
-		            })
-				})
-				.catch(()=>{
-					setLoading(false)
-					serverError()
-				})
-			// this.playButton.current.addEventListener('touchstart', ()=>{
-			// 	const { playSound } = this.state;
-			// })
-			this.something(playSound.context)
-		}
-	}
+		audioRequest(entryID)
+	        .then(({context, arrayBuffer}) => {
+	          context.decodeAudioData(arrayBuffer, decodedAudio => {
+	              const playSound = setupPlayBack(context, decodedAudio)
 
-	something = (ctx) => {
-		if (ctx.state === 'suspended') {
-		    var resume = function () {
-		    ctx.resume();
+	              const unlock = function() {
+	                playSound.start(0);
+	                this.playButton.current.removeEventListener('touchstart', unlock);
+	                this.playButton.current.removeEventListener('touchend', unlock);
+	              };
 
-		    setTimeout(function () {
-		        if (ctx.state === 'running') {
-		          document.body.removeEventListener('touchend', resume,   false);
-		        }
-		    }, 0);
-		};
-
-		  document.body.addEventListener('touchend', resume, false);
-		}
+	              this.playButton.current.addEventListener('touchstart', unlock, false);
+	              this.playButton.current.addEventListener('touchend', unlock, false);
+	          }, () => {
+	            console.log('failed to load audio')
+	          })
+	        })
+	        .catch(()=>{
+	          console.log('failed to request audio')
+	        })
 	}
 
 	playAudio = (entryID) => {
 		const { setLoading} = this.props;
-		if (!isIOS) {
-			setLoading(true)
-			audioRequest(entryID)
-				.then(() => setLoading(false))
-				.catch(()=>{
-					setLoading(false)
-					serverError()
-				})
-		} else {
-
-		}
+		setLoading(true)
+		audioRequest(entryID)
+			.then(() => setLoading(false))
+			.catch(()=>{
+				setLoading(false)
+				serverError()
+			})
 	}
 
 	render() {
