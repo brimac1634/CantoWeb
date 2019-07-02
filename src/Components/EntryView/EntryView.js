@@ -195,13 +195,9 @@ class EntryView extends Component {
 	               	this.playButton.current.addEventListener('touchstart', this.unlockAudio, false);
 	               }
 	              setLoading(false)
-	          }, () => {
-	            this.noAudio()
-	          })
+	          }, ()=>this.noAudio())
 	        })
-	        .catch(()=>{
-	        	this.noAudio()
-	        })
+	        .catch(()=>this.noAudio())
 	}
 
 	playAudio = () => {
