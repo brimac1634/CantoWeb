@@ -177,6 +177,10 @@ class EntryView extends Component {
 	}
 
 	loadAudio = (entryID) => {
+		if (isIOS) {     
+			this.playButton.current.removeEventListener('touchstart', this.unlockAudio, false)
+		}
+
 		const { setLoading} = this.props;
 		setLoading(true)
 		audioRequest(entryID)
@@ -187,6 +191,9 @@ class EntryView extends Component {
 	              	context, 
 	              	decodedAudio
 	              })
+	               if (isIOS) {
+	               	this.playButton.current.addEventListener('touchstart', this.unlockAudio, false);
+	               }
 	              setLoading(false)
 	          }, () => {
 	            this.noAudio()
@@ -195,6 +202,12 @@ class EntryView extends Component {
 	        .catch(()=>{
 	        	this.noAudio()
 	        })
+	}
+
+	playAudio = () => {
+		if (!isIOS) {
+			this.unlockAudio()
+		}
 	}
 
 	unlockAudio = () => {
@@ -266,7 +279,7 @@ class EntryView extends Component {
 									</button>
 									<button 
 										className='entry-btn'
-										onClick={this.unlockAudio}
+										onClick={this.playAudio}
 										ref={this.playButton}
 									>
 										<Icon 
