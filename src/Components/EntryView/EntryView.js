@@ -37,7 +37,9 @@ class EntryView extends Component {
 		this.state = {
 			isFavorited: false,
 			entry: '',
-			playSound: {}
+			audioAvailable: false,
+			context: {},
+			decodedAudio: {}
 		}
 	}
 
@@ -175,39 +177,45 @@ class EntryView extends Component {
 	}
 
 	loadAudio = (entryID) => {
-		if (isIOS) {
-			audioRequest(entryID)
-		        .then(({context, arrayBuffer}) => {
-		          context.decodeAudioData(arrayBuffer, decodedAudio => {
-		              const playSound = setupPlayBack(context, decodedAudio)
-		              const unlock = function() {
-		              	console.log('playing')
-		                playSound.start(0);
-		              };
+		// if (isIOS) {
+		// 	this.playButton.current.removeEventListener('touchstart', this.unlockAudio, false)
+		// }
 
-		              this.playButton.current.addEventListener('touchstart', unlock, false);
-		              this.playButton.current.addEventListener('touchend', unlock, false);
-		          }, () => {
-		            console.log('failed to load audio')
-		          })
-		        })
-		        .catch(()=>{
-		          console.log('failed to request audio')
-		        })
+		const { setLoading} = this.props;
+		setLoading(true)
+		audioRequest(entryID)
+	        .then(({context, arrayBuffer}) => {
+	          context.decodeAudioData(arrayBuffer, decodedAudio => {
+	              this.setState({
+	              	audioAvailable: true,
+	              	context, 
+	              	decodedAudio
+	              })
+	              // if (isIOS) {
+	              // 	this.playButton.current.addEventListener('touchstart', this.unlockAudio, false);
+	              // }
+	              setLoading(false)
+	          }, () => {
+	            this.noAudio()
+	          })
+	        })
+	        .catch(()=>{
+	        	this.noAudio()
+	        })
+	}
+
+	unlockAudio = () => {
+		const { context, decodedAudio, audioAvailable } = this.state;
+		if (audioAvailable) {
+			const playSound = setupPlayBack(context, decodedAudio)
+	        playSound.start(0);
 		}
 	}
 
-	playAudio = (entryID) => {
-		if (!isIOS) {
-			const { setLoading} = this.props;
-			setLoading(true)
-			audioRequest(entryID)
-				.then(() => setLoading(false))
-				.catch(()=>{
-					setLoading(false)
-					serverError()
-				})
-		}
+	noAudio = () => {
+		const { setLoading} = this.props;
+		this.setState({audioAvailable: false})
+		setLoading(false)
 	}
 
 	render() {
@@ -226,7 +234,8 @@ class EntryView extends Component {
 				canto_sentence,
 				jyutping_sentence,
 				english_sentence
-			}
+			},
+			audioAvailable
 		} = this.state
 
 		const clLabel = classifier ? 'cl: ' : '';
@@ -264,13 +273,16 @@ class EntryView extends Component {
 									</button>
 									<button 
 										className='entry-btn'
-										onClick={() => this.playAudio(entry_id)}
+										onClick={this.unlockAudio}
 										ref={this.playButton}
 									>
 										<Icon 
 											icon='speaker-5' 
 											iconSize='35' 
-											iconStyle='dark'
+											color={audioAvailable
+												? 'cantoDarkBlue'
+												: 'cantoDarkGray'
+											}
 										/>
 									</button>
 								</div>
