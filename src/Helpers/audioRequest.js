@@ -5,17 +5,6 @@ export const setupPlayBack = (context, audio) => {
     return playSound
 }
 
-// export const playBack = (playSound) => {
-//     const context = playSound.context;
-//     if (playSound.start) {
-//         playSound.start(context.currentTime);
-//     } else if (playSound.play) {
-//         playSound.play(context.currentTime);
-//     } else if (playSound.noteOn) {
-//         playSound.noteOn(context.currentTime);
-//     }
-// }
-
 export const audioRequest = (entryID) => {
     let AudioContext = window.AudioContext || window.webkitAudioContext;
     const context = new AudioContext();
