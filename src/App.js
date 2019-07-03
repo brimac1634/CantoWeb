@@ -8,6 +8,7 @@ import MainView from './Containers/MainView/MainView';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
 import { setUser } from './Containers/SignIn/actions';
 import { SwapSpinner } from "react-spinners-kit";
+import { setLoading } from '../../Loading/actions';
 import apiRequest from './Helpers/apiRequest';
 import { routes } from './Routing/constants';
 
@@ -21,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateURL: (path) => dispatch(push(path)),
     updateUser: (user) => dispatch(setUser(user)),
+    setLoading: (loading) => dispatch(setLoading(loading)),
   }
 }
 
@@ -33,7 +35,7 @@ class App extends Component {
   }  
 
   componentDidMount() {
-    const { updateURL, updateUser } = this.props;
+    const { updateURL, updateUser, setLoading } = this.props;
     const { LOGIN } = routes;
     const cookies = new Cookies();
     const token = cookies.get('authToken')
@@ -49,9 +51,17 @@ class App extends Component {
           updateUser(user);
         }
         this.setState({loadingHasFinished: true})
+        setLoading(false)
       })
-      .catch(()=>this.setState({loadingHasFinished: true}))
+      .catch(()=>{
+        this.setState({loadingHasFinished: true})
+        setLoading(false)
+      })
+    } else {
+      this.setState({loadingHasFinished: true})
+      setLoading(false)
     }
+
   }
 
   render() {
