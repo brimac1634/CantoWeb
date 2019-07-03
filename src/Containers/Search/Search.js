@@ -130,7 +130,6 @@ class Search extends Component {
 				body: {searchKey, searchType} 
 			})
 			.then(entries => {
-				console.log('search')
 				if (this._isMounted) {
 					if (Array.isArray(entries)) {
 						this.setState({
@@ -167,7 +166,6 @@ class Search extends Component {
 			body: {userID} 
 		})
 		.then(entries => {
-			console.log('filter')
 			setLoading(false)
 			if (entries.error != null) {
 				serverError()

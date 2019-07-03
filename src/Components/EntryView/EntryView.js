@@ -179,27 +179,29 @@ class EntryView extends Component {
 	}
 
 	loadAudio = (entryID) => {
-		if (isIOS) {     
+		if (isIOS && this.playButton.current) {     
 			this.playButton.current.removeEventListener('touchstart', this.unlockAudio, false)
 		}
 
-		const { setLoading} = this.props;
-		setLoading(true)
-		audioRequest(entryID)
-	        .then(({context, arrayBuffer}) => {
-        		context.decodeAudioData(arrayBuffer, decodedAudio => {
-    				this.setState({
-		            	audioAvailable: true,
-		            	context, 
-		            	decodedAudio
-		            })
-		            if (isIOS) {
-		             	this.playButton.current.addEventListener('touchstart', this.unlockAudio, false);
-		            }
-		            setLoading(false)
-		        }, ()=>this.noAudio())
-	        })
-	        .catch(()=>this.noAudio())
+		if (this.playButton.current) {
+			const { setLoading} = this.props;
+			setLoading(true)
+			audioRequest(entryID)
+		        .then(({context, arrayBuffer}) => {
+	        		context.decodeAudioData(arrayBuffer, decodedAudio => {
+	    				this.setState({
+			            	audioAvailable: true,
+			            	context, 
+			            	decodedAudio
+			            })
+			            if (isIOS) {
+			             	this.playButton.current.addEventListener('touchstart', this.unlockAudio, false);
+			            }
+			            setLoading(false)
+			        }, ()=>this.noAudio())
+		        })
+		        .catch(()=>this.noAudio())
+		}
 	}
 
 	playAudio = () => {
