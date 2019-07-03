@@ -1,16 +1,22 @@
 import { connectionError } from './helpers';
+import Cookies from 'universal-cookie';
 
 export default ({
 	endPoint = '',
 	method = 'GET',
-	headers = {'Content-Type': 'application/json'},
 	body,
 	timeout = 20000
 }) => {
+    const cookies = new Cookies();
+    const token = cookies.get('authToken')
+    console.log(endPoint, token)
     // http://localhost:3000
     return Promise.race([fetch(`${process.env.REACT_APP_SERVER_URL}${endPoint}`, {
 		method,
-		headers,
+		headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token ? token : ''
+        },
 		body: JSON.stringify(body)
 	}),
         new Promise((_, reject) =>

@@ -6,6 +6,7 @@
 	padding: 10px;
 	border-radius: 4px;
 	right: 50px;
+	bottom: 20px;
 	transition: all 0.3s linear;
 	background: var(--cantoWhite);
 	box-shadow: var(--cantoFloatShadow);
@@ -25,11 +26,13 @@
 }
 
 .alertIsVisible {
-	bottom: 20px;
+	opacity: 1;
+	transform: translateY(0);
 }
 
 .alertIsHidden {
-	bottom: -100px;
+	opacity: 0;
+	transform: translateY(100px);
 }
 
 .alert-icon-group {

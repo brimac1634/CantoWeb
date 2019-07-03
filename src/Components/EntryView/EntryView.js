@@ -185,17 +185,17 @@ class EntryView extends Component {
 		setLoading(true)
 		audioRequest(entryID)
 	        .then(({context, arrayBuffer}) => {
-	          context.decodeAudioData(arrayBuffer, decodedAudio => {
-	              this.setState({
-	              	audioAvailable: true,
-	              	context, 
-	              	decodedAudio
-	              })
-	               if (isIOS) {
-	               	this.playButton.current.addEventListener('touchstart', this.unlockAudio, false);
-	               }
-	              setLoading(false)
-	          }, ()=>this.noAudio())
+        		context.decodeAudioData(arrayBuffer, decodedAudio => {
+    				this.setState({
+		            	audioAvailable: true,
+		            	context, 
+		            	decodedAudio
+		            })
+		            if (isIOS) {
+		             	this.playButton.current.addEventListener('touchstart', this.unlockAudio, false);
+		            }
+		            setLoading(false)
+		        }, ()=>this.noAudio())
 	        })
 	        .catch(()=>this.noAudio())
 	}

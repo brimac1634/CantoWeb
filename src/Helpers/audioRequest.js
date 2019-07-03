@@ -18,11 +18,15 @@ export const audioRequest = (entryID) => {
             setTimeout(() => reject(new Error('timeout')), 20000)
         )
     ])
-    	.then(data => data.arrayBuffer())
+    	.then(data => {
+            if (data.status === 404) {
+                throw new Error()
+            } else {
+                return data.arrayBuffer()
+            }
+        })
         .then(arrayBuffer => {
             return {context, arrayBuffer}
         })
-    	.catch(() => {
-            console.log('Failed to retrieve audio')
-        })		
+    	.catch()		
 }
