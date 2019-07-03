@@ -8,7 +8,7 @@ import MainView from './Containers/MainView/MainView';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
 import { setUser } from './Containers/SignIn/actions';
 import { SwapSpinner } from "react-spinners-kit";
-import { setLoading } from '../../Loading/actions';
+import { setLoading } from './Loading/actions';
 import apiRequest from './Helpers/apiRequest';
 import { routes } from './Routing/constants';
 
