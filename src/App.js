@@ -27,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
 class App extends Component {
   constructor (props) {
   	super();
+    this.state = {
+      loadingHasFinished: false
+    }
   }  
 
   componentDidMount() {
@@ -43,29 +46,35 @@ class App extends Component {
         if (user && user.error) {
           updateURL(LOGIN)
         } else {
-          console.log(user);
           updateUser(user);
         }
+        this.setState({loadingHasFinished: true})
       })
-      .catch()
+      .catch(()=>this.setState({loadingHasFinished: true}))
     }
   }
 
   render() {
     const { loading } = this.props;
+    const { loadingHasFinished } = this.state;
     return (
       <div className='app'>
-        <TitleBar 
-          className='title-bar'
-        />
-        <div className='main-view-container'>
-          <MainView className='main-view' />
-        </div>
-        <PopUpAlert 
-          title={alert.title} 
-          message={alert.message} 
-          showAlert={alert.showAlert}
-        />
+        {
+          loadingHasFinished &&
+            <span>
+              <TitleBar 
+                className='title-bar'
+              />
+              <div className='main-view-container'>
+                <MainView className='main-view' />
+              </div>
+              <PopUpAlert 
+                title={alert.title} 
+                message={alert.message} 
+                showAlert={alert.showAlert}
+              />
+            </span>
+        }
         {
           loading &&
             <div className='center-div'>
