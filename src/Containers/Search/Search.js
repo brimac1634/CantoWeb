@@ -41,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
 class Search extends Component {
 	constructor(props) {
 		super()
+		this._isMounted = false;
 		this.state = {
 			entries: [],
 			selectedEntry: {},
@@ -49,16 +50,10 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
+		this._isMounted = true;
 		let { pathName, updateURL, user: { userID } } = this.props;
 		const { SEARCH, RECENT, FAVORITES, LOGIN } = routes;
 
-		if (!userID) {
-			const cachedUser = localStorage.getItem('user')
-			if (cachedUser) {
-				const user = JSON.parse(cachedUser);
-				userID = user.userID
-			}
-		}
 		if (pathName === SEARCH) {
 			this.loadSearchOnMount()
 		} else if (pathName === RECENT || pathName === FAVORITES) {
@@ -96,6 +91,7 @@ class Search extends Component {
 	}
 
 	componentWillUnmount() {
+		this._isMounted = false;
 		const {setMobileEntry} = this.props;
 	    setMobileEntry('');
 	}
@@ -134,21 +130,24 @@ class Search extends Component {
 				body: {searchKey, searchType} 
 			})
 			.then(entries => {
-				if (Array.isArray(entries)) {
-					this.setState({
-						entries: entries
-					})
-				} else {
-					this.setState({
-						entries: []
-					})
+				console.log('search')
+				if (this._isMounted) {
+					if (Array.isArray(entries)) {
+						this.setState({
+							entries: entries
+						})
+					} else {
+						this.setState({
+							entries: []
+						})
+					}
+					this.setState({searchComplete: true})
 				}
 				setLoading(false)
-				this.setState({searchComplete: true})
 			})
 			.catch(()=>{
 				setLoading(false)
-				this.setState({searchComplete: true})
+				this._isMounted && this.setState({searchComplete: true})
 				connectionError()
 			})
 		} else {
@@ -168,16 +167,15 @@ class Search extends Component {
 			body: {userID} 
 		})
 		.then(entries => {
+			console.log('filter')
 			setLoading(false)
 			if (entries.error != null) {
 				serverError()
 			} else {
 				if (Array.isArray(entries)) {
-					this.setState({entries})
+					this._isMounted && this.setState({entries})
 				} else {
-					this.setState({
-						entries: []
-					})
+					this._isMounted && this.setState({entries: []})
 				}
 			}
 		})

@@ -34,6 +34,7 @@ class EntryView extends Component {
 	constructor(props) {
 		super(props);
 		this.playButton = React.createRef();
+		this._isMounted = false;
 		this.state = {
 			isFavorited: false,
 			entry: '',
@@ -44,15 +45,16 @@ class EntryView extends Component {
 	}
 
 	componentDidMount() {
+		this._isMounted = true;
 		const { hash } = this.props;
-		if (hash) { 
+		if (hash) {
 			this.getEntry(hash)
 		}
 	}
 
 	componentDidUpdate(prevProps) {
 		const { selectedEntry, userID, hash, setMobileEntry, pathName } = this.props;
-		const { entry: { entry_id }, entry } = this.state;
+		const { entry } = this.state;
 		const { WORD_OF_THE_DAY, FAVORITES } = routes;
 		if (prevProps.selectedEntry !== selectedEntry) {
 			this.setState({entry: selectedEntry})
@@ -65,18 +67,25 @@ class EntryView extends Component {
 			}
 		} else if (hash && hash !== prevProps.hash) {
 			this.getEntry(hash)
-		} else if (Object.entries(prevProps.selectedEntry).length === 0 && Object.entries(selectedEntry).length === 0 && hash && validateUser(userID)) {
-			this.checkIfFavorite(entry_id, userID);
 		} else if (pathName !== WORD_OF_THE_DAY && !hash && entry !== '') {
 			this.setState({entry: ''})
 			setMobileEntry('');
 		} 
 	}
 
+	componentWillUnmount() {
+		this._isMounted = false;
+	}
+
 	getEntry = (hash) => {
 		const { userID, setLoading } = this.props;
 		const entryID = hash.slice(1, hash.length)
 		setLoading(true)
+		this.loadAudio(entryID)
+		if (entryID != null && validateUser(userID)) {
+			this.checkIfFavorite(entryID, userID);
+		}
+
 		apiRequest({
 			endPoint: '/entryid',
 			method: 'POST',
@@ -87,14 +96,7 @@ class EntryView extends Component {
 			if (entry.error) {
 				serverError()
 			} else {
-				this.setState({entry})
-				this.loadAudio(entry.entry_id)
-				if (
-					entryID != null &&
-					validateUser(userID)
-				) {
-					this.checkIfFavorite(entryID, userID);
-				}
+				this._isMounted && this.setState({entry})
 			}
 		})
 		.catch(() => {
@@ -115,7 +117,7 @@ class EntryView extends Component {
 		.then(favorited => {
 			setLoading(false)
 			if (favorited !== isFavorited) {
-				this.setState({isFavorited: favorited})
+				this._isMounted && this.setState({isFavorited: favorited})
 			}
 		})
 		.catch(()=>setLoading(false))
@@ -142,7 +144,7 @@ class EntryView extends Component {
 				if (favorited.error) {
 					serverError()
 				} else {
-					this.setState({isFavorited: favorited})
+					this._isMounted && this.setState({isFavorited: favorited})
 					if (pathName === FAVORITES) {
 						updateFavs(userID, FAVORITES)
 						if (!favorited) {
@@ -258,7 +260,7 @@ class EntryView extends Component {
 							
 								<div className='entry-btn-container'>
 									<button 
-										className='entry-btn' 
+										className='entry-btn entry-btn-active' 
 										onClick={() => this.toggleFavorite(entry_id, userID, canto_word)}
 									>
 										{isFavorited

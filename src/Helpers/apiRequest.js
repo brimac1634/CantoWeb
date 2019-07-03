@@ -9,8 +9,6 @@ export default ({
 }) => {
     const cookies = new Cookies();
     const token = cookies.get('authToken')
-    console.log(endPoint, token)
-    // http://localhost:3000
     return Promise.race([fetch(`${process.env.REACT_APP_SERVER_URL}${endPoint}`, {
 		method,
 		headers: {

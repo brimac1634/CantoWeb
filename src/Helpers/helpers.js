@@ -1,8 +1,14 @@
 import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
 import { routes } from '../Routing/constants';
+import Cookies from 'universal-cookie';
 
 export const validateUser = (userID) => {
 	return userID != null && userID.toString().length
+}
+
+export const deleteToken = () => {
+	const cookies = new Cookies();
+    cookies.remove('authToken', { path: '/' });
 }
 
 export const setQueryURL = (key, type, hash) => {

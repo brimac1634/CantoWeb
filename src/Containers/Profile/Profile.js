@@ -12,6 +12,7 @@ import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
 import { setLoading } from '../../Loading/actions';
 import { setUser } from '../SignIn/actions';
+import { deleteToken } from '../../Helpers/helpers';
 
 const mapStateToProps = state => {
 	return {
@@ -86,7 +87,7 @@ class Profile extends Component {
 					optionAlert({title, message})
 				} else {
 					updateUser('');
-					localStorage.setItem('user', '');
+					deleteToken()
 					optionAlert({
 					    title: 'Account Deleted',
 					    message: 'Your user account has successfully been deleted.',

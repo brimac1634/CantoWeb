@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
+import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import TitleBar from './Components/TitleBar/TitleBar';
 import MainView from './Containers/MainView/MainView';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
 import { setUser } from './Containers/SignIn/actions';
 import { SwapSpinner } from "react-spinners-kit";
+import apiRequest from './Helpers/apiRequest';
+import { routes } from './Routing/constants';
 
 const mapStateToProps = state => {
   return {
@@ -15,6 +19,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    updateURL: (path) => dispatch(push(path)),
     updateUser: (user) => dispatch(setUser(user)),
   }
 }
@@ -25,11 +30,24 @@ class App extends Component {
   }  
 
   componentDidMount() {
-    const cachedUser = localStorage.getItem('user');
-    if (cachedUser) {
-      const { updateUser } = this.props;
-      const user = JSON.parse(cachedUser)
-      updateUser(user);
+    const { updateURL, updateUser } = this.props;
+    const { LOGIN } = routes;
+    const cookies = new Cookies();
+    const token = cookies.get('authToken')
+    if (token) {
+      apiRequest({
+        endPoint: '/',
+        method: 'GET',
+      })
+      .then(user => {
+        if (user && user.error) {
+          updateURL(LOGIN)
+        } else {
+          console.log(user);
+          updateUser(user);
+        }
+      })
+      .catch()
     }
   }
 

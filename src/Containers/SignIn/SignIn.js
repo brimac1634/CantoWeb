@@ -202,8 +202,6 @@ class SignIn extends Component {
 	    }
 	    const cookies = new Cookies();
 		cookies.set('authToken', resData.token, { path: '/' });
-
-		localStorage.setItem('user', JSON.stringify(user));
 		updateUser(user);
 		presentAlert(alert);
 		updateURL(SEARCH)
