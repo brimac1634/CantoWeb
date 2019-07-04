@@ -17,7 +17,7 @@ import { routes } from '../../Routing/constants';
 import { setUser } from './actions';
 import { setLoading } from '../../Loading/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
-import config from '../../Helpers/config.json';
+import config from '../../config.json';
 
 const mapStateToProps = state => {
 	return {
@@ -335,7 +335,7 @@ class SignIn extends Component {
     		const { accessToken } = response;
     		setLoading(true)
 			apiRequest({
-				endPoint: 'api/v1/auth/facebook',
+				endPoint: '/api/v1/auth/facebook',
 				method: 'POST',
 				body: {accessToken}
 			})
@@ -348,12 +348,9 @@ class SignIn extends Component {
 					    })
 					} else {
 						//login success
-						const token = userData.headers.get('x-auth-token');
-						if (token) {
-		                    localStorage.setItem('id_token', token);
-		                }
+						// const token = userData.headers.get('x-auth-token');
 						// if (token) {
-		    //                 // this.setState({isAuthenticated: true, userData, token})
+		    //                 localStorage.setItem('id_token', token);
 		    //             }
 					}
 					setLoading(false)

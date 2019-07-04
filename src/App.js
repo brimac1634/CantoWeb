@@ -8,7 +8,6 @@ import MainView from './Containers/MainView/MainView';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
 import { setUser } from './Containers/SignIn/actions';
 import { SwapSpinner } from "react-spinners-kit";
-import { setLoading } from './Loading/actions';
 import apiRequest from './Helpers/apiRequest';
 import { routes } from './Routing/constants';
 
@@ -22,7 +21,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateURL: (path) => dispatch(push(path)),
     updateUser: (user) => dispatch(setUser(user)),
-    setLoading: (loading) => dispatch(setLoading(loading)),
   }
 }
 
@@ -30,12 +28,13 @@ class App extends Component {
   constructor (props) {
   	super();
     this.state = {
-      loadingHasFinished: false
+      loadingHasFinished: false,
+      initialLoading: true
     }
   }  
 
   componentDidMount() {
-    const { updateURL, updateUser, setLoading } = this.props;
+    const { updateURL, updateUser } = this.props;
     const { LOGIN } = routes;
     const cookies = new Cookies();
     const token = cookies.get('authToken')
@@ -50,23 +49,26 @@ class App extends Component {
         } else {
           updateUser(user);
         }
-        this.setState({loadingHasFinished: true})
-        setLoading(false)
+        this.completeLoading()
       })
       .catch(()=>{
-        this.setState({loadingHasFinished: true})
-        setLoading(false)
+        this.completeLoading()
       })
     } else {
-      this.setState({loadingHasFinished: true})
-      setLoading(false)
+      this.completeLoading()
     }
+  }
 
+  completeLoading = () => {
+    this.setState({
+      loadingHasFinished: true,
+      initialLoading: false
+    })
   }
 
   render() {
     const { loading } = this.props;
-    const { loadingHasFinished } = this.state;
+    const { loadingHasFinished, initialLoading } = this.state;
     return (
       <div className='app'>
         {
@@ -84,6 +86,16 @@ class App extends Component {
                 showAlert={alert.showAlert}
               />
             </span>
+        }
+        {
+          initialLoading &&
+            <div className='center-div'>
+              <SwapSpinner
+                size={60}
+                color='#ff7a8a'
+                loading={initialLoading}
+              />
+            </div>
         }
         {
           loading &&

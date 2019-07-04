@@ -1,7 +1,7 @@
 import { SET_LOADING } from './constants';
 
 const initialState = {
-	loading: true
+	loading: false
 } 
 
 export const setLoading = (state=initialState, action={}) => {
