@@ -113,19 +113,25 @@ class SearchBar extends Component {
 
 	updateSearchList = (key) => {
 		let searchList = JSON.parse(localStorage.getItem('searchList'))
-			if (searchList !== null) {
-				searchList.unshift(key)
-				if (searchList.length > 15) {
-					searchList.pop()
-				}
-			} else {
-				searchList = [key]
+		if (searchList !== null) {
+			searchList.unshift(key)
+			if (searchList.length > 15) {
+				searchList.pop()
 			}
-			this.setState({
-				searchList,
-				initialSearchList: searchList,
-			})
-			localStorage.setItem('searchList', JSON.stringify(searchList))
+			let i = searchList.length
+			while (i--) {
+				if (searchList[i] === key && i !== 0) {
+					searchList.splice(i, 1);
+				}
+			}
+		} else {
+			searchList = [key]
+		}
+		this.setState({
+			searchList,
+			initialSearchList: searchList,
+		})
+		localStorage.setItem('searchList', JSON.stringify(searchList))
 	}
 
 	wordSelect = (word) => {

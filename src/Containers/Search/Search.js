@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
-import { serverError, connectionError, requestToLogin } from '../../Helpers/helpers';
+import { serverError, connectionError, requestToLogin, validateUser } from '../../Helpers/helpers';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
@@ -57,11 +57,10 @@ class Search extends Component {
 		if (pathName === SEARCH) {
 			this.loadSearchOnMount()
 		} else if (pathName === RECENT || pathName === FAVORITES) {
-			if (userID != null) {
+			if (validateUser(userID)) {
 				this.filterEntries(userID, pathName)
 			} else {
 				requestToLogin(()=>{
-					setPrevRoute(pathName)
 		        	updateURL(LOGIN)
 				})
 			}
@@ -69,12 +68,18 @@ class Search extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {user: {userID}, search, pathName, setTempSearch} = this.props;
-		const { RECENT, FAVORITES, SEARCH } = routes;
+		const {user: {userID}, search, pathName, setTempSearch, updateURL } = this.props;
+		const { RECENT, FAVORITES, SEARCH, LOGIN } = routes;
 		
 		if (prevProps.pathName !== pathName) {
 			if (pathName === FAVORITES || pathName === RECENT) {
-				this.filterEntries(userID, pathName)
+				if (validateUser(userID)) {
+					this.filterEntries(userID, pathName)
+				} else {
+					requestToLogin(()=>{
+			        	updateURL(LOGIN)
+					})
+				}
 			} else if (pathName === SEARCH ) {
 				this.loadSearchOnMount()
 			}
@@ -157,6 +162,7 @@ class Search extends Component {
 	}
 
 	filterEntries = (userID, filterType) => {
+		console.log('yup')
 		const { updateURL, setLoading } = this.props;
 		const { SEARCH } = routes;
 		setLoading(true)
