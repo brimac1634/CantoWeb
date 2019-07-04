@@ -1,9 +1,11 @@
 .hidden-entry-view {
-	transform: translateY(100%);
+	opacity: 0;
+	transform: translateY(100%) scale(0);
 }
 
 .visible-entry-view {
-	transform: translateY(0);
+	opacity: 1;
+	transform: translateY(0) scale(1);
 }
 
 .back-div {

@@ -64,6 +64,12 @@ code {
   align-items: center;
 }
 
+.absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .vertical {
   flex-direction: column;
 }

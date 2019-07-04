@@ -3,7 +3,8 @@ import './SignIn.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import { Link } from 'react-router-dom';
-import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
+import Cookies from 'universal-cookie';
+import { optionAlert } from '../OptionAlert/OptionAlert';
 import { serverError, connectionError, validateEmail } from '../../Helpers/helpers';
 import queryString from 'query-string';
 import MediaQuery from 'react-responsive';
@@ -96,12 +97,6 @@ class SignIn extends Component {
 		return password.length >= 6 ? true : false;
 	}
 
-	handleUpdateUser = (user) => {
-		const { updateUser } = this.props;
-		localStorage.setItem('user', JSON.stringify(user));
-		updateUser(user);
-	}
-
 	createUser = (userData) => {
 		const { name, id, email } = userData;
 		return {
@@ -148,10 +143,10 @@ class SignIn extends Component {
 						method: 'POST',
 						body: {email, password} 
 					})
-						.then(userData => {
+						.then(resData => {
 							setLoading(false)
-							if (userData && userData.error != null) {
-								const { name, title, message } = userData.error;
+							if (resData && resData.error != null) {
+								const { name, title, message } = resData.error;
 								if (name === 'ServerError') {
 									serverError()
 								} else if (name === 'EmailNotRegistered') {
@@ -183,7 +178,7 @@ class SignIn extends Component {
 									}
 								}
 							} else {
-								this.handleLogin(title, userData)
+								this.handleLogin(title, resData)
 							}
 						})
 						.catch(()=>{
@@ -197,17 +192,19 @@ class SignIn extends Component {
 		}
     }
 
-    handleLogin = (type, userData) => {
-    	const { presentAlert, updateURL } = this.props;
+    handleLogin = (type, resData) => {
+    	const { presentAlert, updateURL, updateUser } = this.props;
     	const { SEARCH } = routes;
-    	const user = this.createUser(userData)
+    	const user = this.createUser(resData.user)
 
 		const alert = {
 	        title: 'Login Successful',
 	        message: `You are now logged in as "${user.userEmail}".`,
 	        showAlert: true,
 	    }
-		this.handleUpdateUser(user)
+	    const cookies = new Cookies();
+		cookies.set('authToken', resData.token, { path: '/' });
+		updateUser(user);
 		presentAlert(alert);
 		updateURL(SEARCH)
     }
@@ -224,10 +221,10 @@ class SignIn extends Component {
 				method: 'POST',
 				body: {password, token} 
 			})
-			.then(userData => {
+			.then(resData => {
 				setLoading(false)
-				if (userData && userData.error != null) {
-					const { name, title, message } = userData.error;
+				if (resData && resData.error != null) {
+					const { name, title, message } = resData.error;
 					if (name === 'PasswordTokenExpired') {
 						optionAlert({
 						    title,
@@ -250,7 +247,7 @@ class SignIn extends Component {
 						})
 					}
 				} else {
-					this.handleLogin('Login', userData)
+					this.handleLogin('Login', resData)
 				}
 			})
 			.catch(()=>{

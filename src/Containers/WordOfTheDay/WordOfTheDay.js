@@ -28,6 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 class WordOfTheDay extends Component {
 	constructor(props) {
 		super()
+		this._isMounted = false;
 		this.state = {
 			wods: [],
 			selectedEntry: {}
@@ -35,10 +36,12 @@ class WordOfTheDay extends Component {
 	}
 
 	componentDidMount() {
+		this._isMounted = true;
 		this.getWordsOfDay()
 	}
 
 	componentWillUnmount() {
+		this._isMounted = false;
 		const {setMobileEntry} = this.props;
 	    setMobileEntry('');
 	}
@@ -57,7 +60,10 @@ class WordOfTheDay extends Component {
 					const date = yyyymmdd(entry.date)
 					wods[date] = entry
 				})
-				this.setState({wods})
+				this._isMounted && this.setState({
+					wods,
+					selectedEntry: entries[0]
+				})
 			}
 		})
 		.catch(()=>{

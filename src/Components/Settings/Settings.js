@@ -9,6 +9,7 @@ import {renderComponentAlert} from '../../Containers/ComponentAlert/ComponentAle
 import { setUser } from '../../Containers/SignIn/actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 import { setPrevRoute } from '../../Routing/actions';
+import { deleteToken } from '../../Helpers/helpers';
 
 const mapStateToProps = state => {
 	return {
@@ -63,7 +64,8 @@ const Settings = ({ user: { userName }, updateUser, presentAlert, togglePopOver,
 
 	const handleLogout = () => {
 		updateUser('');
-		localStorage.setItem('user', '');
+		deleteToken()
+
 		const alert = {
 	        title: 'Logout Successful',
 	        message: 'You have successfully been logged out.',

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
-import { serverError, connectionError, requestToLogin } from '../../Helpers/helpers';
+import { serverError, connectionError, requestToLogin, validateUser } from '../../Helpers/helpers';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import EntryView from '../../Components/EntryView/EntryView';
@@ -24,6 +24,7 @@ const mapStateToProps = (state, ownProps) => {
     hash: state.router.location.hash,
     search: state.router.location.search,
     tempSearchKey: state.temp.key,
+    searchType: state.temp.searchType
   }
 }
 
@@ -40,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
 class Search extends Component {
 	constructor(props) {
 		super()
+		this._isMounted = false;
 		this.state = {
 			entries: [],
 			selectedEntry: {},
@@ -48,24 +50,17 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
+		this._isMounted = true;
 		let { pathName, updateURL, user: { userID } } = this.props;
 		const { SEARCH, RECENT, FAVORITES, LOGIN } = routes;
 
-		if (!userID) {
-			const cachedUser = localStorage.getItem('user')
-			if (cachedUser) {
-				const user = JSON.parse(cachedUser);
-				userID = user.userID
-			}
-		}
 		if (pathName === SEARCH) {
 			this.loadSearchOnMount()
 		} else if (pathName === RECENT || pathName === FAVORITES) {
-			if (userID != null) {
+			if (validateUser(userID)) {
 				this.filterEntries(userID, pathName)
 			} else {
 				requestToLogin(()=>{
-					setPrevRoute(pathName)
 		        	updateURL(LOGIN)
 				})
 			}
@@ -73,12 +68,18 @@ class Search extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {user: {userID}, search, pathName, setTempSearch} = this.props;
-		const { RECENT, FAVORITES, SEARCH } = routes;
+		const {user: {userID}, search, pathName, setTempSearch, updateURL } = this.props;
+		const { RECENT, FAVORITES, SEARCH, LOGIN } = routes;
 		
 		if (prevProps.pathName !== pathName) {
 			if (pathName === FAVORITES || pathName === RECENT) {
-				this.filterEntries(userID, pathName)
+				if (validateUser(userID)) {
+					this.filterEntries(userID, pathName)
+				} else {
+					requestToLogin(()=>{
+			        	updateURL(LOGIN)
+					})
+				}
 			} else if (pathName === SEARCH ) {
 				this.loadSearchOnMount()
 			}
@@ -95,6 +96,7 @@ class Search extends Component {
 	}
 
 	componentWillUnmount() {
+		this._isMounted = false;
 		const {setMobileEntry} = this.props;
 	    setMobileEntry('');
 	}
@@ -123,31 +125,33 @@ class Search extends Component {
 	}
 
 	handleSearch = (searchKey) => {
-		const { setLoading } = this.props;
+		const { setLoading, searchType } = this.props;
 		this.setState({searchComplete: false})
 		setLoading(true)
 		if (searchKey) {
 			apiRequest({
 				endPoint: '/search',
 				method: 'POST',
-				body: {searchKey} 
+				body: {searchKey, searchType} 
 			})
 			.then(entries => {
-				if (Array.isArray(entries)) {
-					this.setState({
-						entries: entries
-					})
-				} else {
-					this.setState({
-						entries: []
-					})
+				if (this._isMounted) {
+					if (Array.isArray(entries)) {
+						this.setState({
+							entries: entries
+						})
+					} else {
+						this.setState({
+							entries: []
+						})
+					}
+					this.setState({searchComplete: true})
 				}
 				setLoading(false)
-				this.setState({searchComplete: true})
 			})
 			.catch(()=>{
 				setLoading(false)
-				this.setState({searchComplete: true})
+				this._isMounted && this.setState({searchComplete: true})
 				connectionError()
 			})
 		} else {
@@ -158,6 +162,7 @@ class Search extends Component {
 	}
 
 	filterEntries = (userID, filterType) => {
+		console.log('yup')
 		const { updateURL, setLoading } = this.props;
 		const { SEARCH } = routes;
 		setLoading(true)
@@ -172,11 +177,9 @@ class Search extends Component {
 				serverError()
 			} else {
 				if (Array.isArray(entries)) {
-					this.setState({entries})
+					this._isMounted && this.setState({entries})
 				} else {
-					this.setState({
-						entries: []
-					})
+					this._isMounted && this.setState({entries: []})
 				}
 			}
 		})

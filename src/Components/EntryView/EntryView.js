@@ -3,13 +3,15 @@ import './EntryView.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
-import { validateUser, serverError, togglePlay } from '../../Helpers/helpers';
+import { validateUser, serverError } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
 import { setPrevRoute } from '../../Routing/actions';
 import { setLoading } from '../../Loading/actions';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
+import { audioRequest, setupPlayBack } from '../../Helpers/audioRequest';
+import { isIOS } from "react-device-detect";
 
 const mapStateToProps = state => {
 	return {
@@ -31,25 +33,32 @@ const mapDispatchToProps = (dispatch) => {
 class EntryView extends Component {
 	constructor(props) {
 		super(props);
+		this.playButton = React.createRef();
+		this._isMounted = false;
 		this.state = {
 			isFavorited: false,
-			entry: ''
+			entry: '',
+			audioAvailable: false,
+			context: {},
+			decodedAudio: {}
 		}
 	}
 
 	componentDidMount() {
+		this._isMounted = true;
 		const { hash } = this.props;
-		if (hash) { 
+		if (hash) {
 			this.getEntry(hash)
 		}
 	}
 
 	componentDidUpdate(prevProps) {
 		const { selectedEntry, userID, hash, setMobileEntry, pathName } = this.props;
-		const { entry: { entry_id }, entry } = this.state;
+		const { entry } = this.state;
 		const { WORD_OF_THE_DAY, FAVORITES } = routes;
 		if (prevProps.selectedEntry !== selectedEntry) {
 			this.setState({entry: selectedEntry})
+			this.loadAudio(selectedEntry.entry_id)
 			if (pathName === FAVORITES) {
 				this.setState({isFavorited: true})
 			} else if (selectedEntry !== '' && validateUser(userID)) {
@@ -58,18 +67,25 @@ class EntryView extends Component {
 			}
 		} else if (hash && hash !== prevProps.hash) {
 			this.getEntry(hash)
-		} else if (Object.entries(prevProps.selectedEntry).length === 0 && Object.entries(selectedEntry).length === 0 && hash && validateUser(userID)) {
-			this.checkIfFavorite(entry_id, userID);
 		} else if (pathName !== WORD_OF_THE_DAY && !hash && entry !== '') {
 			this.setState({entry: ''})
 			setMobileEntry('');
 		} 
 	}
 
+	componentWillUnmount() {
+		this._isMounted = false;
+	}
+
 	getEntry = (hash) => {
 		const { userID, setLoading } = this.props;
 		const entryID = hash.slice(1, hash.length)
 		setLoading(true)
+		this.loadAudio(entryID)
+		if (entryID != null && validateUser(userID)) {
+			this.checkIfFavorite(entryID, userID);
+		}
+
 		apiRequest({
 			endPoint: '/entryid',
 			method: 'POST',
@@ -80,13 +96,7 @@ class EntryView extends Component {
 			if (entry.error) {
 				serverError()
 			} else {
-				this.setState({entry})
-				if (
-					entryID != null &&
-					validateUser(userID)
-				) {
-					this.checkIfFavorite(entryID, userID);
-				}
+				this._isMounted && this.setState({entry})
 			}
 		})
 		.catch(() => {
@@ -107,7 +117,7 @@ class EntryView extends Component {
 		.then(favorited => {
 			setLoading(false)
 			if (favorited !== isFavorited) {
-				this.setState({isFavorited: favorited})
+				this._isMounted && this.setState({isFavorited: favorited})
 			}
 		})
 		.catch(()=>setLoading(false))
@@ -134,7 +144,7 @@ class EntryView extends Component {
 				if (favorited.error) {
 					serverError()
 				} else {
-					this.setState({isFavorited: favorited})
+					this._isMounted && this.setState({isFavorited: favorited})
 					if (pathName === FAVORITES) {
 						updateFavs(userID, FAVORITES)
 						if (!favorited) {
@@ -168,6 +178,52 @@ class EntryView extends Component {
 		}
 	}
 
+	loadAudio = (entryID) => {
+		if (isIOS && this.playButton.current) {     
+			this.playButton.current.removeEventListener('touchstart', this.unlockAudio, false)
+		}
+
+		if (this.playButton.current) {
+			const { setLoading} = this.props;
+			setLoading(true)
+			audioRequest(entryID)
+		        .then(({context, arrayBuffer}) => {
+	        		context.decodeAudioData(arrayBuffer, decodedAudio => {
+	    				this.setState({
+			            	audioAvailable: true,
+			            	context, 
+			            	decodedAudio
+			            })
+			            if (isIOS) {
+			             	this.playButton.current.addEventListener('touchstart', this.unlockAudio, false);
+			            }
+			            setLoading(false)
+			        }, ()=>this.noAudio())
+		        })
+		        .catch(()=>this.noAudio())
+		}
+	}
+
+	playAudio = () => {
+		if (!isIOS) {
+			this.unlockAudio()
+		}
+	}
+
+	unlockAudio = () => {
+		const { context, decodedAudio, audioAvailable } = this.state;
+		if (audioAvailable) {
+			const playSound = setupPlayBack(context, decodedAudio)
+	        playSound.start(0);
+		}
+	}
+
+	noAudio = () => {
+		const { setLoading} = this.props;
+		this.setState({audioAvailable: false})
+		setLoading(false)
+	}
+
 	render() {
 		const { WORD_OF_THE_DAY } = routes;
 		const { userID, pathName } = this.props;
@@ -184,16 +240,19 @@ class EntryView extends Component {
 				canto_sentence,
 				jyutping_sentence,
 				english_sentence
-			}
+			},
+			audioAvailable
 		} = this.state
 
 		const clLabel = classifier ? 'cl: ' : '';
+		const isWOD = (pathName === WORD_OF_THE_DAY)
+		const active = audioAvailable ? 'entry-btn-active' : 'entry-btn-disabled'
 
 		return (
-			<div className='entry-view'>
+			<div className={`entry-view ${isWOD ? 'wod-view' : 'non-wod-view'}`}>
 				{entry !== ''
 					?   <div>
-							{pathName === WORD_OF_THE_DAY &&
+							{isWOD &&
 								<div className='center-div'>
 									<h2 className='wod-date'>{new Date(entry.date).toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}
 									</h2>
@@ -203,7 +262,7 @@ class EntryView extends Component {
 							
 								<div className='entry-btn-container'>
 									<button 
-										className='entry-btn' 
+										className='entry-btn entry-btn-active' 
 										onClick={() => this.toggleFavorite(entry_id, userID, canto_word)}
 									>
 										{isFavorited
@@ -220,13 +279,17 @@ class EntryView extends Component {
 										}
 									</button>
 									<button 
-										className='entry-btn'
-										onClick={() => togglePlay(entry_id)}
+										className={`entry-btn ${active}`}
+										onClick={this.playAudio}
+										ref={this.playButton}
 									>
 										<Icon 
 											icon='speaker-5' 
 											iconSize='35' 
-											iconStyle='dark'
+											color={audioAvailable
+												? 'cantoDarkBlue'
+												: 'cantoDarkGray'
+											}
 										/>
 									</button>
 								</div>
