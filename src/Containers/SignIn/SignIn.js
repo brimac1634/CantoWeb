@@ -178,7 +178,7 @@ class SignIn extends Component {
 									}
 								}
 							} else {
-								this.handleLogin(title, resData)
+								this.handleLogin(resData)
 							}
 						})
 						.catch(()=>{
@@ -192,7 +192,7 @@ class SignIn extends Component {
 		}
     }
 
-    handleLogin = (type, resData) => {
+    handleLogin = (resData) => {
     	const { presentAlert, updateURL, updateUser } = this.props;
     	const { SEARCH } = routes;
     	const user = this.createUser(resData.user)
@@ -247,7 +247,7 @@ class SignIn extends Component {
 						})
 					}
 				} else {
-					this.handleLogin('Login', resData)
+					this.handleLogin(resData)
 				}
 			})
 			.catch(()=>{
@@ -332,12 +332,12 @@ class SignIn extends Component {
     responseFacebook = (response) => {
     	const { setLoading } = this.props;
     	if (response && response.email) {
-    		const { accessToken } = response;
+    		const { accessToken, id, email, name } = response;
     		setLoading(true)
 			apiRequest({
 				endPoint: '/api/v1/auth/facebook',
 				method: 'POST',
-				body: {accessToken}
+				body: {accessToken, id, email, name}
 			})
 				.then(userData => {
 					if (userData && userData.error != null) {
@@ -347,11 +347,7 @@ class SignIn extends Component {
 						    message
 					    })
 					} else {
-						//login success
-						// const token = userData.headers.get('x-auth-token');
-						// if (token) {
-		    //                 localStorage.setItem('id_token', token);
-		    //             }
+						this.handleLogin(userData)
 					}
 					setLoading(false)
 				})
@@ -373,10 +369,10 @@ class SignIn extends Component {
     }
 
     renderComponent = (pathName) => {
-    	const { title, email, name, password, password2, signInButton, alternateButton } = this.state;
+    	const { title, email, name, password, password2, signInButton, alternateButton, didAgree } = this.state;
     	const { LOGIN, REGISTER, VERIFY, RESET, PRIVACY } = routes;
     	const { updateURL } = this.props;
-    	
+    	console.log(didAgree)
     	if (pathName === RESET || pathName === VERIFY) {
     		const heading = pathName === RESET ? 'Reset Account' : 'Set Password'
 			const line = pathName === RESET ? 'We will email you a link to reset your password.' : 'Please put your new password in both fields below.'
@@ -437,6 +433,8 @@ class SignIn extends Component {
 				? 'Don\'t forget to use your CantoTalk profile to its fullest by keeping track of learned words and practicing with the flash card decks!'
 				: 'Creating a profile allows you to keep track of your previous searches, save favorites, build your own flash card decks, and more! This will also make it possible to sync information between devices. '
 
+			const buttonDisabled = signInButton === 'Register' ? (!didAgree || !name || !email) : false
+
     		return (
     			<div className='sign-in-container'>
 					<div className='left-panel'>
@@ -488,9 +486,9 @@ class SignIn extends Component {
 						}
 						<div className='agree-row'>
 							<Button 
-								buttonType='ghost' 
 								title={signInButton}
 								margin='10px 20px 10px 0'
+								isDisabled={buttonDisabled}
 								handleClick={this.onUserSubmit}
 							/>
 							<p>or</p>
@@ -498,16 +496,18 @@ class SignIn extends Component {
 						        appId={config.FACEBOOK_APP_ID}
 						        fields='name,email,picture'
 						        cssClass='custom-fb-button'
+						        isDisabled={!didAgree}
 						        callback={this.responseFacebook}
 						    />
-							{pathName === REGISTER &&
+						</div>
+						{pathName === REGISTER &&
 								<div className='agree-row'>
 									<input 
 		                                className='checkbox'
 		                                id='checkbox'
 		                                type="checkbox" 
 		                                onChange={this.handleAgree} 
-		                                defaultChecked={this.state.privacyAgree}
+		                                defaultChecked={didAgree}
 		                            />
 		                            <label 
 		                                className='checkbox-label' 
@@ -516,7 +516,6 @@ class SignIn extends Component {
 		                            <p className='mini'>I agree to the <Link to={PRIVACY} target='_blank' className='underline-button'>privacy policy</Link></p>
 	                            </div>
 							}
-						</div>
 						{pathName === LOGIN &&
 							<div className='bottom-row'>
 								<p 

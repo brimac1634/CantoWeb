@@ -1,10 +1,9 @@
-.full,
-.ghost {
+.btn-disabled,
+.btn-active {
 	width: auto;
 	height: auto;
 	border-radius: 4px;
 	font-size: 16px;
-	cursor: pointer;
 	transition: all .2s linear;
 	text-align: center;
 	box-sizing: border-box;
@@ -15,6 +14,19 @@
 	align-items: center;
 }
 
+.btn-active {
+	color: var(--cantoBlue);
+	background: transparent;
+	border: solid 1px var(--cantoDarkGray);
+	cursor: pointer;
+}
+
+.btn-disabled {
+	background: var(--cantoGray);
+	color: var(--cantoDarkGray);
+	cursor: default;
+}
+
 .with-icon {
 	margin: 0 0 0 10px;
 }
@@ -23,26 +35,7 @@
 	margin: 0;
 }
 
-.full {
-	background: linear-gradient(to bottom right, #1a588e, var(--cantoDarkBlue));
-	color: var(--cantoWhite);
-}
-
-.full p {
-	color: var(--cantoWhite);
-}
-
-.ghost {
-	color: var(--cantoBlue);
-	background: transparent;
-	border: solid 1px var(--cantoDarkGray);
-}
-
-.full:hover {
-	background: linear-gradient(to bottom right, #2170b5, var(--cantoDarkBlue));
-}
-
-.ghost:hover,
+.btn-active:hover,
 .selected-button {
 	border: solid 1px var(--cantoDarkBlue);
 }
@@ -51,6 +44,8 @@
 	background: var(--cantoGray);
 }
 
-.ghost:active {
+.btn-active:active {
 	background: var(--cantoDarkGray);
 }
+
+
