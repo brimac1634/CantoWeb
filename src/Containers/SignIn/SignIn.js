@@ -23,6 +23,7 @@ const mapStateToProps = state => {
 	return {
 		pathName: state.router.location.pathname,
 		search: state.router.location.search,
+		prevPath: state.prevRoute.route,
 	}
 }
 
@@ -193,7 +194,7 @@ class SignIn extends Component {
     }
 
     handleLogin = (resData) => {
-    	const { presentAlert, updateURL, updateUser } = this.props;
+    	const { presentAlert, updateURL, updateUser, prevPath } = this.props;
     	const { SEARCH } = routes;
     	const user = this.createUser(resData.user)
 
@@ -206,7 +207,7 @@ class SignIn extends Component {
 		cookies.set('authToken', resData.token, { path: '/' });
 		updateUser(user);
 		presentAlert(alert);
-		updateURL(SEARCH)
+		updateURL(prevPath ? prevPath : SEARCH)
     }
 
     onVerifyEmail = () => {
@@ -385,7 +386,8 @@ class SignIn extends Component {
 								margin='20px 0'
 								placeHolder='Email Address'
 								value={email}
-								id='email'
+								id='email1'
+								name='email'
 								type='text'
 								handleChange={this.onInputChange}
 							/>
@@ -398,7 +400,7 @@ class SignIn extends Component {
 									placeHolder='Password'
 									value={password}
 									type='password'
-									id='password'
+									id='password1'
 									handleChange={this.onInputChange}
 								/>
 								<TextInput 
@@ -432,7 +434,6 @@ class SignIn extends Component {
 				: 'Creating a profile allows you to keep track of your previous searches, save favorites, build your own flash card decks, and more! This will also make it possible to sync information between devices. '
 
 			const buttonDisabled = signInButton === 'Register' ? (!didAgree || !name || !email) : false
-			const fbButtonDisabled = signInButton === 'Register' ? !didAgree : false
 
     		return (
     			<div className='sign-in-container'>
@@ -466,7 +467,7 @@ class SignIn extends Component {
 							margin={pathName === LOGIN ? '0' : '10px 0 20px 0'}
 							placeHolder='Email Address'
 							value={email}
-							id='email'
+							id='email2'
 							name='email'
 							type='text'
 							handleChange={this.onInputChange}
@@ -511,7 +512,6 @@ class SignIn extends Component {
 						        appId={config.FACEBOOK_APP_ID}
 						        fields='name,email,picture'
 						        cssClass='custom-fb-button'
-						        isDisabled={fbButtonDisabled}
 						        callback={this.responseFacebook}
 						    />
 						</div>

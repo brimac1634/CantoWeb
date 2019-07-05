@@ -63,6 +63,7 @@ const Settings = ({ user: { userName }, updateUser, presentAlert, togglePopOver,
 	}
 
 	const handleLogout = () => {
+		setPrevRoute(pathName)
 		updateUser('');
 		deleteToken()
 
