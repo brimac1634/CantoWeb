@@ -364,6 +364,10 @@ class SignIn extends Component {
       console.log(response);
     }
 
+    handleFBButton = (e) => {
+    	console.log(e, 'here')
+    }
+
     handleAgree = () => {
     	this.setState({didAgree: !this.state.didAgree})
     }
@@ -434,6 +438,7 @@ class SignIn extends Component {
 				: 'Creating a profile allows you to keep track of your previous searches, save favorites, build your own flash card decks, and more! This will also make it possible to sync information between devices. '
 
 			const buttonDisabled = signInButton === 'Register' ? (!didAgree || !name || !email) : false
+			const fbButtonDisabled = signInButton === 'Register' ? !didAgree : false
 
     		return (
     			<div className='sign-in-container'>
@@ -492,13 +497,15 @@ class SignIn extends Component {
 								handleClick={this.onUserSubmit}
 							/>
 							<p>or</p>
-							<FacebookLogin
-						        appId={config.FACEBOOK_APP_ID}
-						        fields='name,email,picture'
-						        cssClass='custom-fb-button'
-						        isDisabled={!didAgree}
-						        callback={this.responseFacebook}
-						    />
+							<div onClick={this.handleFBButton}>
+								<FacebookLogin
+							        appId={config.FACEBOOK_APP_ID}
+							        fields='name,email,picture'
+							        cssClass='custom-fb-button'
+							        isDisabled={fbButtonDisabled}
+							        callback={this.responseFacebook}
+							    />
+						    </div>
 						</div>
 						{pathName === REGISTER &&
 								<div className='agree-row'>
