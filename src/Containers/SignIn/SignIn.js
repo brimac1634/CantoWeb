@@ -100,7 +100,7 @@ class SignIn extends Component {
 	createUser = (userData) => {
 		const { name, id, email } = userData;
 		return {
-			userName: name,
+			c: name,
 			userID: id,
 			userEmail: email,
 		}
@@ -199,7 +199,7 @@ class SignIn extends Component {
 
 		const alert = {
 	        title: 'Login Successful',
-	        message: `You are now logged in as "${user.userEmail}".`,
+	        message: `You are now logged in as "${user.userName}".`,
 	        showAlert: true,
 	    }
 	    const cookies = new Cookies();
@@ -376,7 +376,6 @@ class SignIn extends Component {
     	const { title, email, name, password, password2, signInButton, alternateButton, didAgree } = this.state;
     	const { LOGIN, REGISTER, VERIFY, RESET, PRIVACY } = routes;
     	const { updateURL } = this.props;
-    	console.log(didAgree)
     	if (pathName === RESET || pathName === VERIFY) {
     		const heading = pathName === RESET ? 'Reset Account' : 'Set Password'
 			const line = pathName === RESET ? 'We will email you a link to reset your password.' : 'Please put your new password in both fields below.'
@@ -489,6 +488,22 @@ class SignIn extends Component {
 								handleChange={this.onInputChange}
 							/>
 						}
+						{pathName === REGISTER &&
+							<div className='agree-row'>
+								<input 
+	                                className='checkbox'
+	                                id='checkbox'
+	                                type="checkbox" 
+	                                onChange={this.handleAgree} 
+	                                defaultChecked={didAgree}
+	                            />
+	                            <label 
+	                                className='checkbox-label' 
+	                                htmlFor="checkbox"
+	                            ></label>
+	                            <p className='mini'>I agree to the <Link to={PRIVACY} target='_blank' className='underline-button'>privacy policy</Link></p>
+                            </div>
+						}
 						<div className='agree-row'>
 							<Button 
 								title={signInButton}
@@ -497,32 +512,14 @@ class SignIn extends Component {
 								handleClick={this.onUserSubmit}
 							/>
 							<p>or</p>
-							<div onClick={this.handleFBButton}>
-								<FacebookLogin
-							        appId={config.FACEBOOK_APP_ID}
-							        fields='name,email,picture'
-							        cssClass='custom-fb-button'
-							        isDisabled={fbButtonDisabled}
-							        callback={this.responseFacebook}
-							    />
-						    </div>
+							<FacebookLogin
+						        appId={config.FACEBOOK_APP_ID}
+						        fields='name,email,picture'
+						        cssClass='custom-fb-button'
+						        isDisabled={fbButtonDisabled}
+						        callback={this.responseFacebook}
+						    />
 						</div>
-						{pathName === REGISTER &&
-								<div className='agree-row'>
-									<input 
-		                                className='checkbox'
-		                                id='checkbox'
-		                                type="checkbox" 
-		                                onChange={this.handleAgree} 
-		                                defaultChecked={didAgree}
-		                            />
-		                            <label 
-		                                className='checkbox-label' 
-		                                htmlFor="checkbox"
-		                            ></label>
-		                            <p className='mini'>I agree to the <Link to={PRIVACY} target='_blank' className='underline-button'>privacy policy</Link></p>
-	                            </div>
-							}
 						{pathName === LOGIN &&
 							<div className='bottom-row'>
 								<p 

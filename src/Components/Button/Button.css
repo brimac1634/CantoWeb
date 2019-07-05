@@ -23,8 +23,12 @@
 
 .btn-disabled {
 	background: var(--cantoGray);
-	color: var(--cantoDarkGray);
+	border: solid 1px var(--cantoGray);
 	cursor: default;
+}
+
+.btn-disabled p {
+	color: var(--cantoDarkGray);
 }
 
 .with-icon {
