@@ -51,7 +51,7 @@ class Search extends Component {
 
 	componentDidMount() {
 		this._isMounted = true;
-		let { pathName, updateURL, user: { userID } } = this.props;
+		let { pathName, updateURL, user: { userID }, setPrevRoute } = this.props;
 		const { SEARCH, RECENT, FAVORITES, LOGIN } = routes;
 
 		if (pathName === SEARCH) {
@@ -61,6 +61,7 @@ class Search extends Component {
 				this.filterEntries(userID, pathName)
 			} else {
 				requestToLogin(()=>{
+					setPrevRoute(pathName)
 		        	updateURL(LOGIN)
 				})
 			}
@@ -68,7 +69,7 @@ class Search extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {user: {userID}, search, pathName, setTempSearch, updateURL } = this.props;
+		const {user: {userID}, search, pathName, setTempSearch, updateURL, setPrevRoute } = this.props;
 		const { RECENT, FAVORITES, SEARCH, LOGIN } = routes;
 		
 		if (prevProps.pathName !== pathName) {
@@ -77,6 +78,7 @@ class Search extends Component {
 					this.filterEntries(userID, pathName)
 				} else {
 					requestToLogin(()=>{
+						setPrevRoute(pathName)
 			        	updateURL(LOGIN)
 					})
 				}

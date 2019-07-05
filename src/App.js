@@ -10,6 +10,7 @@ import { setUser } from './Containers/SignIn/actions';
 import { SwapSpinner } from "react-spinners-kit";
 import apiRequest from './Helpers/apiRequest';
 import { routes } from './Routing/constants';
+import { deleteToken } from './Helpers/helpers';
 
 const mapStateToProps = state => {
   return {
@@ -45,6 +46,7 @@ class App extends Component {
       })
       .then(user => {
         if (user && user.error) {
+          deleteToken()
           updateURL(LOGIN)
         } else {
           updateUser(user);
