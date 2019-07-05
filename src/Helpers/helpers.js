@@ -11,6 +11,14 @@ export const deleteToken = () => {
     cookies.remove('authToken', { path: '/' });
 }
 
+export const updateObject = (event, object) => {
+	let newObject = object
+	const { id } = event.target
+    const { value } = event.target
+    newObject[id] = value
+    return newObject
+}
+
 export const setQueryURL = (key, type, hash) => {
 	const { SEARCH } = routes;
 	return `${SEARCH}?searchkey=${key}&searchtype=${type}${hash}` 

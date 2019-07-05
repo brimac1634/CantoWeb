@@ -35,6 +35,7 @@ const TitleBar = ({ pathName }) => {
 		WHAT,
 		CONTACT,
 		PRIVACY,
+		ADD,
 		PROFILE 
 	} = routes;
 
@@ -64,6 +65,8 @@ const TitleBar = ({ pathName }) => {
 				return 'Profile'
 			case PRIVACY:
 				return 'Privacy'
+			case ADD:
+				return 'New Entry'
 			default:
 				return ''
 		}
@@ -72,70 +75,70 @@ const TitleBar = ({ pathName }) => {
 	return (
 		<MediaQuery maxWidth={574}>
 			{(matches) => {
-				return <div className='title-bar'>
-						<div className='slanted-div logo-div'></div>
-						<div className='title-logo-container'>
-							<Link to={ROOT} className='center-div'>
-								<MediaQuery minWidth={575}>
-									<LogoFull className='title-logo'/>
-								</MediaQuery>
+				return  <div className='title-bar'>
+							<div className='slanted-div logo-div'></div>
+							<div className='title-logo-container'>
+								<Link to={ROOT} className='center-div'>
+									<MediaQuery minWidth={575}>
+										<LogoFull className='title-logo'/>
+									</MediaQuery>
+									<MediaQuery maxWidth={574}>
+										<Logo iconSize='38'/>
+									</MediaQuery>
+								</Link>
+							</div>
+							<div className='slanted-div current-div'></div>
+							<div className='current-container'>
 								<MediaQuery maxWidth={574}>
-									<Logo iconSize='38'/>
+									{(matches) => {
+										return  <h3 className='current'>
+													{matches && pathName === WORD_OF_THE_DAY 
+														? 'W.O.D.'
+														: banner}
+												</h3>
+									}}
 								</MediaQuery>
-							</Link>
+							</div>
+							<div className='button-container'>
+								<Controller>
+									<Trigger>
+										<div>
+											<button 
+												className='button' 
+												style={{marginRight: '10px'}}
+											>
+												<Icon 
+													icon='menu-4' 
+													className='icon' 
+													iconSize={matches ? 30 : 26}
+													color='cantoWhite'
+												/>
+											</button>
+										</div>
+									</Trigger>
+									<PopOver>
+										<PopOverNav />
+									</PopOver>
+								</Controller>
+								<Controller>
+									<Trigger>
+										<div>
+											<button className='button'>
+												<Icon 
+													icon='user-3' 
+													className='icon' 
+													iconSize={matches ? 30 : 26}
+													color='cantoWhite'
+												/>
+											</button>
+										</div>
+									</Trigger>
+									<PopOver>
+										<Settings />
+									</PopOver>
+								</Controller>
+							</div>
 						</div>
-						<div className='slanted-div current-div'></div>
-						<div className='current-container'>
-							<MediaQuery maxWidth={574}>
-								{(matches) => {
-									return  <h3 className='current'>
-												{matches && pathName === WORD_OF_THE_DAY 
-													? 'W.O.D.'
-													: banner}
-											</h3>
-								}}
-							</MediaQuery>
-						</div>
-						<div className='button-container'>
-							<Controller>
-								<Trigger>
-									<div>
-										<button 
-											className='button' 
-											style={{marginRight: '10px'}}
-										>
-											<Icon 
-												icon='menu-4' 
-												className='icon' 
-												iconSize={matches ? 30 : 26}
-												color='cantoWhite'
-											/>
-										</button>
-									</div>
-								</Trigger>
-								<PopOver>
-									<PopOverNav />
-								</PopOver>
-							</Controller>
-							<Controller>
-								<Trigger>
-									<div>
-										<button className='button'>
-											<Icon 
-												icon='user-3' 
-												className='icon' 
-												iconSize={matches ? 30 : 26}
-												color='cantoWhite'
-											/>
-										</button>
-									</div>
-								</Trigger>
-								<PopOver>
-									<Settings />
-								</PopOver>
-							</Controller>
-						</div>
-					</div>
 			}}
 		</MediaQuery>
 	);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Contact.css';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
-import { validateEmail, serverError } from '../../Helpers/helpers';
+import { validateEmail, serverError, updateObject } from '../../Helpers/helpers';
 import { optionAlert } from '../OptionAlert/OptionAlert';
 import HoverBox from '../../Components/HoverBox/HoverBox';
 import TextInput from '../../Components/TextInput/TextInput';
@@ -51,10 +51,8 @@ class Contact extends Component {
 	}
 
 	handleChange = (event) => {
-		const newMessage = { ...this.state.newMessage }
-		const { id } = event.target
-	    const { value } = event.target
-	    newMessage[id] = value
+	    const message = { ...this.state.newMessage }
+	    const newMessage = updateObject(event, message)
 	    this.setState({newMessage})
 	}
 

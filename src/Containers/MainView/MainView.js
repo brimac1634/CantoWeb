@@ -8,6 +8,7 @@ import WhatIsCantoTalk from '../../Components/WhatIsCantoTalk/WhatIsCantoTalk';
 import Profile from '../Profile/Profile';
 import Contact from '../Contact/Contact';
 import PrivacyPolicy from '../../Components/PrivacyPolicy/PrivacyPolicy';
+import AddNewEntry from '../AddNewEntry/AddNewEntry'
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { routes } from '../../Routing/constants';
@@ -43,6 +44,7 @@ class MainView extends Component {
 			LEARN, 
 			PROFILE,
 			PRIVACY,
+			ADD,
 			TRANSITION 
 		} = routes;
 		const { location, location: { key } } = this.props
@@ -158,6 +160,20 @@ class MainView extends Component {
 						            classNames="fade"
 					            >
 					            	<PrivacyPolicy />
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						path={ADD} 
+						render={()=>(
+							<TransitionGroup className='page over-flow'>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+					            	<AddNewEntry />
 					            </CSSTransition>
 							</TransitionGroup>
 						)}

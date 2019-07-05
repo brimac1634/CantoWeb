@@ -15,5 +15,6 @@ export const routes = {
 	WHAT: '/what-is-cantotalk',
 	CONTACT: '/contact-us',
 	PROFILE: '/profile',
-	PRIVACY: '/privacy-policy'
+	PRIVACY: '/privacy-policy',
+	ADD: '/add-entry'
 }

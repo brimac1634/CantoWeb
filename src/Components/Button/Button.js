@@ -20,8 +20,11 @@ const Button = ({ title, handleClick, buttonType, icon, isSelected, width, heigh
 			}}
 		>
 			{icon 
-				? <Icon icon={icon} iconSize={iconSize ? iconSize : '18'}/>
-				: null}	
+				? <div style={{width: `${iconSize}px`}}>
+					<Icon icon={icon} iconSize={iconSize ? iconSize : '18'}/>
+					</div>
+				: null
+			}	
 			{title
 				? <p className={titleType}>{title}</p>
 				: null}

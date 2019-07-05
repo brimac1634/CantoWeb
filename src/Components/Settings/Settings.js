@@ -27,14 +27,14 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const Settings = ({ user: { userName }, updateUser, presentAlert, togglePopOver, pathName, setPrevRoute, updateURL }) => {
+const Settings = ({ user: { userName, userEmail }, updateUser, presentAlert, togglePopOver, pathName, setPrevRoute, updateURL }) => {
 	
 	const userIsLoggedIn = (userName != null && userName.length)
 		? true
 		: false
 
-	const { WHAT, LOGIN, CONTACT, PROFILE } = routes;
-
+	const { WHAT, LOGIN, CONTACT, PROFILE, ADD } = routes;
+	console.log(userEmail)
 	const handleProfile = () => {
 		updateURL(PROFILE)
 		togglePopOver()
@@ -75,6 +75,12 @@ const Settings = ({ user: { userName }, updateUser, presentAlert, togglePopOver,
 	    presentAlert(alert);
 	    handleLogin()
 	}
+
+	const handleAddEntry = () => {
+		updateURL(ADD)
+		togglePopOver()
+	}
+
 	return (
 		<div className='settings'>
 			<div className='setting-list'>
@@ -101,7 +107,15 @@ const Settings = ({ user: { userName }, updateUser, presentAlert, togglePopOver,
 				<IconListItem 
 					icon='paper-plane' 
 					title='Contact'
-					handleClick={handleContact}/>
+					handleClick={handleContact}
+				/>
+				{userEmail === 'brimac1634@gmail.com' &&
+					<IconListItem 
+						icon='add' 
+						title='Add New Entry'
+						handleClick={handleAddEntry}
+					/>
+				}
 				<div className='list-divider'>&nbsp;</div>
 				{userIsLoggedIn
 					? <IconListItem 
