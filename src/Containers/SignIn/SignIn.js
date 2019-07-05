@@ -100,7 +100,7 @@ class SignIn extends Component {
 	createUser = (userData) => {
 		const { name, id, email } = userData;
 		return {
-			c: name,
+			userName: name,
 			userID: id,
 			userEmail: email,
 		}
@@ -199,7 +199,7 @@ class SignIn extends Component {
 
 		const alert = {
 	        title: 'Login Successful',
-	        message: `You are now logged in as "${user.userName}".`,
+	        message: `You are now logged in as ${user.userName}.`,
 	        showAlert: true,
 	    }
 	    const cookies = new Cookies();
@@ -361,11 +361,6 @@ class SignIn extends Component {
 			    message: 'There was an error logging in using Facebook. Please ensure that you are signed in to FaceBook.',
 		    })
     	}
-      console.log(response);
-    }
-
-    handleFBButton = (e) => {
-    	console.log(e, 'here')
     }
 
     handleAgree = () => {
