@@ -195,7 +195,7 @@ class SignIn extends Component {
 
     handleLogin = (resData) => {
     	const { presentAlert, updateURL, updateUser, prevPath } = this.props;
-    	const { SEARCH } = routes;
+    	const { SEARCH, LOGIN, REGISTER, VERIFY } = routes;
     	const user = this.createUser(resData.user)
 		const alert = {
 	        title: 'Login Successful',
@@ -206,7 +206,13 @@ class SignIn extends Component {
 		cookies.set('authToken', resData.token, { path: '/' });
 		updateUser(user);
 		presentAlert(alert);
-		updateURL(prevPath ? prevPath : SEARCH)
+		if (prevPath) {
+			const changePath = prevPath === LOGIN || prevPath === REGISTER || prevPath === VERIFY;
+			updateURL(changePath ? SEARCH : prevPath)
+		} else {
+			updateURL(SEARCH)
+		}
+		
     }
 
     onVerifyEmail = () => {
