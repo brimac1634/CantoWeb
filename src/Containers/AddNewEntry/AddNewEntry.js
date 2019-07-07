@@ -37,7 +37,8 @@ class AddNewEntry extends Component {
 			    canto_sentence: '',
 			    jyutping_sentence: '',
 			    english_sentence: '',
-			}
+			},
+			isComplete: false
 		}
 	}
 
@@ -53,11 +54,21 @@ class AddNewEntry extends Component {
 		const entry = { ...this.state.newEntry }
 	    const newEntry = updateObject(event, entry)
 	    this.setState({newEntry})
+	    let isComplete = true;
+	    Object.keys(newEntry).forEach(key => {
+	    	if (newEntry[key] === '') {
+	    		isComplete = false
+	    		return
+	    	}
+	    })
+	    if (isComplete) {
+	    	this.setState({isComplete})
+	    }
 	}
 
 	handleSubmit = (event) => {
+		const { setLoading } = this.props;
 		const { newEntry } = this.state;
-		
 		setLoading(true)
 		apiRequest({
 			endPoint: '/add-entry',
@@ -91,14 +102,17 @@ class AddNewEntry extends Component {
 	render() {
 		const { user } = this.props;
 		const {
-			canto_word,
-		    jyutping,
-		    classifier,
-		    english_word,
-		    mandarin_word,
-		    canto_sentence,
-		    jyutping_sentence,
-		    english_sentence
+			newEntry: {
+				canto_word,
+			    jyutping,
+			    classifier,
+			    english_word,
+			    mandarin_word,
+			    canto_sentence,
+			    jyutping_sentence,
+			    english_sentence
+			},
+			isComplete
 		} = this.state;
 
 		return (
@@ -182,6 +196,7 @@ class AddNewEntry extends Component {
 									icon='add' 
 									height='44px'
 									margin='20px 0'
+									isDisabled={!isComplete}
 									handleClick={this.handleSubmit}
 								/>
 							</div>

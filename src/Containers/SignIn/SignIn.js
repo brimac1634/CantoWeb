@@ -197,7 +197,6 @@ class SignIn extends Component {
     	const { presentAlert, updateURL, updateUser, prevPath } = this.props;
     	const { SEARCH } = routes;
     	const user = this.createUser(resData.user)
-
 		const alert = {
 	        title: 'Login Successful',
 	        message: `You are now logged in as ${user.userName}.`,
