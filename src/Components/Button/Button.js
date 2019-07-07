@@ -21,7 +21,7 @@ const Button = ({ title, handleClick, buttonType, icon, isSelected, width, heigh
 		>
 			{icon 
 				? <div style={{width: `${iconSize}px`}}>
-					<Icon icon={icon} iconSize={iconSize ? iconSize : '18'}/>
+					<Icon icon={icon} color={isDisabled ? 'cantoDarkGray' : null} iconSize={iconSize ? iconSize : '18'}/>
 					</div>
 				: null
 			}	

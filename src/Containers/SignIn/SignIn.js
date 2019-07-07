@@ -499,7 +499,7 @@ class SignIn extends Component {
 	                            <p className='mini'>I agree to the <Link to={PRIVACY} target='_blank' className='underline-button'>privacy policy</Link></p>
                             </div>
 						}
-						<div className='agree-row'>
+						<div className='button-row'>
 							<Button 
 								title={signInButton}
 								margin='10px 20px 10px 0'

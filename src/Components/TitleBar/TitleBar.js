@@ -66,7 +66,7 @@ const TitleBar = ({ pathName }) => {
 			case PRIVACY:
 				return 'Privacy'
 			case ADD:
-				return 'New Entry'
+				return 'New'
 			default:
 				return ''
 		}

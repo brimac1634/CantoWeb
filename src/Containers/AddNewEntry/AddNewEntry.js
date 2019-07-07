@@ -58,42 +58,46 @@ class AddNewEntry extends Component {
 	    Object.keys(newEntry).forEach(key => {
 	    	if (newEntry[key] === '') {
 	    		isComplete = false
-	    		return
 	    	}
 	    })
-	    if (isComplete) {
-	    	this.setState({isComplete})
-	    }
+	    this.setState({isComplete})
 	}
 
 	handleSubmit = (event) => {
-		const { setLoading } = this.props;
-		const { newEntry } = this.state;
-		setLoading(true)
-		apiRequest({
-			endPoint: '/add-entry',
-			method: 'POST',
-			body: newEntry 
-		})
-		.then(entryData => {
-			setLoading(false)
-			if (entryData && entryData.error != null) {
-				const { title, message } = entryData.error;
-				optionAlert({
-				    title,
-				    message
-			    })
-			} else {
-				optionAlert({
-				    title: `Entry "${newEntry.canto_word}" Added!`,
-				    message: 'The entry has been successfully added to the dictionary.'
-			    })
-			}
-		})
-		.catch(() => {
-			setLoading(false)
-			serverError()
-		})
+		if (this.state.isComplete) {
+			const { setLoading } = this.props;
+			const { newEntry } = this.state;
+			setLoading(true)
+			apiRequest({
+				endPoint: '/add-entry',
+				method: 'POST',
+				body: newEntry 
+			})
+			.then(entryData => {
+				setLoading(false)
+				if (entryData && entryData.error != null) {
+					const { title, message } = entryData.error;
+					optionAlert({
+					    title,
+					    message
+				    })
+				} else {
+					optionAlert({
+					    title: `Entry "${newEntry.canto_word}" Added!`,
+					    message: 'The entry has been successfully added to the dictionary.'
+				    })
+				    let emptyEntry = { ...this.state.newEntry };
+				    Object.keys(emptyEntry).forEach(key => {
+				    	emptyEntry[key] = '';
+				    })
+				    this.setState({newEntry: emptyEntry});
+				}
+			})
+			.catch(() => {
+				setLoading(false)
+				serverError()
+			})
+		}
 	    event.preventDefault();
 	}
 
