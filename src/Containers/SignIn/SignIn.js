@@ -513,6 +513,7 @@ class SignIn extends Component {
 						        fields='name,email,picture'
 						        cssClass='custom-fb-button'
 						        callback={this.responseFacebook}
+						        disableMobileRedirect={true}
 						    />
 						</div>
 						{pathName === LOGIN &&
