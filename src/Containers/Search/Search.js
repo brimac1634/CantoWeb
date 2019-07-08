@@ -164,7 +164,6 @@ class Search extends Component {
 	}
 
 	filterEntries = (userID, filterType) => {
-		console.log('yup')
 		const { updateURL, setLoading } = this.props;
 		const { SEARCH } = routes;
 		setLoading(true)

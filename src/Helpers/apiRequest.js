@@ -1,5 +1,6 @@
 import { connectionError } from './helpers';
 import Cookies from 'universal-cookie';
+import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
 
 export default ({
 	endPoint = '',
@@ -23,9 +24,14 @@ export default ({
     ])
     	.then(res => res.json())
     	.then(data => {
+            if (data && data.error != null) {
+                const { title, message } = data.error;
+                optionAlert({
+                    title,
+                    message
+                })
+            }
     		return data
     	})
-    	.catch(err => {
-    		connectionError()
-    	})		
+    	.catch(() => connectionError())		
 }
