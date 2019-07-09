@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import './NewDeck.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import MediaQuery from 'react-responsive';
+// import MediaQuery from 'react-responsive';
+import TextInput from '../../Components/TextInput/TextInput';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import apiRequest from '../../Helpers/apiRequest';
 import SearchBar from '../../Components/SearchBar/SearchBar';
+import Button from '../../Components/Button/Button';
 import { setLoading } from '../../Loading/actions';
+import { updateObject } from '../../Helpers/helpers';
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -29,8 +32,13 @@ class NewDeck extends Component {
 		super(props);
 		this.state = {
 			entries: [],
-			showEntryList: false,
-			searchComplete: false
+			step: 0,
+			searchComplete: false,
+			deck: {
+				deckName: '',
+				isPublic: false,
+				tags: '',
+			}
 		}
 	}
 
@@ -68,50 +76,96 @@ class NewDeck extends Component {
 			})
 	}
 
+	handleChange = (event) => {
+		const deck = { ...this.state.deck }
+	    const newDeck = updateObject(event, deck)
+	    this.setState({deck: newDeck})
+	}
+
+	handlePublic = () => {
+		const deck = { ...this.state.deck }
+		deck.isPublic = !deck.isPublic;
+		this.setState({deck});
+	}
+
+	next = () => {
+		const { updateURL } = this.props;
+		let { step } = this.state;
+		step += 1
+		this.setState({step})
+		updateURL()
+	}
+
+	renderNewDeckForm = () => {
+		const { deckName, tags, isPublic } = this.state.deck
+		return (
+			<div className='inner-new-entry'>
+				<h2>New Deck Details</h2>
+				<TextInput 
+					placeHolder='Name of Deck'
+					margin='20px 0'
+					height='44px'
+					id='deckName'
+					value={deckName}
+					handleChange={this.handleChange}
+				/>
+				<TextInput 
+					placeHolder='Tags'
+					margin='20px 0'
+					height='44px'
+					id='tags'
+					value={tags}
+					handleChange={this.handleChange}
+				/>
+				<div className='agree-row'>
+					<input 
+                        className='checkbox'
+                        id='checkbox'
+                        type="checkbox"
+                        onChange={()=>this.handlePublic()} 
+                        defaultChecked={isPublic}
+                    />
+                    <label 
+                        className='checkbox-label' 
+                        htmlFor="checkbox"
+                    ></label>
+                    <p className='make-public'>Make Public</p>
+                </div>
+                <div className='add-container'>
+					<Button 
+						title='Next!'
+						buttonType='ghost' 
+						height='44px'
+						margin='20px 0'
+						handleClick={()=>this.next()}
+					/>
+				</div>
+			</div>
+		)
+	}
+
 
 	render() {
-		const { entries, showEntryList, searchComplete } = this.state;
-		
+		const { entries, step, searchComplete } = this.state;
+		const translate = step * -100
+		console.log(translate)
 		return (
-			<div className='page brian'>
-				<MediaQuery minWidth={700}>
-					<div className='new-split-container'>
-						<div className='new-half'>
-
-						</div>
-						<div className='new-half'>
-							<EntriesList 
-								entries={entries}
-								selectEntry={this.handleEntrySelect}
-							/>
-							<div className='search-top'>
-								<SearchBar />
-							</div>
-						</div>
+			<div className='page new-deck'>
+				<div className='slide' style={{left: 0, transform: `translateX(${translate}%)`}}>
+					{this.renderNewDeckForm()}
+				</div>
+				<div className='slide' style={{left: '100%', transform: `translateX(${translate}%)`}}>
+					<div className='new-list-container'>
+						<EntriesList 
+							entries={entries}
+							selectEntry={this.handleEntrySelect}
+							searchComplete={searchComplete}
+						/>
 					</div>
-				</MediaQuery>
-				<MediaQuery maxWidth={699}>
-					{!showEntryList &&
-						<div className='mobile-new-deck'>
-							<EntriesList 
-								entries={entries}
-								selectEntry={this.handleEntrySelect}
-								searchComplete={searchComplete}
-							/>
-							<SearchBar />
-						</div>
-					}
-					{showEntryList &&
-						<div className='mobile-new-deck'>
-							<EntriesList 
-								entries={entries}
-								selectEntry={this.handleEntrySelect}
-								searchComplete={searchComplete}
-							/>
-							<SearchBar />
-						</div>
-					}
-				</MediaQuery>
+					<div className='search-top'>
+						<SearchBar />
+					</div>
+				</div>
 			</div>
 		);
 	}
