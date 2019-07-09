@@ -1,5 +1,30 @@
-.search-bar {
+.deck-container {
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 	position: absolute;
-	top: 0;
+	top: 44px;
 	right: 0;
+	bottom: 0;
+	left: 0;
+	box-sizing: border-box;
+	padding: 10px 0;
+}
+
+.deck-section-container {
+	width: 100%;
+	height: auto;
+}
+
+.deck-section {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+.section-headers {
+	display: inline-block;
+	padding-bottom: 5px;
+	margin: 10px;
+	border-bottom: 1px solid var(--cantoDarkBlue);
 }

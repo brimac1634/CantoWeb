@@ -45,8 +45,9 @@ class SearchBar extends Component {
 	}
 
 	componentDidMount() {
-		const { search, setSearchType, pathName } = this.props;
-		const { SEARCH } = routes;
+		const { search, setSearchType, pathName, setTempSearch } = this.props;
+		const { SEARCH, LEARN } = routes;
+
 		const list = this.getList()
 		const searchList = JSON.parse(localStorage.getItem(list))
 		this.setState({
@@ -54,9 +55,13 @@ class SearchBar extends Component {
 			searchList
 		})
 
-		if (search && pathName === SEARCH) {
+		if (search) {
 			const values = queryString.parse(search)
-			setSearchType(values.searchtype)
+			if (pathName === SEARCH) {
+				setSearchType(values.searchtype)
+			} else if (pathName === LEARN) {
+				setTempSearch(values.decksearch)
+			}
 		} 
 	}
 
@@ -104,16 +109,20 @@ class SearchBar extends Component {
 	}
 
 	searchSubmit = (event) => {
-		const { pathName } = this.props;
+		const { pathName, updateURL } = this.props;
 		const { tempSearchKey } = this.state;
 		const { SEARCH, LEARN } = routes;
 		const enterPressed = (event.which === 13);
-		if (enterPressed && tempSearchKey) {
+		if (enterPressed) {
 			event.target.blur();
-			if (pathName === SEARCH) {
-				this.handleSearch(tempSearchKey)
+			if (tempSearchKey) {
+				if (pathName === SEARCH) {
+					this.handleSearch(tempSearchKey)
+				} else if (pathName === LEARN) {
+					this.handleDeckSearch(tempSearchKey)
+				}
 			} else if (pathName === LEARN) {
-				this.handleDeckSearch(tempSearchKey)
+				updateURL(pathName)
 			}
 		}
 	}
@@ -246,7 +255,7 @@ class SearchBar extends Component {
 											<div className='center-div'>
 												<TextInput 
 													icon='search'
-													placeHolder='Search for deck'
+													placeHolder='Search for other decks'
 													margin='10px 0'
 													value={tempSearchKey ? tempSearchKey : ''}
 													height={matches ? '44px' : '34px'}

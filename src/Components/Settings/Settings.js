@@ -34,7 +34,7 @@ const Settings = ({ user: { userName, userEmail }, updateUser, presentAlert, tog
 		: false
 
 	const { WHAT, LOGIN, CONTACT, PROFILE, ADD } = routes;
-	console.log(userEmail)
+	
 	const handleProfile = () => {
 		updateURL(PROFILE)
 		togglePopOver()

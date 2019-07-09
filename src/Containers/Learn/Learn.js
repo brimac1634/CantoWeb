@@ -5,6 +5,7 @@ import { push } from 'connected-react-router';
 import queryString from 'query-string';
 import apiRequest from '../../Helpers/apiRequest';
 import SearchBar from '../../Components/SearchBar/SearchBar';
+import Deck from '../../Components/Deck/Deck';
 import { setLoading } from '../../Loading/actions';
 import { setPrevRoute } from '../../Routing/actions';
 
@@ -30,52 +31,167 @@ class Learn extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			deckList: []
+			personalDecks: [],
+			officialDecks: [],
+			otherDecks: [],
+			selectedDeck: {}
 		}
 	}
 
 	componentDidMount() {
-		this.getSearchKey()
+		this.getDecks()
 	}
 
 	componentDidUpdate(prevProps) {
 		const { search } = this.props;
 		if (prevProps.search !== search) {
-			this.getSearchKey()
+			this.getDecks()
 		}
 	}
 
-	getSearchKey = () => {
+	getDecks = () => {
 		const { search } = this.props;
 		if (search) {
 			const values = queryString.parse(search)
 			this.handleDeckSearch(values.decksearch)
-		} 
+		} else {
+			this.getGeneralDecks()
+		}
+	}
+
+	getGeneralDecks = () => {
+		const { setLoading, user: { userID } } = this.props;
+		const endPoint = userID ? '/get-decks-id' : '/get-decks'
+		const method = userID ? 'POST' : 'GET' 
+		setLoading(true)
+		apiRequest({
+			endPoint,
+			method,
+			body: userID ? {userID} : null 
+		})
+			.then(data => {
+				setLoading(false)
+				if (data && !data.error) {
+					this.filterDecks(data)
+				}
+			})
+			.catch(err=>{
+				console.log(err)
+				setLoading(false)
+			})
 	}
 
 	handleDeckSearch = (key) => {
-		//api fetch for decks
-		const { setLoading } = this.props;
-		// setLoading(true)
-		// apiRequest({
-		// 	endPoint: '/deck-search',
-		// 	method: 'POST',
-		// 	body: {key} 
-		// })
-		// 	.then(data => {
-		// 		setLoading(false)
-		// 		if (data && !data.error) {
-		// 			//got deck
-		// 		}
-		// 	})
-		// 	.catch(()=>setLoading(false))
+		const { setLoading, user: { userID } } = this.props;
+		const body = userID ? { userID, key } : { key }
+		const endPoint = userID ? '/search-decks-id' : '/search-decks'
+		setLoading(true)
+		apiRequest({
+			endPoint,
+			method: 'POST',
+			body
+		})
+			.then(data => {
+				setLoading(false)
+				if (data && !data.error) {
+					this.filterDecks(data)
+				}
+			})
+			.catch(()=>setLoading(false))
+	}
+
+	filterDecks = (list) => {
+		const { user: { userID } } = this.props;
+		const officialDecks = list.filter(deck => {
+			return deck.user_id === 0;
+		})
+
+		let personalDecks;
+		let otherDecks;
+		if (userID) {
+			personalDecks = list.filter(deck => {
+				return deck.user_id === userID;
+			})
+
+			otherDecks = list.filter(deck => {
+				return deck.user_id !== userID && deck.user_id !== 0;
+			})
+		} else {
+			otherDecks = list.filter(deck => {
+				return deck.user_id !== 0;
+			})
+		}
+		
+		this.setState({officialDecks, personalDecks, otherDecks})
+	}
+
+	handleDeck = (deck) => {
+		console.log(deck)
+		this.setState({selectedDeck: deck})
 	}
 
 
 	render() {
-
+		const { officialDecks, personalDecks, otherDecks } = this.state;
+		
 		return (
 			<div className='page'>
+				<div className='deck-container'>
+				{personalDecks && personalDecks.length > 0 &&
+					<div className='deck-section-container'>
+						<h2 className='section-headers'>Your Decks</h2>
+						<div className='deck-section'>
+							{ 
+								personalDecks.map((deck, i) => {
+									return (
+										<Deck 
+											key={i} 
+											deck={deck} 
+											handleClick={this.handleDeck} 
+										/>
+									)
+								})
+							}
+						</div>
+					</div>
+				}
+				{officialDecks && officialDecks.length > 0 &&
+					<div className='deck-section-container'>
+						<h2 className='section-headers'>CantoTalk Decks</h2>
+						<div className='deck-section'>
+							{ 
+								officialDecks.map((deck, i) => {
+									return (
+										<Deck 
+											key={i} 
+											deck={deck} 
+											handleClick={this.handleDeck} 
+										/>
+									)
+								})
+							}
+						</div>
+					</div>
+				}
+				{otherDecks && otherDecks.length > 0 &&
+					<div className='deck-section-container'>
+						<h2 className='section-headers'>Public Decks</h2>
+						<div className='deck-section'>
+							{ 
+								otherDecks.map((deck, i) => {
+									return (
+										<Deck 
+											key={i} 
+											deck={deck} 
+											handleClick={this.handleDeck} 
+										/>
+									)
+								})
+							}
+						</div>
+					</div>
+				}
+				</div>
 				<SearchBar />
 			</div>
 		);
