@@ -2,10 +2,7 @@ import React from 'react';
 import './Deck.css';
 
 const Deck = ({deck, handleClick}) => {
-
-	const { name, tags } = deck;
-
-
+	const { name } = deck;
 	return (
 		<div className='deck' onClick={()=>handleClick(deck)}>
 			<div className='name-container'>

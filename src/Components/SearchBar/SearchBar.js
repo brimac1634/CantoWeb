@@ -8,7 +8,7 @@ import queryString from 'query-string';
 import TextInput from '../TextInput/TextInput';
 import Button from '../Button/Button';
 import { setPrevRoute } from '../../Routing/actions';
-import { setTempSearch, setSearchType } from './actions';
+import { setTempSearch, setSearchType, setSearchKey } from './actions';
 import { routes } from '../../Routing/constants';
 import Controller from '../../Helpers/Compound/Controller';
 import Trigger from '../../Helpers/Compound/Trigger';
@@ -31,6 +31,7 @@ const mapDispatchToProps = (dispatch) => {
 		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 		setTempSearch: (key) => dispatch(setTempSearch(key)),
 		setSearchType: (type) => dispatch(setSearchType(type)),
+		setSearchKey: (word) => dispatch(setSearchKey(word)),
 	}
 }
 
@@ -109,13 +110,14 @@ class SearchBar extends Component {
 	}
 
 	searchSubmit = (event) => {
-		const { pathName, updateURL } = this.props;
+		const { pathName, updateURL, setSearchKey } = this.props;
 		const { tempSearchKey } = this.state;
 		const { SEARCH, LEARN } = routes;
 		const enterPressed = (event.which === 13);
 		if (enterPressed) {
 			event.target.blur();
 			if (tempSearchKey) {
+				setSearchKey(tempSearchKey)
 				if (pathName === SEARCH) {
 					this.handleSearch(tempSearchKey)
 				} else if (pathName === LEARN) {
@@ -167,15 +169,31 @@ class SearchBar extends Component {
 		localStorage.setItem(list, JSON.stringify(searchList))
 	}
 
+	handleNewDeck = (e) => {
+		const { updateURL, pathName, userID } = this.props;
+		const { NEW_DECK, LOGIN } = routes;
+		if (!validateUser(userID)) {
+			requestToLogin(()=>{
+				setPrevRoute(pathName)
+	        	updateURL(LOGIN)
+			})
+		} else {
+			updateURL(NEW_DECK)
+		}
+		e.target.blur();
+	}
+
 	wordSelect = (word) => {
 		const { setTempSearch, pathName } = this.props;
-		const { SEARCH, LEARN } = routes;
+		const { SEARCH, LEARN, NEW_DECK } = routes;
 		setTempSearch(word)
 		
 		if (pathName === SEARCH) {
 			this.handleSearch(word)
 		} else if (pathName === LEARN) {
 			this.handleDeckSearch(word)
+		} else if (pathName === NEW_DECK) {
+			setSearchKey(word)
 		}
 	}
 	
@@ -186,15 +204,17 @@ class SearchBar extends Component {
 			setSearchType
 		 } = this.props;
 		 const { searchList, tempSearchKey } = this.state;
-		 const { FAVORITES, RECENT, LEARN, SEARCH } = routes;
+		 const { FAVORITES, RECENT, LEARN, SEARCH, NEW_DECK } = routes;
 		 const searchOptions = ['All', 'Can', 'Eng', 'Man', 'Jyu'];
+		 const showSearch = pathName === SEARCH || pathName === NEW_DECK
+		 const isLearn = pathName === LEARN || pathName === NEW_DECK
 		return (
 			<MediaQuery maxWidth={574}>
 				{(matches) => {
 				return (
 					<div className='search-bar-container'>
 						<div className='search-bar'>
-							{pathName !== LEARN &&
+							{!isLearn &&
 								<div className='filter-container'>
 									<Button 
 										title={matches ? null : 'Recent'}
@@ -222,8 +242,21 @@ class SearchBar extends Component {
 									/>
 								</div>
 							}
+							{pathName === LEARN &&
+								<div className='filter-container'>
+									<Button 
+										title='New Deck'
+										buttonType='ghost' 
+										icon='add' 
+										height={matches ? '44px' : '34px'}
+										iconSize={matches ? '22' : null}
+										margin='10px 5px 10px 10px'
+										handleClick={this.handleNewDeck}
+									/>
+								</div>
+							}
 							<div className='search-container'>
-								{pathName === SEARCH &&
+								{showSearch &&
 									 <Controller>
 										<Trigger>
 											<div className='center-div'>

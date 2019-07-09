@@ -1,8 +1,9 @@
-import { SET_TEMP_SEARCH, SET_SEARCH_TYPE } from './constants';
+import { SET_TEMP_SEARCH, SET_SEARCH_TYPE, SET_SEARCH_KEY } from './constants';
 
 const initialState = {
 	key: '',
-	searchType: 'All'
+	searchType: 'All',
+	searchKey: ''
 }
 
 export const setTempSearch = (state=initialState, action={}) => {
@@ -11,6 +12,8 @@ export const setTempSearch = (state=initialState, action={}) => {
 			return Object.assign({}, state, {key: action.payload})
 		case SET_SEARCH_TYPE:
 			return Object.assign({}, state, {searchType: action.payload})
+		case SET_SEARCH_KEY:
+			return Object.assign({}, state, {searchKey: action.payload})
 		default:
 			return state
 	}
