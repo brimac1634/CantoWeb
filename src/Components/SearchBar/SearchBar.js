@@ -178,7 +178,7 @@ class SearchBar extends Component {
 	        	updateURL(LOGIN)
 			})
 		} else {
-			updateURL(NEW_DECK)
+			updateURL(`${NEW_DECK}#0`)
 		}
 		e.target.blur();
 	}

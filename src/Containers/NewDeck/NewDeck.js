@@ -46,10 +46,17 @@ class NewDeck extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { pathName, hash, updateURL } = this.props;
+		if (hash) {
+			updateURL(`${pathName}#${0}`)
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		const { searchKey, hash } = this.props;
 		if (prevProps.hash !== hash) {
-			this.setState({step: hash.slice(1, hash.length)})
+			this.setState({step: Number(hash.slice(1, hash.length))})
 		}
 		if (prevProps.searchKey !== searchKey) {
 			this.searchEntries(searchKey)
@@ -99,8 +106,25 @@ class NewDeck extends Component {
 		const { updateURL, pathName } = this.props;
 		let { step } = this.state;
 		step += 1
-		this.setState({step})
+
 		updateURL(`${pathName}#${step}`)
+	}
+
+	handleEntrySelect = (entry) => {
+		const { entryList } = this.state;
+		let i = entryList.length;
+		if (i < 1) {
+			entryList.push(entry);
+			this.setState({entryList})
+		} else {
+			while (i--) {
+				if (entryList[i].entry_id === entry.entry_id) {
+					return;
+				}	
+			}
+			entryList.push(entry);
+			this.setState({entryList})
+		}
 	}
 
 	renderNewDeckForm = () => {
@@ -162,9 +186,9 @@ class NewDeck extends Component {
 
 
 	render() {
-		const { entries, step, searchComplete, entryList } = this.state;
+		const { entries, step, searchComplete, entryList, deck: { deckName } } = this.state;
 		const translate = step * -100
-
+		console.log(entryList)
 		let buttonMessage;
 		switch(step) {
 			case 0:
@@ -174,12 +198,12 @@ class NewDeck extends Component {
 				buttonMessage = `Add ${entryList.length} Entries`
 				break
 			case 2:
-				buttonMessage = 'Create Deck!'
+				buttonMessage = `Create ${deckName} Deck!`
 				break
 			default:
 				buttonMessage = ''
 		}
-		
+
 		return (
 			<div className='page new-deck'>
 				<div className='slide' style={{left: 0, transform: `translateX(${translate}%)`}}>
@@ -199,7 +223,13 @@ class NewDeck extends Component {
 					</div>
 				</div>
 				<div className='slide' style={{left: '200%', transform: `translateX(${translate}%)`}}>
-					{this.renderNewDeckForm()}
+					<h2 className='slide-title'>Review your new deck!</h2>
+					<div className='new-list-container'>
+						<EntriesList 
+							entries={entryList}
+							selectEntry={this.handleEntrySelect}
+						/>
+					</div>
 				</div>
 				<div className='bottom-container'>
 					<p className='button-label'>{buttonMessage}</p>
