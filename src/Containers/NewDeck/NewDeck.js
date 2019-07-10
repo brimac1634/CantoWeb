@@ -17,6 +17,8 @@ const mapStateToProps = (state, ownProps) => {
   	user: state.user.user,
   	searchKey: state.temp.searchKey,
   	searchType: state.temp.searchType,
+  	pathName: state.router.location.pathname,
+    hash: state.router.location.hash,
   }
 }
 
@@ -37,13 +39,18 @@ class NewDeck extends Component {
 			deck: {
 				deckName: '',
 				isPublic: false,
+				isOfficial: false,
 				tags: '',
-			}
+			},
+			entryList: []
 		}
 	}
 
 	componentDidUpdate(prevProps) {
-		const { searchKey } = this.props;
+		const { searchKey, hash } = this.props;
+		if (prevProps.hash !== hash) {
+			this.setState({step: hash.slice(1, hash.length)})
+		}
 		if (prevProps.searchKey !== searchKey) {
 			this.searchEntries(searchKey)
 		}
@@ -82,22 +89,24 @@ class NewDeck extends Component {
 	    this.setState({deck: newDeck})
 	}
 
-	handlePublic = () => {
+	handlePublic = (event) => {
 		const deck = { ...this.state.deck }
-		deck.isPublic = !deck.isPublic;
+		deck[event.target.id] = !deck[event.target.id];
 		this.setState({deck});
 	}
 
 	next = () => {
-		const { updateURL } = this.props;
+		const { updateURL, pathName } = this.props;
 		let { step } = this.state;
 		step += 1
 		this.setState({step})
-		updateURL()
+		updateURL(`${pathName}#${step}`)
 	}
 
 	renderNewDeckForm = () => {
-		const { deckName, tags, isPublic } = this.state.deck
+		const { user: { userEmail } } = this.props;
+		const { isOfficial, deck: { deckName, tags, isPublic } } = this.state
+		 
 		return (
 			<div className='inner-new-entry'>
 				<h2>New Deck Details</h2>
@@ -118,43 +127,66 @@ class NewDeck extends Component {
 					handleChange={this.handleChange}
 				/>
 				<div className='agree-row'>
+					<p className='button-label'>Make Public</p>
 					<input 
                         className='checkbox'
-                        id='checkbox'
+                        id='isPublic'
                         type="checkbox"
-                        onChange={()=>this.handlePublic()} 
+                        onChange={this.handlePublic} 
                         defaultChecked={isPublic}
                     />
                     <label 
                         className='checkbox-label' 
-                        htmlFor="checkbox"
+                        htmlFor="isPublic"
                     ></label>
-                    <p className='make-public'>Make Public</p>
                 </div>
-                <div className='add-container'>
-					<Button 
-						title='Next!'
-						buttonType='ghost' 
-						height='44px'
-						margin='20px 0'
-						handleClick={()=>this.next()}
-					/>
-				</div>
+                {userEmail === 'brimac1634@gmail.com' &&
+                	<div className='agree-row'>
+                		<p className='button-label'>CantoTalk Official</p>
+						<input 
+	                        className='checkbox'
+	                        id='isOfficial'
+	                        type="checkbox"
+	                        onChange={this.handlePublic} 
+	                        defaultChecked={isOfficial}
+	                    />
+	                    <label 
+	                        className='checkbox-label' 
+	                        htmlFor="isOfficial"
+	                    ></label>
+	                </div>
+            	}
 			</div>
 		)
 	}
 
 
 	render() {
-		const { entries, step, searchComplete } = this.state;
+		const { entries, step, searchComplete, entryList } = this.state;
 		const translate = step * -100
-		console.log(translate)
+
+		let buttonMessage;
+		switch(step) {
+			case 0:
+				buttonMessage = 'Add Entries'
+				break
+			case 1:
+				buttonMessage = `Add ${entryList.length} Entries`
+				break
+			case 2:
+				buttonMessage = 'Create Deck!'
+				break
+			default:
+				buttonMessage = ''
+		}
+		
 		return (
 			<div className='page new-deck'>
 				<div className='slide' style={{left: 0, transform: `translateX(${translate}%)`}}>
 					{this.renderNewDeckForm()}
 				</div>
 				<div className='slide' style={{left: '100%', transform: `translateX(${translate}%)`}}>
+					<h2 className='slide-title'>Add to your new deck!</h2>
 					<div className='new-list-container'>
 						<EntriesList 
 							entries={entries}
@@ -165,6 +197,21 @@ class NewDeck extends Component {
 					<div className='search-top'>
 						<SearchBar />
 					</div>
+				</div>
+				<div className='slide' style={{left: '200%', transform: `translateX(${translate}%)`}}>
+					{this.renderNewDeckForm()}
+				</div>
+				<div className='bottom-container'>
+					<p className='button-label'>{buttonMessage}</p>
+					<Button 
+						title='Next'
+						buttonType='ghost' 
+						color='var(--cantoWhite)'
+						height='44px'
+						width='100px'
+						margin='20px 0'
+						handleClick={()=>this.next()}
+					/>
 				</div>
 			</div>
 		);

@@ -170,7 +170,7 @@ class SearchBar extends Component {
 	}
 
 	handleNewDeck = (e) => {
-		const { updateURL, pathName, userID } = this.props;
+		const { updateURL, setPrevRoute, pathName, userID } = this.props;
 		const { NEW_DECK, LOGIN } = routes;
 		if (!validateUser(userID)) {
 			requestToLogin(()=>{
