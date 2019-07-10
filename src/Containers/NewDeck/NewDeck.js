@@ -3,6 +3,7 @@ import './NewDeck.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../OptionAlert/OptionAlert';
+import MediaQuery from 'react-responsive';
 import TextInput from '../../Components/TextInput/TextInput';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import apiRequest from '../../Helpers/apiRequest';
@@ -38,6 +39,7 @@ class NewDeck extends Component {
 		this.state = {
 			entries: [],
 			step: 0,
+			pop: false,
 			searchComplete: false,
 			deck: {
 				deckName: '',
@@ -128,7 +130,7 @@ class NewDeck extends Component {
 		} = this.state;
 		const { LEARN } = routes;
 		
-		if (step <= 1) {
+		if (step <= 1 && deckName) {
 			step += 1
 			updateURL(`${pathName}#${step}`)
 		} else if (step === 2) {
@@ -140,34 +142,34 @@ class NewDeck extends Component {
 				body: {
 					name: deckName,
 					user_id: userID,
-					is_public: isPublic,
+					is_public: isPublic ? '1' : '0',
 					is_official: isOfficial,
-					tags, 
+					tags: tags, 
 					entry_ids
 				}
 			})
 				.then(data => {
-						if (data && data.error != null) {
-							const { title, message } = data.error;
-							optionAlert({
-							    title,
-							    message
-						    })
-						} else {
-							const alert = {
-						        title: 'Deck Created',
-						        message: `Your new deck, "${deckName}", is now created`,
-						        showAlert: true,
-						    }
-						    presentAlert(alert);
-						    updateURL(LEARN)
-						}
-						setLoading(false)
-					})
-					.catch(err=>{
-						setLoading(false)
-						connectionError()
-					})
+					if (data && data.error != null) {
+						const { title, message } = data.error;
+						optionAlert({
+						    title,
+						    message
+					    })
+					} else {
+						const alert = {
+					        title: 'Deck Created',
+					        message: `Your new deck, "${deckName}", is now created`,
+					        showAlert: true,
+					    }
+					    presentAlert(alert);
+					    updateURL(LEARN)
+					}
+					setLoading(false)
+				})
+				.catch(err=>{
+					setLoading(false)
+					connectionError()
+				})
 		}
 	}
 
@@ -184,15 +186,25 @@ class NewDeck extends Component {
 		if (i < 1) {
 			entryList.push(entry);
 			this.setState({entryList})
+			this.popNumber();
 		} else {
 			while (i--) {
 				if (entryList[i].entry_id === entry.entry_id) {
+					entryList.splice(i, 1);
+					this.setState({entryList})
+					this.popNumber();
 					return;
 				}	
 			}
 			entryList.push(entry);
 			this.setState({entryList})
+			this.popNumber();
 		}
+	}
+
+	popNumber = () => {
+		this.setState({pop: true})
+		setTimeout(()=>this.setState({pop: false}), 500)
 	}
 
 	renderNewDeckForm = () => {
@@ -200,137 +212,168 @@ class NewDeck extends Component {
 		const { isOfficial, deck: { deckName, tags, isPublic } } = this.state
 		 
 		return (
-			<div className='inner-new-entry'>
-				<h2>New Deck Details</h2>
-				<TextInput 
-					placeHolder='Name of Deck'
-					margin='20px 0'
-					height='44px'
-					id='deckName'
-					value={deckName}
-					handleChange={this.handleChange}
-				/>
-				<TextInput 
-					placeHolder='Tags'
-					margin='20px 0'
-					height='44px'
-					id='tags'
-					value={tags}
-					handleChange={this.handleChange}
-				/>
-				<div className='agree-row'>
-					<p className='button-label'>Make Public</p>
-					<input 
-                        className='checkbox'
-                        id='isPublic'
-                        type="checkbox"
-                        onChange={this.handlePublic} 
-                        defaultChecked={isPublic}
-                    />
-                    <label 
-                        className='checkbox-label' 
-                        htmlFor="isPublic"
-                    ></label>
-                </div>
-                {userEmail === 'brimac1634@gmail.com' &&
-                	<div className='agree-row'>
-                		<p className='button-label'>CantoTalk Official</p>
-						<input 
-	                        className='checkbox'
-	                        id='isOfficial'
-	                        type="checkbox"
-	                        onChange={this.handlePublic} 
-	                        defaultChecked={isOfficial}
-	                    />
-	                    <label 
-	                        className='checkbox-label' 
-	                        htmlFor="isOfficial"
-	                    ></label>
-	                </div>
-            	}
-			</div>
+			<MediaQuery maxWidth={699}>
+				{(matches) => {
+					return 	(
+						<div className='inner-new-entry'>
+							{matches 
+								? <h3>New Deck Details</h3>
+								: <h2>New Deck Details</h2>
+							}
+							<TextInput 
+								placeHolder='Name of Deck'
+								margin='20px 0'
+								height='44px'
+								id='deckName'
+								value={deckName}
+								handleChange={this.handleChange}
+							/>
+							<TextInput 
+								placeHolder='Tags'
+								margin='20px 0'
+								height='44px'
+								id='tags'
+								value={tags}
+								handleChange={this.handleChange}
+							/>
+							<div className='agree-row'>
+								<p className='button-label'>Make Public</p>
+								<input 
+			                        className='checkbox'
+			                        id='isPublic'
+			                        type="checkbox"
+			                        onChange={this.handlePublic} 
+			                        defaultChecked={isPublic}
+			                    />
+			                    <label 
+			                        className='checkbox-label' 
+			                        htmlFor="isPublic"
+			                    ></label>
+			                </div>
+			                {userEmail === 'brimac1634@gmail.com' &&
+			                	<div className='agree-row'>
+			                		<p className='button-label'>CantoTalk Official</p>
+									<input 
+				                        className='checkbox'
+				                        id='isOfficial'
+				                        type="checkbox"
+				                        onChange={this.handlePublic} 
+				                        defaultChecked={isOfficial}
+				                    />
+				                    <label 
+				                        className='checkbox-label' 
+				                        htmlFor="isOfficial"
+				                    ></label>
+				                </div>
+			            	}
+						</div>
+					)
+				}}
+			</MediaQuery>
 		)
 	}
 
 
 	render() {
-		const { entries, step, searchComplete, entryList, deck: { deckName } } = this.state;
+		const { entries, step, searchComplete, pop, entryList, deck: { deckName } } = this.state;
 		const translate = step * -100
+		const popClass = pop ? 'pop' : null;
 		let buttonMessage;
 		switch(step) {
 			case 0:
 				buttonMessage = 'Next: Add Entries'
 				break
-			case 1:
-				buttonMessage = `Next: Confirm ${entryList.length} Entries`
-				break
 			case 2:
-				buttonMessage = `Create Deck: ${deckName}`
+				buttonMessage = `Create Deck: "${deckName}"`
 				break
 			default:
 				buttonMessage = ''
 		}
 
 		return (
-			<div className='page new-deck'>
-				<div className='slide' style={{left: 0, transform: `translateX(${translate}%)`}}>
-					{this.renderNewDeckForm()}
-				</div>
-				<div className='slide' style={{left: '100%', transform: `translateX(${translate}%)`}}>
-					<h2 className='slide-title'>Add to your new deck!</h2>
-					{step === 1 &&
-						<div className='new-list-container'>
-							<EntriesList 
-								entries={entries}
-								selectEntry={this.handleEntrySelect}
-								searchComplete={searchComplete}
-							/>
+			<MediaQuery maxWidth={699}>
+				{(matches) => {
+					return 	(
+						<div className='page new-deck'>
+							<div className='slide' style={{left: 0, transform: `translateX(${translate}%)`}}>
+								{this.renderNewDeckForm()}
+							</div>
+							<div className='slide' style={{left: '100%', transform: `translateX(${translate}%)`}}>
+								{matches 
+									? 	<div className='slide-title'>
+											<h3>Add to your new deck!</h3>
+										</div>
+									: <h2 className='slide-title'>Add to your new deck!</h2>
+								}
+								{step === 1 &&
+									<div className='new-list-container'>
+										<EntriesList 
+											entries={entries}
+											selectEntry={this.handleEntrySelect}
+											searchComplete={searchComplete}
+										/>
+									</div>
+								}
+								<div className='search-top'>
+									<SearchBar />
+								</div>
+							</div>
+							<div className='slide last-slide' style={{left: '200%', transform: `translateX(${translate}%)`}}>
+								{step === 2 &&
+									<div className='new-list-container'>
+										<EntriesList 
+											entries={entryList}
+											selectEntry={this.handleEntrySelect}
+										/>
+									</div>
+								}
+								<div className='search-top'>
+									<SearchBar hideSearch={true} />
+								</div>
+								{matches 
+									? 	<div className='slide-title'>
+											<h3>Review your new deck!</h3>
+										</div>
+									: <h2 className='slide-title'>Review your new deck!</h2>
+								}
+							</div>
+							<div className='bottom-container'>
+								{step > 0 &&
+									<div className='back-button'>
+										<Button 
+											title='Back'
+											buttonType='ghost' 
+											color='var(--cantoWhite)'
+											height='44px'
+											width={matches ? '65px' : '100px'}
+											margin={matches ? '5px 0' : '20px 0'}
+											handleClick={()=>this.back()}
+										/>
+									</div>
+								}
+								{step === 1 
+									?	<div className='row'>
+											<p>Next: Confirm{` `}</p>
+											<p className={`left-marg ${popClass}`}>{entryList.length}</p> 
+											<p className='button-label left-marg'>{` `}Entries</p>
+										</div>
+									: 	<p className='button-label'>{buttonMessage}</p>
+								}
+								<Button 
+									title={step === 2 ? 'Confirm' : 'Next'}
+									buttonType='ghost' 
+									color='var(--cantoWhite)'
+									height='44px'
+									isDisabled={!deckName}
+									width={matches ? '65px' : '100px'}
+									margin={matches ? '5px 0' : '20px 0'}
+									handleClick={()=>this.next()}
+								/>
+							</div>
 						</div>
-					}
-					<div className='search-top'>
-						<SearchBar />
-					</div>
-				</div>
-				<div className='slide' style={{left: '200%', transform: `translateX(${translate}%)`}}>
-					<h2 className='slide-title'>Review your new deck!</h2>
-					{step === 2 &&
-						<div className='new-list-container'>
-							<EntriesList 
-								entries={entryList}
-								selectEntry={this.handleEntrySelect}
-							/>
-						</div>
-					}
-					<div className='search-top'>
-						<SearchBar hideSearch={true} />
-					</div>
-				</div>
-				<div className='bottom-container'>
-					{step > 0 &&
-						<div className='back-button'>
-							<Button 
-								title='Back'
-								buttonType='ghost' 
-								color='var(--cantoWhite)'
-								height='44px'
-								width='100px'
-								margin='20px 0'
-								handleClick={()=>this.back()}
-							/>
-						</div>
-					}
-					<p className='button-label'>{buttonMessage}</p>
-					<Button 
-						title={step === 2 ? 'Confirm' : 'Next'}
-						buttonType='ghost' 
-						color='var(--cantoWhite)'
-						height='44px'
-						width='100px'
-						margin='20px 0'
-						handleClick={()=>this.next()}
-					/>
-				</div>
-			</div>
+					)
+				}}
+			</MediaQuery>
 		);
 	}
 }

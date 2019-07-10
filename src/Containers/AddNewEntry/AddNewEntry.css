@@ -19,7 +19,8 @@
 	align-items: flex-end;
 }
 
-.inner-new-entry h2 {
+.inner-new-entry h2,
+.inner-new-entry h3 {
 	width: 100%;
 	text-align: center;
 }

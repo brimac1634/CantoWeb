@@ -29,10 +29,10 @@ const EntryList = ({ entries, selectEntry, searchComplete, updateURL, search, pa
 
 	const renderMessage = () => {
 		const { CONTACT, SEARCH } = routes;
-		if (entries.length === 0 && searchComplete && search) {
+		if (entries.length === 0 && searchComplete) {
 			return (
 				<div className='vertical'>
-					{pathName === SEARCH 
+					{pathName === SEARCH && search
 						?	<span>
 								<p className='no-match'>Don't see what you're looking for?<br/>Request for it to be added!</p>
 								<Button 
