@@ -24,7 +24,7 @@
 	width: 100%;
 	padding: 30px 0;
 	box-sizing: border-box;
-	transition: all .6s linear;
+	transition: all .6s ease-in-out;
 	overflow: hidden;
 }
 

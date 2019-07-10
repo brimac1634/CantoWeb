@@ -201,7 +201,8 @@ class SearchBar extends Component {
 		const { 
 			pathName,
 			searchType,
-			setSearchType
+			setSearchType,
+			hideSearch
 		 } = this.props;
 		 const { searchList, tempSearchKey } = this.state;
 		 const { FAVORITES, RECENT, LEARN, SEARCH, NEW_DECK } = routes;
@@ -256,7 +257,7 @@ class SearchBar extends Component {
 								</div>
 							}
 							<div className='search-container'>
-								{showSearch &&
+								{showSearch && !hideSearch &&
 									 <Controller>
 										<Trigger>
 											<div className='center-div'>
@@ -282,7 +283,7 @@ class SearchBar extends Component {
 										/>
 									</Controller>
 								}
-								{pathName === LEARN &&
+								{pathName === LEARN && !hideSearch &&
 									<Controller>
 										<Trigger>
 											<div className='center-div'>

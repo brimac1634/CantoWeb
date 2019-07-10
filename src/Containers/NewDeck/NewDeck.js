@@ -188,7 +188,6 @@ class NewDeck extends Component {
 	render() {
 		const { entries, step, searchComplete, entryList, deck: { deckName } } = this.state;
 		const translate = step * -100
-		console.log(entryList)
 		let buttonMessage;
 		switch(step) {
 			case 0:
@@ -211,24 +210,31 @@ class NewDeck extends Component {
 				</div>
 				<div className='slide' style={{left: '100%', transform: `translateX(${translate}%)`}}>
 					<h2 className='slide-title'>Add to your new deck!</h2>
-					<div className='new-list-container'>
-						<EntriesList 
-							entries={entries}
-							selectEntry={this.handleEntrySelect}
-							searchComplete={searchComplete}
-						/>
-					</div>
+					{step === 1 &&
+						<div className='new-list-container'>
+							<EntriesList 
+								entries={entries}
+								selectEntry={this.handleEntrySelect}
+								searchComplete={searchComplete}
+							/>
+						</div>
+					}
 					<div className='search-top'>
 						<SearchBar />
 					</div>
 				</div>
 				<div className='slide' style={{left: '200%', transform: `translateX(${translate}%)`}}>
 					<h2 className='slide-title'>Review your new deck!</h2>
-					<div className='new-list-container'>
-						<EntriesList 
-							entries={entryList}
-							selectEntry={this.handleEntrySelect}
-						/>
+					{step === 2 &&
+						<div className='new-list-container'>
+							<EntriesList 
+								entries={entryList}
+								selectEntry={this.handleEntrySelect}
+							/>
+						</div>
+					}
+					<div className='search-top'>
+						<SearchBar hideSearch={true} />
 					</div>
 				</div>
 				<div className='bottom-container'>
