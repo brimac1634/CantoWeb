@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import './NewDeck.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-// import MediaQuery from 'react-responsive';
+import { optionAlert } from '../OptionAlert/OptionAlert';
 import TextInput from '../../Components/TextInput/TextInput';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import apiRequest from '../../Helpers/apiRequest';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import Button from '../../Components/Button/Button';
+import { routes } from '../../Routing/constants';
 import { setLoading } from '../../Loading/actions';
-import { updateObject } from '../../Helpers/helpers';
+import { updateObject, connectionError } from '../../Helpers/helpers';
+import { setAlert } from '../../Components/PopUpAlert/actions';
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -26,6 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		updateURL: (searchKey) => dispatch(push(searchKey)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
+		presentAlert: (alert) => dispatch(setAlert(alert)),
 	}
 } 
 
@@ -103,10 +106,75 @@ class NewDeck extends Component {
 	}
 
 	next = () => {
+		const { 
+			updateURL, 
+			presentAlert, 
+			setLoading, 
+			pathName, 
+			user: { 
+				userID 
+			} 
+		} = this.props;
+
+		let { 
+			step, 
+			entryList, 
+			deck: { 
+				deckName, 
+				isPublic, 
+				isOfficial, 
+				tags 
+			} 
+		} = this.state;
+		const { LEARN } = routes;
+		
+		if (step <= 1) {
+			step += 1
+			updateURL(`${pathName}#${step}`)
+		} else if (step === 2) {
+			setLoading(true);
+			let entry_ids = entryList.map(entry => entry.entry_id)
+			apiRequest({
+				endPoint: '/new-deck',
+				method: 'POST',
+				body: {
+					name: deckName,
+					user_id: userID,
+					is_public: isPublic,
+					is_official: isOfficial,
+					tags, 
+					entry_ids
+				}
+			})
+				.then(data => {
+						if (data && data.error != null) {
+							const { title, message } = data.error;
+							optionAlert({
+							    title,
+							    message
+						    })
+						} else {
+							const alert = {
+						        title: 'Deck Created',
+						        message: `Your new deck, "${deckName}", is now created`,
+						        showAlert: true,
+						    }
+						    presentAlert(alert);
+						    updateURL(LEARN)
+						}
+						setLoading(false)
+					})
+					.catch(err=>{
+						setLoading(false)
+						connectionError()
+					})
+		}
+	}
+
+	back = () => {
 		const { updateURL, pathName } = this.props;
 		let { step } = this.state;
-		step += 1
-
+		step -= 1
 		updateURL(`${pathName}#${step}`)
 	}
 
@@ -191,13 +259,13 @@ class NewDeck extends Component {
 		let buttonMessage;
 		switch(step) {
 			case 0:
-				buttonMessage = 'Add Entries'
+				buttonMessage = 'Next: Add Entries'
 				break
 			case 1:
-				buttonMessage = `Add ${entryList.length} Entries`
+				buttonMessage = `Next: Confirm ${entryList.length} Entries`
 				break
 			case 2:
-				buttonMessage = `Create ${deckName} Deck!`
+				buttonMessage = `Create Deck: ${deckName}`
 				break
 			default:
 				buttonMessage = ''
@@ -238,9 +306,22 @@ class NewDeck extends Component {
 					</div>
 				</div>
 				<div className='bottom-container'>
+					{step > 0 &&
+						<div className='back-button'>
+							<Button 
+								title='Back'
+								buttonType='ghost' 
+								color='var(--cantoWhite)'
+								height='44px'
+								width='100px'
+								margin='20px 0'
+								handleClick={()=>this.back()}
+							/>
+						</div>
+					}
 					<p className='button-label'>{buttonMessage}</p>
 					<Button 
-						title='Next'
+						title={step === 2 ? 'Confirm' : 'Next'}
 						buttonType='ghost' 
 						color='var(--cantoWhite)'
 						height='44px'
