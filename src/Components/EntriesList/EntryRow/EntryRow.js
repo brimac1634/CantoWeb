@@ -21,7 +21,9 @@ class EntryRow extends Component {
 
 	handleSelect = (entry) => {
 		const { selectEntry, addedList } = this.props;
-		this.setState({showMark: !addedList.includes(entry.entry_id)});
+		if (addedList) {
+			this.setState({showMark: !addedList.includes(entry.entry_id)});
+		}
 		selectEntry(entry)
 	}
 
@@ -36,12 +38,20 @@ class EntryRow extends Component {
 				english_word,
 				mandarin_word
 			},
-			isDemo
+			isDemo,
+			isDisabled
 		} = this.props;
 		const { showMark } = this.state;
 		const clLabel = classifier ? 'cl: ' : '';
-		const rowType = isDemo ? 'demo' : 'real';
-
+		const rowType = () => {
+			if (isDemo) {
+				return 'demo'
+			} else if (isDisabled) {
+				return 'disabled'
+			} else {
+				return 'real'
+			}
+		}
 
 		if (entry !== '') {
 			if (isDemo) {
@@ -49,7 +59,7 @@ class EntryRow extends Component {
 					<MediaQuery maxWidth={360}>
 						{(matches) => {
 							return  <div 
-										className={`entry-row ${rowType} ${matches && 'small-demo-row'}`}
+										className={`entry-row ${rowType()} ${matches && 'small-demo-row'}`}
 									>
 										<div className='top-left'>
 											<div data-tip="Cantonese">
@@ -86,7 +96,7 @@ class EntryRow extends Component {
 			} else {
 				return (
 					<div 
-						className={`entry-row ${rowType} animate-pop-in`}
+						className={`entry-row ${rowType()} animate-pop-in`}
 						style={{animationDelay: `${delay}s`}}
 						onClick={() => this.handleSelect(entry)}
 					>
@@ -106,7 +116,7 @@ class EntryRow extends Component {
 		} else {
 			return (
 				<div 
-					className={`entry-row ${rowType} animate-pop-in`}
+					className={`entry-row ${rowType()} animate-pop-in`}
 					style={{animationDelay: `${delay}s`}}
 				>
 					<div className='top-left'>

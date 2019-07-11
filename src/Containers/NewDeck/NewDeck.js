@@ -303,10 +303,10 @@ class NewDeck extends Component {
 				{(matches) => {
 					return 	(
 						<div className='page new-deck'>
-							<div className='slide' style={{left: 0, transform: `translateX(${translate}%)`}}>
+							<div className='slide over-flow' style={{left: 0, transform: `translateX(${translate}%)`}}>
 								{this.renderNewDeckForm()}
 							</div>
-							<div className='slide' style={{left: '100%', transform: `translateX(${translate}%)`}}>
+							<div className='slide over-flow' style={{left: '100%', transform: `translateX(${translate}%)`}}>
 								{matches 
 									? 	<div className='slide-title'>
 											<h3>Add to your new deck!</h3>
@@ -327,12 +327,12 @@ class NewDeck extends Component {
 									<SearchBar />
 								</div>
 							</div>
-							<div className='slide last-slide' style={{left: '200%', transform: `translateX(${translate}%)`}}>
+							<div className='slide over-flow last-slide' style={{left: '200%', transform: `translateX(${translate}%)`}}>
 								{step === 2 &&
 									<div className='new-list-container'>
 										<EntriesList 
 											entries={entryList}
-											selectEntry={this.handleEntrySelect}
+											isDisabled={true}
 										/>
 									</div>
 								}
