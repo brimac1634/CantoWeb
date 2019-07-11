@@ -47,7 +47,8 @@ class NewDeck extends Component {
 				isOfficial: false,
 				tags: '',
 			},
-			entryList: []
+			entryList: [],
+			addedIDList: {}
 		}
 	}
 
@@ -183,10 +184,15 @@ class NewDeck extends Component {
 	handleEntrySelect = (entry) => {
 		const { entryList } = this.state;
 		let i = entryList.length;
-		if (i < 1) {
-			entryList.push(entry);
-			this.setState({entryList})
+
+		const addEntry = (list, entryToAdd) => {
+			list.push(entryToAdd);
+			this.setState({list})
 			this.popNumber();
+		}
+
+		if (i < 1) {
+			addEntry(entryList, entry);
 		} else {
 			while (i--) {
 				if (entryList[i].entry_id === entry.entry_id) {
@@ -196,9 +202,7 @@ class NewDeck extends Component {
 					return;
 				}	
 			}
-			entryList.push(entry);
-			this.setState({entryList})
-			this.popNumber();
+			addEntry(entryList, entry);
 		}
 	}
 
@@ -278,6 +282,11 @@ class NewDeck extends Component {
 		const { entries, step, searchComplete, pop, entryList, deck: { deckName } } = this.state;
 		const translate = step * -100
 		const popClass = pop ? 'pop' : null;
+		let addedList;
+		if (entryList) {
+			addedList = entryList.map(entry => entry.entry_id);
+		}
+
 		let buttonMessage;
 		switch(step) {
 			case 0:
@@ -289,7 +298,6 @@ class NewDeck extends Component {
 			default:
 				buttonMessage = ''
 		}
-
 		return (
 			<MediaQuery maxWidth={699}>
 				{(matches) => {
@@ -311,6 +319,7 @@ class NewDeck extends Component {
 											entries={entries}
 											selectEntry={this.handleEntrySelect}
 											searchComplete={searchComplete}
+											addedList={addedList}
 										/>
 									</div>
 								}

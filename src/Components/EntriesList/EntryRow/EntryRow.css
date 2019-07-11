@@ -13,6 +13,7 @@
 	transition: all 0.3s ease-in-out;
 	white-space: nowrap;
 	overflow: hidden;
+	position: relative;
 }
 
 .entry-row h3,
@@ -71,6 +72,20 @@
 
 .small-demo-row * {
 	font-size: 0.85em;
+}
+
+.circle-mark {
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+	content: "";
+	display: block;
+	border-radius: 50%;
+	background: var(--cantoPink);
+	width: 30px;
+	height: 30px;
+	padding: 0;
 }
 
 @media screen and (max-width: 360px) {

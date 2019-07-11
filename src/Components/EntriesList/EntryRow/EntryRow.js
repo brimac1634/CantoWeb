@@ -1,28 +1,48 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './EntryRow.css';
 import MediaQuery from 'react-responsive';
 import ReactTooltip from 'react-tooltip'
 
-const EntryRow = (props) => {
+class EntryRow extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			showMark: false
+		}
+	}
 
-	const {
-		selectEntry,
-		delay,
-		entry,
-		entry: {
-			canto_word,
-			classifier,
-			jyutping,
-			english_word,
-			mandarin_word
-		},
-		isDemo,
-	} = props;
+	componentDidMount() {
+		const { addedList, entry } = this.props;
+		if (addedList) {
+			const show = addedList.includes(entry.entry_id);
+			this.setState({showMark: show});
+		}
+	}
 
-	const clLabel = classifier ? 'cl: ' : '';
-	const rowType = isDemo ? 'demo' : 'real';
+	handleSelect = (entry) => {
+		const { selectEntry, addedList } = this.props;
+		this.setState({showMark: !addedList.includes(entry.entry_id)});
+		selectEntry(entry)
+	}
 
-	const renderRow = () => {
+	renderRow = () => {
+		const {
+			delay,
+			entry,
+			entry: {
+				canto_word,
+				classifier,
+				jyutping,
+				english_word,
+				mandarin_word
+			},
+			isDemo
+		} = this.props;
+		const { showMark } = this.state;
+		const clLabel = classifier ? 'cl: ' : '';
+		const rowType = isDemo ? 'demo' : 'real';
+
+
 		if (entry !== '') {
 			if (isDemo) {
 				return (
@@ -68,7 +88,7 @@ const EntryRow = (props) => {
 					<div 
 						className={`entry-row ${rowType} animate-pop-in`}
 						style={{animationDelay: `${delay}s`}}
-						onClick={() => selectEntry(entry)}
+						onClick={() => this.handleSelect(entry)}
 					>
 						<div className='top-left'>
 							<h3>{canto_word}</h3>
@@ -77,6 +97,9 @@ const EntryRow = (props) => {
 						<div><p>En: {english_word}</p></div>
 						<div><p>{jyutping}</p></div>
 						<div><p>普: {mandarin_word}</p></div>
+						{(showMark) &&
+							<div className='circle-mark'>&nbsp;</div>
+						}
 					</div>
 				);
 			}
@@ -98,11 +121,13 @@ const EntryRow = (props) => {
 		}
 	}
 
-	return (
-		<div>
-			{renderRow()}
-		</div>
-	);
+	render() {
+		return (
+			<div>
+				{this.renderRow()}
+			</div>
+		);
+	}
 }
 
 export default EntryRow;
