@@ -38,7 +38,8 @@ const TitleBar = ({ pathName }) => {
 		CONTACT,
 		PRIVACY,
 		ADD,
-		PROFILE 
+		PROFILE,
+		EDIT_DECK 
 	} = routes;
 
 	const banner = ((pathName) => {
@@ -53,6 +54,7 @@ const TitleBar = ({ pathName }) => {
 				return 'Word Of The Day'
 			case LEARN:
 			case DECK:
+			case EDIT_DECK:
 				return 'Learn'
 			case NEW_DECK:
 				return 'New Deck'

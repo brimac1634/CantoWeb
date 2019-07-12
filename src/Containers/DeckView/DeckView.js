@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import './DeckView.css';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import apiRequest from '../../Helpers/apiRequest';
 import Deck from '../../Components/Deck/Deck';
 import EntriesList from '../../Components/EntriesList/EntriesList';
+import Button from '../../Components/Button/Button';
 import { setLoading } from '../../Loading/actions';
+import { routes } from '../../Routing/constants';
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -17,6 +20,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		updateURL: (searchKey) => dispatch(push(searchKey)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
 	}
 } 
@@ -78,9 +82,19 @@ class DeckView extends Component {
 			})
 	}
 
+	startDeck = () => {
+		console.log('hey')
+	}
+
+	editDeck = () => {
+		const { updateURL, hash } = this.props;
+		const { EDIT_DECK } = routes;
+		updateURL(`${EDIT_DECK}#${hash}`);
+	}
 
 	render() {
 		const { deck, entries } = this.state;
+		const { user } = this.props;
 		const { user_id, tags, users, name, description, date_created, is_public } = deck;
 		const date = new Date(date_created);
 
@@ -88,29 +102,52 @@ class DeckView extends Component {
 			<div className='page dual-wrap over-flow'>
 				<div className='half deck-details'>
 					<div className='center-text'>
-						<h2>Entries in this deck</h2>
+						<h2>Deck Details</h2>
 					</div>
-					<Deck deck={deck} isDisabled={true} />
 					<div className='deck-info'>
-						{user_id === 0
-							?	<p><strong>CantoTalk Official Deck</strong></p>
-							: 	<p><strong>Created by: </strong>{name}</p>
-						}
-						{user_id !== 0 && date &&
-							<p><strong>Date created: </strong>{date.toDateString()}</p>
-						}
-						{tags &&
-							<p><strong>tags: </strong>{tags}</p>
-						}
-						{user_id !== 0 && users &&
-							<p><strong>Number of followers: </strong>{users}</p>
-						}
-						{is_public &&
-							<p><strong>*This deck is public</strong></p>
-						}
-						{description &&
-							<p><strong>Description: </strong>{description}</p>
-						}
+						<div className='center-left'>
+							<Deck deck={deck} isDisabled={true} />
+							{user_id === 0
+								?	<p><strong>CantoTalk Official Deck</strong></p>
+								: 	<p><strong>Created by: </strong>{name}</p>
+							}
+							{user_id !== 0 && date &&
+								<p><strong>Date created: </strong>{date.toDateString()}</p>
+							}
+							{tags &&
+								<p><strong>tags: </strong>{tags}</p>
+							}
+							{user_id !== 0 && users &&
+								<p><strong>Number of followers: </strong>{users}</p>
+							}
+							{is_public &&
+								<p><strong>*This deck is public</strong></p>
+							}
+							{description &&
+								<p><strong>Description: </strong>{description}</p>
+							}
+						</div>
+						<div className='text-right'>
+							{user_id === user.userID &&
+								<Button 
+									title='Edit Deck'
+									buttonType='ghost' 
+									height='44px'
+									width='100px'
+									margin='20px 0'
+									handleClick={()=>this.editDeck()}
+								/>
+							}
+							<Button 
+								title='Start'
+								buttonType='ghost' 
+								color='var(--cantoPink)'
+								height='44px'
+								width='100px'
+								margin='10px 0'
+								handleClick={()=>this.startDeck()}
+							/>
+						</div>
 					</div>
 				</div>
 				<div className='half deck-entry-list'>

@@ -49,6 +49,7 @@ class MainView extends Component {
 			PROFILE,
 			PRIVACY,
 			ADD,
+			EDIT_DECK,
 			TRANSITION 
 		} = routes;
 		const { location, location: { key } } = this.props
@@ -141,7 +142,7 @@ class MainView extends Component {
 						)}
 					/>
 					<Route 
-						path={NEW_DECK} 
+						path={[NEW_DECK, EDIT_DECK]} 
 						render={()=>(
 							<TransitionGroup className='page'>
 								<CSSTransition

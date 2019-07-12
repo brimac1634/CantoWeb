@@ -41,6 +41,7 @@ class NewDeck extends Component {
 			step: 0,
 			pop: false,
 			searchComplete: false,
+			isEditing: false,
 			deck: {
 				deckName: '',
 				isPublic: false,
@@ -55,6 +56,11 @@ class NewDeck extends Component {
 
 	componentDidMount() {
 		const { pathName, hash, updateURL } = this.props;
+		const { EDIT_DECK } = routes;
+
+		if (pathName === EDIT_DECK) {
+			this.setState({isEditing: true})
+		}
 		if (hash) {
 			updateURL(`${pathName}#${0}`)
 		}
@@ -217,15 +223,16 @@ class NewDeck extends Component {
 	renderNewDeckForm = () => {
 		const { user: { userEmail } } = this.props;
 		const { deckName, tags, isPublic, description, isOfficial } = this.state.deck;
-		 
+		const { isEditing } = this.state;
+		const message = isEditing ? 'Edit Deck Details' : 'New Deck Details';
 		return (
 			<MediaQuery maxWidth={699}>
 				{(matches) => {
 					return 	(
 						<div className='inner-new-entry'>
 							{matches 
-								? <h3>New Deck Details</h3>
-								: <h2>New Deck Details</h2>
+								? <h3>{message}</h3>
+								: <h2>{message}</h2>
 							}
 							<TextInput 
 								placeHolder='Name of Deck'
@@ -291,7 +298,7 @@ class NewDeck extends Component {
 
 
 	render() {
-		const { entries, step, searchComplete, pop, entryList, deck: { deckName } } = this.state;
+		const { entries, step, searchComplete, pop, entryList, isEditing, deck: { deckName } } = this.state;
 		const translate = step * -100
 		const popClass = pop ? 'pop' : null;
 		let addedList;
@@ -302,10 +309,10 @@ class NewDeck extends Component {
 		let buttonMessage;
 		switch(step) {
 			case 0:
-				buttonMessage = 'Next: Add Entries'
+				buttonMessage = isEditing ? 'Next: Edit Entries' : 'Next: Add Entries'
 				break
 			case 2:
-				buttonMessage = `Create Deck: "${deckName}"`
+				buttonMessage = isEditing ? `Update Deck: "${deckName}"` : `Create Deck: "${deckName}"`
 				break
 			default:
 				buttonMessage = ''

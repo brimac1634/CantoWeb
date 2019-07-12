@@ -83,6 +83,14 @@ code {
   text-align: center;
 }
 
+.center-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .ghost-div {
   width: 100%;
   height: 100%;
