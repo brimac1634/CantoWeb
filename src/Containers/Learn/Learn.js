@@ -8,6 +8,7 @@ import SearchBar from '../../Components/SearchBar/SearchBar';
 import Deck from '../../Components/Deck/Deck';
 import { setLoading } from '../../Loading/actions';
 import { setPrevRoute } from '../../Routing/actions';
+import { routes } from '../../Routing/constants';
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -126,73 +127,76 @@ class Learn extends Component {
 	}
 
 	handleDeck = (deck) => {
-		console.log(deck)
+		const { updateURL } = this.props;
+		const { DECK } = routes;
+		updateURL(`${DECK}#${deck.deck_id}`)
 		this.setState({selectedDeck: deck})
 	}
 
 
 	render() {
 		const { officialDecks, personalDecks, otherDecks } = this.state;
-		
 		return (
 			<div className='page'>
-				<div className='deck-container'>
-				{personalDecks && personalDecks.length > 0 &&
-					<div className='deck-section-container'>
-						<h2 className='section-headers'>Your Decks</h2>
-						<div className='deck-section'>
-							{ 
-								personalDecks.map((deck, i) => {
-									return (
-										<Deck 
-											key={i} 
-											deck={deck} 
-											handleClick={this.handleDeck} 
-										/>
-									)
-								})
-							}
-						</div>
+				<div>
+					<div className='deck-container'>
+						{personalDecks && personalDecks.length > 0 &&
+							<div className='deck-section-container'>
+								<h2 className='section-headers'>Your Decks</h2>
+								<div className='deck-section'>
+									{ 
+										personalDecks.map((deck, i) => {
+											return (
+												<Deck 
+													key={i} 
+													deck={deck} 
+													handleClick={this.handleDeck} 
+												/>
+											)
+										})
+									}
+								</div>
+							</div>
+						}
+						{officialDecks && officialDecks.length > 0 &&
+							<div className='deck-section-container'>
+								<h2 className='section-headers'>CantoTalk Decks</h2>
+								<div className='deck-section'>
+									{ 
+										officialDecks.map((deck, i) => {
+											return (
+												<Deck 
+													key={i} 
+													deck={deck} 
+													handleClick={this.handleDeck} 
+												/>
+											)
+										})
+									}
+								</div>
+							</div>
+						}
+						{otherDecks && otherDecks.length > 0 &&
+							<div className='deck-section-container'>
+								<h2 className='section-headers'>Public Decks</h2>
+								<div className='deck-section'>
+									{ 
+										otherDecks.map((deck, i) => {
+											return (
+												<Deck 
+													key={i} 
+													deck={deck} 
+													handleClick={this.handleDeck} 
+												/>
+											)
+										})
+									}
+								</div>
+							</div>
+						}
 					</div>
-				}
-				{officialDecks && officialDecks.length > 0 &&
-					<div className='deck-section-container'>
-						<h2 className='section-headers'>CantoTalk Decks</h2>
-						<div className='deck-section'>
-							{ 
-								officialDecks.map((deck, i) => {
-									return (
-										<Deck 
-											key={i} 
-											deck={deck} 
-											handleClick={this.handleDeck} 
-										/>
-									)
-								})
-							}
-						</div>
-					</div>
-				}
-				{otherDecks && otherDecks.length > 0 &&
-					<div className='deck-section-container'>
-						<h2 className='section-headers'>Public Decks</h2>
-						<div className='deck-section'>
-							{ 
-								otherDecks.map((deck, i) => {
-									return (
-										<Deck 
-											key={i} 
-											deck={deck} 
-											handleClick={this.handleDeck} 
-										/>
-									)
-								})
-							}
-						</div>
-					</div>
-				}
+					<SearchBar />
 				</div>
-				<SearchBar />
 			</div>
 		);
 	}

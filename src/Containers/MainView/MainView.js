@@ -3,7 +3,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Search from '../Search/Search';
 import WordOfTheDay from '../WordOfTheDay/WordOfTheDay';
 import Learn from '../Learn/Learn';
-import NewDeck from '../NewDeck/NewDeck'
+import NewDeck from '../NewDeck/NewDeck';
+import DeckView from '../DeckView/DeckView';
 import SignIn from '../../Containers/SignIn/SignIn';
 import WhatIsCantoTalk from '../../Components/WhatIsCantoTalk/WhatIsCantoTalk';
 import Profile from '../Profile/Profile';
@@ -43,6 +44,7 @@ class MainView extends Component {
 			SEARCH, 
 			WORD_OF_THE_DAY, 
 			LEARN,
+			DECK,
 			NEW_DECK, 
 			PROFILE,
 			PRIVACY,
@@ -162,6 +164,20 @@ class MainView extends Component {
 						            classNames="fade"
 					            >
 					            	<Learn />
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						path={DECK} 
+						render={()=>(
+							<TransitionGroup className='page'>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+					            	<DeckView />
 					            </CSSTransition>
 							</TransitionGroup>
 						)}

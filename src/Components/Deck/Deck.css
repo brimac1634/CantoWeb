@@ -10,7 +10,14 @@
 	border: solid 1px var(--cantoDarkGray);
 	transition: all 0.3s ease-in-out;
 	overflow: hidden;
+}
+
+.default {
 	cursor: pointer;
+}
+
+.disable {
+	cursor: default;
 }
 
 .deck:after {
@@ -26,6 +33,10 @@
 	transform: translate(-50%, -50%);
 }
 
-.deck:hover {
+.default:hover {
 	box-shadow: var(--cantoShadow);
+}
+
+.deck:hover {
+	
 }

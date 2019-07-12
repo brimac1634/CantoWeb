@@ -46,6 +46,7 @@ class NewDeck extends Component {
 				isPublic: false,
 				isOfficial: false,
 				tags: '',
+				description: ''
 			},
 			entryList: [],
 			addedIDList: {}
@@ -126,7 +127,8 @@ class NewDeck extends Component {
 				deckName, 
 				isPublic, 
 				isOfficial, 
-				tags 
+				tags,
+				description 
 			} 
 		} = this.state;
 		const { LEARN } = routes;
@@ -141,11 +143,12 @@ class NewDeck extends Component {
 				endPoint: '/new-deck',
 				method: 'POST',
 				body: {
-					name: deckName,
+					deck_name: deckName,
 					user_id: userID,
 					is_public: isPublic ? '1' : '0',
 					is_official: isOfficial,
-					tags: tags, 
+					tags,
+					description, 
 					entry_ids
 				}
 			})
@@ -213,7 +216,7 @@ class NewDeck extends Component {
 
 	renderNewDeckForm = () => {
 		const { user: { userEmail } } = this.props;
-		const { isOfficial, deck: { deckName, tags, isPublic } } = this.state
+		const { deckName, tags, isPublic, description, isOfficial } = this.state.deck;
 		 
 		return (
 			<MediaQuery maxWidth={699}>
@@ -233,11 +236,20 @@ class NewDeck extends Component {
 								handleChange={this.handleChange}
 							/>
 							<TextInput 
-								placeHolder='Tags'
+								placeHolder='Tags (optional)'
 								margin='20px 0'
 								height='44px'
 								id='tags'
 								value={tags}
+								handleChange={this.handleChange}
+							/>
+							<TextInput 
+								isTextArea={true}
+								placeHolder='Description (optional)'
+								margin='20px 0'
+								height='100px'
+								id='description'
+								value={description}
 								handleChange={this.handleChange}
 							/>
 							<div className='agree-row'>

@@ -29,6 +29,7 @@ const TitleBar = ({ pathName }) => {
 		WORD_OF_THE_DAY, 
 		LEARN, 
 		NEW_DECK,
+		DECK,
 		LOGIN,
 		REGISTER,
 		VERIFY,
@@ -51,6 +52,7 @@ const TitleBar = ({ pathName }) => {
 			case WORD_OF_THE_DAY:
 				return 'Word Of The Day'
 			case LEARN:
+			case DECK:
 				return 'Learn'
 			case NEW_DECK:
 				return 'New Deck'

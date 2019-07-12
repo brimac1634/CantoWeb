@@ -17,5 +17,6 @@ export const routes = {
 	CONTACT: '/contact-us',
 	PROFILE: '/profile',
 	PRIVACY: '/privacy-policy',
-	ADD: '/add-entry'
+	ADD: '/add-entry',
+	DECK: '/deck'
 }
