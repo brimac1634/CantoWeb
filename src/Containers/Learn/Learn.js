@@ -131,6 +131,7 @@ class Learn extends Component {
 	handleDeck = (deck) => {
 		const { updateURL, user: { userID } } = this.props;
 		const { DECK } = routes;
+		console.log(deck)
 		updateURL(`${DECK}?deck=${deck.deck_id}&user=${userID}`)
 		this.setState({selectedDeck: deck})
 	}

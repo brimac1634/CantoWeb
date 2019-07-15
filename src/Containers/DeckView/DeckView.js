@@ -8,7 +8,9 @@ import Deck from '../../Components/Deck/Deck';
 import NewDeck from '../NewDeck/NewDeck';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import Button from '../../Components/Button/Button';
+import { optionAlert } from '../OptionAlert/OptionAlert';
 import { setLoading } from '../../Loading/actions';
+import { setAlert } from '../../Components/PopUpAlert/actions';
 import { routes } from '../../Routing/constants';
 
 const mapStateToProps = (state, ownProps) => {
@@ -23,6 +25,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		updateURL: (searchKey) => dispatch(push(searchKey)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
+		presentAlert: (alert) => dispatch(setAlert(alert)),
 	}
 } 
 
@@ -99,7 +102,50 @@ class DeckView extends Component {
 	}
 
 	deleteDeck = () => {
-		console.log('delete')
+		const { deck } = this.state;
+		console.log(deck.deck_id);
+		optionAlert({
+		    title: 'Delete Deck',
+		    message: 'Are you sure you want to delete this deck? This cannot be undone.',
+		    buttons: [
+		      {
+		        label: 'Yes',
+		        onClick: ()=>this.handleDelete(deck)
+		      },
+		      { 
+		        label: 'No',
+		        onClick: null
+		      }
+		    ]
+	    })
+	}
+
+	handleDelete = (deck) => {
+		const { presentAlert, updateURL } = this.props;
+		const { deck_id, deck_name } = deck;
+		const { LEARN } = routes;
+		setLoading(true)
+		apiRequest({
+			endPoint: '/delete-deck',
+			method: 'POST',
+			body: {deck_id} 
+		})
+			.then(data => {
+				setLoading(false)
+				if (data && !data.error) {
+					const alert = {
+				        title: 'Deck Deleted',
+				        message: `Your deck, "${deck_name}", has been deleted.`,
+				        showAlert: true,
+				    }
+				    presentAlert(alert);
+				    updateURL(LEARN)
+				}
+			})
+			.catch(err=>{
+				console.log(err)
+				setLoading(false)
+			})
 	}
 
 	renderDeckView = () => {
