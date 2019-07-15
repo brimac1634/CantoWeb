@@ -96,6 +96,10 @@ code {
   text-align: right;
 }
 
+.push-right {
+  margin-left: auto;
+}
+
 .ghost-div {
   width: 100%;
   height: 100%;

@@ -5,12 +5,16 @@
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
-	justify-content: space-around;
 	box-sizing: border-box;
 }
 
 .dual-wrap {
 	padding: 20px;
+	justify-content: space-around;
+}
+
+.deck-info {
+	justify-content: flex-start;
 }
 
 .half {
@@ -20,12 +24,9 @@
 }
 
 .deck-details {
+	padding: 30px;
 	border-radius: 4px;
 	background: var(--cantoGray);
-}
-
-.deck-info {
-	padding: 10px;
 }
 
 .deck-entry-list {

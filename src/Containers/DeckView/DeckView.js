@@ -98,6 +98,10 @@ class DeckView extends Component {
 		updateURL(`${EDIT_DECK}${search}#0`)
 	}
 
+	deleteDeck = () => {
+		console.log('delete')
+	}
+
 	renderDeckView = () => {
 		const { deck, entries } = this.state;
 		const { user } = this.props;
@@ -114,38 +118,13 @@ class DeckView extends Component {
 						</div>
 						<div className='deck-info'>
 							<div className='center-left'>
-								<Deck deck={deck} isDisabled={true} />
-								{user_id === 0
-									?	<p><strong>CantoTalk Official Deck</strong></p>
-									: 	<p><strong>Created by: </strong>{name}</p>
-								}
-								{user_id !== 0 && date &&
-									<p><strong>Date created: </strong>{date.toDateString()}</p>
-								}
-								{tags &&
-									<p><strong>tags: </strong>{tags}</p>
-								}
-								{user_id !== 0 && users &&
-									<p><strong>Number of followers: </strong>{users}</p>
-								}
-								{is_public === true &&
-									<p><strong>*This deck is public</strong></p>
-								}
-								{description &&
-									<p><strong>Description: </strong>{description}</p>
-								}
+								<Deck 
+									deck={deck} 
+									isDisabled={true} 
+									margin='0' 
+								/>
 							</div>
-							<div className='text-right'>
-								{user_id === user.userID &&
-									<Button 
-										title='Edit Deck'
-										buttonType='ghost' 
-										height='44px'
-										width='100px'
-										margin='20px 0'
-										handleClick={()=>this.editDeck()}
-									/>
-								}
+							<div className='push-right text-right'>
 								<Button 
 									title='Start'
 									buttonType='ghost' 
@@ -155,7 +134,50 @@ class DeckView extends Component {
 									margin='10px 0'
 									handleClick={()=>this.startDeck()}
 								/>
+								{user_id === user.userID &&
+									<span>
+										<Button 
+											title='Edit Deck'
+											buttonType='ghost' 
+											color='var(--cantoWhite)'
+											height='44px'
+											width='100px'
+											margin='20px 0'
+											handleClick={()=>this.editDeck()}
+										/>
+										<Button 
+											title='Delete'
+											buttonType='ghost' 
+											color='var(--cantoWhite)'
+											height='44px'
+											width='100px'
+											margin='20px 0'
+											handleClick={()=>this.deleteDeck()}
+										/>
+									</span>
+								}
 							</div>
+						</div>
+						<div className='center-left'>
+							{user_id === 0
+								?	<p><strong>CantoTalk Official Deck</strong></p>
+								: 	<p><strong>Created by: </strong>{name}</p>
+							}
+							{user_id !== 0 && date &&
+								<p><strong>Date created: </strong>{date.toDateString()}</p>
+							}
+							{tags &&
+								<p><strong>tags: </strong>{tags}</p>
+							}
+							{user_id !== 0 && users &&
+								<p><strong>Number of followers: </strong>{users}</p>
+							}
+							{is_public === true &&
+								<p><strong>*This deck is public</strong></p>
+							}
+							{description &&
+								<p><strong>Description: </strong>{description}</p>
+							}
 						</div>
 					</div>
 					<div className='half deck-entry-list'>
