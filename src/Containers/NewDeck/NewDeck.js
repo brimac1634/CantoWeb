@@ -47,6 +47,7 @@ class NewDeck extends Component {
 			searchComplete: false,
 			isEditing: false,
 			deck: {
+				deck_id: '',
 				deckName: '',
 				isPublic: false,
 				isOfficial: false,
@@ -129,10 +130,7 @@ class NewDeck extends Component {
 			.then(data => {
 				setLoading(false)
 				if (data && !data.error) {
-					const entryIDS = data.map(entry => {
-						return entry.entry_id;
-					})
-					this.setState({entryList: entryIDS})
+					this.setState({entryList: data})
 				}
 			})
 			.catch(err=>{
@@ -143,18 +141,19 @@ class NewDeck extends Component {
 
 	setDeckToEdit = (deck) => {
 		const {
+			deck_id,
 			deck_name,
 			is_public,
 			tags,
 			description,
 			user_id
 		} = deck;
-
 		this.setState({
 			isEditing: true,
 			deck: {
+				deck_id,
 				deckName: deck_name,
-				isPublic: is_public,
+				isPublic: is_public === '0' ? false : true,
 				isOfficial: user_id === 0 ? true : false,
 				tags,
 				description
@@ -207,6 +206,7 @@ class NewDeck extends Component {
 			presentAlert, 
 			setLoading, 
 			pathName, 
+			search,
 			user: { 
 				userID 
 			} 
@@ -216,6 +216,7 @@ class NewDeck extends Component {
 			step, 
 			entryList, 
 			deck: { 
+				deck_id,
 				deckName, 
 				isPublic, 
 				isOfficial, 
@@ -224,10 +225,10 @@ class NewDeck extends Component {
 			} 
 		} = this.state;
 		const { LEARN } = routes;
-		
+		console.log(this.state.deck);
 		if (step <= 1 && deckName) {
 			step += 1
-			updateURL(`${pathName}#${step}`)
+			updateURL(`${pathName}${search}#${step}`)
 		} else if (step === 2) {
 			setLoading(true);
 			let entry_ids = entryList.map(entry => entry.entry_id)
@@ -235,6 +236,7 @@ class NewDeck extends Component {
 				endPoint: '/new-deck',
 				method: 'POST',
 				body: {
+					deck_id,
 					deck_name: deckName,
 					user_id: userID,
 					is_public: isPublic ? '1' : '0',
@@ -252,9 +254,17 @@ class NewDeck extends Component {
 						    message
 					    })
 					} else {
+						let title, message;
+						if (deck_id) {
+							title = 'Deck Updated'
+							message = `Your deck, "${deckName}", has been updated!`
+						} else {
+							title = 'Deck Created'
+							message = `Your new deck, "${deckName}", has been created!`
+						}
 						const alert = {
-					        title: 'Deck Created',
-					        message: `Your new deck, "${deckName}", is now created`,
+					        title,
+					        message,
 					        showAlert: true,
 					    }
 					    presentAlert(alert);
@@ -270,10 +280,10 @@ class NewDeck extends Component {
 	}
 
 	back = () => {
-		const { updateURL, pathName } = this.props;
+		const { updateURL, pathName, search } = this.props;
 		let { step } = this.state;
 		step -= 1
-		updateURL(`${pathName}#${step}`)
+		updateURL(`${pathName}${search}#${step}`)
 	}
 
 	handleEntrySelect = (entry) => {
@@ -397,8 +407,10 @@ class NewDeck extends Component {
 		switch(step) {
 			case 0:
 				buttonMessage = isEditing ? 'Next: Edit Entries' : 'Next: Add Entries'
+				break;
+			case 1:
 				title = isEditing ? 'Need to edit your deck?' : 'Add to your new deck!'
-				break
+				break;
 			case 2:
 				buttonMessage = isEditing ? `Update Deck: "${deckName}"` : `Create Deck: "${deckName}"`
 				title = isEditing ? 'Review the updated entries' : 'Review your new deck!'

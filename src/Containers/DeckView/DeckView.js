@@ -101,12 +101,13 @@ class DeckView extends Component {
 	renderDeckView = () => {
 		const { deck, entries } = this.state;
 		const { user } = this.props;
-		const { user_id, tags, users, name, description, date_created, is_public } = deck;
+		let { user_id, tags, users, name, description, date_created, is_public } = deck;
+		is_public = is_public === '0' ? false : true;
 		const date = new Date(date_created);
 
 		if (Object.entries(deck).length) {
 			return (
-				<div className='dual-wrap over-flow'>
+				<div className='dual-wrap'>
 					<div className='half deck-details'>
 						<div className='center-text'>
 							<h2>Deck Details</h2>
@@ -174,7 +175,7 @@ class DeckView extends Component {
 		const { EDIT_DECK } = routes;
 		
 		return (
-			<div className='page'>
+			<div className='page over-flow-y'>
 				{pathName === EDIT_DECK
 					?	<NewDeck />
 					: 	this.renderDeckView()

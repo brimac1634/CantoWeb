@@ -207,7 +207,7 @@ class SearchBar extends Component {
 		 const { searchList, tempSearchKey } = this.state;
 		 const { FAVORITES, RECENT, LEARN, SEARCH, NEW_DECK, EDIT_DECK } = routes;
 		 const searchOptions = ['All', 'Can', 'Eng', 'Man', 'Jyu'];
-		 const showSearch = pathName === SEARCH || pathName === NEW_DECK
+		 const showSearch = pathName === SEARCH || pathName === NEW_DECK || pathName === EDIT_DECK;
 		 const isLearn = pathName === LEARN || pathName === NEW_DECK || pathName === EDIT_DECK;
 		return (
 			<MediaQuery maxWidth={574}>

@@ -74,9 +74,14 @@ code {
   flex-direction: column;
 }
 
-.over-flow {
+.over-flow,
+.over-flow-y {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+.over-flow-y {
+  overflow-x: hidden;
 }
 
 .center-text {
