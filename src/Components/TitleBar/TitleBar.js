@@ -30,6 +30,7 @@ const TitleBar = ({ pathName }) => {
 		LEARN, 
 		NEW_DECK,
 		DECK,
+		EDIT_DECK,
 		LOGIN,
 		REGISTER,
 		VERIFY,
@@ -39,7 +40,6 @@ const TitleBar = ({ pathName }) => {
 		PRIVACY,
 		ADD,
 		PROFILE,
-		EDIT_DECK 
 	} = routes;
 
 	const banner = ((pathName) => {

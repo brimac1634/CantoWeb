@@ -49,7 +49,6 @@ class MainView extends Component {
 			PROFILE,
 			PRIVACY,
 			ADD,
-			EDIT_DECK,
 			TRANSITION 
 		} = routes;
 		const { location, location: { key } } = this.props
@@ -142,7 +141,7 @@ class MainView extends Component {
 						)}
 					/>
 					<Route 
-						path={[NEW_DECK, EDIT_DECK]} 
+						path={NEW_DECK} 
 						render={()=>(
 							<TransitionGroup className='page'>
 								<CSSTransition
@@ -151,20 +150,6 @@ class MainView extends Component {
 						            classNames="fade"
 					            >
 					            	<NewDeck />
-					            </CSSTransition>
-							</TransitionGroup>
-						)}
-					/>
-					<Route 
-						path={LEARN} 
-						render={()=>(
-							<TransitionGroup className='page'>
-								<CSSTransition
-									key={key}
-						            timeout={TRANSITION}
-						            classNames="fade"
-					            >
-					            	<Learn />
 					            </CSSTransition>
 							</TransitionGroup>
 						)}
@@ -179,6 +164,20 @@ class MainView extends Component {
 						            classNames="fade"
 					            >
 					            	<DeckView />
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						path={LEARN} 
+						render={()=>(
+							<TransitionGroup className='page'>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+					            	<Learn />
 					            </CSSTransition>
 							</TransitionGroup>
 						)}

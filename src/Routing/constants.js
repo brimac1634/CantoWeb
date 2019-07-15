@@ -18,6 +18,6 @@ export const routes = {
 	PROFILE: '/profile',
 	PRIVACY: '/privacy-policy',
 	ADD: '/add-entry',
-	DECK: '/deck',
-	EDIT_DECK: '/edit-deck'
+	DECK: '/learn/deck',
+	EDIT_DECK: '/learn/deck/edit'
 }

@@ -44,8 +44,9 @@ class Learn extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const { search } = this.props;
-		if (prevProps.search !== search) {
+		const { pathName, search } = this.props;
+		const { LEARN } = routes;
+		if (pathName === LEARN && prevProps.search !== search) {
 			this.getDecks()
 		}
 	}
@@ -53,6 +54,7 @@ class Learn extends Component {
 	getDecks = () => {
 		const { search } = this.props;
 		if (search) {
+			console.log('in here')
 			const values = queryString.parse(search)
 			this.handleDeckSearch(values.decksearch)
 		} else {
@@ -127,9 +129,9 @@ class Learn extends Component {
 	}
 
 	handleDeck = (deck) => {
-		const { updateURL } = this.props;
+		const { updateURL, user: { userID } } = this.props;
 		const { DECK } = routes;
-		updateURL(`${DECK}#${deck.deck_id}`)
+		updateURL(`${DECK}?deck=${deck.deck_id}&user=${userID}`)
 		this.setState({selectedDeck: deck})
 	}
 

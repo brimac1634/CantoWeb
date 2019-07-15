@@ -3,6 +3,7 @@ import './NewDeck.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../OptionAlert/OptionAlert';
+import queryString from 'query-string';
 import MediaQuery from 'react-responsive';
 import TextInput from '../../Components/TextInput/TextInput';
 import EntriesList from '../../Components/EntriesList/EntriesList';
@@ -11,7 +12,8 @@ import SearchBar from '../../Components/SearchBar/SearchBar';
 import Button from '../../Components/Button/Button';
 import { routes } from '../../Routing/constants';
 import { setLoading } from '../../Loading/actions';
-import { updateObject, connectionError } from '../../Helpers/helpers';
+import { setPrevRoute } from '../../Routing/actions';
+import { updateObject, connectionError, isEmptyObject } from '../../Helpers/helpers';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 
 
@@ -22,6 +24,7 @@ const mapStateToProps = (state, ownProps) => {
   	searchType: state.temp.searchType,
   	pathName: state.router.location.pathname,
     hash: state.router.location.hash,
+    search: state.router.location.search,
   }
 }
 
@@ -30,6 +33,7 @@ const mapDispatchToProps = (dispatch) => {
 		updateURL: (searchKey) => dispatch(push(searchKey)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
 		presentAlert: (alert) => dispatch(setAlert(alert)),
+		setPrevRoute: (prevRoute) => dispatch(setPrevRoute(prevRoute)),
 	}
 } 
 
@@ -55,14 +59,32 @@ class NewDeck extends Component {
 	}
 
 	componentDidMount() {
-		const { pathName, hash, updateURL } = this.props;
-		const { EDIT_DECK } = routes;
+		const { pathName, hash, updateURL, user, user: { userID }, search } = this.props;
+		const { LOGIN, EDIT_DECK, LEARN } = routes;
+		const values = queryString.parse(search)
 
-		if (pathName === EDIT_DECK) {
-			this.setState({isEditing: true})
+		if (isEmptyObject(user)) {
+			if (search) {
+				setPrevRoute(`${pathName}${search}${hash}`)
+			} else {
+				setPrevRoute(`${pathName}${hash}`)
+			}
+			updateURL(LOGIN)	
+		} else if (pathName === EDIT_DECK) {
+			if (search) {
+				if (userID === Number(values.user)) {
+					this.setState({isEditing: true})
+					const deckID = values.deck
+					this.getDeckEntries(deckID);
+					this.getDeck(deckID);
+				}
+			} else {
+				updateURL(LEARN)
+			}
 		}
-		if (hash) {
-			updateURL(`${pathName}#${0}`)
+					
+		if (hash && hash !== '#0') {
+			updateURL(`${pathName}#0`)
 		}
 	}
 
@@ -74,6 +96,70 @@ class NewDeck extends Component {
 		if (prevProps.searchKey !== searchKey) {
 			this.searchEntries(searchKey)
 		}
+	}
+
+	getDeck = (deck_id) => {
+		const { setLoading } = this.props;
+		setLoading(true)
+		apiRequest({
+			endPoint: '/get-deck-by-id',
+			method: 'POST',
+			body: {deck_id} 
+		})
+			.then(data => {
+				setLoading(false)
+				if (data && !data.error) {
+					this.setDeckToEdit(data)
+				}
+			})
+			.catch(err=>{
+				console.log(err)
+				setLoading(false)
+			})
+	}
+
+	getDeckEntries = (deck_id) => {
+		const { setLoading } = this.props;
+		setLoading(true)
+		apiRequest({
+			endPoint: '/deck-entries',
+			method: 'POST',
+			body: {deck_id} 
+		})
+			.then(data => {
+				setLoading(false)
+				if (data && !data.error) {
+					const entryIDS = data.map(entry => {
+						return entry.entry_id;
+					})
+					this.setState({entryList: entryIDS})
+				}
+			})
+			.catch(err=>{
+				console.log(err)
+				setLoading(false)
+			})
+	}
+
+	setDeckToEdit = (deck) => {
+		const {
+			deck_name,
+			is_public,
+			tags,
+			description,
+			user_id
+		} = deck;
+
+		this.setState({
+			isEditing: true,
+			deck: {
+				deckName: deck_name,
+				isPublic: is_public,
+				isOfficial: user_id === 0 ? true : false,
+				tags,
+				description
+			}
+		})
 	}
 
 	searchEntries = (searchKey) => {
@@ -222,8 +308,8 @@ class NewDeck extends Component {
 
 	renderNewDeckForm = () => {
 		const { user: { userEmail } } = this.props;
-		const { deckName, tags, isPublic, description, isOfficial } = this.state.deck;
 		const { isEditing } = this.state;
+		const { deckName, tags, isPublic, description, isOfficial } = this.state.deck;
 		const message = isEditing ? 'Edit Deck Details' : 'New Deck Details';
 		return (
 			<MediaQuery maxWidth={699}>
@@ -298,7 +384,7 @@ class NewDeck extends Component {
 
 
 	render() {
-		const { entries, step, searchComplete, pop, entryList, isEditing, deck: { deckName } } = this.state;
+		const { isEditing, entries, step, searchComplete, pop, entryList, deck: { deckName } } = this.state;
 		const translate = step * -100
 		const popClass = pop ? 'pop' : null;
 		let addedList;
@@ -307,12 +393,15 @@ class NewDeck extends Component {
 		}
 
 		let buttonMessage;
+		let title;
 		switch(step) {
 			case 0:
 				buttonMessage = isEditing ? 'Next: Edit Entries' : 'Next: Add Entries'
+				title = isEditing ? 'Need to edit your deck?' : 'Add to your new deck!'
 				break
 			case 2:
 				buttonMessage = isEditing ? `Update Deck: "${deckName}"` : `Create Deck: "${deckName}"`
+				title = isEditing ? 'Review the updated entries' : 'Review your new deck!'
 				break
 			default:
 				buttonMessage = ''
@@ -328,9 +417,9 @@ class NewDeck extends Component {
 							<div className='slide over-flow' style={{left: '100%', transform: `translateX(${translate}%)`}}>
 								{matches 
 									? 	<div className='slide-title'>
-											<h3>Add to your new deck!</h3>
+											<h3>{title}</h3>
 										</div>
-									: <h2 className='slide-title'>Add to your new deck!</h2>
+									: <h2 className='slide-title'>{title}</h2>
 								}
 								{step === 1 &&
 									<div className='new-list-container'>
@@ -360,9 +449,9 @@ class NewDeck extends Component {
 								</div>
 								{matches 
 									? 	<div className='slide-title'>
-											<h3>Review your new deck!</h3>
+											<h3>{title}</h3>
 										</div>
-									: <h2 className='slide-title'>Review your new deck!</h2>
+									: <h2 className='slide-title'>{title}</h2>
 								}
 							</div>
 							<div className='bottom-container'>
