@@ -5,7 +5,8 @@ import WordOfTheDay from '../WordOfTheDay/WordOfTheDay';
 import Learn from '../Learn/Learn';
 import NewDeck from '../NewDeck/NewDeck';
 import DeckView from '../DeckView/DeckView';
-import SignIn from '../../Containers/SignIn/SignIn';
+import SignIn from '../SignIn/SignIn';
+import LearnGame from '../LearnGame/LearnGame';
 import WhatIsCantoTalk from '../../Components/WhatIsCantoTalk/WhatIsCantoTalk';
 import Profile from '../Profile/Profile';
 import Contact from '../Contact/Contact';
@@ -44,7 +45,9 @@ class MainView extends Component {
 			SEARCH, 
 			WORD_OF_THE_DAY, 
 			LEARN,
+			LEARN_GAME,
 			DECK,
+			EDIT_DECK,
 			NEW_DECK, 
 			PROFILE,
 			PRIVACY,
@@ -141,7 +144,7 @@ class MainView extends Component {
 						)}
 					/>
 					<Route 
-						path={NEW_DECK} 
+						path={[NEW_DECK, EDIT_DECK]} 
 						render={()=>(
 							<TransitionGroup className='page'>
 								<CSSTransition
@@ -164,6 +167,20 @@ class MainView extends Component {
 						            classNames="fade"
 					            >
 					            	<DeckView />
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						path={LEARN_GAME} 
+						render={()=>(
+							<TransitionGroup className='page'>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+					            	<LearnGame />
 					            </CSSTransition>
 							</TransitionGroup>
 						)}

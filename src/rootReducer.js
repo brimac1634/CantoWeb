@@ -6,6 +6,7 @@ import {setSearchState} from './Containers/Search/reducers';
 import {setPrevRoute} from './Routing/reducers';
 import {setLoading} from './Loading/reducers';
 import {setTempSearch} from './Components/SearchBar/reducers';
+import {setDeck} from './Containers/DeckView/reducers';
 
 export default history => combineReducers({
 	router: connectRouter(history),
@@ -15,4 +16,5 @@ export default history => combineReducers({
 	prevRoute: setPrevRoute,
 	loading: setLoading,
 	temp: setTempSearch,
+	deck: setDeck,
 })

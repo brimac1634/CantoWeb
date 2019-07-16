@@ -11,6 +11,7 @@ export const deleteToken = () => {
     cookies.remove('authToken', { path: '/' });
 }
 
+
 export const isEmptyObject = (obj) => {
 	return Object.entries(obj).length === 0
 }

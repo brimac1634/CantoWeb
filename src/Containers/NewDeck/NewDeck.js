@@ -3,7 +3,6 @@ import './NewDeck.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../OptionAlert/OptionAlert';
-import queryString from 'query-string';
 import MediaQuery from 'react-responsive';
 import TextInput from '../../Components/TextInput/TextInput';
 import EntriesList from '../../Components/EntriesList/EntriesList';
@@ -25,6 +24,8 @@ const mapStateToProps = (state, ownProps) => {
   	pathName: state.router.location.pathname,
     hash: state.router.location.hash,
     search: state.router.location.search,
+    deck: state.deck.deck,
+    deckEntries: state.deck.deckEntries,
   }
 }
 
@@ -60,9 +61,8 @@ class NewDeck extends Component {
 	}
 
 	componentDidMount() {
-		const { pathName, hash, updateURL, user, user: { userID }, search } = this.props;
-		const { LOGIN, EDIT_DECK, LEARN } = routes;
-		const values = queryString.parse(search)
+		const { pathName, hash, updateURL, user, deck, search } = this.props;
+		const { LOGIN, EDIT_DECK, LEARN, DECK } = routes;
 
 		if (isEmptyObject(user)) {
 			if (search) {
@@ -72,15 +72,14 @@ class NewDeck extends Component {
 			}
 			updateURL(LOGIN)	
 		} else if (pathName === EDIT_DECK) {
-			if (search) {
-				if (userID === Number(values.user)) {
-					this.setState({isEditing: true})
-					const deckID = values.deck
-					this.getDeckEntries(deckID);
-					this.getDeck(deckID);
-				}
+			if (!isEmptyObject(deck)) {
+				this.setDeckToEdit(deck)
 			} else {
-				updateURL(LEARN)
+				if (search) {
+					updateURL(`${DECK}${search}`)
+				} else {
+					updateURL(LEARN)
+				}
 			}
 		}
 					
@@ -99,47 +98,8 @@ class NewDeck extends Component {
 		}
 	}
 
-	getDeck = (deck_id) => {
-		const { setLoading } = this.props;
-		setLoading(true)
-		apiRequest({
-			endPoint: '/get-deck-by-id',
-			method: 'POST',
-			body: {deck_id} 
-		})
-			.then(data => {
-				setLoading(false)
-				if (data && !data.error) {
-					this.setDeckToEdit(data)
-				}
-			})
-			.catch(err=>{
-				console.log(err)
-				setLoading(false)
-			})
-	}
-
-	getDeckEntries = (deck_id) => {
-		const { setLoading } = this.props;
-		setLoading(true)
-		apiRequest({
-			endPoint: '/deck-entries',
-			method: 'POST',
-			body: {deck_id} 
-		})
-			.then(data => {
-				setLoading(false)
-				if (data && !data.error) {
-					this.setState({entryList: data})
-				}
-			})
-			.catch(err=>{
-				console.log(err)
-				setLoading(false)
-			})
-	}
-
 	setDeckToEdit = (deck) => {
+		const { deckEntries } = this.props;
 		const {
 			deck_id,
 			deck_name,
@@ -148,16 +108,19 @@ class NewDeck extends Component {
 			description,
 			user_id
 		} = deck;
+		
+		const newDeck = {
+			deck_id,
+			deckName: deck_name,
+			isPublic: is_public === '0' ? false : true,
+			isOfficial: user_id === 0 ? true : false,
+			tags: tags || '',
+			description: description || ''
+		}
 		this.setState({
 			isEditing: true,
-			deck: {
-				deck_id,
-				deckName: deck_name,
-				isPublic: is_public === '0' ? false : true,
-				isOfficial: user_id === 0 ? true : false,
-				tags,
-				description
-			}
+			entryList: deckEntries,
+			deck: newDeck 
 		})
 	}
 
@@ -225,7 +188,7 @@ class NewDeck extends Component {
 			} 
 		} = this.state;
 		const { LEARN } = routes;
-		console.log(this.state.deck);
+		
 		if (step <= 1 && deckName) {
 			step += 1
 			updateURL(`${pathName}${search}#${step}`)
@@ -320,6 +283,7 @@ class NewDeck extends Component {
 		const { user: { userEmail } } = this.props;
 		const { isEditing } = this.state;
 		const { deckName, tags, isPublic, description, isOfficial } = this.state.deck;
+		console.log(isPublic)
 		const message = isEditing ? 'Edit Deck Details' : 'New Deck Details';
 		return (
 			<MediaQuery maxWidth={699}>

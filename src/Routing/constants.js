@@ -8,6 +8,7 @@ export const routes = {
 	FAVORITES: '/search/favorites',
 	WORD_OF_THE_DAY: '/word-of-the-day',
 	LEARN: '/learn',
+	LEARN_GAME: '/learn/game',
 	NEW_DECK: '/learn/new-deck',
 	LOGIN: '/signin',
 	REGISTER: '/register',

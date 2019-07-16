@@ -54,7 +54,6 @@ class Learn extends Component {
 	getDecks = () => {
 		const { search } = this.props;
 		if (search) {
-			console.log('in here')
 			const values = queryString.parse(search)
 			this.handleDeckSearch(values.decksearch)
 		} else {
@@ -129,10 +128,9 @@ class Learn extends Component {
 	}
 
 	handleDeck = (deck) => {
-		const { updateURL, user: { userID } } = this.props;
+		const { updateURL } = this.props;
 		const { DECK } = routes;
-		console.log(deck)
-		updateURL(`${DECK}?deck=${deck.deck_id}&user=${userID}`)
+		updateURL(`${DECK}?deck=${deck.deck_id}`)
 		this.setState({selectedDeck: deck})
 	}
 

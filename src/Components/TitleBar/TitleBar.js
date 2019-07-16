@@ -31,6 +31,7 @@ const TitleBar = ({ pathName }) => {
 		NEW_DECK,
 		DECK,
 		EDIT_DECK,
+		LEARN_GAME,
 		LOGIN,
 		REGISTER,
 		VERIFY,
@@ -55,6 +56,7 @@ const TitleBar = ({ pathName }) => {
 			case LEARN:
 			case DECK:
 			case EDIT_DECK:
+			case LEARN_GAME:
 				return 'Learn'
 			case NEW_DECK:
 				return 'New Deck'

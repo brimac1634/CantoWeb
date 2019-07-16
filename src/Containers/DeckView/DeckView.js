@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import apiRequest from '../../Helpers/apiRequest';
 import Deck from '../../Components/Deck/Deck';
-import NewDeck from '../NewDeck/NewDeck';
 import EntriesList from '../../Components/EntriesList/EntriesList';
 import Button from '../../Components/Button/Button';
 import { optionAlert } from '../OptionAlert/OptionAlert';
 import { setLoading } from '../../Loading/actions';
+import { setDeck, setDeckEntries } from './actions';
 import { setAlert } from '../../Components/PopUpAlert/actions';
 import { routes } from '../../Routing/constants';
 
@@ -18,6 +18,8 @@ const mapStateToProps = (state, ownProps) => {
   	user: state.user.user,
     pathName: state.router.location.pathname,
     search: state.router.location.search,
+    deck: state.deck.deck,
+    deckEntries: state.deck.deckEntries,
   }
 }
 
@@ -26,33 +28,36 @@ const mapDispatchToProps = (dispatch) => {
 		updateURL: (searchKey) => dispatch(push(searchKey)),
 		setLoading: (loading) => dispatch(setLoading(loading)),
 		presentAlert: (alert) => dispatch(setAlert(alert)),
+		setDeck: (deck) => dispatch(setDeck(deck)),
+		setDeckEntries: (deckEntries) => dispatch(setDeckEntries(deckEntries)),
 	}
 } 
 
 class DeckView extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			deck: {},
-			entries: [],
-		}
+		this.state = {}
 	}
 
 	componentDidMount() {
-		const { pathName } = this.props;
-		const { DECK } = routes;
+		const { pathName,updateURL } = this.props;
+		const { DECK, LEARN } = routes;
 
 		if (pathName === DECK) {
 			const { search } = this.props;
 			const values = queryString.parse(search)
 			const deckID = values.deck
-			this.getDeckEntries(deckID);
-			this.getDeck(deckID);
+			if (deckID) {
+				this.getDeckEntries(deckID);
+				this.getDeck(deckID);
+			} else {
+				updateURL(LEARN)
+			}
 		}
 	}
 
 	getDeck = (deck_id) => {
-		const { setLoading } = this.props;
+		const { setLoading, setDeck } = this.props;
 		setLoading(true)
 		apiRequest({
 			endPoint: '/get-deck-by-id',
@@ -60,10 +65,10 @@ class DeckView extends Component {
 			body: {deck_id} 
 		})
 			.then(data => {
-				setLoading(false)
 				if (data && !data.error) {
-					this.setState({deck: data})
+					setDeck(data)
 				}
+				setLoading(false)
 			})
 			.catch(err=>{
 				console.log(err)
@@ -72,7 +77,7 @@ class DeckView extends Component {
 	}
 
 	getDeckEntries = (deck_id) => {
-		const { setLoading } = this.props;
+		const { setLoading, setDeckEntries } = this.props;
 		setLoading(true)
 		apiRequest({
 			endPoint: '/deck-entries',
@@ -80,10 +85,10 @@ class DeckView extends Component {
 			body: {deck_id} 
 		})
 			.then(data => {
-				setLoading(false)
 				if (data && !data.error) {
-					this.setState({entries: data})
+					setDeckEntries(data)
 				}
+				setLoading(false)
 			})
 			.catch(err=>{
 				console.log(err)
@@ -92,7 +97,9 @@ class DeckView extends Component {
 	}
 
 	startDeck = () => {
-		console.log('hey')
+		const { updateURL, deck: { deck_id } } = this.props;
+		const { LEARN_GAME } = routes;
+		updateURL(`${LEARN_GAME}?deck=${deck_id}`)
 	}
 
 	editDeck = () => {
@@ -102,8 +109,7 @@ class DeckView extends Component {
 	}
 
 	deleteDeck = () => {
-		const { deck } = this.state;
-		console.log(deck.deck_id);
+		const { deck } = this.props;
 		optionAlert({
 		    title: 'Delete Deck',
 		    message: 'Are you sure you want to delete this deck? This cannot be undone.',
@@ -149,8 +155,7 @@ class DeckView extends Component {
 	}
 
 	renderDeckView = () => {
-		const { deck, entries } = this.state;
-		const { user } = this.props;
+		const { user, deck, deckEntries } = this.props;
 		let { user_id, tags, users, name, description, date_created, is_public } = deck;
 		is_public = is_public === '0' ? false : true;
 		const date = new Date(date_created);
@@ -229,7 +234,7 @@ class DeckView extends Component {
 					<div className='half deck-entry-list'>
 						<h2>Entries in this deck</h2>
 						<EntriesList 
-							entries={entries}
+							entries={deckEntries}
 							isDisabled={true}
 						/>
 					</div>
@@ -239,15 +244,9 @@ class DeckView extends Component {
 	}
 
 	render() {
-		const { pathName } = this.props;
-		const { EDIT_DECK } = routes;
-		
 		return (
 			<div className='page over-flow-y'>
-				{pathName === EDIT_DECK
-					?	<NewDeck />
-					: 	this.renderDeckView()
-				}
+				{this.renderDeckView()}
 			</div>
 		);
 	}
