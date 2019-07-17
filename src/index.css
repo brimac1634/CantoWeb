@@ -51,16 +51,23 @@ code {
 /*--------Reusable pieces------------*/
 
 .fill,
-.center-div  {
+.center-div,
+.center-x  {
   width: 100%;
   height: 100%;
 }
 
+.center-x,
 .centered,
 .center-div,
 .vertical {
   display: flex;
   justify-content: center;
+}
+
+.centered,
+.center-div,
+.vertical {
   align-items: center;
 }
 

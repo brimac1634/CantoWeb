@@ -73,7 +73,7 @@ class NewDeck extends Component {
 			updateURL(LOGIN)	
 		} else if (pathName === EDIT_DECK) {
 			if (!isEmptyObject(deck)) {
-				this.setDeckToEdit(deck)
+				setTimeout(()=>this.setDeckToEdit(deck), 0)
 			} else {
 				if (search) {
 					updateURL(`${DECK}${search}`)
