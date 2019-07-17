@@ -133,6 +133,7 @@ class LearnGame extends Component {
 
 	render() {
 		const { gameList, gameList: { head }, answerComplete, correctOption, wrongOption, answer, listLength } = this.state;
+		const { deck_name } = this.props.deck;
 		return (
 			<div className='page over-flow-y center-x'>
 				{head &&
@@ -192,6 +193,9 @@ class LearnGame extends Component {
 							})}
 						</div>
 						<div className='bottom-btns'>
+							<h3 className='push-left'>
+								{`${deck_name} Deck`}
+							</h3>
 							<p className='button-label'>
 								{`${listLength - gameList.length} / ${listLength}`}
 							</p>

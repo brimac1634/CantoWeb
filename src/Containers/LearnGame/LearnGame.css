@@ -52,6 +52,10 @@
 	position: relative;
 }
 
+.option-box p {
+	font-size: 20px;
+}
+
 .default-border {
 	cursor: pointer;
 }
@@ -91,4 +95,8 @@
 	justify-content: flex-end;
 	background-color: var(--cantoGray);
 	box-shadow: var(--cantoShadow);
+}
+
+.push-left {
+  margin: 10px auto 10px 10px;
 }

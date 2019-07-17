@@ -66,6 +66,8 @@ class DeckView extends Component {
 		})
 			.then(data => {
 				if (data && !data.error) {
+					const deck = {...data};
+					data.deck_name = deck.deck_name.charAt(0).toUpperCase() + deck.deck_name.slice(1);
 					setDeck(data)
 				}
 				setLoading(false)
