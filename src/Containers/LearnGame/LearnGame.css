@@ -13,6 +13,7 @@
 .option-box {
 	border-radius: 4px;
 	border: solid 1px var(--cantoDarkGray);
+	box-shadow: var(--cantoShadow);
 }
 
 .question-card {
@@ -21,6 +22,7 @@
 	max-width: 400px;
 	text-align: center;
 	overflow: hidden;
+	box-shadow: var(--cantoShadow);
 }
 
 .question-container,
@@ -35,23 +37,26 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-around;
-	background: var(--cantoGray);
 	border-radius: 4px;
 }
 
-.option-box {
+.option-box,
+.default-border {
 	box-sizing: border-box;
 	background: var(--cantoWhite);
 	width: 100%;
 	max-width: 150px;
-	margin: 20px;
+	margin: 15px;
 	padding: 10px;
-	overflow: hidden;
-	cursor: pointer;
 	transition: all 0.3s ease-in-out;
+	position: relative;
 }
 
-.option-box:hover {
+.default-border {
+	cursor: pointer;
+}
+
+.default-border:hover {
 	border: solid 1px var(--cantoDarkBlue);
 }
 
@@ -60,4 +65,30 @@
   content: "";
   display: block;
   padding-bottom: 50%;
+}
+
+.icon-stamp {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	transform: rotateZ(-20deg);
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	box-shadow: var(--cantoFloatShadow);
+	animation: pop 0.6s ease-in-out 1;
+}
+
+.bottom-btns {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	background-color: var(--cantoGray);
+	box-shadow: var(--cantoShadow);
 }

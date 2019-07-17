@@ -3,6 +3,7 @@ import './LearnGame.css';
 import { connect } from 'react-redux';
 import LinkedList from '../../Helpers/LinkedList';
 import Button from '../../Components/Button/Button';
+import Icon from '../../Components/Icon/Icon';
 import { push } from 'connected-react-router';
 import { setLoading } from '../../Loading/actions';
 import { routes } from '../../Routing/constants';
@@ -30,6 +31,7 @@ class LearnGame extends Component {
 		this.state = {
 			gameList: {},
 			answerComplete: false,
+			answer: '',
 			correctOption: '',
 			wrongOption: ''
 		}
@@ -43,7 +45,10 @@ class LearnGame extends Component {
 		} else {
 			//make linked list 
 			const gameList = this.createGameList(deckEntries);
-			this.setState({gameList});
+			this.setState({
+				gameList,
+				listLength: gameList.length
+			});
 		} 
 	}
 
@@ -91,27 +96,43 @@ class LearnGame extends Component {
 	}
 
 	checkAnswer = (answer) => {
-		const { gameList } = this.state;
-		const correctAnswer = gameList.head.value.answer;
-		this.setState({
-			answerComplete: true
-		})
-		if (correctAnswer === answer) {
-			// correct
+		const { gameList, answerComplete } = this.state;
+		if (!answerComplete) {
+			const correctAnswer = gameList.head.value.answer;
 			this.setState({
-				correctOption: answer
+				answer,
+				answerComplete: true
 			})
-		} else {
-			// wrong
-			this.setState({
-				correctOption: correctAnswer,
-				wrongOption: answer,
-			})
+			if (correctAnswer === answer) {
+				// correct
+				this.setState({
+					correctOption: answer
+				})
+			} else {
+				// wrong
+				this.setState({
+					correctOption: correctAnswer,
+					wrongOption: answer,
+				})
+			}
 		}
 	}
 
+	next = () => {
+		const { gameList } = this.state;
+		gameList.removeFromHead();
+		this.setState({
+			gameList,
+			answerComplete: false,
+			correctOption: '',
+			wrongOption: '',
+		})
+		
+
+	}
+
 	render() {
-		const { gameList: { head }, answerComplete, correctOption, wrongOption } = this.state;
+		const { gameList, gameList: { head }, answerComplete, correctOption, wrongOption, answer, listLength } = this.state;
 		return (
 			<div className='page over-flow-y center-x'>
 				{head &&
@@ -123,38 +144,66 @@ class LearnGame extends Component {
 						</div>
 						<div className='option-container'>
 							{head.value.options.map(option => {
-								let color;
-								if (option === correctOption) {
-									color = 'var(--cantoPink)'
-								} else if (option === wrongOption) {
-									color = 'var(--cantoDarkBlue)'
-								} else {
-									color = 'var(--cantoGray)'
-								}
+								const correctChoice = (option === correctOption && option === answer);
+
+								const color = option === correctOption 
+									? 'var(--cantoPink)'
+									: 'var(--cantoGray)'
+								const disable = answerComplete ? null : 'default-border'
 								const style = {
-									background: answerComplete ? color : null 
+									background: answerComplete 
+										? color 
+										: null 
 								}
 								return (
 									<div 
 										key={option}
 										style={style}
-										className='option-box centered'
+										className={`option-box centered ${disable}`}
 										onClick={()=>this.checkAnswer(option)}
 									>
-										<h2>{option}</h2>
+										<p>{option}</p>
+										{correctChoice &&
+											<div 
+												style={{background: 'var(--cantoBlue'}}
+												className='icon-stamp centered'
+											>
+												<Icon 
+													icon='like'
+													color='cantoWhite' 
+													iconSize='18'
+												/>
+											</div>
+										}
+										{option === wrongOption &&
+											<div 
+												style={{background: 'var(--cantoPink'}}
+												className='icon-stamp centered'
+											>
+												<Icon 
+													icon='dislike'
+													color='cantoWhite' 
+													iconSize='18'
+												/>
+											</div>
+										}
 									</div>
 								)
 							})}
 						</div>
 						<div className='bottom-btns'>
-							{answerComplete &&
-								<Button 
-									title='Next'
-									buttonType='ghost'
-									color='var(--cantoWhite)'
-									margin='10px 10px 10px auto'
-								/>
-							}
+							<p className='button-label'>
+								{`${listLength - gameList.length} / ${listLength}`}
+							</p>
+							<Button 
+								title={answerComplete ? 'Next' : 'Skip'}
+								buttonType='ghost'
+								color='var(--cantoWhite)'
+								margin='10px'
+								height='44px'
+								width='100px'
+								handleClick={()=>this.next()}
+							/>
 						</div>
 					</div>
 				}	
