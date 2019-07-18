@@ -246,7 +246,7 @@ class SearchBar extends Component {
 							{pathName === LEARN &&
 								<div className='filter-container'>
 									<Button 
-										title='New Deck'
+										title={matches ? null : 'New Deck'}
 										buttonType='ghost' 
 										icon='add' 
 										height={matches ? '44px' : '34px'}

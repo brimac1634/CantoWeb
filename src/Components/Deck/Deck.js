@@ -1,5 +1,6 @@
 import React from 'react';
 import './Deck.css';
+import MediaQuery from 'react-responsive';
 
 const Deck = ({deck, handleClick, isDisabled, margin}) => {
 	const { deck_name } = deck;
@@ -11,15 +12,24 @@ const Deck = ({deck, handleClick, isDisabled, margin}) => {
 		}
 	}
 	return (
-		<div 
-			className={`deck ${disable}`}
-			style={{margin: marg}} 
-			onClick={()=>shouldClick(deck)}
-		>
-			<div className='name-container'>
-		        <h1>{deck_name}</h1>
-		    </div>
-		</div>
+		<MediaQuery maxWidth={699}>
+			{(matches) => {
+				return 	(
+					<div 
+						className={`deck ${disable}`}
+						style={{margin: marg}} 
+						onClick={()=>shouldClick(deck)}
+					>
+						<div className='name-container'>
+							{matches 	
+								? 	<h2>{deck_name}</h2>
+								: 	<h1>{deck_name}</h1>
+							}
+					    </div>
+					</div>
+				)
+			}}
+		</MediaQuery>
 	);
 }
 

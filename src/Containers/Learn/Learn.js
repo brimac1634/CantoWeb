@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Learn.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
 import apiRequest from '../../Helpers/apiRequest';
 import SearchBar from '../../Components/SearchBar/SearchBar';
@@ -135,68 +136,56 @@ class Learn extends Component {
 		this.setState({selectedDeck: deck})
 	}
 
+	renderSection = (heading, deckList, color) => {
+		return (
+			<MediaQuery maxWidth={699}>
+				{(matches) => {
+					return 	(
+						<div 
+							className='deck-section-container'
+							style={{background: color || null}}
+						>
+							{matches
+								?	<h3 className='section-headers'>{heading}</h3>
+								: 	<h2 className='section-headers'>{heading}</h2>
+							}
+							<div className='deck-section'>
+								{ 
+									deckList.map((deck, i) => {
+										return (
+											<Deck 
+												key={i} 
+												deck={deck} 
+												handleClick={this.handleDeck} 
+											/>
+										)
+									})
+								}
+							</div>
+						</div>
+					)
+				}}
+			</MediaQuery>
+		)
+	}
+
 
 	render() {
 		const { officialDecks, personalDecks, otherDecks } = this.state;
 		return (
-			<div className='page'>
-				<div>
-					<div className='deck-container'>
-						{personalDecks && personalDecks.length > 0 &&
-							<div className='deck-section-container'>
-								<h2 className='section-headers'>Your Decks</h2>
-								<div className='deck-section'>
-									{ 
-										personalDecks.map((deck, i) => {
-											return (
-												<Deck 
-													key={i} 
-													deck={deck} 
-													handleClick={this.handleDeck} 
-												/>
-											)
-										})
-									}
-								</div>
-							</div>
-						}
-						{officialDecks && officialDecks.length > 0 &&
-							<div className='deck-section-container'>
-								<h2 className='section-headers'>CantoTalk Decks</h2>
-								<div className='deck-section'>
-									{ 
-										officialDecks.map((deck, i) => {
-											return (
-												<Deck 
-													key={i} 
-													deck={deck} 
-													handleClick={this.handleDeck} 
-												/>
-											)
-										})
-									}
-								</div>
-							</div>
-						}
-						{otherDecks && otherDecks.length > 0 &&
-							<div className='deck-section-container'>
-								<h2 className='section-headers'>Public Decks</h2>
-								<div className='deck-section'>
-									{ 
-										otherDecks.map((deck, i) => {
-											return (
-												<Deck 
-													key={i} 
-													deck={deck} 
-													handleClick={this.handleDeck} 
-												/>
-											)
-										})
-									}
-								</div>
-							</div>
-						}
-					</div>
+			<div className='page over-flow-y'>
+				<div className='deck-container'>
+					{personalDecks && personalDecks.length > 0 &&
+						this.renderSection('Your Decks', personalDecks, 'var(--cantoGray)')
+					}
+					{officialDecks && officialDecks.length > 0 &&
+						this.renderSection('CantoTalk Decks', officialDecks, 'var(--cantoPink)')
+					}
+					{otherDecks && otherDecks.length > 0 &&
+						this.renderSection('Public Decks', otherDecks, 'var(--cantoDarkGray)')
+					}
+				</div>
+				<div className='deck-search'>
 					<SearchBar />
 				</div>
 			</div>

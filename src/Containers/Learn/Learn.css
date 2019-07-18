@@ -1,22 +1,33 @@
 .deck-container {
-	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch;
-	position: absolute;
-	top: 44px;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	margin-top: 44px;
 	box-sizing: border-box;
 	padding: 10px 0;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: flex-start;
 }
 
-.deck-section-container {
+.deck-search {
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: auto;
 }
 
+.deck-section-container {
+	width: auto;
+	height: auto;
+	border-radius: 4px;
+	padding: 10px;
+	margin: 10px;
+	box-sizing: border-box;
+}
+
 .deck-section {
 	display: flex;
+	flex-wrap: wrap;
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: flex-start;
@@ -24,7 +35,6 @@
 
 .section-headers {
 	display: inline-block;
-	padding-bottom: 5px;
 	margin: 10px;
 	border-bottom: 1px solid var(--cantoDarkBlue);
 }
