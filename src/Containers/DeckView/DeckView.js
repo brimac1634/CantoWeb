@@ -179,9 +179,9 @@ class DeckView extends Component {
 							</div>
 							<div className='push-right text-right'>
 								<Button 
-									title='Start'
+									title='Play'
 									buttonType='ghost' 
-									color='var(--cantoPink)'
+									color='var(--cantoWhite)'
 									height='44px'
 									width='100px'
 									margin='10px 0'
@@ -192,7 +192,8 @@ class DeckView extends Component {
 										<Button 
 											title='Edit Deck'
 											buttonType='ghost' 
-											color='var(--cantoWhite)'
+											color='var(--cantoDarkBlue)'
+											textColor='var(--cantoWhite)'
 											height='44px'
 											width='100px'
 											margin='20px 0'
@@ -201,7 +202,8 @@ class DeckView extends Component {
 										<Button 
 											title='Delete'
 											buttonType='ghost' 
-											color='var(--cantoWhite)'
+											color='var(--cantoDarkBlue)'
+											textColor='var(--cantoWhite)'
 											height='44px'
 											width='100px'
 											margin='20px 0'

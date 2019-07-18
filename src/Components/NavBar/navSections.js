@@ -14,13 +14,13 @@ export default [
 		icon: 'like-2',
 	},
 	{
-		title: 'Word Of The Day',
-		to: WORD_OF_THE_DAY,
-		icon: 'calendar-7',
-	},
-	{
 		title: 'Learn',
 		to: LEARN,
 		icon: 'windows',
+	},
+	{
+		title: 'Word Of The Day',
+		to: WORD_OF_THE_DAY,
+		icon: 'calendar-7',
 	},
 ];

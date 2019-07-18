@@ -27,12 +27,12 @@
 
 .alertIsVisible {
 	opacity: 1;
-	transform: translateY(0);
+	transform: translateY(0) scale(1);
 }
 
 .alertIsHidden {
 	opacity: 0;
-	transform: translateY(100px);
+	transform: translateY(100px) scale(0);
 }
 
 .alert-icon-group {

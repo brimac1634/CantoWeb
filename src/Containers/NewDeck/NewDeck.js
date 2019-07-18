@@ -55,8 +55,7 @@ class NewDeck extends Component {
 				tags: '',
 				description: ''
 			},
-			entryList: [],
-			addedIDList: {}
+			entryList: []
 		}
 	}
 
@@ -73,7 +72,7 @@ class NewDeck extends Component {
 			updateURL(LOGIN)	
 		} else if (pathName === EDIT_DECK) {
 			if (!isEmptyObject(deck)) {
-				setTimeout(()=>this.setDeckToEdit(deck), 0)
+				this.setDeckToEdit(deck)
 			} else {
 				if (search) {
 					updateURL(`${DECK}${search}`)
@@ -190,8 +189,15 @@ class NewDeck extends Component {
 		const { LEARN } = routes;
 		
 		if (step <= 1 && deckName) {
-			step += 1
-			updateURL(`${pathName}${search}#${step}`)
+			if (step === 1 && entryList.length < 5) {
+				optionAlert({
+				    title: 'Not Enough Entries',
+				    message: 'You must have at least 5 entries added to your deck before proceeding!'
+			    })
+			} else {
+				step += 1
+				updateURL(`${pathName}${search}#${step}`)
+			}
 		} else if (step === 2) {
 			setLoading(true);
 			let entry_ids = entryList.map(entry => entry.entry_id)
@@ -283,7 +289,6 @@ class NewDeck extends Component {
 		const { user: { userEmail } } = this.props;
 		const { isEditing } = this.state;
 		const { deckName, tags, isPublic, description, isOfficial } = this.state.deck;
-		console.log(isPublic)
 		const message = isEditing ? 'Edit Deck Details' : 'New Deck Details';
 		return (
 			<MediaQuery maxWidth={699}>
@@ -326,7 +331,7 @@ class NewDeck extends Component {
 			                        id='isPublic'
 			                        type="checkbox"
 			                        onChange={this.handlePublic} 
-			                        defaultChecked={isPublic}
+			                        checked={isPublic}
 			                    />
 			                    <label 
 			                        className='checkbox-label' 
@@ -341,7 +346,7 @@ class NewDeck extends Component {
 				                        id='isOfficial'
 				                        type="checkbox"
 				                        onChange={this.handlePublic} 
-				                        defaultChecked={isOfficial}
+				                        checked={isOfficial}
 				                    />
 				                    <label 
 				                        className='checkbox-label' 
