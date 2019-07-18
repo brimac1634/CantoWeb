@@ -57,7 +57,7 @@ class DeckView extends Component {
 	}
 
 	getDeck = (deck_id) => {
-		const { setLoading, setDeck } = this.props;
+		const { setLoading, setDeck, user: { userID } } = this.props;
 		setLoading(true)
 		apiRequest({
 			endPoint: '/get-deck-by-id',
@@ -66,11 +66,23 @@ class DeckView extends Component {
 		})
 			.then(data => {
 				if (data && !data.error) {
-					const deck = {...data};
-					data.deck_name = deck.deck_name.charAt(0).toUpperCase() + deck.deck_name.slice(1);
-					setDeck(data)
+					const { user_id, is_public } = data;
+					if (userID === user_id || is_public) {
+						const deck = {...data};
+						data.deck_name = deck.deck_name.charAt(0).toUpperCase() + deck.deck_name.slice(1);
+						setDeck(data)
+						setLoading(false)
+					} else {
+						const { updateURL } = this.props;
+						const { LEARN } = routes;
+						setLoading(false)
+						optionAlert({
+						    title: 'Oops!',
+						    message: 'This deck belongs to another user and is not set to public.'
+					    })
+					    updateURL(LEARN)
+					}
 				}
-				setLoading(false)
 			})
 			.catch(err=>{
 				console.log(err)

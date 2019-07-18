@@ -58,31 +58,35 @@ class LearnGame extends Component {
 		const { setLoading } = this.props;
 		setLoading(true);
 		let gameList = new LinkedList();
-		entries.forEach((entry, i) => {
-			const { canto_word, jyutping, english_word } = entry;
-			const options = [canto_word, jyutping, english_word];
-			const randomQ = this.getRandomNumber(options.length, []);
-			const randomA = this.getRandomNumber(options.length, [randomQ])
-			let node = {
-				id: i,
-				question: options[randomQ],
-				answer: options[randomA],
-				options: [options[randomA]]
-			}
+		const generateQuestions = (cycles) => {
+			while (cycles--) {
+				entries.forEach((entry, i) => {
+					const { canto_word, jyutping, english_word } = entry;
+					const options = [canto_word, jyutping, english_word];
+					const randomQ = this.getRandomNumber(options.length, []);
+					const randomA = this.getRandomNumber(options.length, [randomQ])
+					let node = {
+						id: i,
+						question: options[randomQ],
+						answer: options[randomA],
+						options: [options[randomA]]
+					}
 
-			let answers = 3;
-			let excludes = [node.id];
-			while (answers--) {
-				const random = this.getRandomNumber(entries.length, excludes)
-				excludes.push(random)
-				const nextEntry = entries[random];
-				const nextOption = [nextEntry.canto_word, nextEntry.jyutping, nextEntry.english_word];
-				node.options.push(nextOption[randomA]);
+					let answers = 3;
+					let excludes = [node.id];
+					while (answers--) {
+						const random = this.getRandomNumber(entries.length, excludes)
+						excludes.push(random)
+						const nextEntry = entries[random];
+						const nextOption = [nextEntry.canto_word, nextEntry.jyutping, nextEntry.english_word];
+						node.options.push(nextOption[randomA]);
+					}
+					node.options = this.shuffle(node.options);
+					gameList.addToHead(node);
+				})
 			}
-			node.options = this.shuffle(node.options);
-			gameList.addToHead(node);
-		})
-		console.log(gameList)
+		}
+		generateQuestions(2);
 		setLoading(false);
 		return gameList
 	}
@@ -231,7 +235,7 @@ class LearnGame extends Component {
 					<p className='button-label'>
 						{!head
 							?	'Complete'
-							: 	`${listLength - gameList.length} / ${listLength}`
+							: 	`${listLength - gameList.length + 1} / ${listLength}`
 						}
 					</p>
 					<Button 

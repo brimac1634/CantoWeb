@@ -94,6 +94,7 @@ class Learn extends Component {
 			body
 		})
 			.then(data => {
+				console.log(data)
 				setLoading(false)
 				if (data && !data.error) {
 					this.filterDecks(data)
