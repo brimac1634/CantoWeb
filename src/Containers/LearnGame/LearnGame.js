@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import './LearnGame.css';
 import { connect } from 'react-redux';
+import { optionAlert } from '../OptionAlert/OptionAlert';
 import LinkedList from '../../Helpers/LinkedList';
 import Button from '../../Components/Button/Button';
 import Icon from '../../Components/Icon/Icon';
+import apiRequest from '../../Helpers/apiRequest';
+import { isEmptyObject } from '../../Helpers/helpers';
 import { push } from 'connected-react-router';
 import { setLoading } from '../../Loading/actions';
 import { routes } from '../../Routing/constants';
@@ -35,7 +38,8 @@ class LearnGame extends Component {
 			correctOption: '',
 			wrongOption: '',
 			listLength: 0,
-			correctCount: 0
+			correctCount: 0,
+			progress: []
 		}
 	}
 
@@ -61,12 +65,13 @@ class LearnGame extends Component {
 		const generateQuestions = (cycles) => {
 			while (cycles--) {
 				entries.forEach((entry, i) => {
-					const { canto_word, jyutping, english_word } = entry;
+					const { entry_id, canto_word, jyutping, english_word } = entry;
 					const options = [canto_word, jyutping, english_word];
 					const randomQ = this.getRandomNumber(options.length, []);
 					const randomA = this.getRandomNumber(options.length, [randomQ])
 					let node = {
 						id: i,
+						entry_id,
 						question: options[randomQ],
 						answer: options[randomA],
 						options: [options[randomA]]
@@ -117,7 +122,7 @@ class LearnGame extends Component {
 	}
 
 	checkAnswer = (answer) => {
-		const { gameList, answerComplete } = this.state;
+		const { gameList, answerComplete, progress } = this.state;
 		if (!answerComplete) {
 			const correctAnswer = gameList.head.value.answer;
 			this.setState({
@@ -125,8 +130,30 @@ class LearnGame extends Component {
 				answerComplete: true
 			})
 			if (correctAnswer === answer) {
-				// correct
+				const { entry_id } = gameList.head.value;
+				let i = progress.length;
+
+				function addToProgress() {
+					progress.push({
+						entry_id,
+						progress: 1
+					})
+				}
+				if (i === 0) {
+					addToProgress()
+				} else {
+					while (i--) {
+						if (entry_id === progress[i].entry_id) {
+							progress[i].progress += 1
+							break;
+						} else if (i === 0) {
+							addToProgress()
+						}
+					}
+				}
+				
 				this.setState({
+					progress,
 					correctCount: this.state.correctCount + 1,
 					correctOption: answer
 				})
@@ -151,9 +178,41 @@ class LearnGame extends Component {
 				wrongOption: '',
 			})
 		} else {
-			const { updateURL, search } = this.props;
+			const { updateURL, search, user, user: { userID } } = this.props;
 			const { DECK } = routes;
-			updateURL(`${DECK}${search}`)
+
+			if (!isEmptyObject(user)) {
+				const { progress } = this.state;
+				setLoading(true)
+				apiRequest({
+					endPoint: '/update-progress',
+					method: 'POST',
+					body: {
+						user_id: userID,
+						entries: progress
+					} 
+				})
+					.then(data => {
+						setLoading(false)
+						if (data && data.error != null) {
+							const { title, message } = data.error;
+							optionAlert({
+							    title,
+							    message
+						    })
+						} else {
+							console.log('Progress Updated')
+						}
+						updateURL(`${DECK}${search}`)
+					})
+					.catch(err=>{
+						console.log(err)
+						setLoading(false)
+					})
+			} else {
+				updateURL(`${DECK}${search}`)
+			}
+			
 		}
 	}
 

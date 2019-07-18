@@ -3,7 +3,8 @@ import './Deck.css';
 import MediaQuery from 'react-responsive';
 
 const Deck = ({deck, handleClick, isDisabled, margin}) => {
-	const { deck_name } = deck;
+	let { deck_name } = deck;
+	deck_name = deck_name.charAt(0).toUpperCase() + deck.deck_name.slice(1);
 	const disable = isDisabled ? 'disabled' : 'default';
 	const marg = margin ? margin : '10px';
 	const shouldClick = (deck) => {
