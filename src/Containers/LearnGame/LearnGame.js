@@ -178,7 +178,7 @@ class LearnGame extends Component {
 				wrongOption: '',
 			})
 		} else {
-			const { updateURL, search, user, user: { userID } } = this.props;
+			const { setLoading, updateURL, search, user, user: { userID } } = this.props;
 			const { DECK } = routes;
 
 			if (!isEmptyObject(user)) {

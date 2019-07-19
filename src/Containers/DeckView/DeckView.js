@@ -91,15 +91,20 @@ class DeckView extends Component {
 	}
 
 	getDeckEntries = (deck_id) => {
-		const { setLoading, setDeckEntries } = this.props;
+		const { setLoading, setDeckEntries, user: { userID } } = this.props;
 		setLoading(true)
+		const endPoint = userID ? '/deck-entries-id' : '/deck-entries';
+		const body = userID 
+			? {deck_id, user_id: userID} 
+			: {deck_id};
 		apiRequest({
-			endPoint: '/deck-entries',
+			endPoint,
 			method: 'POST',
-			body: {deck_id} 
+			body 
 		})
 			.then(data => {
 				if (data && !data.error) {
+					console.log(data)
 					setDeckEntries(data)
 				}
 				setLoading(false)
