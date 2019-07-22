@@ -1,4 +1,5 @@
-.entry-row {
+.entry-row,
+.show-progress {
 	background: var(--cantoWhite);
 	box-sizing: border-box;
 	width: auto;
@@ -7,13 +8,49 @@
 	grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
 	align-items: center;
 	border-radius: 4px;
-	padding: 10px;
 	margin: 10px;
 	border: solid 1px var(--cantoDarkGray);
 	transition: all 0.3s ease-in-out;
 	white-space: nowrap;
 	overflow: hidden;
 	position: relative;
+}
+
+.entry-row {
+	padding: 10px;
+}
+
+.show-progress {
+	padding: 10px 30% 10px 10px;
+}
+
+.progress-container {
+	box-sizing: border-box;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 33%;
+	height: 100%;
+	padding: 10px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	background: linear-gradient(to left, var(--cantoWhite) 0%, var(--cantoWhite) 80%, rgba(255, 255, 255, 0) 100%);
+	background: -webkit-linear-gradient(to left, var(--cantoWhite) 0%, var(--cantoWhite) 80%, rgba(255, 255, 255, 0) 100%);
+}
+
+.progress-border {
+	width: 70%;
+	height: 15px;
+	border-radius: 4px;
+	overflow: hidden;
+	margin: 0 5px;
+	background: var(--cantoGray);
+}
+
+.progress {
+	background: var(--cantoPink);
+	height: 100%;
 }
 
 .entry-row h3,

@@ -36,7 +36,8 @@ class EntryRow extends Component {
 				classifier,
 				jyutping,
 				english_word,
-				mandarin_word
+				mandarin_word,
+				progress
 			},
 			isDemo,
 			isDisabled
@@ -52,6 +53,10 @@ class EntryRow extends Component {
 				return 'real'
 			}
 		}
+		const progressPer = progress * 100 / 10;
+		const showProgress = Boolean(progress)
+		const progressStyle = showProgress ? 'show-progress' : null;
+		console.log(showProgress, progressPer)
 
 		if (entry !== '') {
 			if (isDemo) {
@@ -96,7 +101,7 @@ class EntryRow extends Component {
 			} else {
 				return (
 					<div 
-						className={`entry-row ${rowType()} animate-pop-in`}
+						className={`entry-row ${rowType()} animate-pop-in ${progressStyle}`}
 						style={{animationDelay: `${delay}s`}}
 						onClick={() => this.handleSelect(entry)}
 					>
@@ -109,6 +114,17 @@ class EntryRow extends Component {
 						<div><p>普: {mandarin_word}</p></div>
 						{(showMark) &&
 							<div className='circle-mark'>&nbsp;</div>
+						}
+						{showProgress &&
+							<div className='progress-container'>
+								<div className='progress-border'>
+									<div 
+										className='progress'
+										style={{width: progressPer}}
+									></div>
+								</div>
+								<p>{`${progressPer}%`}</p>
+							</div>
 						}
 					</div>
 				);

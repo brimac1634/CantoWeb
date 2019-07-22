@@ -20,11 +20,11 @@
 .half {
 	width: 100%;
 	max-width: 500px;
-	padding: 20px;
+	padding: 10px 0;
 }
 
 .deck-details {
-	padding: 30px;
+	padding: 10px 30px;
 	border-radius: 4px;
 	background: var(--cantoGray);
 }
