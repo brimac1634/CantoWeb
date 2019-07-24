@@ -41,10 +41,13 @@ const TitleBar = ({ pathName }) => {
 		PRIVACY,
 		ADD,
 		PROFILE,
+		HOME
 	} = routes;
 
 	const banner = ((pathName) => {
 		switch (pathName) {
+			case HOME:
+				return 'Home'
 			case SEARCH:
 				return 'Search'
 			case RECENT:

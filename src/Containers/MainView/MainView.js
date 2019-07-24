@@ -7,6 +7,7 @@ import NewDeck from '../NewDeck/NewDeck';
 import DeckView from '../DeckView/DeckView';
 import SignIn from '../SignIn/SignIn';
 import LearnGame from '../LearnGame/LearnGame';
+import Home from '../../Components/Home/Home';
 import WhatIsCantoTalk from '../../Components/WhatIsCantoTalk/WhatIsCantoTalk';
 import Profile from '../Profile/Profile';
 import Contact from '../Contact/Contact';
@@ -36,6 +37,7 @@ class MainView extends Component {
 
 	render() {
 		const { 
+			HOME,
 			LOGIN, 
 			REGISTER,
 			VERIFY,
@@ -228,8 +230,22 @@ class MainView extends Component {
 						)}
 					/>
 					<Route 
+						path={HOME} 
 						render={()=>(
-							<Redirect to={SEARCH} />
+							<TransitionGroup className='page-trans over-flow'>
+								<CSSTransition
+									key={key}
+						            timeout={TRANSITION}
+						            classNames="fade"
+					            >
+					            	<Home />
+					            </CSSTransition>
+							</TransitionGroup>
+						)}
+					/>
+					<Route 
+						render={()=>(
+							<Redirect to={HOME} />
 						)}
 					/>
 				</Switch>

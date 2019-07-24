@@ -1,6 +1,7 @@
 .title-bar {
 	background: var(--cantoDarkBlue);
 	overflow: hidden;
+	box-shadow: var(--cantoShadow);
 }
 
 .slanted-div {

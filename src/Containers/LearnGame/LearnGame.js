@@ -61,6 +61,7 @@ class LearnGame extends Component {
 	createGameList = (entries) => {
 		const { setLoading } = this.props;
 		setLoading(true);
+		let gameArray = [];
 		let gameList = new LinkedList();
 		const generateQuestions = (cycles) => {
 			while (cycles--) {
@@ -87,11 +88,13 @@ class LearnGame extends Component {
 						node.options.push(nextOption[randomA]);
 					}
 					node.options = this.shuffle(node.options);
-					gameList.addToHead(node);
+					gameArray.push(node);
 				})
 			}
 		}
 		generateQuestions(2);
+		const shuffled = this.shuffle(gameArray);
+		shuffled.forEach(node => gameList.addToHead(node));
 		setLoading(false);
 		return gameList
 	}
@@ -257,7 +260,7 @@ class LearnGame extends Component {
 												<Icon 
 													icon='like'
 													color='cantoWhite' 
-													iconSize='18'
+													iconSize='54'
 												/>
 											</div>
 										}
@@ -269,7 +272,7 @@ class LearnGame extends Component {
 												<Icon 
 													icon='dislike'
 													color='cantoWhite' 
-													iconSize='18'
+													iconSize='54'
 												/>
 											</div>
 										}

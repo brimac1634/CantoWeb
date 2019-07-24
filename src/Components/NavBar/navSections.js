@@ -4,7 +4,7 @@ const { SEARCH, FAVORITES, WORD_OF_THE_DAY, LEARN } = routes;
 
 export default [
 	{
-		title: 'Search',
+		title: 'Dictionary',
 		to: SEARCH,
 		icon: 'search',
 	},

@@ -75,12 +75,12 @@
 	position: absolute;
 	right: 5px;
 	top: 5px;
-	transform: rotateZ(-20deg);
-	width: 30px;
-	height: 30px;
+	transform: rotateZ(-20deg) scale(.3);
+	width: 90px;
+	height: 90px;
 	border-radius: 50%;
 	box-shadow: var(--cantoFloatShadow);
-	animation: pop 0.6s ease-in-out 1;
+	animation: pop-invert 0.6s ease-in-out 1;
 }
 
 .bottom-btns {
@@ -105,4 +105,8 @@
 	width: 100%;
 	padding: 20px;
 	text-align: center;
+}
+
+@keyframes pop-invert {
+  50%  {transform: scale(1);}
 }

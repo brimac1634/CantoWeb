@@ -76,12 +76,12 @@ class App extends Component {
         {
           loadingHasFinished &&
             <span>
-              <TitleBar 
-                className='title-bar'
-              />
               <div className='main-view-container'>
                 <MainView className='main-view' />
               </div>
+              <TitleBar 
+                className='title-bar'
+              />
               <PopUpAlert 
                 title={alert.title} 
                 message={alert.message} 
