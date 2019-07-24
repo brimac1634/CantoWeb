@@ -112,18 +112,25 @@
 	font-size: 0.85em;
 }
 
-.circle-mark {
+.mark-spot {
 	position: absolute;
 	right: 5px;
 	top: 50%;
 	transform: translateY(-50%);
+	width: 30px;
+	height: 30px;
+	padding: 0;
+}
+
+.circle-mark {
 	content: "";
 	display: block;
 	border-radius: 50%;
 	background: var(--cantoPink);
-	width: 30px;
-	height: 30px;
-	padding: 0;
+}
+
+.x-mark {
+	cursor: pointer;
 }
 
 @media screen and (max-width: 360px) {

@@ -410,6 +410,13 @@ class NewDeck extends Component {
 											searchComplete={searchComplete}
 											addedList={addedList}
 										/>
+										{!matches &&
+											<EntriesList 
+												entries={entryList}
+												handleX={this.handleEntrySelect}
+												showX={true}
+											/>
+										}
 									</div>
 								}
 								<div className='search-top'>

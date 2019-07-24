@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './EntryRow.css';
 import MediaQuery from 'react-responsive';
 import ReactTooltip from 'react-tooltip'
+import Icon from '../../Icon/Icon';
 
 class EntryRow extends Component {
 	constructor(props) {
@@ -40,7 +41,9 @@ class EntryRow extends Component {
 				progress
 			},
 			isDemo,
-			isDisabled
+			isDisabled,
+			showX,
+			handleX
 		} = this.props;
 		const { showMark } = this.state;
 		const clLabel = classifier ? 'cl: ' : '';
@@ -113,7 +116,7 @@ class EntryRow extends Component {
 						<div><p>{jyutping}</p></div>
 						<div><p>普: {mandarin_word}</p></div>
 						{(showMark) &&
-							<div className='circle-mark'>&nbsp;</div>
+							<div className='mark-spot circle-mark'>&nbsp;</div>
 						}
 						{showProgress &&
 							<div className='progress-container'>
@@ -124,6 +127,14 @@ class EntryRow extends Component {
 									></div>
 								</div>
 								<p>{`${progressPer}%`}</p>
+							</div>
+						}
+						{showX &&
+							<div 
+								className='mark-spot x-mark' 
+								onClick={()=>handleX(entry)}
+							>
+								<Icon icon='multiply' iconSize='30'/>
 							</div>
 						}
 					</div>
