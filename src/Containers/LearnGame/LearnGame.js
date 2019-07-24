@@ -5,11 +5,14 @@ import { optionAlert } from '../OptionAlert/OptionAlert';
 import LinkedList from '../../Helpers/LinkedList';
 import Button from '../../Components/Button/Button';
 import Icon from '../../Components/Icon/Icon';
+import SpeakerButton from '../SpeakerButton/SpeakerButton';
 import apiRequest from '../../Helpers/apiRequest';
 import { isEmptyObject } from '../../Helpers/helpers';
 import { push } from 'connected-react-router';
 import { setLoading } from '../../Loading/actions';
+import { audioRequest, setupPlayBack } from '../../Helpers/audioRequest';
 import { routes } from '../../Routing/constants';
+import { isIOS } from "react-device-detect";
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -58,6 +61,14 @@ class LearnGame extends Component {
 		} 
 	}
 
+	componentDidUpdate(prevProps) {
+		const lastQuestion = prevProps.gameList.head.value.question;
+		const thisQuestion = this.state.gameList.head.value.question;
+		if (lastQuestion !== thisQuestion) {
+			this.loadAudioIfNeeded()
+		}
+	}
+
 	createGameList = (entries) => {
 		const { setLoading } = this.props;
 		setLoading(true);
@@ -67,15 +78,16 @@ class LearnGame extends Component {
 			while (cycles--) {
 				entries.forEach((entry, i) => {
 					const { entry_id, canto_word, jyutping, english_word } = entry;
-					const options = [canto_word, jyutping, english_word];
+					const questionOptions = [canto_word, jyutping, english_word, entry_id];
+					const answerOptions = [canto_word, jyutping, english_word];
 					const randomQ = this.getRandomNumber(options.length, []);
 					const randomA = this.getRandomNumber(options.length, [randomQ])
 					let node = {
 						id: i,
 						entry_id,
-						question: options[randomQ],
-						answer: options[randomA],
-						options: [options[randomA]]
+						question: questionOptions[randomQ],
+						answer: answerOptions[randomA],
+						options: [answerOptions[randomA]]
 					}
 
 					let answers = 3;
@@ -95,6 +107,7 @@ class LearnGame extends Component {
 		generateQuestions(2);
 		const shuffled = this.shuffle(gameArray);
 		shuffled.forEach(node => gameList.addToHead(node));
+		this.loadAudioIfNeeded()
 		setLoading(false);
 		return gameList
 	}
@@ -123,6 +136,7 @@ class LearnGame extends Component {
 	  	}
 	  	return array;
 	}
+
 
 	checkAnswer = (answer) => {
 		const { gameList, answerComplete, progress } = this.state;
@@ -228,7 +242,12 @@ class LearnGame extends Component {
 					<div className='game-container'>
 						<div className='question-container centered'>
 							<div className='question-card centered'>
-								<h1>{head.value.question || ''}</h1>
+								{isNaN(head.value.question)
+									?	<h1>{head.value.question || ''}</h1>
+									: 	<SpeakerButton 
+											entryID={head.value.question} 
+										/>
+								}
 							</div>
 						</div>
 						<div className='option-container'>

@@ -5,12 +5,12 @@ import { push } from 'connected-react-router';
 import { optionAlert } from '../../Containers/OptionAlert/OptionAlert';
 import { validateUser, serverError } from '../../Helpers/helpers';
 import Icon from '../Icon/Icon';
+import SpeakerButton from '../../Containers/SpeakerButton/SpeakerButton';
 import { setPrevRoute } from '../../Routing/actions';
 import { setLoading } from '../../Loading/actions';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
-import { audioRequest, setupPlayBack } from '../../Helpers/audioRequest';
 import { isIOS } from "react-device-detect";
 
 const mapStateToProps = state => {
@@ -33,14 +33,10 @@ const mapDispatchToProps = (dispatch) => {
 class EntryView extends Component {
 	constructor(props) {
 		super(props);
-		this.playButton = React.createRef();
 		this._isMounted = false;
 		this.state = {
 			isFavorited: false,
 			entry: '',
-			audioAvailable: false,
-			context: {},
-			decodedAudio: {}
 		}
 	}
 
@@ -178,52 +174,6 @@ class EntryView extends Component {
 		}
 	}
 
-	loadAudio = (entryID) => {
-		if (isIOS && this.playButton.current) {     
-			this.playButton.current.removeEventListener('touchstart', this.unlockAudio, false)
-		}
-
-		if (this.playButton.current) {
-			const { setLoading} = this.props;
-			setLoading(true)
-			audioRequest(entryID)
-		        .then(({context, arrayBuffer}) => {
-	        		context.decodeAudioData(arrayBuffer, decodedAudio => {
-	    				this.setState({
-			            	audioAvailable: true,
-			            	context, 
-			            	decodedAudio
-			            })
-			            if (isIOS) {
-			             	this.playButton.current.addEventListener('touchstart', this.unlockAudio, false);
-			            }
-			            setLoading(false)
-			        }, ()=>this.noAudio())
-		        })
-		        .catch(()=>this.noAudio())
-		}
-	}
-
-	playAudio = () => {
-		if (!isIOS) {
-			this.unlockAudio()
-		}
-	}
-
-	unlockAudio = () => {
-		const { context, decodedAudio, audioAvailable } = this.state;
-		if (audioAvailable) {
-			const playSound = setupPlayBack(context, decodedAudio)
-	        playSound.start(0);
-		}
-	}
-
-	noAudio = () => {
-		const { setLoading} = this.props;
-		this.setState({audioAvailable: false})
-		setLoading(false)
-	}
-
 	render() {
 		const { WORD_OF_THE_DAY } = routes;
 		const { userID, pathName } = this.props;
@@ -278,20 +228,7 @@ class EntryView extends Component {
 												/>
 										}
 									</button>
-									<button 
-										className={`entry-btn ${active}`}
-										onClick={this.playAudio}
-										ref={this.playButton}
-									>
-										<Icon 
-											icon='speaker-5' 
-											iconSize='35' 
-											color={audioAvailable
-												? 'cantoDarkBlue'
-												: 'cantoDarkGray'
-											}
-										/>
-									</button>
+									<SpeakerButton entryID={entry_id} />
 								</div>
 								<div className='top-group entry-section'>
 									<div className='canto-class'>
