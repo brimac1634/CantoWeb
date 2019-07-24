@@ -10,9 +10,7 @@ import apiRequest from '../../Helpers/apiRequest';
 import { isEmptyObject } from '../../Helpers/helpers';
 import { push } from 'connected-react-router';
 import { setLoading } from '../../Loading/actions';
-import { audioRequest, setupPlayBack } from '../../Helpers/audioRequest';
 import { routes } from '../../Routing/constants';
-import { isIOS } from "react-device-detect";
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -80,8 +78,8 @@ class LearnGame extends Component {
 					const { entry_id, canto_word, jyutping, english_word } = entry;
 					const questionOptions = [canto_word, jyutping, english_word, entry_id];
 					const answerOptions = [canto_word, jyutping, english_word];
-					const randomQ = this.getRandomNumber(options.length, []);
-					const randomA = this.getRandomNumber(options.length, [randomQ])
+					const randomQ = this.getRandomNumber(questionOptions.length, []);
+					const randomA = this.getRandomNumber(answerOptions.length, [randomQ])
 					let node = {
 						id: i,
 						entry_id,

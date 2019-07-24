@@ -3,6 +3,7 @@ import './App.css';
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import Logo from './Components/Logo/Logo';
 import TitleBar from './Components/TitleBar/TitleBar';
 import MainView from './Containers/MainView/MainView';
 import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
@@ -92,6 +93,7 @@ class App extends Component {
         {
           initialLoading &&
             <div className='center-div'>
+              <Logo iconSize='100px' />
               <SwapSpinner
                 size={60}
                 color='#ff7a8a'

@@ -11,7 +11,6 @@ import { setLoading } from '../../Loading/actions';
 import { setMobileEntry } from '../../Containers/Search/actions';
 import { routes } from '../../Routing/constants';
 import apiRequest from '../../Helpers/apiRequest';
-import { isIOS } from "react-device-detect";
 
 const mapStateToProps = state => {
 	return {
@@ -190,13 +189,11 @@ class EntryView extends Component {
 				canto_sentence,
 				jyutping_sentence,
 				english_sentence
-			},
-			audioAvailable
+			}
 		} = this.state
 
 		const clLabel = classifier ? 'cl: ' : '';
 		const isWOD = (pathName === WORD_OF_THE_DAY)
-		const active = audioAvailable ? 'entry-btn-active' : 'entry-btn-disabled'
 
 		return (
 			<div className={`entry-view ${isWOD ? 'wod-view' : 'non-wod-view'}`}>

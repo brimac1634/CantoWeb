@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import Icon from '../Icon/Icon';
+import Icon from '../../Components/Icon/Icon';
 import { setLoading } from '../../Loading/actions';
 import { audioRequest, setupPlayBack } from '../../Helpers/audioRequest';
 import { isIOS } from "react-device-detect";
@@ -24,13 +24,13 @@ class SpeakerButton extends Component {
 
 	componentDidMount() {
 		const { entryID } = this.props;
-		this.loadAudio(entry_id)
+		this.loadAudio(entryID)
 	}
 
 	componentDidUpdate(prevProps) {
 		const { entryID } = this.props;
 		if (prevProps.entryID !== entryID) {
-			this.loadAudio(entry_id)
+			this.loadAudio(entryID)
 		}
 	}
 
