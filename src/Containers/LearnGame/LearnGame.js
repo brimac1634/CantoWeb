@@ -7,7 +7,6 @@ import Button from '../../Components/Button/Button';
 import Icon from '../../Components/Icon/Icon';
 import SpeakerButton from '../SpeakerButton/SpeakerButton';
 import apiRequest from '../../Helpers/apiRequest';
-import { isEmptyObject } from '../../Helpers/helpers';
 import { push } from 'connected-react-router';
 import { setLoading } from '../../Loading/actions';
 import { routes } from '../../Routing/constants';
@@ -59,14 +58,6 @@ class LearnGame extends Component {
 		} 
 	}
 
-	componentDidUpdate(prevProps) {
-		const lastQuestion = prevProps.gameList.head.value.question;
-		const thisQuestion = this.state.gameList.head.value.question;
-		if (lastQuestion !== thisQuestion) {
-			this.loadAudioIfNeeded()
-		}
-	}
-
 	createGameList = (entries) => {
 		const { setLoading } = this.props;
 		setLoading(true);
@@ -105,7 +96,6 @@ class LearnGame extends Component {
 		generateQuestions(2);
 		const shuffled = this.shuffle(gameArray);
 		shuffled.forEach(node => gameList.addToHead(node));
-		this.loadAudioIfNeeded()
 		setLoading(false);
 		return gameList
 	}
@@ -185,18 +175,18 @@ class LearnGame extends Component {
 	next = () => {
 		const { gameList, gameList: { head } } = this.state;
 		if (head) {
-			gameList.removeFromHead();
 			this.setState({
 				gameList,
 				answerComplete: false,
 				correctOption: '',
 				wrongOption: '',
 			})
+			gameList.removeFromHead();
 		} else {
-			const { setLoading, updateURL, search, user, user: { userID } } = this.props;
+			const { setLoading, updateURL, search, user: { userID } } = this.props;
 			const { DECK } = routes;
 
-			if (!isEmptyObject(user)) {
+			if (Boolean(userID)) {
 				const { progress } = this.state;
 				setLoading(true)
 				apiRequest({
@@ -234,6 +224,7 @@ class LearnGame extends Component {
 	render() {
 		const { gameList, gameList: { head }, answerComplete, correctOption, wrongOption, answer, listLength, correctCount } = this.state;
 		const { deck_name } = this.props.deck;
+		
 		return (
 			<div className='page over-flow-y center-x'>
 				{head &&
@@ -243,6 +234,7 @@ class LearnGame extends Component {
 								{isNaN(head.value.question)
 									?	<h1>{head.value.question || ''}</h1>
 									: 	<SpeakerButton 
+											size='55'
 											entryID={head.value.question} 
 										/>
 								}

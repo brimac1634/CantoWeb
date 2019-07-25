@@ -373,8 +373,39 @@ class SignIn extends Component {
     	this.setState({didAgree: !this.state.didAgree})
     }
 
+    renderPassword = (margin) => {
+    	const { password } = this.state;
+    	return (
+    		<TextInput 
+				icon='locked-4' 
+				margin={margin}
+				placeHolder='Password'
+				value={password}
+				type='password'
+				id='password'
+				handleChange={this.onInputChange}
+			/>
+    	)
+    }
+
+    renderEmail = () => {
+    	const { email } = this.state;
+    	return (
+    		<TextInput 
+				icon='user-3' 
+				margin='20px 0'
+				placeHolder='Email Address'
+				value={email}
+				id='email'
+				name='email'
+				type='text'
+				handleChange={this.onInputChange}
+			/>
+    	)
+    }
+
     renderComponent = (pathName) => {
-    	const { title, email, name, password, password2, signInButton, alternateButton, didAgree } = this.state;
+    	const { title, email, name, password2, signInButton, alternateButton, didAgree } = this.state;
     	const { LOGIN, REGISTER, VERIFY, RESET, PRIVACY } = routes;
     	const { updateURL } = this.props;
     	if (pathName === RESET || pathName === VERIFY) {
@@ -385,29 +416,10 @@ class SignIn extends Component {
 					<div className='right-panel'>
 						<h2 className='right-title'>{heading}</h2>
 						<p>{line}</p>
-						{pathName === RESET &&
-							<TextInput 
-								icon='user-3' 
-								margin='20px 0'
-								placeHolder='Email Address'
-								value={email}
-								id='email1'
-								name='email'
-								type='text'
-								handleChange={this.onInputChange}
-							/>
-						}
+						{pathName === RESET && this.renderEmail}
 						{pathName === VERIFY &&
 							<div>
-								<TextInput 
-									icon='locked-4' 
-									margin='20px 0 0 0'
-									placeHolder='Password'
-									value={password}
-									type='password'
-									id='password1'
-									handleChange={this.onInputChange}
-								/>
+								{this.renderPassword('20px 0 0 0')}
 								<TextInput 
 									icon='locked-4' 
 									margin='20px 0'
@@ -467,28 +479,8 @@ class SignIn extends Component {
 								handleChange={this.onInputChange}
 							/>
 						}
-						<TextInput 
-							icon='paper-plane-1' 
-							margin={pathName === LOGIN ? '0' : '10px 0 20px 0'}
-							placeHolder='Email Address'
-							value={email}
-							id='email2'
-							name='email'
-							type='text'
-							handleChange={this.onInputChange}
-						/>
-						{pathName === LOGIN &&
-							<TextInput 
-								icon='locked-4' 
-								margin='20px 0'
-								placeHolder='Password'
-								value={password}
-								name='password'
-								type='password'
-								id='password'
-								handleChange={this.onInputChange}
-							/>
-						}
+						{this.renderEmail()}
+						{pathName === LOGIN && this.renderPassword('0 0 20px 0')}
 						{pathName === REGISTER &&
 							<div className='agree-row'>
 								<input 

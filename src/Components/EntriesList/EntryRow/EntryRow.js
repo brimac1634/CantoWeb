@@ -59,7 +59,6 @@ class EntryRow extends Component {
 		const progressPer = progress * 100 / 10;
 		const showProgress = Boolean(progress)
 		const progressStyle = showProgress ? 'show-progress' : null;
-		console.log(showProgress, progressPer)
 
 		if (entry !== '') {
 			if (isDemo) {

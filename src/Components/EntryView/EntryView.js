@@ -53,7 +53,6 @@ class EntryView extends Component {
 		const { WORD_OF_THE_DAY, FAVORITES } = routes;
 		if (prevProps.selectedEntry !== selectedEntry) {
 			this.setState({entry: selectedEntry})
-			this.loadAudio(selectedEntry.entry_id)
 			if (pathName === FAVORITES) {
 				this.setState({isFavorited: true})
 			} else if (selectedEntry !== '' && validateUser(userID)) {
@@ -76,7 +75,6 @@ class EntryView extends Component {
 		const { userID, setLoading } = this.props;
 		const entryID = hash.slice(1, hash.length)
 		setLoading(true)
-		this.loadAudio(entryID)
 		if (entryID != null && validateUser(userID)) {
 			this.checkIfFavorite(entryID, userID);
 		}
