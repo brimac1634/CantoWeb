@@ -4,7 +4,7 @@ import CantoIcon from '../../Assets/CantoTalkIconBlue.png';
 const Logo = ({ iconSize, margin }) => {
 	let height = (iconSize) ? iconSize : '100%';
 	return (
-		<div style={{margin: margin || null}}>
+		<div className='centered' style={{margin: margin || null}}>
 			<img 
 				src={CantoIcon} 
 				height={height} 

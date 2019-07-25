@@ -50,6 +50,7 @@
 	margin: 15px;
 	padding: 10px;
 	transition: all 0.3s ease-in-out;
+	text-align: center;
 	position: relative;
 }
 
