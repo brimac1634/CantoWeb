@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => {
 	}
 } 
 
-const EntryList = ({ entries, selectEntry, searchComplete, updateURL, search, pathName, addedList, isDisabled }) => {
+const EntryList = ({ entries, selectEntry, searchComplete, updateURL, search, pathName, addedList, isDisabled, hideGhost, showX, handleX }) => {
 	let ghostRows = [0,1,2,3,4,5,6]
 	const getDelay = (i) => {
 		const add = i * 0.1
@@ -62,11 +62,14 @@ const EntryList = ({ entries, selectEntry, searchComplete, updateURL, search, pa
 								entry={entry}
 								addedList={addedList}
 								isDisabled={isDisabled}
+								showX={showX}
+								handleX={handleX}
 							/>
 						);
 					})
 					
-				:   ghostRows.map(i => {
+				:   !hideGhost &&
+					ghostRows.map(i => {
 						return (
 							<EntryRow
 								key={i}

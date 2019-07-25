@@ -20,12 +20,17 @@ class EntryRow extends Component {
 		}
 	}
 
-	handleSelect = (entry) => {
-		const { selectEntry, addedList } = this.props;
-		if (addedList) {
-			this.setState({showMark: !addedList.includes(entry.entry_id)});
+	componentDidUpdate(prevProps) {
+		const { addedList, entry } = this.props;
+		if (prevProps.addedList !== addedList) {
+			this.setState({showMark: addedList.includes(entry.entry_id)});
 		}
-		selectEntry(entry)
+	}
+
+	onX = (e, entry) => {
+		const { handleX } = this.props;
+		handleX(entry)
+		e.stopPropagation()
 	}
 
 	renderRow = () => {
@@ -40,10 +45,10 @@ class EntryRow extends Component {
 				mandarin_word,
 				progress
 			},
+			selectEntry,
 			isDemo,
 			isDisabled,
-			showX,
-			handleX
+			showX
 		} = this.props;
 		const { showMark } = this.state;
 		const clLabel = classifier ? 'cl: ' : '';
@@ -105,7 +110,7 @@ class EntryRow extends Component {
 					<div 
 						className={`entry-row ${rowType()} animate-pop-in ${progressStyle}`}
 						style={{animationDelay: `${delay}s`}}
-						onClick={() => this.handleSelect(entry)}
+						onClick={selectEntry ? ()=>selectEntry(entry) : null}
 					>
 						<div className='top-left'>
 							<h3>{canto_word}</h3>
@@ -131,9 +136,9 @@ class EntryRow extends Component {
 						{showX &&
 							<div 
 								className='mark-spot x-mark' 
-								onClick={()=>handleX(entry)}
+								onClick={e=>this.onX(e, entry)}
 							>
-								<Icon icon='multiply' iconSize='30'/>
+								<Icon icon='multiply' iconSize='18' color='cantoWhite'/>
 							</div>
 						}
 					</div>

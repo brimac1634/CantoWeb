@@ -3,6 +3,7 @@ import './NewDeck.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { optionAlert } from '../OptionAlert/OptionAlert';
+import EntryRow from '../../Components/EntriesList/EntryRow/EntryRow';
 import MediaQuery from 'react-responsive';
 import TextInput from '../../Components/TextInput/TextInput';
 import EntriesList from '../../Components/EntriesList/EntriesList';
@@ -162,6 +163,13 @@ class NewDeck extends Component {
 		this.setState({deck});
 	}
 
+	notEnoughMessage = () => {
+		optionAlert({
+		    title: 'Not Enough Entries',
+		    message: 'You must have at least 5 entries added to your deck before proceeding!'
+	    })
+	}
+
 	next = () => {
 		const { 
 			updateURL, 
@@ -190,61 +198,62 @@ class NewDeck extends Component {
 		
 		if (step <= 1 && deckName) {
 			if (step === 1 && entryList.length < 5) {
-				optionAlert({
-				    title: 'Not Enough Entries',
-				    message: 'You must have at least 5 entries added to your deck before proceeding!'
-			    })
+				this.notEnoughMessage()
 			} else {
 				step += 1
 				updateURL(`${pathName}${search}#${step}`)
 			}
 		} else if (step === 2) {
-			setLoading(true);
-			let entry_ids = entryList.map(entry => entry.entry_id)
-			apiRequest({
-				endPoint: '/new-deck',
-				method: 'POST',
-				body: {
-					deck_id,
-					deck_name: deckName,
-					user_id: userID,
-					is_public: isPublic ? '1' : '0',
-					is_official: isOfficial,
-					tags,
-					description, 
-					entry_ids
-				}
-			})
-				.then(data => {
-					if (data && data.error != null) {
-						const { title, message } = data.error;
-						optionAlert({
-						    title,
-						    message
-					    })
-					} else {
-						let title, message;
-						if (deck_id) {
-							title = 'Deck Updated'
-							message = `Your deck, "${deckName}", has been updated!`
-						} else {
-							title = 'Deck Created'
-							message = `Your new deck, "${deckName}", has been created!`
-						}
-						const alert = {
-					        title,
-					        message,
-					        showAlert: true,
-					    }
-					    presentAlert(alert);
-					    updateURL(LEARN)
+			if (entryList.length < 5) {
+				this.notEnoughMessage()
+			} else {
+				setLoading(true);
+				let entry_ids = entryList.map(entry => entry.entry_id)
+				apiRequest({
+					endPoint: '/new-deck',
+					method: 'POST',
+					body: {
+						deck_id,
+						deck_name: deckName,
+						user_id: userID,
+						is_public: isPublic ? '1' : '0',
+						is_official: isOfficial,
+						tags,
+						description, 
+						entry_ids
 					}
-					setLoading(false)
 				})
-				.catch(err=>{
-					setLoading(false)
-					connectionError()
-				})
+					.then(data => {
+						if (data && data.error != null) {
+							const { title, message } = data.error;
+							optionAlert({
+							    title,
+							    message
+						    })
+						} else {
+							let title, message;
+							if (deck_id) {
+								title = 'Deck Updated'
+								message = `Your deck, "${deckName}", has been updated!`
+							} else {
+								title = 'Deck Created'
+								message = `Your new deck, "${deckName}", has been created!`
+							}
+							const alert = {
+						        title,
+						        message,
+						        showAlert: true,
+						    }
+						    presentAlert(alert);
+						    updateURL(LEARN)
+						}
+						setLoading(false)
+					})
+					.catch(err=>{
+						setLoading(false)
+						connectionError()
+					})
+			}
 		}
 	}
 
@@ -370,15 +379,16 @@ class NewDeck extends Component {
 		if (entryList) {
 			addedList = entryList.map(entry => entry.entry_id);
 		}
-
 		let buttonMessage;
 		let title;
+		let title2;
 		switch(step) {
 			case 0:
 				buttonMessage = isEditing ? 'Next: Edit Entries' : 'Next: Add Entries'
 				break;
 			case 1:
 				title = isEditing ? 'Need to edit your deck?' : 'Add to your new deck!'
+				title2 = 'Entries added'
 				break;
 			case 2:
 				buttonMessage = isEditing ? `Update Deck: "${deckName}"` : `Create Deck: "${deckName}"`
@@ -396,45 +406,73 @@ class NewDeck extends Component {
 								{this.renderNewDeckForm()}
 							</div>
 							<div className='slide over-flow' style={{left: '100%', transform: `translateX(${translate}%)`}}>
-								{matches 
-									? 	<div className='slide-title'>
-											<h3>{title}</h3>
-										</div>
-									: <h2 className='slide-title'>{title}</h2>
-								}
-								{step === 1 &&
+								<div className='list-flex'>
 									<div className='new-list-container'>
-										<EntriesList 
-											entries={entries}
-											selectEntry={this.handleEntrySelect}
-											searchComplete={searchComplete}
-											addedList={addedList}
-										/>
-										{!matches &&
-											<EntriesList 
-												entries={entryList}
-												handleX={this.handleEntrySelect}
-												showX={true}
-											/>
+										{matches 
+											? 	<div className='slide-title'>
+													<h3>{title}</h3>
+												</div>
+											: <h2 className='slide-title'>{title}</h2>
 										}
+										<div className='list-search'>
+											{step === 1 &&
+												<EntriesList 
+													entries={entries}
+													selectEntry={this.handleEntrySelect}
+													searchComplete={searchComplete}
+													addedList={addedList}
+												/>
+											}
+											<div className='search-top'>
+												<SearchBar />
+											</div>
+										</div>
 									</div>
-								}
-								<div className='search-top'>
-									<SearchBar />
+									{!matches &&
+										<div className='new-list-container'>
+											{matches 
+												? 	<div className='slide-title'>
+														<h3>{title2}</h3>
+													</div>
+												: <h2 className='slide-title'>{title2}</h2>
+											}
+											<div className='list-search'>
+												{entryList.map(entry=>{
+													return (
+														<EntryRow
+															key={entry.entry_id}
+															handleX={this.handleEntrySelect}
+															entry={entry}
+															showX={true}
+															isDisabled={true}
+														/>
+													)
+												})}
+											</div>
+										</div>
+									}
 								</div>
 							</div>
 							<div className='slide over-flow last-slide' style={{left: '200%', transform: `translateX(${translate}%)`}}>
 								{step === 2 &&
-									<div className='new-list-container'>
-										<EntriesList 
-											entries={entryList}
-											isDisabled={true}
-										/>
+									<div className='list-flex'>
+										<div className='new-list-container'>
+											<div className='list-search-no-search'>
+												{entryList.map(entry=>{
+													return (
+														<EntryRow
+															key={entry.entry_id}
+															handleX={this.handleEntrySelect}
+															entry={entry}
+															showX={true}
+															isDisabled={true}
+														/>
+													)
+												})}
+											</div>
+										</div>
 									</div>
 								}
-								<div className='search-top'>
-									<SearchBar hideSearch={true} />
-								</div>
 								{matches 
 									? 	<div className='slide-title'>
 											<h3>{title}</h3>

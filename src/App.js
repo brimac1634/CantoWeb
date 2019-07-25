@@ -92,8 +92,8 @@ class App extends Component {
         }
         {
           initialLoading &&
-            <div className='center-div'>
-              <Logo iconSize='100px' />
+            <div className='center-div vertical'>
+              <Logo iconSize='100px' margin='20px'/>
               <SwapSpinner
                 size={60}
                 color='#ff7a8a'
