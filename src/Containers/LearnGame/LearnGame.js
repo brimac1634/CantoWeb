@@ -5,7 +5,7 @@ import { optionAlert } from '../OptionAlert/OptionAlert';
 import LinkedList from '../../Helpers/LinkedList';
 import Button from '../../Components/Button/Button';
 import Icon from '../../Components/Icon/Icon';
-import SpeakerButton from '../SpeakerButton/SpeakerButton';
+import SpeakerButton from '../SpeakerButton/SpeakerButton'; 
 import apiRequest from '../../Helpers/apiRequest';
 import { push } from 'connected-react-router';
 import { setLoading } from '../../Loading/actions';

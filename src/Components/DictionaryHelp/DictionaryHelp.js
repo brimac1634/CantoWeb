@@ -6,6 +6,7 @@ import { serverError } from '../../Helpers/helpers';
 import EntryRow from '../EntriesList/EntryRow/EntryRow';
 import { demoEntry, directory, initials, finals, tones } from './jyutpingExamples';
 import { SwapSpinner } from "react-spinners-kit";
+import { isIOS } from "react-device-detect";
 
 class DictionaryHelp extends Component {
 	constructor(props) {
@@ -27,13 +28,15 @@ class DictionaryHelp extends Component {
 	}
 
 	playAudio = (entryID) => {
-		this.setState({isLoading: true})
-		audioRequest(entryID)
-			.then(() => this.setState({isLoading: false}))
-			.catch(()=>{
-				this.setState({isLoading: false})
-				serverError()
-			})
+		if (!isIOS) {
+			this.setState({isLoading: true})
+			audioRequest(entryID, true)
+				.then(() => this.setState({isLoading: false}))
+				.catch(()=>{
+					this.setState({isLoading: false})
+					serverError()
+				})
+		}
 	}
 	
 	render() {
@@ -69,7 +72,7 @@ class DictionaryHelp extends Component {
 						</div>
 						<div className='list-divider'></div>
 						<h2 ref={this.jyutping}>Jyutping (粵拼)</h2>
-						<p>Jyutping is the form of romanization used in this dictionary to help learners read the characters correctly without having ever heard them before. In Jyutping, each chinese character is represented by a syllable consisting of possibly an initial consonant, a final syllabic vowel plus a possible ending consonant, and lastly, the tonal pitch represented with a number. Below are examples of the different syllable initial sounds and final sounds including the tones. Click on a row to hear how it sounds!</p>
+						<p>Jyutping is the form of romanization used in this dictionary to help learners read the characters correctly without having ever heard them before. In Jyutping, each chinese character is represented by a syllable consisting of possibly an initial consonant, a final syllabic vowel plus a possible ending consonant, and lastly, the tonal pitch represented with a number. Below are examples of the different syllable initial sounds and final sounds including the tones. {!isIOS && 'Click on a row to hear how it sounds!'}</p>
 						<h3 ref={this.initials}>Initials</h3>
 						<div className='row-diagram'>
 							{initials.map((ex, i) => {
@@ -116,7 +119,7 @@ class DictionaryHelp extends Component {
 						</div>
 						<div className='list-divider'></div>
 						<h2 ref={this.tones}>Tones</h2>
-						<p>Cantonese has six tones that can be idenitfied. To indicate the correct tone, jyutping uses number 1 through 6. Click on the examples below to hear the difference between each tone...</p>
+						<p>Cantonese has six tones that can be idenitfied. To indicate the correct tone, jyutping uses number 1 through 6. {!isIOS && 'Click on the examples below to hear the difference between each tone...'}</p>
 						{tones.map((ex, i) => {
 								return (
 									<div 

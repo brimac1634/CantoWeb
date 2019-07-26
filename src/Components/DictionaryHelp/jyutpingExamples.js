@@ -89,7 +89,7 @@ export const initials = [
 		example: 'aau2',
 		canto: '跑',
 		english: 'to run',
-		entryID: 45
+		entryID: 2
 	},
 	{
 		letter: 't',

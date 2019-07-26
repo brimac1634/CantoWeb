@@ -124,13 +124,13 @@ class EntryRow extends Component {
 						}
 						{showProgress &&
 							<div className='progress-container'>
+								<p>{`${progressPer}%`}</p>
 								<div className='progress-border'>
 									<div 
 										className='progress'
-										style={{width: progressPer}}
+										style={{width: `${progressPer}%`}}
 									></div>
 								</div>
-								<p>{`${progressPer}%`}</p>
 							</div>
 						}
 						{showX &&
