@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router'
-import {updateUser} from './Containers/SignIn/reducers';
-import {presentAlert} from './Components/PopUpAlert/reducers';
-import {setSearchState} from './Containers/Search/reducers';
-import {setPrevRoute} from './Routing/reducers';
-import {setLoading} from './Loading/reducers';
-import {setTempSearch} from './Components/SearchBar/reducers';
-import {setDeck} from './Containers/DeckView/reducers';
+import {updateUser} from './redux/sign-in/sign-in.reducers';
+import {presentAlert} from './redux/pop-up-alert/pop-up-alert.reducers';
+import {setSearchState} from './redux/search/search.reducers';
+import {setPrevRoute} from './redux/routing/routing.reducers';
+import {setLoading} from './redux/loading/loading.reducers';
+import {setTempSearch} from './redux/search-bar/search-bar.reducers';
+import {setDeck} from './redux/deck-view/deck-view.reducers';
 
 export default history => combineReducers({
 	router: connectRouter(history),

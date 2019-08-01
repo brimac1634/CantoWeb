@@ -3,15 +3,15 @@ import './App.css';
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import Logo from './Components/Logo/Logo';
-import TitleBar from './Components/TitleBar/TitleBar';
-import MainView from './Containers/MainView/MainView';
-import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
-import { setUser } from './Containers/SignIn/actions';
 import { SwapSpinner } from "react-spinners-kit";
-import apiRequest from './Helpers/apiRequest';
-import { routes } from './Routing/constants';
-import { deleteToken } from './Helpers/helpers';
+import Logo from './components/logo/logo.component';
+import TitleBar from './components/title-bar/title-bar.component';
+import MainView from './components/main-view/main-view.component';
+import PopUpAlert from './components/pop-up-alert/pop-up-alert.component';
+import { setUser } from './redux/sign-in/sign-in.actions';
+import apiRequest from './helpers/apiRequest';
+import { routes } from './redux/routing/routing.constants';
+import { deleteToken } from './helpers/helpers';
 
 const mapStateToProps = state => {
   return {

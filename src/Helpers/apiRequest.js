@@ -1,6 +1,6 @@
 import { connectionError } from './helpers';
 import Cookies from 'universal-cookie';
-import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
+import { optionAlert } from '../components/option-alert/option-alert.component';
 
 export default ({
 	endPoint = '',

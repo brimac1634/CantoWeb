@@ -1,5 +1,5 @@
-import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
-import { routes } from '../Routing/constants';
+import { optionAlert } from '../components/option-alert/option-alert.component';
+import { routes } from '../redux/routing/routing.constants';
 import Cookies from 'universal-cookie';
 
 export const validateUser = (userID) => {
