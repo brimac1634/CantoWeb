@@ -75,8 +75,8 @@ class Controller extends Component {
 		const { children } = this.props;
 		const { show, triggerRect, animateOut } = this.state;
 
-		const childrenWithProps = React.Children.map(children, child => {
-		      if (child.type.name === 'Trigger') {
+		const childrenWithProps = React.Children.map(children, (child, i) => {
+		      if (i === 0) {
 		      	 return React.cloneElement(child, { toggle: this.toggle, setPositition: this.setPositition })
 		      } else {
 		      	if (show) {
