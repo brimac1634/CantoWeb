@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -12,6 +12,8 @@ import { setUser } from './redux/sign-in/sign-in.actions';
 import apiRequest from './helpers/apiRequest';
 import { routes } from './redux/routing/routing.constants';
 import { deleteToken } from './helpers/helpers';
+
+import './App.scss';
 
 const mapStateToProps = state => {
   return {
@@ -73,7 +75,7 @@ class App extends Component {
     const { loading } = this.props;
     const { loadingHasFinished, initialLoading } = this.state;
     return (
-      <div>
+      <div className='app'>
         {
           loadingHasFinished &&
             <span>
@@ -88,7 +90,7 @@ class App extends Component {
         }
         {
           initialLoading &&
-            <div className='center-div vertical'>
+            <div className='loader vertical'>
               <Logo iconSize='100px' margin='20px'/>
               <SwapSpinner
                 size={60}
@@ -99,7 +101,7 @@ class App extends Component {
         }
         {
           loading &&
-            <div className='center-div'>
+            <div className='loader'>
               <SwapSpinner
                 size={60}
                 color='#ff7a8a'

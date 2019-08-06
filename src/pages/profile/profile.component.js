@@ -1,17 +1,18 @@
 import React from 'react';
-import './profile.styles.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import MediaQuery from 'react-responsive';
-import { connectionError } from '../../helpers/helpers';
+
 import { optionAlert } from '../../components/option-alert/option-alert.component';
-import HoverBox from '../../components/hover-box/hover-box.component';
 import Button from '../../components/button/button.component';
 import { routes } from '../../redux/routing/routing.constants';
+
 import apiRequest from '../../helpers/apiRequest';
 import { setLoading } from '../../redux/loading/loading.actions';
 import { setUser } from '../../redux/sign-in/sign-in.actions';
-import { deleteToken } from '../../helpers/helpers';
+import { deleteToken, connectionError } from '../../helpers/helpers';
+
+import './profile.styles.scss';
 
 const mapStateToProps = state => {
 	return {
@@ -86,39 +87,37 @@ const Profile = ({ user: { userName, userEmail }, setLoading, updateURL, updateU
 		<MediaQuery maxWidth={574}>
 			{(matches) => {
 			return (
-				<HoverBox>
+				<div className='profile-page'>
 					<div className='profile'>
-						<div className='profile-inner'>
-							<h2>Hello, {userName}!</h2>
-							<div className='section'>
-								<p><strong>Want to reset your password?</strong></p>
-								<p>You will need to verify your email to reset your password.</p>
-								<Button 
-									title='Reset'
-									buttonType='ghost' 
-									icon='shuffle' 
-									height='44px'
-									margin='0'
-									width='100px'
-									handleClick={()=>updateURL(RESET)}
-								/>
-							</div>
-							<div className='section'>
-								<p><strong>Wish to delete you account?</strong></p>
-								<p>Beware! This will delete your account and any saved data related to your account.</p>
-								<Button 
-									title='Delete'
-									buttonType='ghost' 
-									icon='multiply' 
-									height='44px'
-									margin='0'
-									width='100px'
-									handleClick={verifyDeletion}
-								/>
-							</div>
+						<h2 className='heading'>Hello, {userName}!</h2>
+						<div className='section'>
+							<p><strong>Want to reset your password?</strong></p>
+							<p>You will need to verify your email to reset your password.</p>
+							<Button 
+								title='Reset'
+								buttonType='ghost' 
+								icon='shuffle' 
+								height='44px'
+								margin='0'
+								width='100px'
+								handleClick={()=>updateURL(RESET)}
+							/>
+						</div>
+						<div className='section'>
+							<p><strong>Wish to delete you account?</strong></p>
+							<p>Beware! This will delete your account and any saved data related to your account.</p>
+							<Button 
+								title='Delete'
+								buttonType='ghost' 
+								icon='multiply' 
+								height='44px'
+								margin='0'
+								width='100px'
+								handleClick={verifyDeletion}
+							/>
 						</div>
 					</div>
-				</HoverBox>
+				</div>
 			)}}
 		</MediaQuery>
 	);	

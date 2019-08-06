@@ -1,0 +1,22 @@
+* {
+	box-sizing: border-box;
+}
+
+.app {
+	.loader {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&.vertical {
+			flex-direction: column;
+		}
+	}
+}
+
+
+
+
+

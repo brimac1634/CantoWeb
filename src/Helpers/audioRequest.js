@@ -8,8 +8,7 @@ export const setupPlayBack = (context, audio) => {
 export const audioRequest = (entryID, playNow) => {
     let AudioContext = window.AudioContext || window.webkitAudioContext;
     const context = new AudioContext();
-    // ${process.env.REACT_APP_SERVER_URL}
-    return Promise.race([fetch(`http://localhost:3000/stream-audio`, {
+    return Promise.race([fetch(`${process.env.REACT_APP_SERVER_URL}/stream-audio`, {
 		method: 'POST',
 		headers: {'Content-Type': 'application/json'},
 		body: JSON.stringify({entryID})
