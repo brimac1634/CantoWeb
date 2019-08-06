@@ -1,12 +1,14 @@
 import React from 'react';
-import './text-input.styles.css'
+
 import Icon from '../icon/icon.component';
 import Button from '../button/button.component';
 import Controller from '../compound/controller.component';
 import Trigger from '../compound/trigger.component';
 import DropDown from '../drop-down/drop-down.component';
 
-const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height, type, margin, padding, handleClick, id, isTextArea, name, button, buttonList, handleDropDown }) => {
+import './text-input.styles.scss'
+
+const TextInput = ({ icon, handleChange, height, margin, padding, handleClick, isTextArea, button, buttonList, handleDropDown, ...otherProps }) => {
 	const inputHeight = height ? height : '44px';
 	const container = isTextArea ? 'input-area-group' : 'input-group';
 
@@ -51,22 +53,13 @@ const TextInput = ({ placeHolder, icon, handleChange, handleInput, value, height
 			{isTextArea
 				?   <textarea
 						className='text-input text-area'
-						id={id}
-						placeholder={placeHolder}
 						onChange={handleChange}
-						onKeyPress={handleInput}
-						value={value}
-						name={name}
+						{ ...otherProps }
 					/>
 				:   <input 
 						className='text-input'
-						id={id}
-						placeholder={placeHolder}
 						onChange={handleChange}
-						onKeyPress={handleInput}
-						value={value}
-						type={type}
-						name={name}
+						{ ...otherProps }
 					/>
 
 			}

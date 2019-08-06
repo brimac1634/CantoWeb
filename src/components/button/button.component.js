@@ -2,13 +2,13 @@ import React from 'react';
 import './button.styles.css'
 import Icon from '../icon/icon.component';
 
-const Button = ({ title, handleClick, buttonType, icon, isSelected, width, height, margin, padding, color, textColor, type, iconSize, isDisabled }) => {
+const Button = ({ title, handleClick, buttonType, icon, isSelected, width, height, margin, padding, color, textColor, type, iconSize, isDisabled, ...otherProps }) => {
 	const active = isDisabled ? 'btn-disabled' : 'btn-active'
 	const titleType = icon ? 'with-icon' : 'without-icon';
 	const buttonSelect = isSelected ? 'selected-button' : null;
 
 	return (
-		<div 
+		<button 
 			className={`${buttonSelect} ${active}`} 
 			onClick={handleClick}
 			type={type}
@@ -19,6 +19,7 @@ const Button = ({ title, handleClick, buttonType, icon, isSelected, width, heigh
 				padding: `${padding ? padding : '5px 15px'}`,
 				background: `${color ? color : null}`
 			}}
+			{ ...otherProps }
 		>
 			{icon 
 				? <div style={{width: `${iconSize}px`}}>
@@ -33,7 +34,7 @@ const Button = ({ title, handleClick, buttonType, icon, isSelected, width, heigh
 					>{title}</p>
 				: 	null
 			}
-		</div>
+		</button>
 	);
 }
 

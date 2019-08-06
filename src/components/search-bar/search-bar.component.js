@@ -265,13 +265,13 @@ class SearchBar extends Component {
 													button={searchType}
 													buttonList={searchOptions}
 													handleDropDown={type=>setSearchType(type)}
-													placeHolder='English/Cantonese/Mandarin/Jyutping'
+													placeholder='English/Cantonese/Mandarin/Jyutping'
 													margin='10px 0'
 													value={tempSearchKey ? tempSearchKey : ''}
 													height={matches ? '44px' : '34px'} 
 													padding='2px 5px 2px 2px'
 													handleChange={this.searchChange}
-													handleInput={this.searchSubmit}
+													onKeyPress={this.searchSubmit}
 												/>
 											</div>
 										</Trigger>
@@ -289,12 +289,12 @@ class SearchBar extends Component {
 											<div className='center-div'>
 												<TextInput 
 													icon='search'
-													placeHolder='Search for other decks'
+													placeholder='Search for other decks'
 													margin='10px 0'
 													value={tempSearchKey ? tempSearchKey : ''}
 													height={matches ? '44px' : '34px'}
 													handleChange={this.searchChange}
-													handleInput={this.searchSubmit}
+													onKeyPress={this.searchSubmit}
 												/>
 											</div>
 										</Trigger>

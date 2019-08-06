@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import './add-new-entry.styles.css';
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux';
-import { optionAlert } from '../../components/option-alert/option-alert.component';
 import MediaQuery from 'react-responsive';
+
+import { optionAlert } from '../../components/option-alert/option-alert.component';
 import TextInput from '../../components/text-input/text-input.component';
 import Button from '../../components/button/button.component';
+
 import apiRequest from '../../helpers/apiRequest';
 import { setLoading } from '../../redux/loading/loading.actions';
-import { push } from 'connected-react-router'
 import { routes } from '../../redux/routing/routing.constants';
 import { updateObject, serverError } from '../../helpers/helpers';
 import fields from './add-new-entry.data';
+
+import './add-new-entry.styles.scss';
 
 const mapStateToProps = state => {
 	return {
@@ -29,16 +32,14 @@ class AddNewEntry extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			newEntry: {
-				canto_word: '',
-			    jyutping: '',
-			    classifier: '',
-			    english_word: '',
-			    mandarin_word: '',
-			    canto_sentence: '',
-			    jyutping_sentence: '',
-			    english_sentence: '',
-			},
+			canto_word: '',
+		    jyutping: '',
+		    classifier: '',
+		    english_word: '',
+		    mandarin_word: '',
+		    canto_sentence: '',
+		    jyutping_sentence: '',
+		    english_sentence: '',
 			isComplete: false
 		}
 	}
@@ -52,28 +53,29 @@ class AddNewEntry extends Component {
 	}
 
 	handleChange = (event) => {
-		const entry = { ...this.state.newEntry }
-	    const newEntry = updateObject(event, entry)
-	    this.setState({newEntry})
-	    let isComplete = true;
-	    Object.keys(newEntry).forEach(key => {
-	    	const value = newEntry[key];
-	    	if (value === '' && value !== 'classifier') {
-	    		isComplete = false
-	    	}
+		const { name, value } = event.target;
+	    this.setState({ [name]: value }, ()=>{
+	    	let isComplete = true;
+		    Object.keys(this.state).forEach(key => {
+		    	const value = this.state[key];
+		    	if (value === '' && key !== 'classifier') {
+		    		isComplete = false
+		    	}
+		    })
+		    this.setState({isComplete})
 	    })
-	    this.setState({isComplete})
 	}
 
 	handleSubmit = (event) => {
+		event.preventDefault();
 		if (this.state.isComplete) {
 			const { setLoading } = this.props;
-			const { newEntry } = this.state;
+			const newEntry = this.state;
 			setLoading(true)
 			apiRequest({
 				endPoint: '/add-entry',
 				method: 'POST',
-				body: newEntry 
+				body: this.state 
 			})
 			.then(entryData => {
 				setLoading(false)
@@ -88,7 +90,7 @@ class AddNewEntry extends Component {
 					    title: `Entry "${newEntry.canto_word}" Added!`,
 					    message: 'The entry has been successfully added to the dictionary.'
 				    })
-				    let emptyEntry = { ...this.state.newEntry };
+				    let emptyEntry = { ...this.state };
 				    Object.keys(emptyEntry).forEach(key => {
 				    	emptyEntry[key] = '';
 				    })
@@ -100,7 +102,6 @@ class AddNewEntry extends Component {
 				serverError()
 			})
 		}
-	    event.preventDefault();
 	}
 
 	
@@ -115,33 +116,33 @@ class AddNewEntry extends Component {
 				return (
 					<div className='new-entry'>
 						<div className='inner-new-entry'>
-							<h2>Welcome, {user.userName}</h2>
+							<h2 className='heading'>Welcome, {user.userName}</h2>
 							{
-								fields.fields.map(field => {
+								fields.fields.map(({name, required, id}) => {
 									return (
 										<TextInput 
-											key={field.id}
-											placeHolder={field.name}
+											key={id}
+											placeholder={name}
 											margin='20px 0'
 											height='44px'
-											id={field.id}
-											value={this.state[field.id]}
+											name={id}
+											value={this.state[id]}
 											handleChange={this.handleChange}
 										/>
 									)
 								})
 							}
 							{
-								fields.areas.map(field => {
+								fields.areas.map(({name, required, id}) => {
 									return (
 										<TextInput 
-											key={field.id}
+											key={id}
 											isTextArea={true}
-											placeHolder={field.name}
+											placeholder={name}
 											margin='20px 0'
 											height='100px'
-											id={field.id}
-											value={this.state[field.id]}
+											name={id}
+											value={this.state[id]}
 											handleChange={this.handleChange}
 										/>
 									)
