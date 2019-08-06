@@ -1,23 +1,26 @@
 import React, {Component} from 'react';
-import './sign-in.styles.css';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { serverError, connectionError, validateEmail } from '../../helpers/helpers';
 import FacebookLogin from 'react-facebook-login';
 import queryString from 'query-string';
 import MediaQuery from 'react-responsive';
+
 import { optionAlert } from '../../components/option-alert/option-alert.component';
-import HoverBox from '../../components/hover-box/hover-box.component';
 import Button from '../../components/button/button.component';
 import TextInput from '../../components/text-input/text-input.component';
+
 import apiRequest from '../../helpers/apiRequest';
+import { serverError, connectionError, validateEmail } from '../../helpers/helpers';
 import { routes } from '../../redux/routing/routing.constants';
+
 import { setUser } from '../../redux/sign-in/sign-in.actions';
 import { setLoading } from '../../redux/loading/loading.actions';
 import { setAlert } from '../../redux/pop-up-alert/pop-up-alert.actions';
 import config from '../../config.json';
+
+import './sign-in.styles.scss';
 
 const mapStateToProps = state => {
 	return {
@@ -413,10 +416,10 @@ class SignIn extends Component {
 			const line = pathName === RESET ? 'We will email you a link to reset your password.' : 'Please put your new password in both fields below.'
     		return (
     			<div className='sign-in-container'>
-					<div className='right-panel'>
-						<h2 className='right-title'>{heading}</h2>
+					<div className='panel'>
+						<h2 className='heading'>{heading}</h2>
 						<p>{line}</p>
-						{pathName === RESET && this.renderEmail}
+						{pathName === RESET && this.renderEmail()}
 						{pathName === VERIFY &&
 							<div>
 								{this.renderPassword('20px 0 0 0')}
@@ -454,18 +457,20 @@ class SignIn extends Component {
 
     		return (
     			<div className='sign-in-container'>
-					<div className='left-panel'>
-						<MediaQuery minWidth={361}>
-							<h1 className='pink contact-h'>{first}</h1>
-							<h1 className='contact-h'>{second}</h1>
-						</MediaQuery>
-						<MediaQuery maxWidth={360}>
-							<h2 className='pink contact-h'>{first}</h2>
-							<h2 className='contact-h'>{second}</h2>
-						</MediaQuery>
+					<div className='panel'>
+						<div className='heading-container'>
+							<MediaQuery minWidth={361}>
+								<h1 className='heading pink'>{first}</h1>
+								<h1 className='heading'>{second}</h1>
+							</MediaQuery>
+							<MediaQuery maxWidth={360}>
+								<h2 className='heading pink'>{first}</h2>
+								<h2 className='heading'>{second}</h2>
+							</MediaQuery>
+						</div>
 						<p>{message}</p>
 					</div>
-					<form className='right-panel' autoComplete='on'>
+					<form className='panel' autoComplete='on'>
 						<h2 className='right-title'>{title}</h2>
 						{pathName === REGISTER &&
 							<TextInput 
@@ -494,7 +499,7 @@ class SignIn extends Component {
 	                                className='checkbox-label' 
 	                                htmlFor="checkbox"
 	                            ></label>
-	                            <p className='mini'>I agree to the <Link to={PRIVACY} target='_blank' className='underline-button'>privacy policy</Link></p>
+	                            <p className='mini'>I agree to the <Link to={PRIVACY} target='_blank' className='mini'>privacy policy</Link></p>
                             </div>
 						}
 						<div className='button-row'>
@@ -516,7 +521,7 @@ class SignIn extends Component {
 						{pathName === LOGIN &&
 							<div className='bottom-row'>
 								<p 
-									className='underline-button' 
+									className='mini button' 
 									onClick={()=>updateURL(RESET)}
 								>Forgot Password</p>
 							</div>
@@ -529,7 +534,7 @@ class SignIn extends Component {
 								}
 							</p>
 							<p 
-								className='underline-button' 
+								className='mini button' 
 								onClick={() => this.signInToggle(alternateButton)}
 							>
 								{alternateButton}
@@ -545,9 +550,9 @@ class SignIn extends Component {
 	render() {
 		const { pathName } = this.props;
 		return (
-			<HoverBox>
-					{this.renderComponent(pathName)}
-			</HoverBox>
+			<div className='sign-in-page'>
+				{this.renderComponent(pathName)}
+			</div>
 		);
 	}
 }

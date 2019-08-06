@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import './contact.styles.css';
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
-import { validateEmail, serverError, updateObject } from '../../helpers/helpers';
+
 import { optionAlert } from '../../components/option-alert/option-alert.component';
-import HoverBox from '../../components/hover-box/hover-box.component';
 import TextInput from '../../components/text-input/text-input.component';
 import Button from '../../components/button/button.component';
+
+import { validateEmail, serverError, updateObject } from '../../helpers/helpers';
 import apiRequest from '../../helpers/apiRequest';
+
 import { setLoading } from '../../redux/loading/loading.actions';
-import { push } from 'connected-react-router'
+
+import './contact.styles.scss';
 
 const mapStateToProps = state => {
 	return {
@@ -126,21 +129,21 @@ class Contact extends Component {
 			<MediaQuery maxWidth={574}>
 				{(matches) => {
 				return (
-					<HoverBox>
+					<div className='contact-page'>
 						<div className='contact'>
-							<div className='left-panel'>
+							<div className='panel'>
 								<MediaQuery minWidth={361}>
-									<h1 className='pink'>{first}</h1>
-									<h1>{second}</h1>
+									<h1 className='heading pink'>{first}</h1>
+									<h1 className='heading'>{second}</h1>
 								</MediaQuery>
 								<MediaQuery maxWidth={360}>
-									<h2 className='pink'>{first}</h2>
-									<h2>{second}</h2>
+									<h2 className='heading pink'>{first}</h2>
+									<h2 className='heading'>{second}</h2>
 								</MediaQuery>
 								<p>Feel free to get in touch with us! Whether you need help with the application, or there is something you would like to see here, or just want to say hi, we are waiting to hear from you! 
 								</p>
 							</div>
-							<div className='right-panel'>
+							<div className='panel'>
 							        <TextInput 
 										placeHolder='Name'
 										margin='10px 0'
@@ -176,7 +179,7 @@ class Contact extends Component {
 									/>
 							</div>
 						</div>
-					</HoverBox>
+					</div>
 				)}}
 			</MediaQuery>
 		);

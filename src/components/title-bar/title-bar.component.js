@@ -1,8 +1,8 @@
 import React from 'react';
-import './title-bar.styles.css';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import MediaQuery from 'react-responsive';
+
 import LogoFull from '../logo-full/logo-full.component';
 import Logo from '../logo/logo.component';
 import Icon from '../icon/icon.component';
@@ -11,7 +11,10 @@ import Trigger from '../compound/trigger.component';
 import PopOver from '../pop-over/pop-over.component';
 import Settings from '../settings/settings.component';
 import NavMenu from '../nav-menu/nav-menu.component';
+
 import { routes } from '../../redux/routing/routing.constants';
+
+import './title-bar.styles.scss';
 
 const mapStateToProps = (state, ownProps) => {
   return {

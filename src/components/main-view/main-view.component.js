@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import Search from '../../pages/search/search.component';
 import WordOfTheDay from '../../pages/word-of-day/word-of-day.component';
 import Learn from '../../pages/learn/learn.component';
@@ -13,9 +16,10 @@ import Profile from '../../pages/profile/profile.component';
 import Contact from '../../pages/contact/contact.component';
 import PrivacyPolicy from '../../pages/privacy-policy/privacy-policy.component';
 import AddNewEntry from '../../pages/add-new-entry/add-new-entry.component'
-import { connect } from 'react-redux';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import { routes } from '../../redux/routing/routing.constants';
+
+import './main-view.styles.scss';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -59,12 +63,12 @@ class MainView extends Component {
 		const { location, location: { key } } = this.props
 
 		return (
-			<div className='main-view' style={{position: 'absolute'}}>
+			<div className='main-view'>
 				<Switch location={location}>
 					<Route 
 						path={[LOGIN, REGISTER, VERIFY, RESET]} 
 						render={()=>(
-							<TransitionGroup className='page-trans over-flow'>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
@@ -78,7 +82,7 @@ class MainView extends Component {
 					<Route 
 						path={PROFILE} 
 						render={()=>(
-							<TransitionGroup className='page-trans over-flow'>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
@@ -92,7 +96,7 @@ class MainView extends Component {
 					<Route 
 						path={WHAT} 
 						render={()=>(
-							<TransitionGroup className='page-trans over-flow'>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
@@ -106,7 +110,7 @@ class MainView extends Component {
 					<Route 
 						path={CONTACT} 
 						render={()=>(
-							<TransitionGroup className='page-trans over-flow'>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}

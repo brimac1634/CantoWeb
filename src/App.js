@@ -73,16 +73,12 @@ class App extends Component {
     const { loading } = this.props;
     const { loadingHasFinished, initialLoading } = this.state;
     return (
-      <div className='app'>
+      <div>
         {
           loadingHasFinished &&
             <span>
-              <div className='main-view-container'>
-                <MainView className='main-view' />
-              </div>
-              <TitleBar 
-                className='title-bar'
-              />
+              <MainView />
+              <TitleBar />
               <PopUpAlert 
                 title={alert.title} 
                 message={alert.message} 
