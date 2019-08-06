@@ -10,7 +10,7 @@ import Button from '../../components/button/button.component';
 import apiRequest from '../../helpers/apiRequest';
 import { setLoading } from '../../redux/loading/loading.actions';
 import { routes } from '../../redux/routing/routing.constants';
-import { serverError } from '../../helpers/helpers';
+import { updateObject, serverError } from '../../helpers/helpers';
 import fields from './add-new-entry.data';
 
 import './add-new-entry.styles.scss';
