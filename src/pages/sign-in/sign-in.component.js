@@ -382,7 +382,7 @@ class SignIn extends Component {
     		<TextInput 
 				icon='locked-4' 
 				margin={margin}
-				placeHolder='Password'
+				placeholder='Password'
 				value={password}
 				type='password'
 				id='password'
@@ -397,7 +397,7 @@ class SignIn extends Component {
     		<TextInput 
 				icon='user-3' 
 				margin='20px 0'
-				placeHolder='Email Address'
+				placeholder='Email Address'
 				value={email}
 				id='email'
 				name='email'
@@ -426,7 +426,7 @@ class SignIn extends Component {
 								<TextInput 
 									icon='locked-4' 
 									margin='20px 0'
-									placeHolder='Retype Password'
+									placeholder='Retype Password'
 									value={password2}
 									type='password'
 									id='password2'
@@ -476,7 +476,7 @@ class SignIn extends Component {
 							<TextInput 
 								icon='user-3' 
 								margin='0'
-								placeHolder='Full Name'
+								placeholder='Full Name'
 								value={name}
 								id='name'
 								name='name'
