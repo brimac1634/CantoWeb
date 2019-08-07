@@ -13,7 +13,7 @@ import apiRequest from './helpers/apiRequest';
 import { routes } from './redux/routing/routing.constants';
 import { deleteToken } from './helpers/helpers';
 
-import './App.scss';
+import './App.scss'; 
 
 const mapStateToProps = state => {
   return {
