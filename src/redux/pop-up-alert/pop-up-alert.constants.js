@@ -1,1 +1,0 @@
-export const PRESENT_ALERT = 'PRESENT_ALERT';

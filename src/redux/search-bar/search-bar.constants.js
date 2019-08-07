@@ -1,3 +1,0 @@
-export const SET_TEMP_SEARCH = 'SET_TEMP_SEARCH';
-export const SET_SEARCH_TYPE = 'SET_SEARCH_TYPE';
-export const SET_SEARCH_KEY = 'SET_SEARCH_KEY';
