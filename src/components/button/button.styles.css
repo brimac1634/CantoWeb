@@ -1,0 +1,57 @@
+.btn-disabled,
+.btn-active {
+	width: auto;
+	height: auto;
+	border-radius: 4px;
+	font-size: 16px;
+	transition: all .2s linear;
+	text-align: center;
+	box-sizing: border-box;
+	border: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	outline: none;
+}
+
+.btn-active {
+	color: var(--cantoBlue);
+	background: transparent;
+	border: solid 1px var(--cantoDarkGray);
+	cursor: pointer;
+}
+
+.btn-disabled {
+	background: var(--cantoGray);
+	border: solid 1px var(--cantoGray);
+	cursor: default;
+}
+
+.btn-disabled p {
+	color: var(--cantoDarkGray);
+}
+
+.with-icon {
+	margin: 0 0 0 10px;
+}
+
+.without-icon {
+	margin: 0;
+}
+
+.btn-active:hover,
+.selected-button {
+	border: solid 1px var(--cantoDarkBlue);
+}
+
+.selected-button {
+	background: var(--cantoGray);
+}
+
+.btn-active:active {
+	background: var(--cantoDarkGray);
+}
+
+
+

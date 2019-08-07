@@ -1,5 +1,6 @@
 import { connectionError } from './helpers';
 import Cookies from 'universal-cookie';
+import { optionAlert } from '../components/option-alert/option-alert.component';
 
 export default ({
 	endPoint = '',
@@ -15,7 +16,7 @@ export default ({
             'Content-Type': 'application/json',
             'x-access-token': token ? token : ''
         },
-		body: JSON.stringify(body)
+		body: body ? JSON.stringify(body) : undefined
 	}),
         new Promise((_, reject) =>
             setTimeout(() => reject(new Error('timeout')), timeout)
@@ -23,9 +24,14 @@ export default ({
     ])
     	.then(res => res.json())
     	.then(data => {
+            if (data && data.error != null) {
+                const { title, message } = data.error;
+                optionAlert({
+                    title,
+                    message
+                })
+            }
     		return data
     	})
-    	.catch(err => {
-    		connectionError()
-    	})		
+    	.catch(() => connectionError())		
 }

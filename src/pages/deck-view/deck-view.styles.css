@@ -1,0 +1,35 @@
+.dual-wrap,
+.deck-info {
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	box-sizing: border-box;
+}
+
+.dual-wrap {
+	padding: 20px;
+	justify-content: space-around;
+}
+
+.deck-info {
+	justify-content: flex-start;
+}
+
+.half {
+	width: 100%;
+	max-width: 500px;
+	padding: 10px 0;
+}
+
+.deck-details {
+	padding: 10px 30px;
+	border-radius: 4px;
+	background: var(--cantoGray);
+}
+
+.deck-entry-list {
+	text-align: center;
+	overflow: hidden;
+}

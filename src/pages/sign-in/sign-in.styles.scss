@@ -1,0 +1,136 @@
+@mixin startRow {
+    display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.sign-in-page {
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	display: flex;
+	justify-content: center;
+
+	.sign-in-container {
+		max-width: 1000px;
+		min-height: 500px;
+		padding: 20px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		align-items: center;
+		flex-wrap: wrap;
+		background: var(--cantoWhite);
+
+		p {
+			margin: 4px 0;
+		}
+
+		.panel {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-start;
+			padding: 10px;
+			min-width: 310px;
+			width: 45%;
+
+			.heading-container {
+				margin-bottom: 20px;
+			}
+
+			.heading {
+				margin: 5px 0;
+
+				&.pink {
+					color: var(--cantoPink);
+				}
+			}
+
+			.button-row {
+				@include startRow();
+			}
+
+			.agree-row  {
+				@include startRow();
+
+				.checkbox {
+				    cursor: pointer;
+				    display: none;
+
+				    &:checked + .checkbox-label {
+						background-color: var(--cantoPink);
+						border: solid 1px var(--cantoDarkBlue);
+					}
+				}
+
+				.checkbox-label {
+				    display: block;
+				    border: solid 1px var(--cantoDarkGray);
+				    border-radius: 100%;
+				    width: 1em;
+				    height: 1em;
+				    cursor: pointer;
+				    margin-right: 5px;
+				    transition: all .2s ease-in-out;
+
+				    &:active {
+						transform: scale(0.8);
+					}
+				}
+			}
+
+			.bottom-row {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+				margin-top: 10px;
+			}
+
+			.mini {
+				color: var(--cantoBlue);
+				text-decoration: none;
+				margin-right: 5px;
+
+				&.button {
+					cursor: pointer;
+					font-weight: bold;
+				}
+			}
+
+			.custom-fb-button {
+				background: #4c69ba;
+				color: var(--cantoWhite);
+				height: 45px;
+				border-radius: 4px;
+				font-size: 16px;
+				padding: 5px 15px;
+				margin: 10px 0 10px 20px;
+				cursor: pointer;
+				outline: none;
+			}
+		}
+	}
+
+	@media screen and (max-width: 575px) {
+	    .mini {
+			font-size: 16px;
+		}
+
+		.button-row {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.custom-fb-button {
+			margin: 10px 0;
+		}
+	}
+}
+
+
+

@@ -1,5 +1,5 @@
-import { optionAlert } from '../Containers/OptionAlert/OptionAlert';
-import { routes } from '../Routing/constants';
+import { optionAlert } from '../components/option-alert/option-alert.component';
+import { routes } from '../redux/routing/routing.constants';
 import Cookies from 'universal-cookie';
 
 export const validateUser = (userID) => {
@@ -9,6 +9,11 @@ export const validateUser = (userID) => {
 export const deleteToken = () => {
 	const cookies = new Cookies();
     cookies.remove('authToken', { path: '/' });
+}
+
+
+export const isEmptyObject = (obj) => {
+	return Object.entries(obj).length === 0
 }
 
 export const updateObject = (event, object) => {

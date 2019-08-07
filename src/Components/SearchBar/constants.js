@@ -1,2 +1,0 @@
-export const SET_TEMP_SEARCH = 'SET_TEMP_SEARCH';
-export const SET_SEARCH_TYPE = 'SET_SEARCH_TYPE';

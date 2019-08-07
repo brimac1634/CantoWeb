@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
+
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import TitleBar from './Components/TitleBar/TitleBar';
-import MainView from './Containers/MainView/MainView';
-import PopUpAlert from './Components/PopUpAlert/PopUpAlert';
-import { setUser } from './Containers/SignIn/actions';
 import { SwapSpinner } from "react-spinners-kit";
-import apiRequest from './Helpers/apiRequest';
-import { routes } from './Routing/constants';
-import { deleteToken } from './Helpers/helpers';
+import Logo from './components/logo/logo.component';
+import TitleBar from './components/title-bar/title-bar.component';
+import MainView from './components/main-view/main-view.component';
+import PopUpAlert from './components/pop-up-alert/pop-up-alert.component';
+import { setUser } from './redux/sign-in/sign-in.actions';
+import apiRequest from './helpers/apiRequest';
+import { routes } from './redux/routing/routing.constants';
+import { deleteToken } from './helpers/helpers';
+
+import './App.scss';
 
 const mapStateToProps = state => {
   return {
@@ -76,12 +79,8 @@ class App extends Component {
         {
           loadingHasFinished &&
             <span>
-              <TitleBar 
-                className='title-bar'
-              />
-              <div className='main-view-container'>
-                <MainView className='main-view' />
-              </div>
+              <MainView />
+              <TitleBar />
               <PopUpAlert 
                 title={alert.title} 
                 message={alert.message} 
@@ -91,7 +90,8 @@ class App extends Component {
         }
         {
           initialLoading &&
-            <div className='center-div'>
+            <div className='loader vertical'>
+              <Logo iconSize='100px' margin='20px'/>
               <SwapSpinner
                 size={60}
                 color='#ff7a8a'
@@ -101,7 +101,7 @@ class App extends Component {
         }
         {
           loading &&
-            <div className='center-div'>
+            <div className='loader'>
               <SwapSpinner
                 size={60}
                 color='#ff7a8a'

@@ -1,0 +1,149 @@
+.entry-row,
+.show-progress {
+	background: var(--cantoWhite);
+	box-sizing: border-box;
+	width: auto;
+	height: 80px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+	align-items: center;
+	border-radius: 4px;
+	margin: 10px;
+	border: solid 1px var(--cantoDarkGray);
+	transition: all 0.3s ease-in-out;
+	white-space: nowrap;
+	overflow: hidden;
+	position: relative;
+}
+
+.entry-row {
+	padding: 10px;
+}
+
+.show-progress {
+	padding: 10px 30% 10px 10px;
+}
+
+.entry-row h3,
+.entry-row p {
+	margin: 0;
+}
+
+.real {
+	cursor: pointer; 
+}
+
+.real:hover {
+	box-shadow: var(--cantoShadow);
+}
+
+.demo,
+.disabled {
+	cursor: default;
+}
+
+.entry-row > * {
+	padding: 0 5px;
+	text-align: left;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.entry-row p {
+	font-size: 16px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.top-left h3 {
+	font-size: 22px;
+	margin-right: 8px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: 'Heebo', sans-serif;
+}
+
+.hover-box {
+	border: solid 1px transparent;
+	border-radius: 4px;
+	transition: all 0.2s ease-in-out;
+}
+
+.hover-box:hover {
+	border: solid 1px #333;
+}
+
+.small-demo-row {
+	margin: 10px 0;
+}
+
+.small-demo-row * {
+	font-size: 0.85em;
+}
+
+.mark-spot {
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 30px;
+	height: 30px;
+	box-sizing: border-box;
+	padding: 2px;
+	border-radius: 50%;
+	border: solid 2px var(--cantoPink);
+	transition: all .4s ease-in-out;
+}
+
+.circle-mark {
+	content: "";
+	display: block;
+}
+
+.x-mark {
+	background: var(--cantoPink);
+	cursor: pointer;
+}
+
+.progress-container {
+	box-sizing: border-box;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 33%;
+	height: 100%;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(to left, var(--cantoWhite) 0%, var(--cantoWhite) 80%, rgba(255, 255, 255, 0) 100%);
+	background: -webkit-linear-gradient(to left, var(--cantoWhite) 0%, var(--cantoWhite) 80%, rgba(255, 255, 255, 0) 100%);
+}
+
+.progress-border {
+	width: 100%;
+	height: 15px;
+	border-radius: 4px;
+	overflow: hidden;
+	margin: 0 5px;
+	background: var(--cantoGray);
+}
+
+.progress {
+	background: var(--cantoPink);
+	height: 100%;
+}
+
+@media screen and (max-width: 360px) {
+    .entry-row h3 {
+    	font-size: 1.1em;
+    }
+
+    .entry-row p {
+    	font-size: 0.9em;
+    }
+}
+

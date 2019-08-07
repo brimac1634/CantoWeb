@@ -5,10 +5,9 @@ export const setupPlayBack = (context, audio) => {
     return playSound
 }
 
-export const audioRequest = (entryID) => {
+export const audioRequest = (entryID, playNow) => {
     let AudioContext = window.AudioContext || window.webkitAudioContext;
     const context = new AudioContext();
-
     return Promise.race([fetch(`${process.env.REACT_APP_SERVER_URL}/stream-audio`, {
 		method: 'POST',
 		headers: {'Content-Type': 'application/json'},
@@ -26,7 +25,14 @@ export const audioRequest = (entryID) => {
             }
         })
         .then(arrayBuffer => {
-            return {context, arrayBuffer}
+            if (playNow) {
+                context.decodeAudioData(arrayBuffer, decodedAudio => {
+                    const playSound = setupPlayBack(context, decodedAudio)
+                    playSound.start(0);
+                }, ()=>new Error())
+            } else {
+                return {context, arrayBuffer}
+            }
         })
     	.catch()		
 }
