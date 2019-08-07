@@ -1,6 +1,9 @@
 {
   "name": "cantotalkweb",
   "version": "0.1.0",
+  "engines": {
+    "node": "11.15.0"
+  },
   "private": true,
   "dependencies": {
     "connected-react-router": "^6.5.2",
