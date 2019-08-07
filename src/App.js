@@ -9,7 +9,7 @@ import TitleBar from './components/title-bar/title-bar.component';
 import MainView from './components/main-view/main-view.component';
 import PopUpAlert from './components/pop-up-alert/pop-up-alert.component';
 import { setUser } from './redux/sign-in/sign-in.actions';
-import apiRequest from './helpers/apiRequest';
+import apiRequest from './helpers/apiRequestUtil';
 import { routes } from './redux/routing/routing.constants';
 import { deleteToken } from './helpers/helpers';
 
