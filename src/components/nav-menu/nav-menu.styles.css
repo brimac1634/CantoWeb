@@ -1,0 +1,22 @@
+.nav {
+	width: 250px;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	text-align: center;
+	background: var(--cantoWhite)
+}
+
+.link {
+	height: auto;
+	width: 100%;
+	text-decoration: none;
+}
+
+@media screen and (max-width: 575px) {
+    .nav {
+  	    width: 230px;
+    }
+}

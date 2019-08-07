@@ -1,0 +1,58 @@
+body.component-alert-body-element {
+  overflow: hidden;
+}
+
+.component-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: rgba(6, 38, 66, 0.62);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: component-alert-fadeIn 0.5s 0.2s forwards;
+}
+
+.component-alert-body {
+  position: relative;
+  box-sizing: border-box;
+  height: 430px;
+  overflow: hidden;
+  background: var(--cantoWhite);
+  border-radius: 4px;
+  box-shadow: var(--cantoFloatShadow);
+}
+
+.inner-container {
+  box-sizing: border-box;
+  height: inherit;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 35px;
+}
+
+.close {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  top: 10px;
+  right: 10px;
+  outline: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+
+@keyframes component-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

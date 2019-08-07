@@ -1,0 +1,84 @@
+.input-area-group,
+.input-group  {
+	border: solid 1px var(--cantoDarkGray);
+	border-radius: 4px;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 10px;
+	transition: all .3s linear;
+}
+
+.input-group {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.input-group:focus-within,
+.input-area-group:focus-within {
+	border: solid 1px var(--cantoDarkBlue);
+}
+
+.icon-group {
+	height: auto;
+	width: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.btn-container {
+	height: 100%;
+}
+
+.input-icon {
+	width: auto;
+	height: auto;
+	padding-right: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.input-divider {
+	background: var(--cantoDarkGray);
+	width: 1px;
+	height: 95%;
+	margin-right: 10px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px var(--cantoWhite) inset !important;
+}
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: var(--cantoDarkBlue);
+}
+
+.text-input {
+	width: 100%;
+	height: 100%;
+	outline: none;
+	border: none;
+	background: transparent;
+	font-size: 16px;
+	color: var(--cantoDarkBlue);
+}
+
+.text-area {
+	resize: none;
+	overflow: auto;
+}
+
+@media screen and (max-width: 575px) {
+	.input-group {
+		height: 44px;
+	}
+}

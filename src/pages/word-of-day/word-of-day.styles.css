@@ -1,0 +1,45 @@
+.word-of-day {
+	width: 100%;
+	height: 100%;
+	background: var(--cantoWhite);
+}
+
+.wod-bar {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.wod-split {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	flex-direction: row;
+}
+
+.half-container {
+	width: 50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	box-sizing: border-box;
+	padding: 10px;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+@media screen and (max-width: 700px) {
+
+	.half-container {
+		width: 100%;
+		height: 100%;
+	}
+
+	.wod-split {
+		display: block;
+	}
+}

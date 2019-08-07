@@ -1,0 +1,182 @@
+.vertical-center {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
+
+.calendar-row {
+    display: flex;
+    width: 100%;
+}
+
+.calendar {
+    display: block;
+    width: 100%;
+    border: solid 1px var(--cantoDarkBlue);
+    border-radius: 4px;
+    font-size: 1.3rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--cantoWhite);
+    cursor: default;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.month-display {
+    align-items: center;
+    height: 50px;
+    background: var(--cantoDarkBlue);
+}
+
+.month-label { 
+   flex: 1;
+}
+
+.month-label h2 { 
+   color: var(--cantoWhite);
+   font-size: 1.1em;
+}
+
+.arrow {
+    text-align: center;
+    flex-basis: 15%;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background .2s;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fa-angle-left {
+    transform: rotateZ(180deg);
+}
+
+.arrow:hover {
+    background: darken(var(--cantoDarkBlue), 50%);
+}
+
+.week {
+    border-top: solid 1px var(--cantoDarkGray);   
+}
+
+.week:first-child {
+    border-top: none;
+}
+
+.day-names .day {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    color: var(--cantoDarkBlue);
+    font-weight: bold;
+    cursor: default;
+    font-size: 1.2rem;
+    height: 50px;
+}
+
+.day-names .day {
+    cursor: default;
+}
+
+.day-names .day:hover {
+    background: inherit;
+}
+
+.day {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    height: 80px;
+    border-left: solid 1px var(--cantoDarkGray);
+    cursor: pointer;
+    transition: all .2s;
+    overflow: hidden;
+    color: var(--cantoDarkBlue);
+}
+
+
+.day-number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    padding: 0 2px;
+    font-size: 1rem;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+}
+
+.day-canto {
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 5px;
+}
+
+.day:hover {
+    background: var(--cantoPink);
+}
+
+.day:first-child {
+    border-left:none;
+}
+
+.today {
+    background: var(--cantoDarkGray);
+}
+
+.different-month {
+    color: var(--cantoDarkGray);
+}
+
+.selected {
+    background: var(--cantoPink);
+    color: var(--cantoWhite);
+}
+
+@media screen and (max-width:930px) and (min-width:700px) {
+    .day {
+        height: 60px;
+    }
+
+    .day-number {
+        font-size: 0.8rem;
+    }
+    
+}
+
+@media screen and (max-width:450px) {
+    .day-names .day {
+        font-size: 0.9rem;
+    }
+
+    .day {
+        height: 50px;
+    }
+
+    .day-number {
+        font-size: 0.7rem;
+    }
+
+    .day-canto {
+        font-size: 1rem;
+    }
+}

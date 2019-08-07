@@ -1,0 +1,1 @@
+export const SET_MOBILE_ENTRY = 'SET_MOBILE_ENTRY';

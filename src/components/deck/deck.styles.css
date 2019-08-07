@@ -1,0 +1,44 @@
+.deck {
+	position: relative;
+	background: var(--cantoWhite);
+	box-sizing: border-box;
+	width: 200px;
+	border-radius: 4px;
+	padding: 10px;
+	margin: 10px;
+	border: solid 1px var(--cantoDarkGray);
+	transition: all 0.3s ease-in-out;
+	overflow: hidden;
+}
+
+.default {
+	cursor: pointer;
+}
+
+.disable {
+	cursor: default;
+}
+
+.deck:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.name-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.default:hover {
+	box-shadow: var(--cantoShadow);
+}
+
+
+@media screen and (max-width: 575px) {
+	.deck {
+		width: 120px;
+	}
+}

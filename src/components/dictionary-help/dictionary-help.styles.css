@@ -1,0 +1,129 @@
+.dict-help {
+	max-width: 720px;
+	height: auto;
+	box-sizing: border-box;
+	text-align: center;
+	display: grid;
+	grid-template-columns: [directory] 120px [content] auto;
+}
+
+.directory {
+	position: fixed;
+	grid-column-start: directory;
+	width: 100px;
+	height: auto;
+	text-align: left;
+	overflow-y: hidden;
+	box-sizing: border-box;
+}
+
+.directory p {
+	margin: 0;
+	font-size: 0.95em;
+	white-space: nowrap;
+	margin-right: auto;
+	transition: all .2s linear;
+}
+
+.directory p:hover {
+	background: var(--cantoGray);
+}
+
+.directory > * {
+	cursor: pointer;
+}
+
+
+.content {
+	grid-column-start: content;
+	max-width: 600px;
+}
+
+.row-diagram {
+	margin: 30px 0;
+}
+
+.group-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.example-word {
+	font-size: 2em;
+	margin: 10px;
+}
+
+/*Example Grid*/
+
+.example-divider {
+	margin: 35px 0 10px 0;
+}
+
+.example-row {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	box-sizing: border-box;
+	padding: 0 20px;
+	margin: 10px 0;
+	border-radius: 4px;
+	border: solid 1px var(--cantoDarkGray);
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+}
+
+.example-row > p {
+	margin: 5px;
+}
+
+.example-row:hover {
+	box-shadow: var(--cantoShadow);
+}
+
+.main,
+.sub,
+.sub-sub {
+	margin-right: auto;
+}
+
+.main {
+	font-weight: 600;
+}
+
+.sub {
+	font-weight: 300;
+	text-indent: 1em;
+}
+
+.sub-sub {
+	font-weight: 100;
+	text-indent: 2em;
+	color: #666;
+}
+
+::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+@media screen and (max-width: 800px) {
+   	.content {
+		grid-column-start: directory;
+		grid-column-end: 3;
+	}
+}
+
+@media screen and (max-width: 380px) {
+    h1 {
+    	font-size: 1.4em;
+    }
+
+    h2,
+    h3,{
+    	font-size: 1em;
+    }
+
+    p {
+    	font-size: 0.9em;
+    }
+}
