@@ -1,7 +1,9 @@
 import React from 'react';
-import './privacy-policy.styles.css'
 import {Link} from 'react-router-dom';
+
 import { routes } from '../../redux/routing/routing.constants';
+
+import './privacy-policy.styles.scss'
 
 const PrivacyPolicy = () => {
 	const { CONTACT } = routes;

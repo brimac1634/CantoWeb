@@ -28,7 +28,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 class MainView extends Component {
-
 	shouldComponentUpdate(newProps) {
 		const pathName = this.props.location.pathname
 		const newPathName = newProps.location.pathname
@@ -208,7 +207,7 @@ class MainView extends Component {
 					<Route 
 						path={PRIVACY} 
 						render={()=>(
-							<TransitionGroup className='page over-flow'>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
@@ -222,7 +221,7 @@ class MainView extends Component {
 					<Route 
 						path={ADD} 
 						render={()=>(
-							<TransitionGroup className='page over-flow'>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
@@ -236,7 +235,7 @@ class MainView extends Component {
 					<Route 
 						path={HOME} 
 						render={()=>(
-							<TransitionGroup className='page-trans over-flow'>
+							<TransitionGroup className='page'>
 								<CSSTransition
 									key={key}
 						            timeout={TRANSITION}
