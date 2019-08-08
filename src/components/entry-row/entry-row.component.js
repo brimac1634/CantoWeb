@@ -35,7 +35,6 @@ class EntryRow extends Component {
 
 	renderRow = () => {
 		const {
-			delay,
 			entry,
 			entry: {
 				canto_word,
@@ -108,8 +107,7 @@ class EntryRow extends Component {
 			} else {
 				return (
 					<div 
-						className={`entry-row ${rowType()} animate-pop-in ${progressStyle}`}
-						style={{animationDelay: `${delay}s`}}
+						className={`entry-row ${rowType()} ${progressStyle}`}
 						onClick={selectEntry ? ()=>selectEntry(entry) : null}
 					>
 						<div className='top-left'>
@@ -147,8 +145,7 @@ class EntryRow extends Component {
 		} else {
 			return (
 				<div 
-					className={`entry-row ${rowType()} animate-pop-in`}
-					style={{animationDelay: `${delay}s`}}
+					className={`entry-row ${rowType()}`}
 				>
 					<div className='top-left'>
 						<div className='ghost-div'>&nbsp;</div>

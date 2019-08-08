@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './slide-up-entry.styles.css';
+import { connect } from 'react-redux';
+import { SwapSpinner } from "react-spinners-kit";
+
 import EntryView from '../entry-view/entry-view.component';
 import Icon from '../icon/icon.component';
-import { connect } from 'react-redux';
+
 import { setMobileEntry } from '../../redux/search/search.actions';
-import { SwapSpinner } from "react-spinners-kit";
+
+import './slide-up-entry.styles.scss';
 
 const mapStateToProps = state => {
   return {
@@ -27,7 +30,7 @@ const SlideUpEntry = ({ isSelected, selectedEntry, setMobileEntry, loading, upda
 			: 'hidden-entry-view'
 
 	return ReactDOM.createPortal(
-        <span onClick={event => event.stopPropagation()}>
+        <span className='slide-up-entry' onClick={event => event.stopPropagation()}>
             {isSelected
 	              ? <div className='back-div animate-in'>&nbsp;</div>
 	              : null
@@ -38,7 +41,7 @@ const SlideUpEntry = ({ isSelected, selectedEntry, setMobileEntry, loading, upda
 			>
 				<div className='entry-view-sizer' onClick={event => event.stopPropagation()}>
 					<button 
-                      className='slide-up-close' 
+                      className='close-btn ' 
                       onClick={()=>setMobileEntry('')}
                     >
                         <Icon 

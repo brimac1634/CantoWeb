@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './learn-game.styles.css';
+
 import { connect } from 'react-redux';
 import { optionAlert } from '../../components/option-alert/option-alert.component';
 import LinkedList from '../../helpers/LinkedList';
@@ -10,6 +10,8 @@ import apiRequest from '../../helpers/apiRequest';
 import { push } from 'connected-react-router';
 import { setLoading } from '../../redux/loading/loading.actions';
 import { routes } from '../../redux/routing/routing.constants';
+
+import './learn-game.styles.scss';
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -226,11 +228,11 @@ class LearnGame extends Component {
 		const { deck_name } = this.props.deck;
 		
 		return (
-			<div className='page over-flow-y center-x'>
+			<div className='learn-game'>
 				{head &&
 					<div className='game-container'>
-						<div className='question-container centered'>
-							<div className='question-card centered'>
+						<div className='question-container'>
+							<div className='question-card'>
 								{isNaN(head.value.question)
 									?	<h1>{head.value.question || ''}</h1>
 									: 	<SpeakerButton 
@@ -247,7 +249,7 @@ class LearnGame extends Component {
 								const color = option === correctOption 
 									? 'var(--cantoPink)'
 									: 'var(--cantoGray)'
-								const disable = answerComplete ? null : 'default-border'
+								const active = answerComplete ? null : 'active'
 								const style = {
 									background: answerComplete 
 										? color 
@@ -257,14 +259,14 @@ class LearnGame extends Component {
 									<div 
 										key={option}
 										style={style}
-										className={`option-box centered ${disable}`}
+										className={`option-box ${active}`}
 										onClick={()=>this.checkAnswer(option)}
 									>
 										<p>{option}</p>
 										{correctChoice &&
 											<div 
 												style={{background: 'var(--cantoBlue'}}
-												className='icon-stamp centered'
+												className='icon-stamp'
 											>
 												<Icon 
 													icon='like'
@@ -276,7 +278,7 @@ class LearnGame extends Component {
 										{option === wrongOption &&
 											<div 
 												style={{background: 'var(--cantoPink'}}
-												className='icon-stamp centered'
+												className='icon-stamp'
 											>
 												<Icon 
 													icon='dislike'

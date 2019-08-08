@@ -21,10 +21,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const EntryList = ({ entries, selectEntry, searchComplete, updateURL, search, pathName, addedList, isDisabled, hideGhost, showX, handleX }) => {
 	let ghostRows = [0,1,2,3,4,5,6]
-	const getDelay = (i) => {
-		const add = i * 0.1
-		return 0 + add
-	}
 
 	const renderMessage = () => {
 		const { CONTACT, SEARCH } = routes;
@@ -56,7 +52,6 @@ const EntryList = ({ entries, selectEntry, searchComplete, updateURL, search, pa
 				?   entries.map((entry, i) => {
 						return (
 							<EntryRow
-								delay={getDelay(i)}
 								key={entry.entry_id}
 								selectEntry={selectEntry}
 								entry={entry}
@@ -74,7 +69,6 @@ const EntryList = ({ entries, selectEntry, searchComplete, updateURL, search, pa
 							<EntryRow
 								key={i}
 								entry=''
-								delay={getDelay(i)}
 							/>
 						);
 					})
