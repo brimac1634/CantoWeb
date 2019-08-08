@@ -1,5 +1,6 @@
 import React from 'react';
-import './calendar.styles.css'
+
+import './calendar.styles.scss'
 
 const DayNames = () => {
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

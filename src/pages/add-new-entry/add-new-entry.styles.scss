@@ -1,8 +1,11 @@
 .new-entry {
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 	width: 100%;
-	padding: 20px 10px;
+	height: 100%;
 	display: flex;
 	justify-content: center;
+	padding: 20px 10px;
 
 	.inner-new-entry {
 		padding: 0 10px;

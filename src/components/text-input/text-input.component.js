@@ -19,50 +19,52 @@ const TextInput = ({ icon, handleChange, height, margin, padding, handleClick, i
 	}
 
 	return (
-		<div className={container} style={style} onClick={handleClick}>
-			{icon != null &&
-				<div className='icon-group'>
-					<div className='input-icon'>
-						<Icon iconSize='18' icon={icon} color='cantoBlue'/>
+		<div className='text-input'>
+			<div className={container} style={style} onClick={handleClick}>
+				{icon != null &&
+					<div className='icon-group'>
+						<div className='input-icon'>
+							<Icon iconSize='18' icon={icon} color='cantoBlue'/>
+						</div>
+						<div className='input-divider'>&nbsp;</div>
 					</div>
-					<div className='input-divider'>&nbsp;</div>
-				</div>
-			}
-			{button != null &&
-				<div className='btn-container' onClick={e=>e.stopPropagation()}>
-					<Controller>
-						<Trigger>
-							<div className='icon-group'>
-								<Button 
-									title={button}
-									buttonType='ghost'
-									height='100%'
-									margin='0 10px 0 0'
-									padding='0 16px'
-								/>
-							</div>
-						</Trigger>
-						<DropDown 
-							list={buttonList} 
-							handleSelection={handleDropDown}
-							padding='0'
+				}
+				{button != null &&
+					<div className='btn-container' onClick={e=>e.stopPropagation()}>
+						<Controller>
+							<Trigger>
+								<div className='icon-group'>
+									<Button 
+										title={button}
+										buttonType='ghost'
+										height='100%'
+										margin='0 10px 0 0'
+										padding='0 16px'
+									/>
+								</div>
+							</Trigger>
+							<DropDown 
+								list={buttonList} 
+								handleSelection={handleDropDown}
+								padding='0'
+							/>
+						</Controller>
+					</div>
+				}
+				{isTextArea
+					?   <textarea
+							className='text-input text-area'
+							onChange={handleChange}
+							{ ...otherProps }
 						/>
-					</Controller>
-				</div>
-			}
-			{isTextArea
-				?   <textarea
-						className='text-input text-area'
-						onChange={handleChange}
-						{ ...otherProps }
-					/>
-				:   <input 
-						className='text-input'
-						onChange={handleChange}
-						{ ...otherProps }
-					/>
+					:   <input 
+							className='text-input'
+							onChange={handleChange}
+							{ ...otherProps }
+						/>
 
-			}
+				}
+			</div>
 		</div>
 	);
 }

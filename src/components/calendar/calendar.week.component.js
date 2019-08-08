@@ -1,6 +1,8 @@
 import React from 'react';
-import './calendar.styles.css'
+
 import Day from './calendar.day.component';
+
+import './calendar.styles.scss'
 
 const Week = (props) => {
 	let days = [];

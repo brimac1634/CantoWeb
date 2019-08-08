@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import './calendar.styles.css'
+
 import moment from 'moment';
 import Week from './calendar.week.component';
 import DayNames from './calendar.day-names.component';
-import Icon from '../icon/icon.component';
+
+import './calendar.styles.scss'
 
 class Calendar extends Component {
 	constructor(props) {
@@ -92,28 +93,20 @@ class Calendar extends Component {
 	        <header className="header">
 	          <div className="month-display calendar-row">
 	            <div 
-	            	className="arrow fa fa-angle-left" 
+	            	className="arrow" 
 	            	onClick={isFirstMonth ? this.previous : null}
 	            >
 	            	{isFirstMonth &&
-	            		<Icon 
-							icon='fast-forward' 
-							iconSize='25'
-							color='cantoWhite'
-						/>
+	            		<p>&#10094;</p>
 	            	}
 				</div>
 	            {this.renderMonthLabel()}
             	<div 
-            		className="arrow fa fa-angle-right" 
+            		className="arrow" 
             		onClick={isLastMonth ? this.next : null}
             	>
             		{isLastMonth &&
-			            <Icon 
-							icon='fast-forward' 
-							iconSize='25'
-							color='cantoWhite'
-						/>
+			            <p>&#10095;</p>
 					}
 				</div>
 	          </div>

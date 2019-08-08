@@ -16,24 +16,26 @@ const mapDispatchToProps = (dispatch) => {
 
 const Home = ({ updateURL }) => (
 	<div className='home-page'>
-		<div className='home-welcome'>
-			<h1>Welcome to CantoTalk</h1>
-			<p>Current day Cantonese, when you need it</p>
-		</div>
-		<div className='home-item-list'>
-			{homeList.map(item => {
-				return (
-					<div 
-						key={item.title}
-						className='home-item' 
-						onClick={()=>updateURL(item.route)}
-					>
-						<Icon icon={item.icon} iconSize='30' />
-						<h2>{item.title}</h2>
-						<p>{item.description}</p>
-					</div>
-				)
-			})}
+		<div className='inner-home'>
+			<div className='home-welcome'>
+				<h1>Welcome to CantoTalk</h1>
+				<p>Current day Cantonese, when you need it</p>
+			</div>
+			<div className='home-item-list'>
+				{homeList.map(item => {
+					return (
+						<div 
+							key={item.title}
+							className='home-item' 
+							onClick={()=>updateURL(item.route)}
+						>
+							<Icon icon={item.icon} iconSize='30' />
+							<h2>{item.title}</h2>
+							<p>{item.description}</p>
+						</div>
+					)
+				})}
+			</div>
 		</div>
 	</div>
 );

@@ -1,5 +1,6 @@
 import React from 'react';
-import './calendar.styles.css'
+
+import './calendar.styles.scss'
 
 const Day = (props) => {
 	const {

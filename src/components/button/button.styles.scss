@@ -1,0 +1,57 @@
+.btn {
+	width: auto;
+	height: auto;
+	border-radius: 4px;
+	font-size: 16px;
+	transition: all .2s linear;
+	text-align: center;
+	border: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	outline: none;
+
+	.title {
+		margin: 0;
+		 
+		&.with-icon {
+			padding-left: 8px;
+		}
+	}
+
+	&.btn-active {
+		color: var(--cantoBlue);
+		background: transparent;
+		border: solid 1px var(--cantoDarkGray);
+		cursor: pointer;
+
+		&:hover {
+			border: solid 1px var(--cantoDarkBlue);
+		}
+
+		&:active {
+			background: var(--cantoDarkGray);
+		}
+	}
+
+	&.btn-disabled {
+		background: var(--cantoGray);
+		border: solid 1px var(--cantoGray);
+		cursor: default;
+
+		& p {
+			color: var(--cantoDarkGray);
+		}
+	}
+
+	&.selected-button {
+		border: solid 1px var(--cantoDarkBlue);
+		background: var(--cantoGray);
+	}
+}
+
+
+
+
+

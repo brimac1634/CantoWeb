@@ -38,9 +38,9 @@ const SlideUpEntry = ({ isSelected, selectedEntry, setMobileEntry, loading, upda
 			>
 				<div className='entry-view-sizer' onClick={event => event.stopPropagation()}>
 					<button 
-                          className='slide-up-close' 
-                          onClick={()=>setMobileEntry('')}
-                        >
+                      className='slide-up-close' 
+                      onClick={()=>setMobileEntry('')}
+                    >
                         <Icon 
                           icon='multiply' 
                           iconStyle='dark' 

@@ -116,7 +116,9 @@ class AddNewEntry extends Component {
 				return (
 					<div className='new-entry'>
 						<div className='inner-new-entry'>
-							<h2 className='heading'>Welcome, {user.userName}</h2>
+							<h2 className='heading'>
+								Welcome, {user.userName}
+							</h2>
 							{
 								fields.fields.map(({name, required, id}) => {
 									return (
@@ -148,10 +150,9 @@ class AddNewEntry extends Component {
 									)
 								})
 							}
-							<div className='add-container'>
+							<div>
 								<Button 
 									title='Add Entry!'
-									buttonType='ghost' 
 									icon='add' 
 									height='44px'
 									margin='20px 0'
